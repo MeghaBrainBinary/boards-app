@@ -13,4 +13,9 @@ class StringRes {
   static const String holidays = "Holidays";
   static const String tasty = "Tasty";
   static const String events = "Events";
+
+   ///______________________________ lnguage screen2 ______________________________///
+  static const String language = "Language";
+  static const String cancel = "Cancel";
+  static const String confirm  = "Confirm ";
 }

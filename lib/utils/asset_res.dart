@@ -13,8 +13,7 @@ class AssetRes {
   static String testyIcon = "${icons}testy_icon.png";
   static String weekendIcon = "${icons}weekend_icon.png";
   static String eventsIcon = "${icons}events_icon.png";
-
-  ///________________________________ images ______________________________///
+  static String aerrowIcon = "${icons}aerrow_icon.png";
 
   static String lngaugeImg = "${image}lng_img.png";
 }

@@ -1,3 +1,4 @@
+import 'package:boards_app/screens/language_screen2/languagescreen2.dart';
 import 'package:boards_app/screens/boards_screen/boards_screen.dart';
 import 'package:boards_app/screens/language_screen/language_screen.dart';
 import 'package:boards_app/screens/splash_screen.dart';
@@ -43,7 +44,7 @@ class MyApp extends StatelessWidget {
           GetPage(name: AppRoutes.languagePage, page: () => LanguageScreen()),
           GetPage(name: AppRoutes.boardsPage, page: () => BoardsScreen()),
         ],
-        home: const SplashScreen()
+        home:  SplashScreen()
         //  (PrefService.getBool(PrefKeys.isLogin))
         //     ? HomeScreen()
         //     : SignInScreen(),
