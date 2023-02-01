@@ -1,3 +1,4 @@
+import 'package:boards_app/localization/localization.dart';
 import 'package:boards_app/screens/language_screen/language_controller.dart';
 import 'package:boards_app/utils/app_text_field.dart';
 import 'package:boards_app/utils/appstyle.dart';
@@ -54,7 +55,7 @@ class LanguageScreen extends StatelessWidget {
                 child: appTextField(
                   controller: languageController.searchController,
                   onChanged: (val) {
-                    languageController.onSearch(val);
+                    languageController.onSearch(val.toString().toLowerCase());
                   },
                   prefixIcon: Padding(
                     padding: const EdgeInsets.only(left: 10),
@@ -79,7 +80,7 @@ class LanguageScreen extends StatelessWidget {
                 height: Get.height * 0.025,
               ),
               SizedBox(
-                  height: Get.height * 0.54,
+                  height: Get.height * 0.4,
                   child: (languageController.searchController.text.isNotEmpty)
                       ? ListView.builder(
                           padding: const EdgeInsets.all(0),
@@ -89,7 +90,7 @@ class LanguageScreen extends StatelessWidget {
                           itemBuilder: (context, index) {
                             return InkWell(
                               onTap: () {
-                                languageController.onTapContainer(
+                                languageController.onTapContainer(language:languageController.filterLst[index],
                                     val: true, i: index);
                               },
                               focusColor: ColorRes.color305EBE,
@@ -145,6 +146,7 @@ class LanguageScreen extends StatelessWidget {
                             return InkWell(
                               onTap: () {
                                 languageController.onTapContainer(
+                                  language: languageController.lngs[index],
                                     val: true, i: index);
                               },
                               focusColor: ColorRes.color305EBE,

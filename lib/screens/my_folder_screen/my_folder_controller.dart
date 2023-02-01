@@ -1,14 +1,23 @@
-import 'package:boards_app/utils/asset_res.dart';
-import 'package:boards_app/utils/string_res.dart';
-import 'package:chewie/chewie.dart';
+import 'package:boards_app/screens/my_folder_screen/api/get_board_info.dart';
+import 'package:boards_app/screens/my_folder_screen/model/get_board_info_model.dart';
 import 'package:get/get.dart';
-import 'package:video_player/video_player.dart';
 
 class MyFolderController extends GetxController {
   // late VideoPlayerController controller;
   // ChewieController? chewieController;
 
+  GetBoardInfoModel getBoardInfoModel = GetBoardInfoModel();
+  RxBool loader = false.obs;
   List checkImg = List.generate(4, (index) => false);
+
+  int(String id)async{
+    loader.value = true;
+    getBoardInfoModel = await GetBoardInfoApi.getBoardInfoApi(id);
+    loader.value = false;
+
+  List checkImg = List.generate(getBoardInfoModel.data?.length ??0, (index) => false);
+  update(['fldr']);
+  }
   List simg = [];
 
   bool isSelect = false;
@@ -21,7 +30,7 @@ class MyFolderController extends GetxController {
     } else {
       isSelect = false;
     }
-    checkImg = List.generate(4, (index) => false);
+    checkImg = List.generate(getBoardInfoModel.data?.length??0, (index) => false);
     simg = [];
     update(['fldr']);
   }
@@ -35,7 +44,7 @@ class MyFolderController extends GetxController {
     update(['fldr']);
   }
 
-  onTapCheck(int index) {
+  onTapCheck(index) {
     if (checkImg[index] == false) {
       checkImg[index] = true;
       simg.add(index);
@@ -46,32 +55,32 @@ class MyFolderController extends GetxController {
     update(['fldr']);
   }
 
-  List folderImgs = [
-    {
-      "url": AssetRes.folderImg1,
-      "type": "img",
-    },
-    {
-      "url": AssetRes.folderImg2,
-      "type": "img",
-    },
-    {
-      "url": AssetRes.folderImg3,
-      "type": "img",
-    },
-    {
-      "url": AssetRes.folderImg4,
-      // ChewieController(
-      //   autoPlay: false,
-      //   videoPlayerController: VideoPlayerController.network(
-      //       'https://flutter.github.io/assets-for-api-docs/assets/videos/bee.mp4')
-      //     ..initialize().then((_) {
-      //       // Ensure the first frame is shown after the video is initialized, even before the play button has been pressed.
-      //     }),
-      // ),
-      "type": "video",
-    },
-  ];
+  // List folderImgs = [
+  //   {
+  //     "url": AssetRes.folderImg1,
+  //     "type": "img",
+  //   },
+  //   {
+  //     "url": AssetRes.folderImg2,
+  //     "type": "img",
+  //   },
+  //   {
+  //     "url": AssetRes.folderImg3,
+  //     "type": "img",
+  //   },
+  //   {
+  //     "url": AssetRes.folderImg4,
+  //     // ChewieController(
+  //     //   autoPlay: false,
+  //     //   videoPlayerController: VideoPlayerController.network(
+  //     //       'https://flutter.github.io/assets-for-api-docs/assets/videos/bee.mp4')
+  //     //     ..initialize().then((_) {
+  //     //       // Ensure the first frame is shown after the video is initialized, even before the play button has been pressed.
+  //     //     }),
+  //     // ),
+  //     "type": "video",
+  //   },
+  // ];
 
   // @override
   // void onInit() {

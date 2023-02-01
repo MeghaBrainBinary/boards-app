@@ -1,8 +1,10 @@
+import 'package:boards_app/localization/localization.dart';
 import 'package:boards_app/screens/language_screen2/languagescreen2.dart';
 import 'package:boards_app/screens/boards_screen/boards_screen.dart';
 import 'package:boards_app/screens/language_screen/language_screen.dart';
 import 'package:boards_app/screens/my_folder_screen/my_folder_screen.dart';
 import 'package:boards_app/screens/splash_screen.dart';
+import 'package:boards_app/services/pref_services.dart';
 import 'package:boards_app/utils/approutes.dart';
 import 'package:flutter/services.dart';
 // ignore: depend_on_referenced_packages
@@ -12,6 +14,7 @@ import 'package:flutter/material.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+  PrefService.init();
   // WidgetsBinding.instance.addObserver(Handler());
   // await Firebase.initializeApp();
   // await PrefService.init();
@@ -36,6 +39,9 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
+        locale: LocalizationService.locale,
+        fallbackLocale: LocalizationService.fallbackLocale,
+        translations: LocalizationService(),
         debugShowCheckedModeBanner: false,
         title: 'Flutter Demo',
         theme:

@@ -1,4 +1,5 @@
 import 'package:boards_app/screens/language_screen2/language2_controller.dart';
+import 'package:boards_app/services/pref_services.dart';
 import 'package:boards_app/utils/app_text_field.dart';
 import 'package:boards_app/utils/approutes.dart';
 import 'package:boards_app/utils/appstyle.dart';
@@ -9,13 +10,14 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_connect/http/src/utils/utils.dart';
 
+import '../../utils/prefkeys.dart';
+
 class LanguageScreen22 extends StatelessWidget {
   LanguageScreen22({super.key});
   Language2Controller2 languageController = Get.put(Language2Controller2());
   @override
   Widget build(BuildContext context) {
-    return Scaffold(body: Obx((() {
-      return SafeArea(
+    return Scaffold(body:  SafeArea(
         child: Padding(
           padding: const EdgeInsets.only(left: 20, right: 20),
           child: SizedBox(
@@ -36,14 +38,12 @@ class LanguageScreen22 extends StatelessWidget {
                       maintainSize: true,
                       maintainAnimation: true,
                       child: InkWell(
-                        child: Container(
-                          child: Text(
-                            StringRes.cancel,
-                            style: appTextStyle(
-                                color: ColorRes.color305EBE,
-                                fontSize: 12,
-                                weight: FontWeight.w500),
-                          ),
+                        child: Text(
+                          StringRes.cancel,
+                          style: appTextStyle(
+                              color: ColorRes.color305EBE,
+                              fontSize: 12,
+                              weight: FontWeight.w500),
                         ),
                       ),
                     ),
@@ -60,14 +60,12 @@ class LanguageScreen22 extends StatelessWidget {
                       onTap: () {
                         Get.offAndToNamed(AppRoutes.myFolderPage);
                       },
-                      child: Container(
-                        child: Text(
-                          StringRes.cancel,
-                          style: appTextStyle(
-                              color: ColorRes.color305EBE,
-                              fontSize: 12,
-                              weight: FontWeight.w500),
-                        ),
+                      child: Text(
+                        StringRes.cancel,
+                        style: appTextStyle(
+                            color: ColorRes.color305EBE,
+                            fontSize: 12,
+                            weight: FontWeight.w500),
                       ),
                     ),
                   ],
@@ -84,23 +82,8 @@ class LanguageScreen22 extends StatelessWidget {
                   child: appTextField(
                     controller: languageController.searchController,
                     onChanged: (value) {
-                      if (value.isEmpty) {
-                        languageController.list.clear();
-                        languageController.onoffindex.value = -1;
-                      } else {
-                        languageController.list.clear();
-                        languageController.onoffindex.value = -1;
-                        for (var element in languageController.name) {
-                          languageController.onoffindex.value++;
-                          languageController.name2 = element;
-                          if (languageController.name2
-                              .toLowerCase()
-                              .startsWith(value.toLowerCase())) {
-                            languageController.list
-                                .add(languageController.onoffindex.value);
-                          }
-                        }
-                      }
+                      languageController
+                          .onSearch(value.toString().toLowerCase());
                     },
                     prefixIcon: Padding(
                       padding: const EdgeInsets.only(left: 10),
@@ -123,78 +106,134 @@ class LanguageScreen22 extends StatelessWidget {
                 SizedBox(
                   height: Get.height * 0.05,
                 ),
-                SizedBox(
-                    height: Get.height * 0.54,
-                    child: ListView.builder(
-                        shrinkWrap: true,
-                        physics: const NeverScrollableScrollPhysics(),
-                        itemCount: languageController.onoffindex.value == -1
-                            ? languageController.name.length
-                            : languageController.list.length,
-                        itemBuilder: ((context, index) {
-                          return Column(
-                            children: [
-                              GestureDetector(
-                                onTap: () {
-                                  print("Tapped");
-                                  languageController.number.value = index;
-                                },
-                                child: Container(
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    children: [
-                                      SizedBox(
-                                        height: Get.height * 0.041,
-                                        child: languageController
-                                                    .onoffindex.value ==
-                                                -1
-                                            ? Text(
-                                                languageController.name[index],
-                                                style: const TextStyle(
-                                                    fontSize: 14,
-                                                    fontWeight:
-                                                        FontWeight.w500),
-                                              )
-                                            : Text(languageController.name[
+                GetBuilder<Language2Controller2>(
+                    id: "lng",
+                    builder: (con) {
+                      con.update();
+                      return SizedBox(
+                          height: Get.height * 0.54,
+                          child: (languageController
+                                  .searchController.text.isNotEmpty)
+                              ? ListView.builder(
+                                  shrinkWrap: true,
+                                  physics: const NeverScrollableScrollPhysics(),
+                                  itemCount:
+                                      languageController.filterList.length,
+                                  itemBuilder: ((context, index) {
+                                    return Column(
+                                      children: [
+                                        GestureDetector(
+                                          onTap: () {
+                                            languageController.onTapLanguage(
                                                 languageController
-                                                    .list[index]]),
-                                      ),
-                                      const Spacer(),
-                                      Obx((() {
-                                        return Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.start,
-                                          children: [
-                                            languageController.number.value ==
-                                                    index
-                                                ? Container(
-                                                    color: Colors.white,
-                                                    height:
-                                                        Get.height * 0.020345,
-                                                    width: Get.width * 0.03908,
-                                                    child: Image.asset(
-                                                        AssetRes.aerrowIcon),
-                                                  )
-                                                : const SizedBox(),
-                                          ],
-                                        );
-                                      }))
-                                    ],
-                                  ),
-                                ),
-                              ),
-                              SizedBox(
-                                height: Get.height * 0.0172,
-                              ),
-                            ],
-                          );
-                        }))),
+                                                    .filterList[index],
+                                            index
+                                            );
+                                          },
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.start,
+                                            children: [
+                                              SizedBox(
+                                                  height: Get.height * 0.041,
+                                                  child: Text(
+                                                    languageController
+                                                        .filterList[index],
+                                                    style: const TextStyle(
+                                                        fontSize: 14,
+                                                        fontWeight:
+                                                            FontWeight.w500),
+                                                  )),
+                                              const Spacer(),
+                                              Column(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.start,
+                                                children: [
+                                                 languageController.isCheck[index]
+                                                      ? Container(
+                                                          color: Colors.white,
+                                                          height: Get.height *
+                                                              0.020345,
+                                                          width: Get.width *
+                                                              0.03908,
+                                                          child: Image.asset(
+                                                              AssetRes
+                                                                  .aerrowIcon),
+                                                        )
+                                                      : const SizedBox(),
+                                                ],
+                                              )
+                                            ],
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          height: Get.height * 0.0172,
+                                        ),
+                                      ],
+                                    );
+                                  }))
+                              : ListView.builder(
+                                  shrinkWrap: true,
+                                  physics: const NeverScrollableScrollPhysics(),
+                                  itemCount: languageController.language.length,
+                                  itemBuilder: ((context, index) {
+                                    return Column(
+                                      children: [
+                                        InkWell(
+                                          onTap: () {
+                                            languageController.onTapLanguage(
+                                                languageController
+                                                    .language[index],index);
+                                          },
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.start,
+                                            children: [
+                                              SizedBox(
+                                                  height: Get.height * 0.041,
+                                                  child: Text(
+                                                    languageController
+                                                        .language[index],
+                                                    style: const TextStyle(
+                                                        fontSize: 14,
+                                                        fontWeight:
+                                                            FontWeight.w500),
+                                                  )),
+                                              const Spacer(),
+                                              Column(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.start,
+                                                children: [
+                                                  languageController.isCheck[index] ==true
+                                                      ? Container(
+                                                          color: Colors.white,
+                                                          height: Get.height *
+                                                              0.020345,
+                                                          width: Get.width *
+                                                              0.03908,
+                                                          child: Image.asset(
+                                                              AssetRes
+                                                                  .aerrowIcon),
+                                                        )
+                                                      : const SizedBox(),
+                                                ],
+                                              )
+                                            ],
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          height: Get.height * 0.0172,
+                                        ),
+                                      ],
+                                    );
+                                  })));
+                    }),
                 SizedBox(
                   height: Get.height * 0.05552,
                 ),
                 GestureDetector(
                   onTap: () {
-                    Get.offAndToNamed(AppRoutes.myFolderPage);
+                    languageController.onTapConfirm();
                   },
                   child: Container(
                     alignment: Alignment.center,
@@ -218,7 +257,7 @@ class LanguageScreen22 extends StatelessWidget {
             ),
           ),
         ),
-      );
-    })));
+      )
+    );
   }
 }
