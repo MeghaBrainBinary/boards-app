@@ -1,3 +1,4 @@
+import 'package:boards_app/utils/approutes.dart';
 import 'package:boards_app/utils/asset_res.dart';
 import 'package:boards_app/utils/string_res.dart';
 import 'package:get/get.dart';
@@ -34,5 +35,7 @@ class BoardsController extends GetxController {
     update(['board']);
   }
 
-  onTapFolder() {}
+  onTapFolder() {
+    Get.toNamed(AppRoutes.myFolderPage);
+  }
 }

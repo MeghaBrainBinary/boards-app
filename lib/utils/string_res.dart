@@ -14,8 +14,12 @@ class StringRes {
   static const String tasty = "Tasty";
   static const String events = "Events";
 
-   ///______________________________ lnguage screen2 ______________________________///
+  ///______________________________ lnguage screen2 ______________________________///
   static const String language = "Language";
   static const String cancel = "Cancel";
-  static const String confirm  = "Confirm ";
+  static const String confirm = "Confirm";
+
+  static const String imageSelected = "Image Selected";
+
+  static String selectedLng = "";
 }

@@ -26,7 +26,6 @@ class Language2Controller2 extends GetxController {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       onoff.value = 0;
       onoffindex.value = -1;
-      
     });
   }
 }

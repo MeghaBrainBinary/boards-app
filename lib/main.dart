@@ -1,6 +1,7 @@
 import 'package:boards_app/screens/language_screen2/languagescreen2.dart';
 import 'package:boards_app/screens/boards_screen/boards_screen.dart';
 import 'package:boards_app/screens/language_screen/language_screen.dart';
+import 'package:boards_app/screens/my_folder_screen/my_folder_screen.dart';
 import 'package:boards_app/screens/splash_screen.dart';
 import 'package:boards_app/utils/approutes.dart';
 import 'package:flutter/services.dart';
@@ -43,8 +44,12 @@ class MyApp extends StatelessWidget {
           GetPage(name: AppRoutes.splashPage, page: () => const SplashScreen()),
           GetPage(name: AppRoutes.languagePage, page: () => LanguageScreen()),
           GetPage(name: AppRoutes.boardsPage, page: () => BoardsScreen()),
+          GetPage(name: AppRoutes.myFolderPage, page: () => MyFolderScreen()),
+          GetPage(
+              name: AppRoutes.languageConfirmPage,
+              page: () => LanguageScreen22()),
         ],
-        home:  SplashScreen()
+        home: SplashScreen()
         //  (PrefService.getBool(PrefKeys.isLogin))
         //     ? HomeScreen()
         //     : SignInScreen(),

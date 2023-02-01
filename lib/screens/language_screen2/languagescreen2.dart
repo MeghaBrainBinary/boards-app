@@ -1,11 +1,13 @@
 import 'package:boards_app/screens/language_screen2/language2_controller.dart';
 import 'package:boards_app/utils/app_text_field.dart';
+import 'package:boards_app/utils/approutes.dart';
 import 'package:boards_app/utils/appstyle.dart';
 import 'package:boards_app/utils/asset_res.dart';
 import 'package:boards_app/utils/color_res.dart';
 import 'package:boards_app/utils/string_res.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get/get_connect/http/src/utils/utils.dart';
 
 class LanguageScreen22 extends StatelessWidget {
   LanguageScreen22({super.key});
@@ -17,7 +19,6 @@ class LanguageScreen22 extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.only(left: 20, right: 20),
           child: SizedBox(
-           
             height: Get.height,
             width: Get.width,
             child: SingleChildScrollView(
@@ -29,9 +30,24 @@ class LanguageScreen22 extends StatelessWidget {
                 ),
                 Row(
                   children: [
-                    SizedBox(
-                      width: Get.width * 0.26,
+                    Visibility(
+                      visible: false,
+                      maintainState: true,
+                      maintainSize: true,
+                      maintainAnimation: true,
+                      child: InkWell(
+                        child: Container(
+                          child: Text(
+                            StringRes.cancel,
+                            style: appTextStyle(
+                                color: ColorRes.color305EBE,
+                                fontSize: 12,
+                                weight: FontWeight.w500),
+                          ),
+                        ),
+                      ),
                     ),
+                    const Spacer(),
                     Text(
                       StringRes.language,
                       style: appTextStyle(
@@ -40,12 +56,19 @@ class LanguageScreen22 extends StatelessWidget {
                           weight: FontWeight.w400),
                     ),
                     const Spacer(),
-                    Text(
-                      StringRes.cancel,
-                      style: appTextStyle(
-                          color: ColorRes.color305EBE,
-                          fontSize: 15,
-                          weight: FontWeight.w500),
+                    InkWell(
+                      onTap: () {
+                        Get.offAndToNamed(AppRoutes.myFolderPage);
+                      },
+                      child: Container(
+                        child: Text(
+                          StringRes.cancel,
+                          style: appTextStyle(
+                              color: ColorRes.color305EBE,
+                              fontSize: 12,
+                              weight: FontWeight.w500),
+                        ),
+                      ),
                     ),
                   ],
                 ),
@@ -98,12 +121,13 @@ class LanguageScreen22 extends StatelessWidget {
                   ),
                 ),
                 SizedBox(
-                  height: Get.height * 0.025,
+                  height: Get.height * 0.05,
                 ),
                 SizedBox(
-                  
-                    height: Get.height * 0.55,
+                    height: Get.height * 0.54,
                     child: ListView.builder(
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
                         itemCount: languageController.onoffindex.value == -1
                             ? languageController.name.length
                             : languageController.list.length,
@@ -120,9 +144,7 @@ class LanguageScreen22 extends StatelessWidget {
                                     mainAxisAlignment: MainAxisAlignment.start,
                                     children: [
                                       SizedBox(
-                                      
                                         height: Get.height * 0.041,
-
                                         child: languageController
                                                     .onoffindex.value ==
                                                 -1
@@ -171,7 +193,9 @@ class LanguageScreen22 extends StatelessWidget {
                   height: Get.height * 0.05552,
                 ),
                 GestureDetector(
-                  //   onTap: controller.onTapContinue,
+                  onTap: () {
+                    Get.offAndToNamed(AppRoutes.myFolderPage);
+                  },
                   child: Container(
                     alignment: Alignment.center,
                     height: 50,

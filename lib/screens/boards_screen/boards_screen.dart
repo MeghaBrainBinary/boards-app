@@ -66,7 +66,7 @@ class BoardsScreen extends StatelessWidget {
                         children: [
                           Padding(
                             padding: EdgeInsets.only(
-                                left: Get.width * 0.05,
+                                left: Get.width * 0.035,
                                 right: Get.width * 0.05),
                             child: Row(
                               children: [
@@ -104,11 +104,20 @@ class BoardsScreen extends StatelessWidget {
                           ),
                           (controller.isIcons[index] == true && index == 0)
                               ? InkWell(
+                                  focusColor: ColorRes.color305EBE,
+                                  hoverColor: ColorRes.color305EBE,
+                                  splashColor:
+                                      ColorRes.color305EBE.withOpacity(0.1),
+                                  overlayColor: MaterialStateProperty.all(
+                                      ColorRes.color305EBE.withOpacity(0.1)),
+                                  onTap: () {
+                                    controller.onTapFolder();
+                                  },
                                   child: Container(
                                     height: Get.height * 0.055,
                                     color: Colors.transparent,
                                     padding: EdgeInsets.only(
-                                      left: Get.width * 0.1,
+                                      left: Get.width * 0.12,
                                     ),
                                     child: Row(
                                       children: [
