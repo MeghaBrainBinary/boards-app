@@ -75,10 +75,11 @@ List filterList =[];
 
     PrefService.setValue(PrefKeys.language, selectedLanguage);
     LocalizationService().changeLocale(selectedLanguage);
+
     BoardsController boardsController = Get.put(BoardsController());
     boardsController.init(languageCode);
 
-    Get.offAndToNamed(AppRoutes.boardsPage,);
+    Get.offAndToNamed(AppRoutes.boardsPage,arguments: languageCode);
   }
 
   @override

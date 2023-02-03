@@ -73,10 +73,8 @@ if(selectedLanguage == "Lithuanian")
 PrefService.setValue(PrefKeys.language, selectedLanguage);
  LocalizationService().changeLocale(selectedLanguage);
 
+ PrefService.setValue(PrefKeys.languageCode, languageCode);
 
- BoardsController boardsController = Get.put(BoardsController());
- boardsController.init(languageCode);
-
-    Get.offAndToNamed(AppRoutes.boardsPage,);
+    Get.offAndToNamed(AppRoutes.boardsPage,arguments: languageCode);
   }
 }

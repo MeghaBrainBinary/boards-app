@@ -1,7 +1,9 @@
 import 'dart:async';
 
+import 'package:boards_app/services/pref_services.dart';
 import 'package:boards_app/utils/approutes.dart';
 import 'package:boards_app/utils/asset_res.dart';
+import 'package:boards_app/utils/prefkeys.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -18,7 +20,15 @@ class _SplashScreenState extends State<SplashScreen> {
     super.initState();
 
     Timer(const Duration(seconds: 3), () {
-      Get.offAndToNamed(AppRoutes.languagePage);
+
+      if(PrefService.getBool(PrefKeys.isLanguage)==false) {
+        Get.offAndToNamed(AppRoutes.languagePage);
+        PrefService.setValue(PrefKeys.isLanguage, true);
+     }
+     else
+       {
+         Get.offAndToNamed(AppRoutes.boardsPage);
+       }
     });
   }
 

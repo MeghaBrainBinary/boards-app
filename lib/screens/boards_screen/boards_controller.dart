@@ -2,16 +2,26 @@ import 'package:boards_app/localization/localization.dart';
 import 'package:boards_app/screens/boards_screen/api/language_api.dart';
 import 'package:boards_app/screens/boards_screen/model/get_board_model.dart';
 import 'package:boards_app/screens/my_folder_screen/my_folder_controller.dart';
+import 'package:boards_app/services/pref_services.dart';
 import 'package:boards_app/utils/approutes.dart';
 import 'package:boards_app/utils/asset_res.dart';
+import 'package:boards_app/utils/prefkeys.dart';
 import 'package:boards_app/utils/string_res.dart';
 import 'package:get/get.dart';
 
 class BoardsController extends GetxController {
-
+  dynamic argumentData = Get.arguments;
 RxBool loader = false.obs;
 GetBoardModel getBoardModel = GetBoardModel();
 List isIcons = List.generate(6, (index) => false);
+
+@override
+void onInit() {
+  init(argumentData ?? PrefService.getString(PrefKeys.languageCode));
+
+  super.onInit();
+}
+
   init(language)async{
     loader.value= true;
     getBoardModel =await GetBoardApi.getBoardApi(language);
@@ -43,6 +53,8 @@ List isIcons = List.generate(6, (index) => false);
   bool isMyfolder = false;
   bool isIcon = false;
 
+  bool isMore = false;
+
   onTapIcon(bool val, int index) {
     if (isIcons[index] == true) {
       isIcons[index] = false;
@@ -53,12 +65,28 @@ List isIcons = List.generate(6, (index) => false);
     update(['board']);
   }
 
-  onTapFolder({required String id}) {
+  onTapMore() {
+    if (isMore == false) {
+      isMore = true;
+    } else {
+      isMore = false;
+    }
+    update(['board']);
+    update(['all']);
+  }
 
+  onTapFolder({required String id}) {
+    isIcons = List.generate(6, (index) => false);
+    isIcon = false;
+    isMyfolder = false;
+    update(['board']);
     MyFolderController myFolderController = Get.put(MyFolderController());
     myFolderController.int(id);
     myFolderController.isMore = false;
 
     Get.toNamed(AppRoutes.myFolderPage);
   }
+
+
+
 }

@@ -1,24 +1,35 @@
 import 'package:boards_app/screens/my_folder_screen/api/get_board_info.dart';
 import 'package:boards_app/screens/my_folder_screen/model/get_board_info_model.dart';
+import 'package:boards_app/utils/color_res.dart';
+import 'package:dio/dio.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:image_gallery_saver/image_gallery_saver.dart';
+import 'package:share_plus/share_plus.dart';
 
 class MyFolderController extends GetxController {
   // late VideoPlayerController controller;
   // ChewieController? chewieController;
 
   GetBoardInfoModel getBoardInfoModel = GetBoardInfoModel();
+  PageController pageController= PageController();
   RxBool loader = false.obs;
   List checkImg = List.generate(4, (index) => false);
+  bool isPageView = false;
+    String? selectedImage;
 
   int(String id)async{
     loader.value = true;
     getBoardInfoModel = await GetBoardInfoApi.getBoardInfoApi(id);
     loader.value = false;
 
-  List checkImg = List.generate(getBoardInfoModel.data?.length ??0, (index) => false);
+
+   checkImg = List.generate(getBoardInfoModel.data?.length ??0, (index) => false);
   update(['fldr']);
   }
-  List simg = [];
+  List<String> simg = [];
 
   bool isSelect = false;
   bool selectedImg = false;
@@ -34,7 +45,15 @@ class MyFolderController extends GetxController {
     simg = [];
     update(['fldr']);
   }
+onTapBack(){
+  isSelect = false;
+  simg =[];
+  selectedImg = false;
+  checkImg = List.generate(getBoardInfoModel.data?.length??0, (index) => false);
 
+  update(['fldr']);
+
+}
   onTapMore() {
     if (isMore == false) {
       isMore = true;
@@ -44,17 +63,116 @@ class MyFolderController extends GetxController {
     update(['fldr']);
   }
 
-  onTapCheck(index) {
+  onTapCheck(data,index) {
     if (checkImg[index] == false) {
       checkImg[index] = true;
-      simg.add(index);
+      simg.add(data);
     } else {
       checkImg[index] = false;
-      simg.remove(index);
+      simg.remove(data);
     }
     update(['fldr']);
   }
+  onTapImage(){
+      isPageView = true;
 
+    update(['fldr']);
+  }
+
+  onImageChanged(i){
+
+    print(pageController.page!.round());
+    print(selectedImage == "");
+    if(getBoardInfoModel.data != null)
+      {
+
+    selectedImage = getBoardInfoModel.data![i].image.toString();
+
+      }
+  }
+
+  tapBackwardButton(){
+    if(pageController.page!.round() != getBoardInfoModel.data!.length - 1) {
+      pageController.animateToPage(
+          pageController.page!.round() +1, duration: const Duration(milliseconds: 500),
+          curve: Curves.easeInOut);
+    }
+  }
+  tapForwardButton(){
+    if(pageController.page!.round() != 0) {
+      pageController.animateToPage(
+          pageController.page!.round() -1, duration: const Duration(milliseconds: 500),
+          curve: Curves.easeInOut);
+    }
+  }
+
+  saveImage()async{
+
+    if(getBoardInfoModel.data!=null && getBoardInfoModel.data!.length !=0) {
+      loader.value = true;
+
+
+      var response = await Dio()
+          .get(
+          selectedImage ?? getBoardInfoModel.data![0].image.toString(), options: Options(responseType: ResponseType.bytes));
+      await ImageGallerySaver.saveImage(
+        Uint8List.fromList(response.data),
+        quality: 60,
+        name: "ra",
+      );
+      loader.value = false;
+      selectedImage = null;
+
+      // loader.value = true;
+      //
+      // simg.forEach((element) async{
+      //   var response = await Dio()
+      //       .get(element, options: Options(responseType: ResponseType.bytes));
+      //   await ImageGallerySaver.saveImage(
+      //     Uint8List.fromList(response.data),
+      //     quality: 60,
+      //     name: "ra",
+      //   );
+      // });
+      // loader.value = false;
+
+      Get.snackbar(
+        "Success",
+        "Images Downloaded Successfully",
+        backgroundColor: Colors.green,
+        colorText: ColorRes.white,
+      );
+      checkImg =
+          List.generate(getBoardInfoModel.data?.length ?? 0, (index) => false);
+      selectedImg = false;
+      isSelect = false;
+      simg = [];
+      update(['fldr']);
+    }
+
+  }
+
+  onTapShare(){
+    if(getBoardInfoModel.data!=null && getBoardInfoModel.data!.length !=0) {
+      Share.share(selectedImage ?? getBoardInfoModel.data![0].image.toString());
+      selectedImage = null;
+
+      print(selectedImage);
+      update(['fldr']);
+    }
+  }
+
+  @override
+  void dispose() {
+selectedImage =null;
+isPageView= false;
+isSelect = false;
+selectedImg = false;
+
+
+    // TODO: implement dispose
+    super.dispose();
+  }
   // List folderImgs = [
   //   {
   //     "url": AssetRes.folderImg1,
