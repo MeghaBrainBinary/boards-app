@@ -46,8 +46,6 @@ dependencies:
   image_gallery_saver: ^1.7.1
   dio: ^4.0.6
   share_plus: ^6.3.0
-  share_it: ^0.6.0
-  vocsy_esys_flutter_share: ^1.0.2
 
 dev_dependencies:
   flutter_test:

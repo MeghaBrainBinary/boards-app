@@ -9,11 +9,7 @@ import 'package:chewie/chewie.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:share_extend/share_extend.dart';
-import 'package:share_it/share_it.dart';
 import 'package:video_player/video_player.dart';
-import 'package:share_plus/share_plus.dart';
-import 'package:vocsy_esys_flutter_share/vocsy_esys_flutter_share.dart';
 
 class MyFolderScreen extends StatefulWidget {
   MyFolderScreen({super.key});

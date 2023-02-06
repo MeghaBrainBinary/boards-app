@@ -322,13 +322,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.0"
-  share_it:
-    dependency: "direct main"
-    description:
-      name: share_it
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.6.0"
   share_plus:
     dependency: "direct main"
     description:
@@ -523,13 +516,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.13"
-  vocsy_esys_flutter_share:
-    dependency: "direct main"
-    description:
-      name: vocsy_esys_flutter_share
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.0.2"
   wakelock:
     dependency: transitive
     description:
