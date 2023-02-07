@@ -7,7 +7,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:image_gallery_saver/image_gallery_saver.dart';
-import 'package:share_plus/share_plus.dart';
+import 'package:http/http.dart' as http;
+// import 'package:share_plus/share_plus.dart';
+// import 'package:share_plus/share_plus.dart';
+import 'package:wc_flutter_share/wc_flutter_share.dart';
 
 class MyFolderController extends GetxController {
   // late VideoPlayerController controller;
@@ -81,8 +84,7 @@ onTapBack(){
 
   onImageChanged(i){
 
-    print(pageController.page!.round());
-    print(selectedImage == "");
+
     if(getBoardInfoModel.data != null)
       {
 
@@ -152,11 +154,32 @@ onTapBack(){
 
   }
 
-  onTapShare(){
+  onTapShare()async{
+    loader.value = true;
+    print(selectedImage);
     if(getBoardInfoModel.data!=null && getBoardInfoModel.data!.length !=0) {
-      Share.share(selectedImage ?? getBoardInfoModel.data![0].image.toString());
-      selectedImage = null;
 
+      try {
+        http.Response response = await http.get(Uri.parse(
+            selectedImage ?? getBoardInfoModel.data![0].image.toString()));
+        final bytes = response.bodyBytes;
+
+        await WcFlutterShare.share(
+            sharePopupTitle: 'share',
+            fileName: "share.${selectedImage!.split(".").last}",
+            mimeType: 'image/${selectedImage!.split(".").last ??
+                getBoardInfoModel.data![0].image
+                    .toString()
+                    .split(".")
+                    .last}',
+            bytesOfFile: bytes);
+      }catch(e){
+        print(e.toString());
+        loader.value = false;
+      }
+     // Share.share(selectedImage ?? getBoardInfoModel.data![0].image.toString(),);
+      selectedImage = null;
+loader.value= false;
       print(selectedImage);
       update(['fldr']);
     }

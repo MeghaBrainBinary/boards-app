@@ -1,5 +1,7 @@
 import 'package:boards_app/localization/localization.dart';
+import 'package:boards_app/screens/boards_screen/api/language_api.dart';
 import 'package:boards_app/screens/boards_screen/boards_controller.dart';
+import 'package:boards_app/screens/boards_screen/model/get_board_model.dart';
 import 'package:boards_app/services/pref_services.dart';
 import 'package:boards_app/utils/approutes.dart';
 import 'package:boards_app/utils/prefkeys.dart';
@@ -12,6 +14,8 @@ class LanguageController extends GetxController {
 
   String selectedLanguage="English";
   String languageCode ="en";
+  GetBoardModel getBoardModel = GetBoardModel();
+  RxBool loader = false.obs;
 
   List lngs = [
     StringRes.latvian,
@@ -50,7 +54,7 @@ class LanguageController extends GetxController {
     update(['lng']);
   }
 
-  onTapContinue() {
+  onTapContinue() async{
 
 if(selectedLanguage == "English")
   {
@@ -69,11 +73,16 @@ if(selectedLanguage == "Lithuanian")
   languageCode ="lt";
 }
 
+loader.value =true;
 
 PrefService.setValue(PrefKeys.language, selectedLanguage);
- LocalizationService().changeLocale(selectedLanguage);
+  LocalizationService().changeLocale(selectedLanguage);
 
  PrefService.setValue(PrefKeys.languageCode, languageCode);
+
+
+//getBoardModel =await GetBoardApi.getBoardApi(languageCode);
+loader.value = false;
 
     Get.offAndToNamed(AppRoutes.boardsPage,arguments: languageCode);
   }

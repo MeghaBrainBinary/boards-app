@@ -84,7 +84,7 @@ class _MyFolderScreenState extends State<MyFolderScreen> {
                         SizedBox(
                           height: Get.height * 0.05,
                         ),
-                        Padding(
+                        (controller.getBoardInfoModel==null)?const SizedBox():Padding(
                           padding: EdgeInsets.only(
                               left: Get.width * 0.05, right: Get.width * 0.06),
                           child: Column(
@@ -164,14 +164,15 @@ class _MyFolderScreenState extends State<MyFolderScreen> {
                                                           ? const EdgeInsets.all(0)
                                                           : const EdgeInsets.all(2),
                                                       decoration: BoxDecoration(
-                                                        color: ColorRes.color305EBE,
+                                                        color: Colors.transparent,
                                                         borderRadius:
                                                         BorderRadius.circular(5),
                                                       ),
                                                       child: Image.network(
                                                         controller.getBoardInfoModel.data![index]
                                                             .image!.toString(),
-                                                        fit: BoxFit.cover,
+                                                        fit: BoxFit.fitWidth,
+
                                                       ),
                                                     ),
                                                   ),
@@ -259,7 +260,7 @@ class _MyFolderScreenState extends State<MyFolderScreen> {
                                                           ? const EdgeInsets.all(0)
                                                           : const EdgeInsets.all(2),
                                                       decoration: BoxDecoration(
-                                                        color: ColorRes.color305EBE,
+                                                        color: Colors.white,
                                                         borderRadius:
                                                             BorderRadius.circular(5),
                                                       ),

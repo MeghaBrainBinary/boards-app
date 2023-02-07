@@ -26,7 +26,10 @@ void onInit() {
     loader.value= true;
     getBoardModel =await GetBoardApi.getBoardApi(language);
 
-    //List isIcons = List.generate(getBoardModel.data?.length??0, (index) => false);
+    print(getBoardModel.data![0].name);
+    print(getBoardModel.data!.length);
+
+     isIcons = List.generate(getBoardModel.data?.length??0, (index) => false);
 
     loader.value= false;
 
