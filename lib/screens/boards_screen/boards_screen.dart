@@ -92,7 +92,7 @@ class BoardsScreen extends StatelessWidget {
                         child: Row(
                           children: [
                             Text(
-                              StringRes.myBoards,
+                              StringRes.myBoards.tr,
                               style: appTextStyle(
                                   color: ColorRes.black,
                                   fontSize: 23,
@@ -213,7 +213,7 @@ class BoardsScreen extends StatelessWidget {
                                                         width: Get.width * 0.06,
                                                       ),
                                                       Text(
-                                                        StringRes.myFolder.toString(),
+                                                        StringRes.myFolder.tr.toString(),
                                                         style: appTextStyle(
                                                             fontSize: 14,
                                                             weight: FontWeight.w500,
@@ -271,7 +271,7 @@ class BoardsScreen extends StatelessWidget {
                                     width: Get.width * 0.03,
                                   ),
                                   Text(
-                                    StringRes.language,
+                                    StringRes.language.tr,
                                     style: appTextStyle(
                                         fontSize: 15,
                                         weight: FontWeight.w500,

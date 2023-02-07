@@ -99,14 +99,14 @@ class _MyFolderScreenState extends State<MyFolderScreen> {
                                     child: Container(
                                       child: (controller.isSelect == false)
                                           ? Text(
-                                              StringRes.select,
+                                              StringRes.select.tr,
                                               style: appTextStyle(
                                                   color: ColorRes.color305EBE,
                                                   fontSize: 15,
                                                   weight: FontWeight.w500),
                                             )
                                           : Text(
-                                              StringRes.cancel,
+                                              StringRes.cancel.tr,
                                               style: appTextStyle(
                                                   color: ColorRes.color305EBE,
                                                   fontSize: 15,
@@ -498,7 +498,7 @@ class _MyFolderScreenState extends State<MyFolderScreen> {
                                       width: Get.width * 0.03,
                                     ),
                                     Text(
-                                      StringRes.language,
+                                      StringRes.language.tr,
                                       style: appTextStyle(
                                           fontSize: 15,
                                           weight: FontWeight.w500,
@@ -566,7 +566,7 @@ appBar() {
                 width: 15,
               ),
               Text(
-                StringRes.myFolder,
+                StringRes.myFolder.tr,
                 style: appTextStyle(
                     fontSize: 24,
                     weight: FontWeight.w400,

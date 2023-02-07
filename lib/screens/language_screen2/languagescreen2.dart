@@ -42,7 +42,7 @@ class LanguageScreen22 extends StatelessWidget {
                           maintainAnimation: true,
                           child: InkWell(
                             child: Text(
-                              StringRes.cancel,
+                              StringRes.cancel.tr,
                               style: appTextStyle(
                                   color: ColorRes.color305EBE,
                                   fontSize: 12,
@@ -52,7 +52,7 @@ class LanguageScreen22 extends StatelessWidget {
                         ),
                         const Spacer(),
                         Text(
-                          StringRes.language,
+                          StringRes.language.tr,
                           style: appTextStyle(
                               color: ColorRes.black,
                               fontSize: 24,
@@ -64,7 +64,7 @@ class LanguageScreen22 extends StatelessWidget {
                             Get.offAndToNamed(AppRoutes.myFolderPage);
                           },
                           child: Text(
-                            StringRes.cancel,
+                            StringRes.cancel.tr,
                             style: appTextStyle(
                                 color: ColorRes.color305EBE,
                                 fontSize: 12,
@@ -98,7 +98,7 @@ class LanguageScreen22 extends StatelessWidget {
                             ),
                           ),
                         ),
-                        hintText: StringRes.searchLanguage,
+                        hintText: StringRes.searchLanguage.tr,
                         hintStyle: appTextStyle(
                           color: ColorRes.black.withOpacity(0.3),
                           fontSize: 13,

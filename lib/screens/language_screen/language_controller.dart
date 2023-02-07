@@ -18,10 +18,10 @@ class LanguageController extends GetxController {
   RxBool loader = false.obs;
 
   List lngs = [
-    StringRes.latvian,
-    StringRes.english,
-    StringRes.estonian,
-    StringRes.lithuanian,
+    StringRes.latvian.tr,
+    StringRes.english.tr,
+    StringRes.estonian.tr,
+    StringRes.lithuanian.tr,
   ];
   List filterLst = [];
   List clrs = List.generate(9, (index) => false);

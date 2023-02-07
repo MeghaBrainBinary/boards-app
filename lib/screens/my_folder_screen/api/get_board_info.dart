@@ -27,7 +27,7 @@ class GetBoardInfoApi {
         bool? status = jsonDecode(response.body)["success"];
         if (status == false) {
           Get.snackbar(
-            StringRes.error,
+            StringRes.error.tr,
             jsonDecode(response.body)["message"],
             duration: const Duration(seconds: 3),
             colorText: ColorRes.white,
@@ -35,7 +35,7 @@ class GetBoardInfoApi {
           );
         } else if (status == true) {
           Get.snackbar(
-            StringRes.error,
+            StringRes.error.tr,
             jsonDecode(response.body)["message"],
             duration: const Duration(seconds: 3),
             colorText: ColorRes.white,
@@ -48,7 +48,7 @@ class GetBoardInfoApi {
           //  } else {}
         } else if (response!.statusCode == 500) {
           Get.snackbar(
-            StringRes.error,
+            StringRes.error.tr,
             jsonDecode(response.body)["message"],
             duration: const Duration(seconds: 3),
             colorText: ColorRes.white,
@@ -57,7 +57,7 @@ class GetBoardInfoApi {
         }
         else {
           Get.snackbar(
-            StringRes.error,
+            StringRes.error.tr,
             jsonDecode(response.body)["message"],
             duration: const Duration(seconds: 3),
             colorText: ColorRes.white,
