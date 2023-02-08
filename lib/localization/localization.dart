@@ -5,17 +5,22 @@ import 'package:boards_app/screens/boards_screen/boards_controller.dart';
 import 'package:boards_app/screens/language_screen/language_controller.dart';
 import 'package:boards_app/screens/language_screen2/language2_controller.dart';
 import 'package:boards_app/screens/my_folder_screen/my_folder_controller.dart';
+import 'package:boards_app/services/pref_services.dart';
+import 'package:boards_app/utils/prefkeys.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import 'English/English.dart';
 
 class LocalizationService extends Translations {
-  static const locale = Locale('en', 'EN');
+  static  var locale =
+  (PrefService.getString(PrefKeys.code)== "")?Locale('en', 'EN')
+      :
+  Locale(PrefService.getString(PrefKeys.code),PrefService.getString(PrefKeys.code).toUpperCase());
 
   static const fallbackLocale = Locale('tr', 'TR');
 
-  static final language = ["Latvian".tr, "English".tr, "Estonian".tr, "Lithuanian".tr];
+  static final language = ["Latvian", "English", "Estonian", "Lithuanian"];
 
   static final locales = [
     const Locale('lv', 'LV'),

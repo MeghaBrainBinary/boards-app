@@ -77,6 +77,10 @@ List filterList =[];
 loader.value = true;
 
     PrefService.setValue(PrefKeys.language, selectedLanguage);
+    PrefService.setValue(PrefKeys.code, languageCode);
+
+    PrefService.setValue(PrefKeys.languageCode, languageCode);
+
     LocalizationService().changeLocale(selectedLanguage);
 
     //getBoardModel =await GetBoardApi.getBoardApi(languageCode);
@@ -86,7 +90,7 @@ loader.value = true;
     loader.value = false;
 
 BoardsController boardsController  = Get.put(BoardsController());
-boardsController.init(languageCode);
+ await boardsController.init(languageCode);
     Get.offAndToNamed(AppRoutes.boardsPage,arguments: languageCode);
   }
 

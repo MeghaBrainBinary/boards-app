@@ -6,6 +6,7 @@ import 'package:boards_app/screens/my_folder_screen/my_folder_screen.dart';
 import 'package:boards_app/screens/splash_screen.dart';
 import 'package:boards_app/services/pref_services.dart';
 import 'package:boards_app/utils/approutes.dart';
+import 'package:boards_app/utils/prefkeys.dart';
 import 'package:flutter/services.dart';
 // ignore: depend_on_referenced_packages
 import 'package:get/get.dart';
@@ -14,7 +15,7 @@ import 'package:flutter/material.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
-  PrefService.init();
+ await PrefService.init();
   // WidgetsBinding.instance.addObserver(Handler());
   // await Firebase.initializeApp();
   // await PrefService.init();
@@ -39,7 +40,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-        locale: LocalizationService.locale,
+        locale: (PrefService.getString(PrefKeys.code) ==" ")?Locale("en,EN"):
+        LocalizationService.locale,
         fallbackLocale: LocalizationService.fallbackLocale,
         translations: LocalizationService(),
         debugShowCheckedModeBanner: false,
@@ -55,7 +57,7 @@ class MyApp extends StatelessWidget {
               name: AppRoutes.languageConfirmPage,
               page: () => LanguageScreen22()),
         ],
-        home: SplashScreen()
+        home:const SplashScreen()
         //  (PrefService.getBool(PrefKeys.isLogin))
         //     ? HomeScreen()
         //     : SignInScreen(),

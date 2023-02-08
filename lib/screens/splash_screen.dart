@@ -23,7 +23,6 @@ class _SplashScreenState extends State<SplashScreen> {
 
       if(PrefService.getBool(PrefKeys.isLanguage)==false) {
         Get.offAndToNamed(AppRoutes.languagePage);
-        PrefService.setValue(PrefKeys.isLanguage, true);
      }
      else
        {

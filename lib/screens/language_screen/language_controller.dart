@@ -76,6 +76,7 @@ if(selectedLanguage == "Lithuanian")
 loader.value =true;
 
 PrefService.setValue(PrefKeys.language, selectedLanguage);
+PrefService.setValue(PrefKeys.code, languageCode);
   LocalizationService().changeLocale(selectedLanguage);
 
  PrefService.setValue(PrefKeys.languageCode, languageCode);
@@ -83,6 +84,7 @@ PrefService.setValue(PrefKeys.language, selectedLanguage);
 
 //getBoardModel =await GetBoardApi.getBoardApi(languageCode);
 loader.value = false;
+    PrefService.setValue(PrefKeys.isLanguage, true);
 
     Get.offAndToNamed(AppRoutes.boardsPage,arguments: languageCode);
   }
