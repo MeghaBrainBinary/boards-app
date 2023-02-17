@@ -35,7 +35,7 @@ class GetBoardInfoApi {
           );
         } else if (status == true) {
           Get.snackbar(
-            StringRes.error.tr,
+            StringRes.success.tr,
             jsonDecode(response.body)["message"],
             duration: const Duration(seconds: 3),
             colorText: ColorRes.white,
