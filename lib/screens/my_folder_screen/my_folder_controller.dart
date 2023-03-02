@@ -166,8 +166,8 @@ onTapBack(){
 
         await WcFlutterShare.share(
             sharePopupTitle: 'share',
-            fileName: "share.${selectedImage!.split(".").last}",
-            mimeType: 'image/${selectedImage!.split(".").last ??
+            fileName: "share.${selectedImage?.split(".").last ?? getBoardInfoModel.data![0].image.toString().split(".").last}",
+            mimeType: 'image/${selectedImage?.split(".").last ??
                 getBoardInfoModel.data![0].image
                     .toString()
                     .split(".")
