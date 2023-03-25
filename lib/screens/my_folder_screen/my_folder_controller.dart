@@ -90,6 +90,8 @@ onTapBack(){
 
     selectedImage = getBoardInfoModel.data![i].image.toString();
 
+    print(selectedImage);
+
       }
   }
 

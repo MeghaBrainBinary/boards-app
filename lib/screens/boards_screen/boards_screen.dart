@@ -10,6 +10,7 @@ import 'package:boards_app/utils/asset_res.dart';
 import 'package:boards_app/utils/color_res.dart';
 import 'package:boards_app/utils/prefkeys.dart';
 import 'package:boards_app/utils/string_res.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -145,9 +146,15 @@ class BoardsScreen extends StatelessWidget {
                                               SizedBox(
                                                 height: 30,
                                                 width: 30,
-                                                child: Image.network(
-                                                  boardsController.getBoardModel.data![index].icon!,
+                                                child: CachedNetworkImage(
+                                                  imageUrl: boardsController.getBoardModel.data![index].icon!.toString(),
+
+                                                  placeholder: (context, url) => Container(),
+                                                  errorWidget: (context, url, error) => Container(),
                                                 ),
+                                                // child: Image.network(
+                                                //   boardsController.getBoardModel.data![index].icon!,
+                                                // ),
                                               ),
                                               SizedBox(
                                                 width: Get.width * 0.06,
