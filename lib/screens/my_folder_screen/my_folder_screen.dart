@@ -257,7 +257,7 @@ class _MyFolderScreenState extends State<MyFolderScreen> {
                                       gridDelegate:
                                           const SliverGridDelegateWithFixedCrossAxisCount(
                                               crossAxisCount: 2,
-                                              mainAxisSpacing: 0,
+                                              mainAxisSpacing: 6,
                                               crossAxisSpacing: 19),
                                       itemBuilder: (context, index) {
                                         return Stack(
