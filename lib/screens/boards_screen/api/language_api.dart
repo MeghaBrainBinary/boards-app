@@ -25,42 +25,42 @@ class GetBoardApi {
       if (response != null && response.statusCode == 200) {
         bool? status = jsonDecode(response.body)["success"];
         if (status == false) {
-          Get.snackbar(
-            StringRes.error.tr,
-            jsonDecode(response.body)["message"],
-            duration: const Duration(seconds: 3),
-            colorText: ColorRes.white,
-            backgroundColor: Colors.red,
-          );
+          // Get.snackbar(
+          //   StringRes.error.tr,
+          //   jsonDecode(response.body)["message"],
+          //   duration: const Duration(seconds: 3),
+          //   colorText: ColorRes.white,
+          //   backgroundColor: Colors.red,
+          // );
         } else if (status == true) {
-          Get.snackbar(
-            StringRes.success.tr,
-            jsonDecode(response.body)["message"],
-            duration: const Duration(seconds: 3),
-            colorText: ColorRes.white,
-            backgroundColor: Colors.green,
-          );
+          // Get.snackbar(
+          //   StringRes.success.tr,
+          //   jsonDecode(response.body)["message"],
+          //   duration: const Duration(seconds: 3),
+          //   colorText: ColorRes.white,
+          //   backgroundColor: Colors.green,
+          // );
           return getBoardModelFromJson(response.body);
 
 
           //  } else {}
         } else if (response!.statusCode == 500) {
-          Get.snackbar(
-            StringRes.error.tr,
-            jsonDecode(response.body)["message"],
-            duration: const Duration(seconds: 3),
-            colorText: ColorRes.white,
-            backgroundColor: Colors.red,
-          );
+          // Get.snackbar(
+          //   StringRes.error.tr,
+          //   jsonDecode(response.body)["message"],
+          //   duration: const Duration(seconds: 3),
+          //   colorText: ColorRes.white,
+          //   backgroundColor: Colors.red,
+          // );
         }
         else {
-          Get.snackbar(
-            StringRes.error.tr,
-            jsonDecode(response.body)["message"],
-            duration: const Duration(seconds: 3),
-            colorText: ColorRes.white,
-            backgroundColor: Colors.red,
-          );
+          // Get.snackbar(
+          //   StringRes.error.tr,
+          //   jsonDecode(response.body)["message"],
+          //   duration: const Duration(seconds: 3),
+          //   colorText: ColorRes.white,
+          //   backgroundColor: Colors.red,
+          // );
         }
       }
     } catch (e) {

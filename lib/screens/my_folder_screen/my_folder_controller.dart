@@ -140,12 +140,12 @@ onTapBack(){
       // });
       // loader.value = false;
 
-      Get.snackbar(
-        "Success",
-        "Images Downloaded Successfully",
-        backgroundColor: Colors.green,
-        colorText: ColorRes.white,
-      );
+      // Get.snackbar(
+      //   "Success",
+      //   "Images Downloaded Successfully",
+      //   backgroundColor: Colors.green,
+      //   colorText: ColorRes.white,
+      // );
       checkImg =
           List.generate(getBoardInfoModel.data?.length ?? 0, (index) => false);
       selectedImg = false;
