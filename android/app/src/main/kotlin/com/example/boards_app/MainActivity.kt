@@ -1,4 +1,4 @@
-package com.example.boards_app
+package com.app.boardapp
 
 import io.flutter.embedding.android.FlutterActivity
 
