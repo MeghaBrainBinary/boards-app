@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.app.boardapp">
+    package="com.filuet">
 
     <uses-permission android:name="android.permission.INTERNET"/>
     

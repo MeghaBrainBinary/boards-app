@@ -1,4 +1,4 @@
-package com.app.boardapp
+package com.filuet
 
 import io.flutter.embedding.android.FlutterActivity
 
