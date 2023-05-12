@@ -3,4 +3,6 @@ class PrefKeys{
   static const isLanguage ="isLanguage";
   static const languageCode ="languageCode";
   static const code ="code";
+
+  static const fcmToken = "fcmToken";
 }
