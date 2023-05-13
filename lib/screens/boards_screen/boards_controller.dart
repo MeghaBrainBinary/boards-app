@@ -2,6 +2,7 @@ import 'package:boards_app/localization/localization.dart';
 import 'package:boards_app/screens/boards_screen/api/language_api.dart';
 import 'package:boards_app/screens/boards_screen/model/get_board_model.dart';
 import 'package:boards_app/screens/my_folder_screen/my_folder_controller.dart';
+import 'package:boards_app/screens/my_folder_screen/my_folder_screen.dart';
 import 'package:boards_app/services/pref_services.dart';
 import 'package:boards_app/utils/approutes.dart';
 import 'package:boards_app/utils/asset_res.dart';
@@ -81,12 +82,14 @@ void onInit() {
     update(['all']);
   }
 
-  onTapFolder(String id, {String? subBoardId}) {
+  onTapFolder(String id, String name, {String? subBoardId, String? subName}) {
     //isIcons = List.generate(6, (index) => false);
     isIcon = false;
     isMyfolder = false;
     update(['board']);
+
     MyFolderController myFolderController = Get.put(MyFolderController());
+
     if(subBoardId == null){
       myFolderController.int(id);
     } else{
@@ -95,7 +98,13 @@ void onInit() {
 
     myFolderController.isMore = false;
 
-    Get.toNamed(AppRoutes.myFolderPage);
+    if(subBoardId == null){
+      //Get.toNamed(AppRoutes.myFolderPage, arguments: name);
+      Get.to(()=>MyFolderScreen(boardName: name,));
+    }else{
+      //Get.toNamed(AppRoutes.myFolderPage, arguments: subName);
+      Get.to(()=>MyFolderScreen(boardName: subName,));
+    }
   }
 
 

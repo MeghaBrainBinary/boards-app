@@ -1,4 +1,5 @@
 import 'package:boards_app/common/common_loader.dart';
+import 'package:boards_app/screens/boards_screen/model/get_board_model.dart';
 import 'package:boards_app/screens/my_folder_screen/my_folder_controller.dart';
 import 'package:boards_app/utils/approutes.dart';
 import 'package:boards_app/utils/appstyle.dart';
@@ -13,7 +14,8 @@ import 'package:get/get.dart';
 import 'package:video_player/video_player.dart';
 
 class MyFolderScreen extends StatefulWidget {
-  MyFolderScreen({super.key});
+  String? boardName;
+  MyFolderScreen({super.key, this.boardName});
 
   @override
   State<MyFolderScreen> createState() => _MyFolderScreenState();
@@ -24,6 +26,9 @@ class _MyFolderScreenState extends State<MyFolderScreen> {
 
   late VideoPlayerController videoPlayerController;
   ChewieController? chewieController;
+
+
+
 
 /*   @override
   void initState() {
@@ -66,7 +71,9 @@ class _MyFolderScreenState extends State<MyFolderScreen> {
   }
  */
   @override
+
   Widget build(BuildContext context) {
+
     return WillPopScope(
       onWillPop: ()async{
         if(myFolderController.isPageView){
@@ -95,7 +102,7 @@ class _MyFolderScreenState extends State<MyFolderScreen> {
                     children: [
                       Column(
                         children: [
-                          appBar(),
+                          appBar(boardName: widget.boardName),
                           SizedBox(
                             height: Get.height * 0.05,
                           ),
@@ -552,8 +559,9 @@ class _MyFolderScreenState extends State<MyFolderScreen> {
   }
 }
 
-appBar() {
+appBar({String? boardName}) {
   MyFolderController myFolderController = Get.put(MyFolderController());
+  GetBoardModel getBoardModel = GetBoardModel();
 
   return Container(
     alignment: Alignment.bottomCenter,
@@ -596,7 +604,7 @@ appBar() {
                 width: 15,
               ),
               Text(
-                StringRes.myFolder.tr,
+                boardName ?? "My folder",
                 style: appTextStyle(
                     fontSize: 24,
                     weight: FontWeight.w400,

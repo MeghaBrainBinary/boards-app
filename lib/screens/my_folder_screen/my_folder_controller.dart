@@ -23,6 +23,8 @@ class MyFolderController extends GetxController {
   bool isPageView = false;
     String? selectedImage;
 
+    var args = Get.arguments;
+
   int(String id, {String? subBoardId})async{
     loader.value = true;
     if(subBoardId == null){
@@ -35,6 +37,7 @@ class MyFolderController extends GetxController {
 
 
    checkImg = List.generate(getBoardInfoModel.data?.length ??0, (index) => false);
+
   update(['fldr']);
   }
   List<String> simg = [];

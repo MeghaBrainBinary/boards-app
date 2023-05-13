@@ -139,7 +139,15 @@ class BoardsScreen extends StatelessWidget {
                                                         .data![
                                                     index]
                                                         .id
-                                                        .toString());
+                                                        .toString(),
+                                                    controller
+                                                        .getBoardModel
+                                                        .data![
+                                                    index]
+                                                        .name
+                                                        .toString()
+
+                                                );
                                               },
                                               child: Column(
                                                 children: [
@@ -235,11 +243,19 @@ class BoardsScreen extends StatelessWidget {
                                                               controller
                                                                   .getBoardModel
                                                                   .data![index].id.toString(),
+                                                              controller
+                                                                  .getBoardModel
+                                                                  .data![index].name.toString(),
                                                              subBoardId: controller
                                                                  .getBoardModel
                                                                  .data![index]
                                                                  .subBoard![i].id
                                                                  .toString(),
+                                                            subName: controller
+                                                                .getBoardModel
+                                                                .data![index]
+                                                                .subBoard![i].name
+                                                                .toString(),
                                                           );
 
 
