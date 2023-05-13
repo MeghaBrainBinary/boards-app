@@ -19,17 +19,10 @@ import 'package:flutter/material.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-
+  await NotificationService.init();
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
-
   await PrefService.init();
 
-
-  // WidgetsBinding.instance.addObserver(Handler());
-  // await Firebase.initializeApp();
-  // await PrefService.init();
-
-   NotificationService.init();
 
   try {
     await FirebaseMessaging.instance.getToken().then((value) {

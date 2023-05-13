@@ -6,12 +6,13 @@ import 'package:get/get.dart';
 
 class NotificationService {
   static Future<void> init() async {
-    await FirebaseMessaging.instance
-        .setForegroundNotificationPresentationOptions(
+    await FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(
       alert: true,
       badge: true,
       sound: true,
     );
+
+ await FirebaseMessaging.instance.getNotificationSettings();
 
     const AndroidNotificationChannel channel = AndroidNotificationChannel(
       'high_importance_channel', // id
@@ -19,13 +20,14 @@ class NotificationService {
       importance: Importance.max,
     );
 
-    final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
-        FlutterLocalNotificationsPlugin();
+    final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
 
     await flutterLocalNotificationsPlugin
         .resolvePlatformSpecificImplementation<
             AndroidFlutterLocalNotificationsPlugin>()
         ?.createNotificationChannel(channel);
+
+    FirebaseMessaging.onMessageOpenedApp;
 
     FirebaseMessaging.onMessage.listen((RemoteMessage? message) {
       RemoteNotification? notification = message?.notification;
@@ -36,6 +38,7 @@ class NotificationService {
       if (notification != null && android != null) {
         Map<String, dynamic> payload = message!.data;
         flutterLocalNotificationsPlugin.show(
+
           notification.hashCode,
           notification.title,
           notification.body,
@@ -58,6 +61,7 @@ class NotificationService {
       }
     });
 
+
     FirebaseMessaging.instance
         .getInitialMessage()
         .then((RemoteMessage? message) async {
@@ -66,18 +70,41 @@ class NotificationService {
       }
     });
 
-    FirebaseMessaging.instance.requestPermission();
+    FirebaseMessaging.instance.requestPermission(
+        provisional: true,
+    );
+
+    FirebaseMessaging.instance
+        .getInitialMessage()
+        .then((RemoteMessage? message) async {
+      if (message != null) {
+        Future.delayed(5.seconds, () {
+
+        });
+      }
+    });
 
 
     FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
 
+
+
     const AndroidInitializationSettings initializationSettingsAndroid =
-        AndroidInitializationSettings('@mipmap/ic_launcher');
-    const DarwinInitializationSettings initializationSettingsIOS = DarwinInitializationSettings();
+    AndroidInitializationSettings('@mipmap/ic_launcher');
+    const DarwinInitializationSettings initializationSettingsIOS =
+    DarwinInitializationSettings(
+        onDidReceiveLocalNotification: onDidReceiveLocalNotification);
     const InitializationSettings initializationSettings =
-        InitializationSettings(
-            android: initializationSettingsAndroid,
-            iOS: initializationSettingsIOS);
+    InitializationSettings(
+        android: initializationSettingsAndroid,
+        iOS: initializationSettingsIOS);
+
+
+    flutterLocalNotificationsPlugin.initialize(
+        initializationSettings,
+
+       );
+
 
 
   }
