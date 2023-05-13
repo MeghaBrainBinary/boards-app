@@ -4,4 +4,5 @@ class ApiEndPoints{
 
   static const String getBoards ="$baseUrl/getBoards";
   static const String getBoardsInfo ="$baseUrl/getBoardInfo";
+  static const String addDeviceToken = "$baseUrl/add-devicetoken";
 }

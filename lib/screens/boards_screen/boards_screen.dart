@@ -133,17 +133,13 @@ class BoardsScreen extends StatelessWidget {
                                                 bottom: Get.height * 0.03),
                                             child: InkWell(
                                               onTap: () {
-                                                if(controller.getBoardModel.data![index].subBoard!.isEmpty){
-                                                  controller.onTapFolder(
-                                                      id: controller
-                                                          .getBoardModel
-                                                          .data![
-                                                      index]
-                                                          .id
-                                                          .toString());
-                                                } else{
-                                                  controller.onTapIcon(true, index);
-                                                }
+                                                controller.onTapFolder(
+                                                     controller
+                                                        .getBoardModel
+                                                        .data![
+                                                    index]
+                                                        .id
+                                                        .toString());
                                               },
                                               child: Column(
                                                 children: [
@@ -158,34 +154,18 @@ class BoardsScreen extends StatelessWidget {
                                                             ? SizedBox()
                                                             : InkWell(
                                                                 onTap: () {
-                                                                  if(controller.getBoardModel.data![index].subBoard!.isEmpty){
-                                                                    controller.onTapFolder(
-                                                                        id: controller
-                                                                            .getBoardModel
-                                                                            .data![
-                                                                        index]
-                                                                            .id
-                                                                            .toString());
-                                                                  } else{
-                                                                    controller.onTapIcon(true, index);
-                                                                  }
-
+                                                                  controller.onTapIcon(true, index);
                                                                 },
-                                                                child: (controller.isIcons[
-                                                                            index] ==
-                                                                        true)
+                                                                child: (controller.isIcons[index] == true)
                                                                     ? Transform.rotate(
                                                                         angle:
-                                                                            pi /
-                                                                                2,
-                                                                        child: icons[
-                                                                            index])
+                                                                            pi / 2,
+                                                                        child: icons[index])
                                                                     : icons[
                                                                         index],
                                                               ),
                                                         SizedBox(
-                                                          width:
-                                                              Get.width * 0.03,
+                                                          width: Get.width * 0.03,
                                                         ),
                                                         SizedBox(
                                                           height: 30,
@@ -252,12 +232,17 @@ class BoardsScreen extends StatelessWidget {
                                                             0.1)),
                                                         onTap: () {
                                                           controller.onTapFolder(
-                                                              id: controller
+                                                              controller
                                                                   .getBoardModel
-                                                                  .data![
-                                                              index]
-                                                                  .id
-                                                                  .toString());
+                                                                  .data![index].id.toString(),
+                                                             subBoardId: controller
+                                                                 .getBoardModel
+                                                                 .data![index]
+                                                                 .subBoard![i].id
+                                                                 .toString(),
+                                                          );
+
+
                                                         },
                                                         child: Container(
                                                           height: Get.height *

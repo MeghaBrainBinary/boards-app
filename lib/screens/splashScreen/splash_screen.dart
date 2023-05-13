@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:boards_app/screens/splashScreen/splash_screen_controller.dart';
 import 'package:boards_app/services/pref_services.dart';
 import 'package:boards_app/utils/approutes.dart';
 import 'package:boards_app/utils/asset_res.dart';
@@ -15,9 +16,14 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
+
+  SplashScreenController splashScreenController = Get.put(SplashScreenController());
+
   @override
   void initState() {
     super.initState();
+
+    splashScreenController.addDeviceTokenApi();
 
     Timer(const Duration(seconds: 3), () {
 

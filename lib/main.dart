@@ -3,7 +3,7 @@ import 'package:boards_app/screens/language_screen2/languagescreen2.dart';
 import 'package:boards_app/screens/boards_screen/boards_screen.dart';
 import 'package:boards_app/screens/language_screen/language_screen.dart';
 import 'package:boards_app/screens/my_folder_screen/my_folder_screen.dart';
-import 'package:boards_app/screens/splash_screen.dart';
+import 'package:boards_app/screens/splashScreen/splash_screen.dart';
 import 'package:boards_app/services/notification_service.dart';
 import 'package:boards_app/services/pref_services.dart';
 import 'package:boards_app/utils/approutes.dart';

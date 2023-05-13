@@ -81,13 +81,18 @@ void onInit() {
     update(['all']);
   }
 
-  onTapFolder({required String id}) {
+  onTapFolder(String id, {String? subBoardId}) {
     //isIcons = List.generate(6, (index) => false);
     isIcon = false;
     isMyfolder = false;
     update(['board']);
     MyFolderController myFolderController = Get.put(MyFolderController());
-    myFolderController.int(id);
+    if(subBoardId == null){
+      myFolderController.int(id);
+    } else{
+      myFolderController.int(id, subBoardId: subBoardId);
+    }
+
     myFolderController.isMore = false;
 
     Get.toNamed(AppRoutes.myFolderPage);

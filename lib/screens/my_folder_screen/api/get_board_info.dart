@@ -11,11 +11,12 @@ import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 
 class GetBoardInfoApi {
-  static Future getBoardInfoApi(String id) async {
+  static Future getBoardInfoApi(String id, {String? subBoardId}) async {
     try {
       String url = ApiEndPoints.getBoardsInfo;
       Map<String, String> param = {
         'board_id': id,
+        'sub_board_id': subBoardId ?? ""
       };
 
       http.Response? response = await HttpService.postApi(

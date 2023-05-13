@@ -23,9 +23,14 @@ class MyFolderController extends GetxController {
   bool isPageView = false;
     String? selectedImage;
 
-  int(String id)async{
+  int(String id, {String? subBoardId})async{
     loader.value = true;
-    getBoardInfoModel = await GetBoardInfoApi.getBoardInfoApi(id);
+    if(subBoardId == null){
+      getBoardInfoModel = await GetBoardInfoApi.getBoardInfoApi(id);
+    }else{
+      getBoardInfoModel = await GetBoardInfoApi.getBoardInfoApi(id, subBoardId: subBoardId);
+    }
+
     loader.value = false;
 
 
