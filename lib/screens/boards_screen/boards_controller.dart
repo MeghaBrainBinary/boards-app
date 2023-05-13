@@ -13,11 +13,14 @@ class BoardsController extends GetxController {
   dynamic argumentData = Get.arguments;
 RxBool loader = false.obs;
 GetBoardModel getBoardModel = GetBoardModel();
-List isIcons = List.generate(6, (index) => false);
+  List isIcons = [];
+
 
 @override
 void onInit() {
   init(argumentData ?? PrefService.getString(PrefKeys.languageCode));
+
+   isIcons = List.generate(getBoardModel.data?.length ?? 6, (index) => false);
 
   super.onInit();
 }
@@ -79,7 +82,7 @@ void onInit() {
   }
 
   onTapFolder({required String id}) {
-    isIcons = List.generate(6, (index) => false);
+    //isIcons = List.generate(6, (index) => false);
     isIcon = false;
     isMyfolder = false;
     update(['board']);
