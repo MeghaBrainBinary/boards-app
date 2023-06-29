@@ -1,4 +1,6 @@
-
+// To parse this JSON data, do
+//
+//     final getBoardModel = getBoardModelFromJson(jsonString);
 
 import 'dart:convert';
 
@@ -8,72 +10,88 @@ String getBoardModelToJson(GetBoardModel data) => json.encode(data.toJson());
 
 class GetBoardModel {
   bool? success;
-  List<Board>? data;
+  List<Datum>? data;
   String? message;
 
   GetBoardModel({
-    this.success,
-    this.data,
-    this.message,
+     this.success,
+     this.data,
+     this.message,
   });
 
   factory GetBoardModel.fromJson(Map<String, dynamic> json) => GetBoardModel(
     success: json["success"],
-    data: json["data"] == null ? [] : List<Board>.from(json["data"]!.map((x) => Board.fromJson(x))),
+    data: List<Datum>.from(json["data"].map((x) => Datum.fromJson(x))),
     message: json["message"],
   );
 
   Map<String, dynamic> toJson() => {
     "success": success,
-    "data": data == null ? [] : List<dynamic>.from(data!.map((x) => x.toJson())),
+    "data": List<dynamic>.from(data!.map((x) => x.toJson())),
     "message": message,
   };
 }
 
-class Board {
+class Datum {
   int? id;
   String? name;
-  String? icon;
+  String? language;
   List<SubBoard>? subBoard;
 
-  Board({
-    this.id,
-    this.name,
-    this.icon,
-    this.subBoard,
+  Datum({
+     this.id,
+     this.name,
+     this.language,
+     this.subBoard,
   });
 
-  factory Board.fromJson(Map<String, dynamic> json) => Board(
+  factory Datum.fromJson(Map<String, dynamic> json) => Datum(
     id: json["id"],
     name: json["name"],
-    icon: json["icon"],
-    subBoard: json["sub_board"] == null ? [] : List<SubBoard>.from(json["sub_board"]!.map((x) => SubBoard.fromJson(x))),
+    language: json["language"],
+    subBoard: List<SubBoard>.from(json["sub_board"].map((x) => SubBoard.fromJson(x))),
   );
 
   Map<String, dynamic> toJson() => {
     "id": id,
     "name": name,
-    "icon": icon,
-    "sub_board": subBoard == null ? [] : List<dynamic>.from(subBoard!.map((x) => x.toJson())),
+    "language": language,
+    "sub_board": List<dynamic>.from(subBoard!.map((x) => x.toJson())),
   };
 }
 
 class SubBoard {
   int? id;
   String? name;
+  String? language;
+  String? parentId;
+  String? subParentId;
+  List<SubBoard>? subBoard;
 
   SubBoard({
-    this.id,
-    this.name,
+     this.id,
+     this.name,
+     this.language,
+     this.parentId,
+     this.subParentId,
+     this.subBoard,
   });
 
   factory SubBoard.fromJson(Map<String, dynamic> json) => SubBoard(
     id: json["id"],
     name: json["name"],
+    language: json["language"],
+    parentId: json["parent_id"],
+    subParentId: json["sub_parent_id"],
+    subBoard: List<SubBoard>.from(json["sub_board"].map((x) => SubBoard.fromJson(x))),
   );
 
   Map<String, dynamic> toJson() => {
     "id": id,
     "name": name,
+    "language": language,
+    "parent_id": parentId,
+    "sub_parent_id": subParentId,
+    "sub_board": List<dynamic>.from(subBoard!.map((x) => x.toJson())),
   };
 }

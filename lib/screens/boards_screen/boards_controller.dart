@@ -8,32 +8,50 @@ import 'package:boards_app/utils/approutes.dart';
 import 'package:boards_app/utils/asset_res.dart';
 import 'package:boards_app/utils/prefkeys.dart';
 import 'package:boards_app/utils/string_res.dart';
+import 'package:flutter_tree/flutter_tree.dart';
 import 'package:get/get.dart';
 
 class BoardsController extends GetxController {
   dynamic argumentData = Get.arguments;
 RxBool loader = false.obs;
-GetBoardModel getBoardModel = GetBoardModel();
+//GetBoardModel getBoardModel = GetBoardModel();
+  var getBoardModelData;
   List isIcons = [];
+  List serverData = [];
+  List<TreeNodeData> treeData = [];
 
-
-@override
+  @override
 void onInit() {
   init(argumentData ?? PrefService.getString(PrefKeys.languageCode));
 
-   isIcons = List.generate(getBoardModel.data?.length ?? 6, (index) => false);
+  // isIcons = List.generate(getBoardModel.data?.length ?? 6, (index) => false);
+  if(getBoardModelData != null){
+
+   isIcons = List.generate(getBoardModelData['data'].length ?? 0, (index) => false);
+  }
 
   super.onInit();
 }
 
   init(language)async{
     loader.value= true;
-    getBoardModel =await GetBoardApi.getBoardApi(language);
+   // getBoardModel =await GetBoardApi.getBoardApi(language);
+    getBoardModelData =await GetBoardApi.getBoardApi(language);
 
-    print(getBoardModel.data![0].name);
-    print(getBoardModel.data!.length);
 
-     isIcons = List.generate(getBoardModel.data?.length??0, (index) => false);
+    //print(getBoardModel.data![0].name);
+   // print(getBoardModel.data!.length);
+
+    // isIcons = List.generate(getBoardModel.data?.length??0, (index) => false);
+    if(getBoardModelData != null){
+
+      isIcons = List.generate(getBoardModelData['data'].length ?? 0, (index) => false);
+    }
+    serverData = getBoardModelData['data'];
+   treeData = List.generate(
+      serverData.length,
+          (index) => mapServerDataToTreeData(serverData[index]),
+    ).toList();
 
     loader.value= false;
 
@@ -107,6 +125,18 @@ void onInit() {
     }
   }
 
+  TreeNodeData mapServerDataToTreeData(Map data) {
+    return TreeNodeData(
+
+      title: data['name'],
+      expaned: false,
+      checked: true,
+      children:
+      List.from(data['sub_board'].map((x) => mapServerDataToTreeData(x))),
+    );
+  }
+
+  /// Generate tree data
 
 
 }

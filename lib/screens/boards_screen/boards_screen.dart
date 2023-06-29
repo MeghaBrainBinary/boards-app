@@ -12,6 +12,7 @@ import 'package:boards_app/utils/prefkeys.dart';
 import 'package:boards_app/utils/string_res.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_tree/flutter_tree.dart';
 import 'package:get/get.dart';
 
 class BoardsScreen extends StatelessWidget {
@@ -110,7 +111,7 @@ class BoardsScreen extends StatelessWidget {
                             ),
 
                             /// list
-                            GetBuilder<BoardsController>(
+                        /*    GetBuilder<BoardsController>(
                               id: 'board',
                               builder: (controller) => SizedBox(
                                 height: Get.height * 0.55,
@@ -158,7 +159,7 @@ class BoardsScreen extends StatelessWidget {
                                                             Get.width * 0.05),
                                                     child: Row(
                                                       children: [
-                                                        (controller.getBoardModel.data![index].subBoard!.isEmpty)
+                                                        (controller.getBoardModel.data![index].sub_board!.isEmpty || controller.getBoardModel.data![index].sub_board!.length == 0)
                                                             ? SizedBox()
                                                             : InkWell(
                                                                 onTap: () {
@@ -175,7 +176,8 @@ class BoardsScreen extends StatelessWidget {
                                                         SizedBox(
                                                           width: Get.width * 0.03,
                                                         ),
-                                                        SizedBox(
+                                                     */
+                            /*   SizedBox(
                                                           height: 30,
                                                           width: 30,
                                                           child:
@@ -199,7 +201,8 @@ class BoardsScreen extends StatelessWidget {
                                                           // child: Image.network(
                                                           //   boardsController.getBoardModel.data![index].icon!,
                                                           // ),
-                                                        ),
+                                                        ),*/
+                            /*
                                                         SizedBox(
                                                           width:
                                                               Get.width * 0.06,
@@ -220,10 +223,10 @@ class BoardsScreen extends StatelessWidget {
                                                       ],
                                                     ),
                                                   ),
-                                                  (controller.getBoardModel.data![index].subBoard!.isNotEmpty) ?
+                                                  (controller.getBoardModel.data![index].sub_board!.isNotEmpty) ?
                                                   (controller.isIcons[index] == true)
                                                       ? Column(
-                                                    children: List.generate(controller.getBoardModel.data![index].subBoard!.length, (i){
+                                                    children: List.generate(controller.getBoardModel.data![index].sub_board!.length, (i){
                                                       return InkWell(
                                                         focusColor: ColorRes
                                                             .color305EBE,
@@ -246,20 +249,21 @@ class BoardsScreen extends StatelessWidget {
                                                               controller
                                                                   .getBoardModel
                                                                   .data![index].name.toString(),
-                                                             subBoardId: controller
+                                                             sub_boardId: controller
                                                                  .getBoardModel
                                                                  .data![index]
-                                                                 .subBoard![i].id
+                                                                 .sub_board![i].id
                                                                  .toString(),
                                                             subName: controller
                                                                 .getBoardModel
                                                                 .data![index]
-                                                                .subBoard![i].name
+                                                                .sub_board![i].name
                                                                 .toString(),
                                                           );
 
 
                                                         },
+
                                                         child: Container(
                                                           height: Get.height *
                                                               0.055,
@@ -317,7 +321,7 @@ class BoardsScreen extends StatelessWidget {
                                                                     0.06,
                                                               ),
                                                               Text(
-                                                                controller.getBoardModel.data![index].subBoard![i].name.toString(),
+                                                                controller.getBoardModel.data![index].sub_board![i].name.toString(),
                                                                 style: appTextStyle(
                                                                     fontSize:
                                                                     14,
@@ -343,8 +347,33 @@ class BoardsScreen extends StatelessWidget {
                                         })
                                     : SizedBox(),
                               ),
-                            ),
+                            ),*/
 
+
+                            /// list dynamic
+                            // create structure of list of sublist of sublist of sublist
+                            (con.getBoardModelData != null)? GetBuilder<BoardsController>(
+                              id: 'board',
+                              builder: (controller) => SizedBox(
+                                height: Get.height * 0.55,
+                                width: Get.width,
+                                child: (controller.getBoardModelData['data'] != null)
+                                    ?TreeView(
+                                  icon: Icon(
+                                    Icons.arrow_right,
+                                    color: ColorRes.black,
+                                  ),
+
+                                  data: controller.treeData,
+                                  onTap: (node) {
+
+                                    print(node.title);
+
+                                  },
+                                )
+                                    : SizedBox(),
+                              ),
+                            ):SizedBox(),
                             /* GetBuilder<BoardsController>(
                         id: 'board',
                         builder: (controller) => SizedBox(
