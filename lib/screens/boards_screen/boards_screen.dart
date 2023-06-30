@@ -42,7 +42,7 @@ class BoardsScreen extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 SizedBox(
-                                  height: Get.height * 0.15,
+                                  height: 50,
                                 ),
 
                                 /// top
@@ -608,7 +608,7 @@ class BoardsScreen extends StatelessWidget {
                                   ),),
                                 ],
                               ),
-                              const SizedBox(height: 20,),
+                              const SizedBox(height: 40,),
                             ],
                           )
                         ],
