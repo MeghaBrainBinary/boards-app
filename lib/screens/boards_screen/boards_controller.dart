@@ -17,7 +17,7 @@ RxBool loader = false.obs;
 //GetBoardModel getBoardModel = GetBoardModel();
   var getBoardModelData;
   List isIcons = [];
-  List serverData = [];
+  final serverData = [];
   List<TreeNodeData> treeData = [];
 
   @override
@@ -47,7 +47,21 @@ void onInit() {
 
       isIcons = List.generate(getBoardModelData['data'].length ?? 0, (index) => false);
     }
-    serverData = getBoardModelData['data'];
+   // serverData = getBoardModelData['data'];
+
+
+    getBoardModelData['data'].forEach((element) {
+      serverData.add({
+        "id": element['id'],
+        "name": element['name'],
+        "parent_id": "0",
+        "sub_parent_id":"0",
+        "language": element['language'],
+        "sub_board": element['sub_board'],
+      });
+    });
+
+
    treeData = List.generate(
       serverData.length,
           (index) => mapServerDataToTreeData(serverData[index]),
@@ -56,6 +70,7 @@ void onInit() {
     loader.value= false;
 
     update(['board']);
+    update(['all']);
 
   }
   // List boards = [
@@ -127,9 +142,13 @@ void onInit() {
 
   TreeNodeData mapServerDataToTreeData(Map data) {
     return TreeNodeData(
-
+parent_id: data['parent_id'],
+      sub_parent_id:  data['sub_parent_id'],
+      id: data['id'],
+      language: data['language'],
+      name: data['name'],
       title: data['name'],
-      expaned: false,
+      expanded: false,
       checked: true,
       children:
       List.from(data['sub_board'].map((x) => mapServerDataToTreeData(x))),

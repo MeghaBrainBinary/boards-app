@@ -14,6 +14,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_tree/flutter_tree.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class BoardsScreen extends StatelessWidget {
   BoardsScreen({super.key});
@@ -93,7 +94,7 @@ class BoardsScreen extends StatelessWidget {
                             ),
 
                             /// my boards
-                            Padding(
+                         /*   Padding(
                               padding: EdgeInsets.only(
                                   left: Get.width * 0.05,
                                   right: Get.width * 0.05),
@@ -109,9 +110,9 @@ class BoardsScreen extends StatelessWidget {
                                 ],
                               ),
                             ),
-
+*/
                             /// list
-                        /*    GetBuilder<BoardsController>(
+                            /*    GetBuilder<BoardsController>(
                               id: 'board',
                               builder: (controller) => SizedBox(
                                 height: Get.height * 0.55,
@@ -349,31 +350,49 @@ class BoardsScreen extends StatelessWidget {
                               ),
                             ),*/
 
-
                             /// list dynamic
                             // create structure of list of sublist of sublist of sublist
-                            (con.getBoardModelData != null)? GetBuilder<BoardsController>(
-                              id: 'board',
-                              builder: (controller) => SizedBox(
-                                height: Get.height * 0.55,
-                                width: Get.width,
-                                child: (controller.getBoardModelData['data'] != null)
-                                    ?TreeView(
-                                  icon: Icon(
-                                    Icons.arrow_right,
-                                    color: ColorRes.black,
-                                  ),
-
-                                  data: controller.treeData,
-                                  onTap: (node) {
-
-                                    print(node.title);
-
-                                  },
-                                )
-                                    : SizedBox(),
-                              ),
-                            ):SizedBox(),
+                            (con.getBoardModelData != null)
+                                ? GetBuilder<BoardsController>(
+                                    id: 'board',
+                                    builder: (controller) => SizedBox(
+                                      height: Get.height * 0.55,
+                                      width: Get.width,
+                                      child: (controller
+                                                  .getBoardModelData['data'] !=
+                                              null)
+                                          ? TreeView(
+                                              leftIcon: Icon(
+                                                Icons.arrow_right,
+                                                color: ColorRes.black,
+                                              ),
+                                              icon: Icon(
+                                                Icons.arrow_right,
+                                                color: ColorRes.black,
+                                              ),
+                                              textStyle: GoogleFonts.inter(
+                                                color: Colors.black,
+                                                fontSize: 17,
+                                                fontWeight: FontWeight.w500,
+                                              ),
+                                              data: controller.treeData,
+                                              onTap: (node) {
+                                                print(node.id);
+                                              },
+                                              onLastTap: (node) {
+                                                print(node.name);
+                                                controller.onTapFolder(
+                                                    node.sub_parent_id
+                                                        .toString(),
+                                                    node.name,
+                                                    subBoardId:
+                                                        node.id.toString(),
+                                                    subName: node.name);
+                                              })
+                                          : SizedBox(),
+                                    ),
+                                  )
+                                : SizedBox(),
                             /* GetBuilder<BoardsController>(
                         id: 'board',
                         builder: (controller) => SizedBox(
@@ -513,11 +532,7 @@ class BoardsScreen extends StatelessWidget {
                               :SizedBox(),
                         ),
                       ),*/
-
                           ]),
-
-
-
                       (boardsController.isMore == true)
                           ? Stack(
                               children: [

@@ -40,7 +40,8 @@ class GetBoardApi {
           //   colorText: ColorRes.white,
           //   backgroundColor: Colors.green,
           // );
-          return getBoardModelFromJson(response.body);
+          return jsonDecode(response.body);
+          //return getBoardModelFromJson(response.body);
 
 
           //  } else {}
