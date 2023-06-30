@@ -22,5 +22,7 @@ const Map<String, String> Latvian = {
   "Lithuanian": "lietuviešu",
   "Error":"Kļūda",
   "success":"Panākumi",
-  "Select":"Izvēlieties"
+  "Select":"Izvēlieties",
+  "Designed by":"Izstrādājis",
+  "filuet":"filuet",
 };

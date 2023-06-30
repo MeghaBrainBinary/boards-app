@@ -50,16 +50,43 @@ void onInit() {
    // serverData = getBoardModelData['data'];
 
 
+      DateTime maxDate = DateTime.parse(getBoardModelData['data'][0]['created_at']);
+
     getBoardModelData['data'].forEach((element) {
-      serverData.add({
-        "id": element['id'],
-        "name": element['name'],
-        "parent_id": "0",
-        "sub_parent_id":"0",
-        "language": element['language'],
-        "sub_board": element['sub_board'],
-      });
+      if(DateTime.parse(getBoardModelData['data'][0]['created_at']).isAfter(maxDate)){
+        maxDate=DateTime.parse(getBoardModelData['data'][0]['created_at']);
+      }
     });
+
+    getBoardModelData['data'].forEach((element) {
+
+      if(DateTime.parse(element['created_at']) == maxDate) {
+        serverData.add({
+          "id": element['id'],
+          "name": element['name'],
+          "parent_id": "0",
+          "sub_parent_id": "0",
+          "isTop": true,
+          "created_at": element['created_at'],
+          "language": element['language'],
+          "sub_board": element['sub_board'],
+        });
+      }
+      else
+        {
+          serverData.add({
+            "id": element['id'],
+            "name": element['name'],
+            "parent_id": "0",
+            "sub_parent_id": "0",
+            "isTop": false,
+            "created_at": element['created_at'],
+            "language": element['language'],
+            "sub_board": element['sub_board'],
+          });
+        }
+    });
+
 
 
    treeData = List.generate(
@@ -115,7 +142,7 @@ void onInit() {
     update(['all']);
   }
 
-  onTapFolder(String id, String name, {String? subBoardId, String? subName}) {
+  onTapFolder(String id, String name, {String? subBoardId, String? subName}) async{
     //isIcons = List.generate(6, (index) => false);
     isIcon = false;
     isMyfolder = false;
@@ -124,13 +151,14 @@ void onInit() {
     MyFolderController myFolderController = Get.put(MyFolderController());
 
     if(subBoardId == null){
-      myFolderController.int(id);
+      await myFolderController.int(id);
     } else{
-      myFolderController.int(id, subBoardId: subBoardId);
+      await myFolderController.int(id, subBoardId: subBoardId);
     }
 
     myFolderController.isMore = false;
 
+    if(myFolderController.getBoardInfoModel.data != null && myFolderController.getBoardInfoModel.data!.length != 0 ){
     if(subBoardId == null){
       //Get.toNamed(AppRoutes.myFolderPage, arguments: name);
       Get.to(()=>MyFolderScreen(boardName: name,));
@@ -138,21 +166,43 @@ void onInit() {
       //Get.toNamed(AppRoutes.myFolderPage, arguments: subName);
       Get.to(()=>MyFolderScreen(boardName: subName,));
     }
+    }
   }
 
-  TreeNodeData mapServerDataToTreeData(Map data) {
-    return TreeNodeData(
-parent_id: data['parent_id'],
-      sub_parent_id:  data['sub_parent_id'],
-      id: data['id'],
-      language: data['language'],
-      name: data['name'],
-      title: data['name'],
-      expanded: false,
-      checked: true,
-      children:
-      List.from(data['sub_board'].map((x) => mapServerDataToTreeData(x))),
-    );
+  TreeNodeData mapServerDataToTreeData(Map data,{bool? isChild}){
+
+    if(isChild == null){
+      isChild = false;
+    }
+    if(isChild == false) {
+      return TreeNodeData(
+        parent_id: data['parent_id'],
+        sub_parent_id: data['sub_parent_id'],
+        id: data['id'],
+        language: data['language'],
+        name: data['name'],
+        title: data['name'],
+        isTop: data['isTop'],
+        expanded: false,
+        checked: true,
+        children: List.from(data['sub_board'].map((x) =>
+            mapServerDataToTreeData(x, isChild: true))),
+      );
+    }else{
+      return TreeNodeData(
+        parent_id: data['parent_id'],
+        sub_parent_id: data['sub_parent_id'],
+        id: data['id'],
+        language: data['language'],
+        name: data['name'],
+        title: data['name'],
+        isTop:false,
+        expanded: false,
+        checked: true,
+        children: List.from(data['sub_board'].map((x) =>
+            mapServerDataToTreeData(x, isChild: true))),
+      );
+    }
   }
 
   /// Generate tree data

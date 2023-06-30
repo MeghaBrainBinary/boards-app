@@ -20,5 +20,7 @@ const Map<String, String> Estonian = {
   "Lithuanian": "Leedu",
   "Error":"Viga",
   "Success":"Edu",
-  "Select":"Valige"
+  "Select":"Valige",
+  "Designed by":"Kujundanud",
+  "filuet":"filuet",
 };

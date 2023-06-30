@@ -20,5 +20,7 @@ const Map<String, String> English = {
   "Lithuanian": "Lithuanian",
   "Error":"Error",
   "Success":"Success",
-  "Select":"Select"
+  "Select":"Select",
+  "Designed by":"Designed by",
+  "filuet":"filuet",
 };

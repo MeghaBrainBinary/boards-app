@@ -30,5 +30,7 @@ class StringRes {
   static String error = "Error".tr;
   static String success = "Success".tr;
   static String select = "Select".tr;
+  static String inspire = "Designed by".tr;
+  static String filuet = "filuet".tr;
 
 }

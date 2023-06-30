@@ -19,6 +19,7 @@ class AssetRes {
   static String playIcon = "${icons}play_icon.png";
   static String shareIcon = "${icons}share_icon.png";
   static String langIcon = "${icons}lang_icon.png";
+  static String success = "${icons}success.png";
 
   ///________________________________ images ______________________________///
 
@@ -27,4 +28,5 @@ class AssetRes {
   static String folderImg2 = "${image}folder_img2.png";
   static String folderImg3 = "${image}folder_img3.png";
   static String folderImg4 = "${image}folder_img4.png";
+  static String splashImageNew = "${image}splashImageNew.png";
 }
