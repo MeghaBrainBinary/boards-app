@@ -176,12 +176,12 @@ void onInit() {
     }
     if(isChild == false) {
       return TreeNodeData(
-        parent_id: data['parent_id'],
-        sub_parent_id: data['sub_parent_id'],
+        parent_id: data['parent_id'].toString(),
+        sub_parent_id: data['sub_parent_id'].toString(),
         id: data['id'],
-        language: data['language'],
-        name: data['name'],
-        title: data['name'],
+        language: data['language'].toString(),
+        name: data['name'].toString(),
+        title: data['name'].toString(),
         isTop: data['isTop'],
         expanded: false,
         checked: true,
@@ -190,12 +190,12 @@ void onInit() {
       );
     }else{
       return TreeNodeData(
-        parent_id: data['parent_id'],
-        sub_parent_id: data['sub_parent_id'],
+        parent_id: data['parent_id'].toString(),
+        sub_parent_id: data['sub_parent_id'].toString(),
         id: data['id'],
-        language: data['language'],
-        name: data['name'],
-        title: data['name'],
+        language: data['language'].toString(),
+        name: data['name'].toString(),
+        title: data['name'].toString(),
         isTop:false,
         expanded: false,
         checked: true,
