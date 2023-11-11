@@ -2,14 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-    <key>NSRemoteNotificationType</key>
-    <integer>1</integer>
-    <key>sound</key>
-    <true/>
-    <key>alert</key>
-    <true/>
-    <key>badge</key>
-    <true/>
 	<key>CADisableMinimumFrameDurationOnPhone</key>
 	<true/>
 	<key>CFBundleDevelopmentRegion</key>
@@ -22,20 +14,12 @@
 	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
-	<key>NSLocationAlwaysUsageDescription</key>
-    <string>Cho phép Chat truy cập thông tin vị trí để chia sẻ vị trí trong cuộc trò chuyện</string>
-    <key>NSLocationWhenInUseUsageDescription</key>
-    <string>Cho phép Chat truy cập thông tin vị trí để chia sẻ vị trí trong cuộc trò chuyện</string>
-    <key>NSPhotoLibraryUsageDescription</key>
-    <string>App needs access to photo lib for profile images</string>
-    <key>NSCameraUsageDescription</key>
-    <string>To capture profile photo please grant camera access</string>
 	<key>CFBundleName</key>
 	<string>boards_app</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>$(FLUTTER_BUILD_NAME)</string>
+	<string>2.0.0</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleVersion</key>
@@ -52,10 +36,20 @@
 	<array>
 		<string>_dartobservatory._tcp</string>
 	</array>
+	<key>NSCameraUsageDescription</key>
+	<string>To capture profile photo please grant camera access</string>
 	<key>NSLocalNetworkUsageDescription</key>
 	<string>Allow Flutter tools on your computer to connect and debug app</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>Cho phép Chat truy cập thông tin vị trí để chia sẻ vị trí trong cuộc trò chuyện</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Cho phép Chat truy cập thông tin vị trí để chia sẻ vị trí trong cuộc trò chuyện</string>
 	<key>NSMicrophoneUsageDescription</key>
-    <string>Please grant microphone access</string>
+	<string>Please grant microphone access</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>App needs access to photo lib for profile images</string>
+	<key>NSRemoteNotificationType</key>
+	<integer>1</integer>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
 	<key>UIBackgroundModes</key>
@@ -84,7 +78,13 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+	<key>alert</key>
+	<true/>
+	<key>badge</key>
+	<true/>
 	<key>io.flutter.embedded_views_preview</key>
+	<true/>
+	<key>sound</key>
 	<true/>
 </dict>
 </plist>
