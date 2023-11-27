@@ -1,6 +1,8 @@
 import 'package:boards_app/common/common_loader.dart';
 import 'package:boards_app/screens/boards_screen/model/get_board_model.dart';
 import 'package:boards_app/screens/my_folder_screen/my_folder_controller.dart';
+import 'package:boards_app/screens/my_select_folder_screen/my_select_folder_controller.dart';
+import 'package:boards_app/screens/my_select_folder_screen/my_select_folder_screen.dart';
 import 'package:boards_app/utils/approutes.dart';
 import 'package:boards_app/utils/appstyle.dart';
 import 'package:boards_app/utils/asset_res.dart';
@@ -90,6 +92,7 @@ class _MyFolderScreenState extends State<MyFolderScreen> {
       },
       child: Scaffold(
         resizeToAvoidBottomInset: false,
+        key: myFolderController.scaffoldKey,
         body: GetBuilder<MyFolderController>(
           id: 'fldr',
           builder: (controller) => Stack(
@@ -109,7 +112,7 @@ class _MyFolderScreenState extends State<MyFolderScreen> {
                           (controller.getBoardInfoModel==null)?const SizedBox():Padding(
                             padding: EdgeInsets.only(
                                 left: Get.width * 0.05, right: Get.width * 0.06),
-                            child: Column(
+                            child: Column(crossAxisAlignment: CrossAxisAlignment.end,
                               children: [
                                /* Row(
                                   mainAxisAlignment: MainAxisAlignment.end,
@@ -138,7 +141,12 @@ class _MyFolderScreenState extends State<MyFolderScreen> {
                                     )
                                   ],
                                 ),*/
-                                const SizedBox(height: 10,),
+                                SizedBox(height: 10,),
+                                GestureDetector(onTap: () {
+                                  MySelectFolderController mySelectFolderController = Get.put(MySelectFolderController());
+                                  mySelectFolderController.addSelectedImage = List.generate( controller.getBoardInfoModel?.data?.length ?? 0, (index) => false);
+                                  Get.to(MySelectFolderScreen( FolderData: controller.getBoardInfoModel?.data ?? [],));
+                                },child: Text(StringRes.select,style: appTextStyle(color: ColorRes.color305EBE,fontSize: 15,weight: FontWeight.w500),)),
                                 (controller.isPageView)?
                                 Container(
                                   height: Get.height * 0.6,
@@ -192,6 +200,7 @@ class _MyFolderScreenState extends State<MyFolderScreen> {
                                                         ),
                                                         child: CachedNetworkImage(
                                                           fit: BoxFit.fitWidth,
+
                                                           imageUrl:controller.getBoardInfoModel.data![index].image!.toString(),
 
                                                           placeholder: (context, url) => Container(),
@@ -255,7 +264,8 @@ class _MyFolderScreenState extends State<MyFolderScreen> {
                                     ],
                                   ),
                                 )
-                                :SizedBox(
+                                :
+                                SizedBox(
                                   height: Get.height * 0.7,
                                   width: Get.width,
                                   child:(controller.getBoardInfoModel.data!=null)? GridView.builder(
@@ -267,6 +277,7 @@ class _MyFolderScreenState extends State<MyFolderScreen> {
                                               mainAxisSpacing: 6,
                                               crossAxisSpacing: 19),
                                       itemBuilder: (context, index) {
+
                                         return Stack(
                                           alignment: Alignment.bottomRight,
                                           children: [
@@ -293,12 +304,36 @@ class _MyFolderScreenState extends State<MyFolderScreen> {
                                                           borderRadius:
                                                               BorderRadius.circular(5),
                                                         ),
-                                                        child: CachedNetworkImage(
-                                                          fit: BoxFit.fitWidth,
-                                                          imageUrl:controller.getBoardInfoModel.data![index].image!.toString(),
+                                                        child: Stack(alignment: Alignment.topRight,
+                                                          children: [
+                                                            CachedNetworkImage(
+                                                              width: Get.width,
+                                                              fit: BoxFit.fitWidth,
+                                                              imageUrl:controller.getBoardInfoModel.data![index].image!.toString(),
 
-                                                          placeholder: (context, url) => Container(),
-                                                          errorWidget: (context, url, error) => Container(),
+                                                              placeholder: (context, url) => Container(),
+                                                              errorWidget: (context, url, error) => Container(),
+                                                            ),
+                                                            GestureDetector(
+                                                              onTap: () {
+                                                              if(  controller.isLike[index]==false)
+                                                                {
+                                                                  controller.isLike[index]=true;
+                                                                }
+                                                              else
+                                                                {
+                                                                  controller.isLike[index]=false;
+                                                                }
+                                                              controller.update(['fldr']);
+                                                              },
+                                                              child: Container(height: 20,width: 20,
+                                                                margin: EdgeInsets.only(top: 12,right: 12),
+                                                                decoration: const BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(5)),
+                                                                    color: Colors.white),
+                                                              child:  controller.isLike[index]==true? Icon(Icons.favorite_outlined,size: 18,color: ColorRes.colorE16F55,):Icon(Icons.favorite_outline_sharp,size: 18,),
+                                                              ),
+                                                            ),
+                                                          ],
                                                         ),
                                                         // child: Image.network(
                                                         //   controller.getBoardInfoModel.data![index]
@@ -554,6 +589,32 @@ class _MyFolderScreenState extends State<MyFolderScreen> {
             ],
           ),
         ),
+        endDrawer: Drawer(shape: OutlineInputBorder(borderRadius: BorderRadius.only(bottomLeft:
+        Radius.circular(55),topLeft: Radius.circular(55))),child: Column(children: [
+          SizedBox(height: Get.height * 0.1,),
+          Center(
+              child:
+              Image.asset(AssetRes.boards, width: Get.width * 0.3)),
+          SizedBox(height: Get.height * 0.08,),
+          Expanded(flex: 2,
+            child: ListView.separated(
+              // shrinkWrap: true,
+              // physics: NeverScrollableScrollPhysics(),
+              itemCount: myFolderController.drawerTitleList.length,
+              itemBuilder: (context, index) {
+                return ListTile(
+                 leading: Image.asset(myFolderController.drawerImageList[index],scale: 4,),
+                  title: Text(myFolderController.drawerTitleList[index]),
+                  trailing: const Icon(Icons.navigate_next),
+                );
+              },
+              separatorBuilder: (BuildContext context, int index) {
+                return Container(height: 1,width: 50,color: ColorRes.black.withOpacity(0.30),margin: EdgeInsets.symmetric(horizontal: 19),);
+              },
+            ),
+          ),
+          SizedBox(height: Get.height * 0.05,),
+        ],)),
       ),
     );
   }
@@ -583,8 +644,8 @@ appBar({String? boardName}) {
             }
             else
               {
-            Get.back();
-            myFolderController.onTapBack();
+                  Get.back();
+                  myFolderController.onTapBack();
               }
           },
           child: const Icon(
@@ -615,17 +676,15 @@ appBar({String? boardName}) {
         ),
         InkWell(
           onTap: () {
-            myFolderController.onTapMore();
+            // myFolderController.onTapMore();
+            myFolderController.scaffoldKey.currentState?.openEndDrawer();
           },
           child: Container(
             // alignment: Alignment.centerRight,
             // color: ColorRes.color305EBE,
             // height: 25,
             // width: 25,
-            child: const Icon(
-              Icons.more_vert,
-              size: 25,
-            ),
+            child:Image.asset(AssetRes.moreOption,scale: 3,)
           ),
         ),
       ],

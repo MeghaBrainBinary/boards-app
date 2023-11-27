@@ -20,6 +20,14 @@ class AssetRes {
   static String shareIcon = "${icons}share_icon.png";
   static String langIcon = "${icons}lang_icon.png";
   static String success = "${icons}success.png";
+  static String faqIcon = "${icons}faqIcon.png";
+  static String loginIcon = "${icons}loginIcon.png";
+  static String contactUs = "${icons}contactUs.png";
+  static String languageIcon = "${icons}languageIcon.png";
+  static String settingsIcon = "${icons}settingsIcon.png";
+  static String FavouriteIcon = "${icons}FavouriteIcon.png";
+  static String homeIcon = "${icons}homeIcon.png";
+
 
   ///________________________________ images ______________________________///
 
@@ -29,4 +37,12 @@ class AssetRes {
   static String folderImg3 = "${image}folder_img3.png";
   static String folderImg4 = "${image}folder_img4.png";
   static String splashImageNew = "${image}splashImageNew.png";
+  static String boards = "${image}Boards.png";
+  static String OnePlus101 = "${image}OnePlus101.png";
+  static String OnePlus102 = "${image}OnePlus102.png";
+  static String OnePlus103 = "${image}OnePlus103.png";
+  static String moreOption = "${image}moreOption.png";
+  static String selectedImage = "${image}selectedImage.png";
+
+
 }

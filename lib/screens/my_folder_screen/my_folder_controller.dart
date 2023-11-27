@@ -1,6 +1,8 @@
 import 'package:boards_app/screens/my_folder_screen/api/get_board_info.dart';
 import 'package:boards_app/screens/my_folder_screen/model/get_board_info_model.dart';
+import 'package:boards_app/utils/asset_res.dart';
 import 'package:boards_app/utils/color_res.dart';
+import 'package:boards_app/utils/string_res.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -8,19 +10,18 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:http/http.dart' as http;
-// import 'package:share_plus/share_plus.dart';
-// import 'package:share_plus/share_plus.dart';
+
 import 'package:wc_flutter_share/wc_flutter_share.dart';
 
 class MyFolderController extends GetxController {
-  // late VideoPlayerController controller;
-  // ChewieController? chewieController;
 
+  final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
   GetBoardInfoModel getBoardInfoModel = GetBoardInfoModel();
   PageController pageController= PageController();
   RxBool loader = false.obs;
   List checkImg = List.generate(4, (index) => false);
   bool isPageView = false;
+  List<bool> isLike = [];
     String? selectedImage;
 
     var args = Get.arguments;
@@ -37,6 +38,7 @@ class MyFolderController extends GetxController {
 
 
    checkImg = List.generate(getBoardInfoModel.data?.length ??0, (index) => false);
+    isLike = List.generate(getBoardInfoModel.data?.length ?? 0, (index) => false);
 
   update(['fldr']);
   }
@@ -45,6 +47,27 @@ class MyFolderController extends GetxController {
   bool isSelect = false;
   bool selectedImg = false;
   bool isMore = false;
+
+  List<String> drawerTitleList = [
+    StringRes.home,
+    StringRes.language,
+    StringRes.favourite,
+    StringRes.contactUs,
+    StringRes.settings,
+    StringRes.faq,
+    StringRes.loginLogout,
+  ];
+
+  List<String> drawerImageList = [
+    AssetRes.homeIcon,
+    AssetRes.languageIcon,
+    AssetRes.FavouriteIcon,
+    AssetRes.contactUs,
+    AssetRes.settingsIcon,
+    AssetRes.faqIcon,
+    AssetRes.loginIcon,
+  ];
+
 
   onTapSelect() {
     if (isSelect == false) {

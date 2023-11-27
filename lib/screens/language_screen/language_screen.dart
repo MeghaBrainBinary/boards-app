@@ -142,8 +142,6 @@ class LanguageScreen extends StatelessWidget {
                               })
                           : ListView.builder(
                               padding: const EdgeInsets.all(0),
-                              shrinkWrap: true,
-                              physics: const NeverScrollableScrollPhysics(),
                               itemCount: languageController.lngs.length,
                               itemBuilder: (context, index) {
                                 return InkWell(

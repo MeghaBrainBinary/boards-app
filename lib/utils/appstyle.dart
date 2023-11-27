@@ -9,3 +9,5 @@ TextStyle appTextStyle({Color? color, double? fontSize, FontWeight? weight}) {
     fontWeight: weight ?? FontWeight.normal,
   );
 }
+
+

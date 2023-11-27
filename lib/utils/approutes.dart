@@ -4,4 +4,5 @@ class AppRoutes {
   static String boardsPage = "/boardsPage";
   static String myFolderPage = "/myFolderPage";
   static String languageConfirmPage = "/languageConfirmPage";
+  static String introPage = "/introPage";
 }

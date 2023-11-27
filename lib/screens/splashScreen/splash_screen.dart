@@ -28,11 +28,12 @@ class _SplashScreenState extends State<SplashScreen> {
     Timer(const Duration(seconds: 3), () {
 
       if(PrefService.getBool(PrefKeys.isLanguage)==false) {
-        Get.offAndToNamed(AppRoutes.languagePage);
+       // Get.offAndToNamed(AppRoutes.languagePage);
+       Get.offAndToNamed(AppRoutes.introPage);
      }
      else
        {
-         Get.offAndToNamed(AppRoutes.boardsPage);
+        Get.offAndToNamed(AppRoutes.boardsPage);
        }
     });
   }
@@ -45,7 +46,8 @@ class _SplashScreenState extends State<SplashScreen> {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Center(
-              child: Image.asset(AssetRes.splashIcon, width: Get.width * 0.5)),
+              child: Image.asset(AssetRes.boards, width: Get.width * 0.5)
+          ),
         ],
       ),
     );

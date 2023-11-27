@@ -1,16 +1,12 @@
 import 'dart:io';
-import 'dart:math';
 
 import 'package:boards_app/common/common_loader.dart';
 import 'package:boards_app/screens/boards_screen/boards_controller.dart';
-import 'package:boards_app/services/pref_services.dart';
 import 'package:boards_app/utils/approutes.dart';
 import 'package:boards_app/utils/appstyle.dart';
 import 'package:boards_app/utils/asset_res.dart';
 import 'package:boards_app/utils/color_res.dart';
-import 'package:boards_app/utils/prefkeys.dart';
 import 'package:boards_app/utils/string_res.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_tree/flutter_tree.dart';
 import 'package:get/get.dart';
@@ -39,28 +35,28 @@ class BoardsScreen extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Column(
-                              crossAxisAlignment: CrossAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                SizedBox(
-                                  height: 50,
+                                 SizedBox(
+                                  height: Get.height * 0.13,
                                 ),
 
                                 /// top
-                                Padding(
-                                  padding: EdgeInsets.only(
-                                      left: Get.width * 0.05,
-                                      right: Get.width * 0.05),
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.end,
-                                    children: [
-                                      Image.asset(
-                                        AssetRes.splashImageNew,
-                                        width: 120,
-                                      ),
-                                    ],
+                                Align(alignment: Alignment.center,
+                                  child: Padding(
+                                    padding: EdgeInsets.only(
+                                        left: Get.width * 0.05,
+                                        right: Get.width * 0.05),
+                                    child: Image.asset(
+                                      AssetRes.boards,
+                                      width: 110,
+                                    ),
                                   ),
                                 ),
                                 const SizedBox(
+                                    height:30
+                                ),
+                               /* const SizedBox(
                                   height:20
                                 ),
                                 Padding(
@@ -71,7 +67,7 @@ class BoardsScreen extends StatelessWidget {
                                     mainAxisAlignment:
                                         MainAxisAlignment.end,
                                     children: [
-                                      /*const Visibility(
+                                      *//*const Visibility(
                                         visible: false,
                                         maintainState: true,
                                         maintainSize: true,
@@ -90,7 +86,7 @@ class BoardsScreen extends StatelessWidget {
                                           width: 96,
                                         ),
                                       ),
-                                      const Spacer(),*/
+                                      const Spacer(),*//*
                                       InkWell(
                                         onTap: () {
                                           boardsController.onTapMore();
@@ -111,7 +107,7 @@ class BoardsScreen extends StatelessWidget {
                                 ),
                                 const SizedBox(
                                     height:30
-                                ),
+                                ),*/
                                 /// my boards
                              /*   Padding(
                                   padding: EdgeInsets.only(
@@ -368,7 +364,15 @@ class BoardsScreen extends StatelessWidget {
                                         : SizedBox(),
                                   ),
                                 ),*/
-
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                                  child: Text(StringRes.myBoards,style: GoogleFonts.inder(
+                                    color: ColorRes.black,
+                                    fontSize: 23,
+                                    fontWeight: FontWeight.w600,
+                                  ),),
+                                ),
+                                SizedBox(height: 10,),
                                 /// list dynamic
                                 // create structure of list of sublist of sublist of sublist
                                 (con.getBoardModelData != null)

@@ -16,6 +16,8 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 
+import 'screens/intro_screen/intro_screen.dart';
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
@@ -59,6 +61,7 @@ class MyApp extends StatelessWidget {
           GetPage(name: AppRoutes.languagePage, page: () => LanguageScreen()),
           GetPage(name: AppRoutes.boardsPage, page: () => BoardsScreen()),
           GetPage(name: AppRoutes.myFolderPage, page: () => MyFolderScreen()),
+          GetPage(name: AppRoutes.introPage, page: () => IntroScreen()),
           GetPage(
               name: AppRoutes.languageConfirmPage,
               page: () => LanguageScreen22()),
