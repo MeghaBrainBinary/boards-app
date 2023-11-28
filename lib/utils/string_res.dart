@@ -5,6 +5,47 @@ class StringRes {
   static String chooseTheLanguage = "Choose The Language".tr;
   static String searchLanguage = "search language".tr;
   static String continu = "Continue".tr;
+  static String alreadyHaveAccount = "Already have account?".tr;
+
+  ///______________________________ login screen ______________________________///
+  static String logIn = "Log In".tr;
+  static String signUp = "Sign up".tr;
+  static String dontHaveAccount = "Don’t have account? ".tr;
+  static String successfully = "Successfully create your account".tr;
+  static String successfullyCreate = "successfully create your account now enjoy our apps".tr;
+
+  ///______________________________ Create New Password screen ______________________________///
+  static String createNewPassword = "Create New Password".tr;
+  static String rememberMe = "remember me".tr;
+
+  ///______________________________ Forgot Password screen ______________________________///
+  static String forgotPassword = "Forgot Password".tr;
+  static String pleaseEnterYourValidEmail = "Please enter your valid email ID. we will send you 6-digit code to verify your account.".tr;
+
+  ///______________________________ sign up screen ______________________________///
+  static String userName = "User name".tr;
+  static String confirmPassword = "Confirm password".tr;
+  static String forgetPassword = "Forget Password?".tr;
+
+  ///______________________________ Settings screen ______________________________///
+  static String privacyPolicy = "Privacy Policy".tr;
+  static String changePassword = "Change Password".tr;
+  static String deleteAccount = "Delete Account".tr;
+  static String enterCurrentPassword = "enter current password".tr;
+  static String enterNewPassword = "enter new password".tr;
+  static String confirmNewPassword = "Confirm new password".tr;
+  static String password = "Password".tr;
+  static String areYouSure = "Are you sure you want to Delete Account?".tr;
+  static String areYouSureLogOut = "Are you sure want to Log Out?".tr;
+
+  ///______________________________ Contact Us screen ______________________________///
+  static String contactUs = "Contact Us".tr;
+  static String name = "Name".tr;
+  static String emailID = "Email ID".tr;
+  static String description = "Description".tr;
+  static String send = "Send".tr;
+  static String yes = "Yes".tr;
+  static String no = "No".tr;
 
   ///______________________________ intro screen ______________________________///
   static String skip = "skip".tr;
@@ -51,7 +92,6 @@ class StringRes {
   static String filuet = "filuet".tr;
   static String home = "Home".tr;
   static String favourite = "Favourite".tr;
-  static String contactUs = "Contact Us".tr;
   static String settings = "Settings".tr;
   static String faq = "FAQ".tr;
   static String loginLogout = "Login / Logout".tr;

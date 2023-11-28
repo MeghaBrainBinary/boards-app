@@ -27,6 +27,14 @@ class AssetRes {
   static String settingsIcon = "${icons}settingsIcon.png";
   static String FavouriteIcon = "${icons}FavouriteIcon.png";
   static String homeIcon = "${icons}homeIcon.png";
+  static String deleteAcountIcon = "${icons}deleteAcountIcon.png";
+  static String lockIcon = "${icons}lockIcon.png";
+  static String privacyPolicy = "${icons}privacyPolicy.png";
+  static String fileLoke = "${icons}fileLoke.png";
+  static String emailIcon = "${icons}emailIcon.png";
+  static String userIcon = "${icons}userIcon.png";
+
+
 
 
   ///________________________________ images ______________________________///
@@ -43,6 +51,9 @@ class AssetRes {
   static String OnePlus103 = "${image}OnePlus103.png";
   static String moreOption = "${image}moreOption.png";
   static String selectedImage = "${image}selectedImage.png";
+  static String secureLogin = "${image}secureLogin.png";
+  static String signUp = "${image}signUp.png";
+  static String succesfullogin = "${image}succesfullogin.png";
 
 
 }

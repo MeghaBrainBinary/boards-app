@@ -13,14 +13,19 @@ import 'package:get/get.dart';
 class Language2Controller2 extends GetxController {
   TextEditingController searchController = TextEditingController();
 RxBool loader = false.obs;
-  List<bool> isCheck = List.generate(4, (index) => false);
+  List<bool> isCheck = List.generate(9, (index) => false);
 GetBoardModel getBoardModel  = GetBoardModel();
 List filterList =[];
   List language = [
-    StringRes.latvian,
-    StringRes.english,
-    StringRes.estonian,
-    StringRes.lithuanian,
+    StringRes.arabic.tr,
+    StringRes.bengali.tr,
+    StringRes.chinese.tr,
+    StringRes.french.tr,
+    StringRes.german.tr,
+    StringRes.hindi.tr,
+    StringRes.englishUS.tr,
+    StringRes.englishUk.tr,
+    StringRes.japanese.tr,
   ];
 
   String selectedLanguage="English";

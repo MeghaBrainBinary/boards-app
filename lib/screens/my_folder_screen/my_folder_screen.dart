@@ -1,12 +1,16 @@
+import 'package:boards_app/common/common_button.dart';
+import 'package:boards_app/common/common_drawer_bar.dart';
 import 'package:boards_app/common/common_loader.dart';
 import 'package:boards_app/screens/boards_screen/model/get_board_model.dart';
 import 'package:boards_app/screens/my_folder_screen/my_folder_controller.dart';
 import 'package:boards_app/screens/my_select_folder_screen/my_select_folder_controller.dart';
 import 'package:boards_app/screens/my_select_folder_screen/my_select_folder_screen.dart';
+import 'package:boards_app/services/pref_services.dart';
 import 'package:boards_app/utils/approutes.dart';
 import 'package:boards_app/utils/appstyle.dart';
 import 'package:boards_app/utils/asset_res.dart';
 import 'package:boards_app/utils/color_res.dart';
+import 'package:boards_app/utils/prefkeys.dart';
 import 'package:boards_app/utils/string_res.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:chewie/chewie.dart';
@@ -315,15 +319,24 @@ class _MyFolderScreenState extends State<MyFolderScreen> {
                                                               errorWidget: (context, url, error) => Container(),
                                                             ),
                                                             GestureDetector(
-                                                              onTap: () {
-                                                              if(  controller.isLike[index]==false)
-                                                                {
-                                                                  controller.isLike[index]=true;
-                                                                }
-                                                              else
-                                                                {
-                                                                  controller.isLike[index]=false;
-                                                                }
+                                                              onTap: () async {
+                                                                if(PrefService.getBool(PrefKeys.login)==false)
+                                                                  {
+                                                                    Get.toNamed( AppRoutes.login);
+                                                                  }
+                                                                else
+                                                                  {
+                                                                    if(  controller.isLike[index]==false)
+                                                                    {
+                                                                      controller.isLike[index]=true;
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                      controller.isLike[index]=false;
+                                                                    }
+                                                                  }
+
+
                                                               controller.update(['fldr']);
                                                               },
                                                               child: Container(height: 20,width: 20,
@@ -589,7 +602,7 @@ class _MyFolderScreenState extends State<MyFolderScreen> {
             ],
           ),
         ),
-        endDrawer: Drawer(shape: OutlineInputBorder(borderRadius: BorderRadius.only(bottomLeft:
+     /*   endDrawer: Drawer(shape: const OutlineInputBorder(borderRadius: BorderRadius.only(bottomLeft:
         Radius.circular(55),topLeft: Radius.circular(55))),child: Column(children: [
           SizedBox(height: Get.height * 0.1,),
           Center(
@@ -602,7 +615,28 @@ class _MyFolderScreenState extends State<MyFolderScreen> {
               // physics: NeverScrollableScrollPhysics(),
               itemCount: myFolderController.drawerTitleList.length,
               itemBuilder: (context, index) {
-                return ListTile(
+                return ListTile(onTap: () {
+                if(index==1)
+                  {
+                    Get.toNamed(AppRoutes.languageConfirmPage);
+                  }
+                else if(index==2)
+                  {
+                    Get.toNamed(AppRoutes.favourite);
+                  }
+                else if(index==3)
+                {
+                  Get.toNamed(AppRoutes.contactUs);
+                }
+                else if(index==4)
+                {
+                  Get.toNamed(AppRoutes.setting);
+                }
+                else
+                  {
+                    showDialogs(context);
+                  }
+                },
                  leading: Image.asset(myFolderController.drawerImageList[index],scale: 4,),
                   title: Text(myFolderController.drawerTitleList[index]),
                   trailing: const Icon(Icons.navigate_next),
@@ -614,11 +648,14 @@ class _MyFolderScreenState extends State<MyFolderScreen> {
             ),
           ),
           SizedBox(height: Get.height * 0.05,),
-        ],)),
+        ],)),*/
+        endDrawer: CommonDrawer(context),
       ),
     );
   }
 }
+
+
 
 appBar({String? boardName}) {
   MyFolderController myFolderController = Get.put(MyFolderController());
@@ -689,5 +726,49 @@ appBar({String? boardName}) {
         ),
       ],
     ),
+  );
+}
+void showDialogs(BuildContext context) {
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return SimpleDialog(contentPadding: EdgeInsets.symmetric(horizontal: 20),children: [
+        SizedBox(height: Get.height * 0.04,),
+        Image.asset(AssetRes.loginIcon,height: Get.height * 0.1,),
+        SizedBox(height: Get.height * 0.03,),
+        Text(StringRes.areYouSureLogOut,textAlign: TextAlign.center,style: appTextStyle(weight: FontWeight.w500,fontSize: 20,color: Colors.black),),
+        SizedBox(height: Get.height * 0.03,),
+        Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,children: [
+          Expanded(
+            child: CommonButton(
+                onTap: () {
+                },
+                text: StringRes.yes),
+          ),
+          SizedBox(width: Get.width * 0.01,),
+          Expanded(
+            child: GestureDetector(
+              onTap: () {
+                Get.back();
+              },
+              child: Container(
+                alignment: Alignment.center,
+                height:  50,
+                width: 234,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(5),
+                    border: Border.all(color: ColorRes.color305EBE)
+                ),
+                child: Text(
+                  StringRes.no,
+                  style: appTextStyle(color: ColorRes.color305EBE,fontSize: 18, weight: FontWeight.w600),
+                ),
+              ),
+            ),
+          ),
+        ],),
+        SizedBox(height: Get.height * 0.04,),
+      ],);
+    },
   );
 }

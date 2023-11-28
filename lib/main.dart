@@ -1,8 +1,15 @@
 import 'package:boards_app/localization/localization.dart';
+import 'package:boards_app/screens/auth/create_new_password_screen/create_new_password_screen.dart';
+import 'package:boards_app/screens/auth/forgot_password_screen/forgot_password_screen.dart';
+import 'package:boards_app/screens/auth/login_screen/login_screen.dart';
+import 'package:boards_app/screens/auth/sign_up_screen/sign_up_screen.dart';
+import 'package:boards_app/screens/contact_us_screen/contact_us_screen.dart';
+import 'package:boards_app/screens/favourite_screen/favourite_screen.dart';
 import 'package:boards_app/screens/language_screen2/languagescreen2.dart';
 import 'package:boards_app/screens/boards_screen/boards_screen.dart';
-import 'package:boards_app/screens/language_screen/language_screen.dart';
 import 'package:boards_app/screens/my_folder_screen/my_folder_screen.dart';
+import 'package:boards_app/screens/privacy_policy_screen/privacy_policy_screen.dart';
+import 'package:boards_app/screens/settings_screen/settings_screen.dart';
 import 'package:boards_app/screens/splashScreen/splash_screen.dart';
 import 'package:boards_app/services/notification_service.dart';
 import 'package:boards_app/services/pref_services.dart';
@@ -16,7 +23,9 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 
+import 'screens/change_password_screen/change_password_screen.dart';
 import 'screens/intro_screen/intro_screen.dart';
+import 'screens/language_screen/language_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -62,11 +71,25 @@ class MyApp extends StatelessWidget {
           GetPage(name: AppRoutes.boardsPage, page: () => BoardsScreen()),
           GetPage(name: AppRoutes.myFolderPage, page: () => MyFolderScreen()),
           GetPage(name: AppRoutes.introPage, page: () => IntroScreen()),
+          GetPage(name: AppRoutes.favourite, page: () => FavouriteScreen()),
+          GetPage(name: AppRoutes.contactUs, page: () => ContactUsScreen()),
+          GetPage(name: AppRoutes.setting, page: () => SettingsScreen()),
+          GetPage(name: AppRoutes.login, page: () => LoginScreen()),
+          GetPage(name: AppRoutes.signUpScreen, page: () => SignUpScreen()),
+          GetPage(name: AppRoutes.forgotPasswordScreen, page: () => ForgotPasswordScreen()),
+          GetPage(name: AppRoutes.createNewPasswordScreen, page: () => CreateNewPasswordScreen()),
           GetPage(
               name: AppRoutes.languageConfirmPage,
               page: () => LanguageScreen22()),
         ],
-        home:const SplashScreen()
+        home: LoginScreen()
+        //SignUpScreen
+        // LoginScreen
+        // LanguageScreen22
+        //ChangePasswordScreen
+        //PrivacyPolicyScreen
+        // SettingsScreen
+        // ContactUsScreen
         //  (PrefService.getBool(PrefKeys.isLogin))
         //     ? HomeScreen()
         //     : SignInScreen(),

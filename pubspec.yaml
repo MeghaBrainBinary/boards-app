@@ -43,6 +43,8 @@ dependencies:
   firebase_core: ^2.0.0
   firebase_messaging: ^14.4.0
   flutter_local_notifications: ^14.0.0+2
+  firebase_auth: ^4.14.1
+  cloud_firestore: ^4.13.2
 
 
 
@@ -56,7 +58,7 @@ dependencies:
   #share_plus: ^6.3.0
   wc_flutter_share: ^0.4.0
   cached_network_image: ^3.2.3
-  flutter_tree:
+  flutter_tree: ^2.0.3
 #  dots_indicator: ^3.0.0
   smooth_page_indicator: ^1.1.0
 dev_dependencies:

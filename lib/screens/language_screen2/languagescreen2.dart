@@ -30,54 +30,53 @@ class LanguageScreen22 extends StatelessWidget {
                   scrollDirection: Axis.vertical,
                   physics: const BouncingScrollPhysics(),
                   child: Column(children: [
-                    SizedBox(
-                      height: Get.height * 0.03,
-                    ),
-                    Row(
-                      children: [
-                        Visibility(
-                          visible: false,
-                          maintainState: true,
-                          maintainSize: true,
-                          maintainAnimation: true,
-                          child: InkWell(
-                            child: Text(
-                              StringRes.cancel.tr,
-                              style: appTextStyle(
-                                  color: ColorRes.color305EBE,
-                                  fontSize: 12,
-                                  weight: FontWeight.w500),
-                            ),
-                          ),
-                        ),
-                        const Spacer(),
-                        Text(
-                          StringRes.language.tr,
-                          style: appTextStyle(
-                              color: ColorRes.black,
-                              fontSize: 24,
-                              weight: FontWeight.w400),
-                        ),
-                        const Spacer(),
-                        InkWell(
-                          onTap: () {
-                            Get.offAndToNamed(AppRoutes.myFolderPage);
-                          },
-                          child: Text(
-                            StringRes.cancel.tr,
-                            style: appTextStyle(
-                                color: ColorRes.color305EBE,
-                                fontSize: 12,
-                                weight: FontWeight.w500),
-                          ),
-                        ),
-                      ],
-                    ),
+
+                    // Row(
+                    //   children: [
+                    //     Visibility(
+                    //       visible: false,
+                    //       maintainState: true,
+                    //       maintainSize: true,
+                    //       maintainAnimation: true,
+                    //       child: InkWell(
+                    //         child: Text(
+                    //           StringRes.cancel.tr,
+                    //           style: appTextStyle(
+                    //               color: ColorRes.color305EBE,
+                    //               fontSize: 12,
+                    //               weight: FontWeight.w500),
+                    //         ),
+                    //       ),
+                    //     ),
+                    //     const Spacer(),
+                    //     Text(
+                    //       StringRes.language.tr,
+                    //       style: appTextStyle(
+                    //           color: ColorRes.black,
+                    //           fontSize: 24,
+                    //           weight: FontWeight.w400),
+                    //     ),
+                    //     const Spacer(),
+                    //     InkWell(
+                    //       onTap: () {
+                    //         Get.offAndToNamed(AppRoutes.myFolderPage);
+                    //       },
+                    //       child: Text(
+                    //         StringRes.cancel.tr,
+                    //         style: appTextStyle(
+                    //             color: ColorRes.color305EBE,
+                    //             fontSize: 12,
+                    //             weight: FontWeight.w500),
+                    //       ),
+                    //     ),
+                    //   ],
+                    // ),
+                    appBar(boardName: StringRes.language),
                     SizedBox(
                       height: Get.height * 0.0569,
                     ),
                     Container(
-                      height: Get.height * 0.055,
+                      height: Get.height * 0.065,
                       width: Get.width,
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(5),
@@ -115,8 +114,7 @@ class LanguageScreen22 extends StatelessWidget {
                           con.update();
                           return SizedBox(
                               height: Get.height * 0.54,
-                              child: (languageController
-                                      .searchController.text.isNotEmpty)
+                              child: (languageController.searchController.text.isNotEmpty)
                                   ? ListView.builder(
                                       shrinkWrap: true,
                                       physics: const NeverScrollableScrollPhysics(),
@@ -264,6 +262,47 @@ class LanguageScreen22 extends StatelessWidget {
           ],
         ),
       )
+    );
+  }
+
+  appBar({String? boardName}) {
+    return Container(
+      alignment: Alignment.bottomCenter,
+      padding: EdgeInsets.only(
+        left: Get.width * 0.05,
+        right: Get.width * 0.05,
+      ),
+      height: Get.height * 0.18,
+      width: Get.width,
+      // color: ColorRes.white,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          InkWell(
+            onTap: () {
+
+            },
+            child: const Icon(
+              Icons.arrow_back_ios,
+              size: 20,
+            ),
+          ),
+          Text(
+            boardName ?? '',
+            style: appTextStyle(
+                fontSize: 24,
+                weight: FontWeight.w400,
+                color: ColorRes.black),
+          ),
+          Text(
+            '',
+            style: appTextStyle(
+                fontSize: 24,
+                weight: FontWeight.w400,
+                color: ColorRes.black),
+          ),
+        ],
+      ),
     );
   }
 }
