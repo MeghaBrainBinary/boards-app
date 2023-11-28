@@ -37,7 +37,7 @@ class MySelectFolderScreen extends StatelessWidget {
         builder: (controller) => Stack(
           alignment: Alignment.center,
           children: [
-            Stack(
+       /*     Stack(
               children: [
                 Stack(
                   alignment: Alignment.bottomCenter,
@@ -231,7 +231,7 @@ class MySelectFolderScreen extends StatelessWidget {
                       )
                     : const SizedBox()
               ],
-            ),
+            )*/
             Obx(() => (myFolderController.loader.value)?const CommonLoader():const SizedBox())
           ],
         ),

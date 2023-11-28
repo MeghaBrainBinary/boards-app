@@ -31,6 +31,7 @@ class LoginController extends GetxController {
       Future.delayed(
         const Duration(seconds: 1),
             () {
+              PrefService.setValue(PrefKeys.userId,email);
           PrefService.setValue(PrefKeys.login, true);
         },
       );

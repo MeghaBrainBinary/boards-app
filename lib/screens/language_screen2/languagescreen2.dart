@@ -280,7 +280,7 @@ class LanguageScreen22 extends StatelessWidget {
         children: [
           InkWell(
             onTap: () {
-
+              Get.back();
             },
             child: const Icon(
               Icons.arrow_back_ios,

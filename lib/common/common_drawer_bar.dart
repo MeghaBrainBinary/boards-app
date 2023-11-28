@@ -32,8 +32,13 @@ Widget CommonDrawer(BuildContext context) {
               itemBuilder: (context, index) {
                 return ListTile(
                   onTap: () {
-                    if (index == 1) {
+                    if(index==0)
+                      {
+                        Get.back();
+                      }
+                    else if (index == 1) {
                       Get.toNamed(AppRoutes.languageConfirmPage);
+                      Get.back();
                     } else if (index == 2) {
                       Get.toNamed(AppRoutes.favourite);
                     } else if (index == 3) {
@@ -43,6 +48,7 @@ Widget CommonDrawer(BuildContext context) {
                     } else {
                       showDialogs(context);
                     }
+
                   },
                   leading: Image.asset(
                     myFolderController.drawerImageList[index],

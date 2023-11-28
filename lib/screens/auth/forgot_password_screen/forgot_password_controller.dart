@@ -10,9 +10,7 @@ class ForgotPasswordController extends GetxController {
 
 
   RxBool loader = false.obs;
-  bool isObscureText = false;
-  String password = '';
-  String passwordErrorMessage = "";
+
 
   String email = '';
   String emailErrorMessage = "";
@@ -32,6 +30,7 @@ class ForgotPasswordController extends GetxController {
 
   void setEmail(String value) {
     email = value.trim();
+    update(['forgot']);
   }
 
   validateEmail() {

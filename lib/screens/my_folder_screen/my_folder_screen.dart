@@ -14,6 +14,8 @@ import 'package:boards_app/utils/prefkeys.dart';
 import 'package:boards_app/utils/string_res.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:chewie/chewie.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -29,7 +31,7 @@ class MyFolderScreen extends StatefulWidget {
 
 class _MyFolderScreenState extends State<MyFolderScreen> {
   MyFolderController myFolderController = Get.put(MyFolderController());
-
+  MySelectFolderController mySelectFolderController = Get.put(MySelectFolderController());
   late VideoPlayerController videoPlayerController;
   ChewieController? chewieController;
 
@@ -79,6 +81,11 @@ class _MyFolderScreenState extends State<MyFolderScreen> {
   @override
 
   Widget build(BuildContext context) {
+    String userId = PrefService.getString(PrefKeys.userId);
+    myFolderController.isLike = (PrefService.getList(PrefKeys.isLike + userId) ?? [])
+        .map((liked) => liked == '1')
+        .toList();
+    print("fgfgd---------------------------------------------------${myFolderController.isLike}");
 
     return WillPopScope(
       onWillPop: ()async{
@@ -146,12 +153,38 @@ class _MyFolderScreenState extends State<MyFolderScreen> {
                                   ],
                                 ),*/
                                 SizedBox(height: 10,),
-                                GestureDetector(onTap: () {
+
+
+
+                                if (controller.isPageView==false && controller.isSelectedPageView==false)
+                                  GestureDetector(onTap: () {
+
                                   MySelectFolderController mySelectFolderController = Get.put(MySelectFolderController());
-                                  mySelectFolderController.addSelectedImage = List.generate( controller.getBoardInfoModel?.data?.length ?? 0, (index) => false);
-                                  Get.to(MySelectFolderScreen( FolderData: controller.getBoardInfoModel?.data ?? [],));
-                                },child: Text(StringRes.select,style: appTextStyle(color: ColorRes.color305EBE,fontSize: 15,weight: FontWeight.w500),)),
-                                (controller.isPageView)?
+                                  myFolderController.addSelectedImage = List.generate( controller.getBoardInfoModel?.data?.length ?? 0, (index) => false);
+                               //   Get.to(MySelectFolderScreen( FolderData: controller.getBoardInfoModel?.data ?? [],));
+                                    controller.isSelectedPageView = true;
+                                    controller.isPageView = false;
+                                    controller.update(['fldr']);
+                                  },
+                                      child: Text(StringRes.select,
+                                        style: appTextStyle(color: ColorRes.color305EBE,fontSize: 15,weight: FontWeight.w500),)) else SizedBox(),
+
+
+
+                                controller.isSelectedPageView ?  Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text('${myFolderController.addSelectedImage.where((e) => e == true).length} ${StringRes.imageSelected}',style: appTextStyle(color: ColorRes.black,fontSize: 13,weight: FontWeight.w600),),
+                                    GestureDetector(onTap: () {
+                                      myFolderController.addSelectedImage = List.generate( controller.getBoardInfoModel.data?.length ?? 0, (index) => false);
+                                      controller.update(['fldr']);
+                                    },child: Text(StringRes.cancel,style: appTextStyle(color: ColorRes.color305EBE,fontSize: 15,weight: FontWeight.w500),)),
+                                  ],
+                                ):SizedBox(),
+
+
+
+
+                                (controller.isPageView && !controller.isSelectedPageView)?
                                 Container(
                                   height: Get.height * 0.6,
                                   width: Get.width,
@@ -269,6 +302,111 @@ class _MyFolderScreenState extends State<MyFolderScreen> {
                                   ),
                                 )
                                 :
+                                (!controller.isPageView && controller.isSelectedPageView)?   SizedBox(
+                                  height: Get.height * 0.7,
+                                  width: Get.width,
+                                  child:(controller.getBoardInfoModel?.data!=null)? GridView.builder(
+                                      padding: const EdgeInsets.all(0),
+                                      itemCount: controller.getBoardInfoModel?.data?.length ?? 0,
+                                      gridDelegate:
+                                      const SliverGridDelegateWithFixedCrossAxisCount(
+                                          crossAxisCount: 2,
+                                          mainAxisSpacing: 6,
+                                          crossAxisSpacing: 19),
+                                      itemBuilder: (context, index) {
+
+                                        return Stack(
+                                          alignment: Alignment.bottomRight,
+                                          children: [
+
+                                            InkWell(
+                                              onTap:(){
+                                                if( myFolderController.addSelectedImage[index]==false)
+                                                {
+                                                  myFolderController.addSelectedImage[index]=true;
+                                                }
+                                                else
+                                                {
+                                                  myFolderController.addSelectedImage[index]=false;
+                                                }
+                                                myFolderController.update(['fldr']);
+                                              },
+                                              child: ClipRRect(
+                                                borderRadius:
+                                                BorderRadius.circular(5),
+                                                child: Container(
+                                                  height: Get.height * 0.199,
+                                                  width: Get.width * 0.45,
+                                                  padding: (myFolderController.checkImg[index] == false)
+                                                      ? const EdgeInsets.all(0)
+                                                      : const EdgeInsets.all(2),
+                                                  decoration: BoxDecoration(
+                                                    color:myFolderController.checkImg[index]==true?
+                                                    ColorRes.color305EBE:Colors.transparent,
+                                                    border: Border.all(color:myFolderController.checkImg[index]==true?
+                                                    ColorRes.color305EBE:Colors.white ),
+                                                    borderRadius:
+                                                    BorderRadius.circular(5),
+                                                  ),
+                                                  child: Stack(alignment: Alignment.bottomRight,
+                                                    children: [
+                                                      CachedNetworkImage(
+
+                                                        width: Get.width,
+                                                        fit: BoxFit.fitWidth,
+                                                        imageUrl:controller.getBoardInfoModel?.data?[index].image ?? "",
+
+                                                        placeholder: (context, url) => Container(),
+                                                        errorWidget: (context, url, error) => Container(),
+                                                      ),
+                                                      myFolderController.addSelectedImage[index]==true? Padding(
+                                                        padding: const EdgeInsets.only(bottom: 10,right: 10),
+                                                        child: Image.asset(AssetRes.selectedImage,scale: 4,),
+                                                      ):SizedBox()
+                                                    ],
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+
+                                            (myFolderController.isSelect == false)
+                                                ? const SizedBox()
+                                                : InkWell(
+                                              onTap: () {
+                                                myFolderController.onTapCheck(myFolderController.getBoardInfoModel.data![index].image,index);
+                                              },
+                                              child: Container(
+                                                margin: const EdgeInsets.only(
+                                                    right: 10, bottom: 10),
+                                                height: 25,
+                                                width: 25,
+                                                decoration: BoxDecoration(
+                                                  color: ColorRes.white,
+                                                  shape: BoxShape.circle,
+                                                ),
+                                                child: (myFolderController
+                                                    .checkImg[index] ==
+                                                    false)
+                                                    ? const SizedBox()
+                                                    : SizedBox(
+                                                  height: 8,
+                                                  width: 11,
+                                                  child: Transform.scale(
+                                                    scale: 0.6,
+                                                    child: Icon(
+                                                      Icons.check_rounded,
+                                                      color: ColorRes
+                                                          .color305EBE,
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        );
+                                      }):const SizedBox(),
+                                )
+                                    :
                                 SizedBox(
                                   height: Get.height * 0.7,
                                   width: Get.width,
@@ -320,23 +458,31 @@ class _MyFolderScreenState extends State<MyFolderScreen> {
                                                             ),
                                                             GestureDetector(
                                                               onTap: () async {
-                                                                if(PrefService.getBool(PrefKeys.login)==false)
-                                                                  {
-                                                                    Get.toNamed( AppRoutes.login);
-                                                                  }
-                                                                else
-                                                                  {
-                                                                    if(  controller.isLike[index]==false)
-                                                                    {
-                                                                      controller.isLike[index]=true;
-                                                                    }
-                                                                    else
-                                                                    {
-                                                                      controller.isLike[index]=false;
-                                                                    }
-                                                                  }
+                                                                // if(PrefService.getBool(PrefKeys.login)==false)
+                                                                //   {
+                                                                //     Get.toNamed( AppRoutes.login);
+                                                                //   }
+                                                                // else
+                                                                //   {
+                                                                //     if(  controller.isLike[index]==false)
+                                                                //     {
+                                                                //       controller.isLike[index]=true;
+                                                                //     }
+                                                                //     else
+                                                                //     {
+                                                                //       controller.isLike[index]=false;
+                                                                //     }
+                                                                //   }
+                                                                if (PrefService.getBool(PrefKeys.login) == false) {
+                                                                  Get.toNamed(AppRoutes.login);
+                                                                } else {
+                                                                  await toggleLike(index,controller,controller.getBoardInfoModel.data![index].image!.toString());
 
-
+                                                                  // You can optionally check the new state of isLike from the controller
+                                                                  List<String>? storedFavorites = PrefService.getList( PrefService.getString(PrefKeys.userId));
+                                                                  print("storedFavorites--> ${storedFavorites}");
+                                                                  controller.update(['fldr']);
+                                                                }
                                                               controller.update(['fldr']);
                                                               },
                                                               child: Container(height: 20,width: 20,
@@ -429,116 +575,129 @@ class _MyFolderScreenState extends State<MyFolderScreen> {
                                         );
                                       }):const SizedBox(),
                                 ),
+
+
+
                               ],
                             ),
                           ),
                         ],
                       ),
-          (controller.isPageView ==false)
+          (controller.isPageView ==false && controller.isSelectedPageView == false)
                           ? const SizedBox()
                           : Container(
                               height: 50,
                               width: Get.width,
                               color: ColorRes.color305EBE,
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: [
-                                  const SizedBox(
-                                    height: 23,
-                                    width: 23,
-                                  ),
-                                  SizedBox(
-                                    width: Get.width * 0.06,
-                                  ),
-                                  const SizedBox(
-                                    height: 23,
-                                    width: 23,
-                                  ),
-                                  SizedBox(
-                                    width: Get.width * 0.06,
-                                  ),
-                                  Expanded(
-                                    child: Container(
-                                      alignment: Alignment.center,
-                                      /*child: Text(
-                                        "${controller.simg.length} ${StringRes.imageSelected}",
-                                        style: appTextStyle(
-                                            fontSize: 13, weight: FontWeight.w600),
-                                      ),*/
+                              child: Padding(
+                                padding: const EdgeInsets.symmetric(horizontal: 50),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    // const SizedBox(
+                                    //   height: 23,
+                                    //   width: 23,
+                                    // ),
+                                    // SizedBox(
+                                    //   width: Get.width * 0.06,
+                                    // ),
+                                    // const SizedBox(
+                                    //   height: 23,
+                                    //   width: 23,
+                                    // ),
+                                    // SizedBox(
+                                    //   width: Get.width * 0.06,
+                                    // ),
+
+                                    InkWell(
+                                      onTap: (){
+                                      },
+                                      child: const SizedBox(
+                                          height: 23,
+                                          width: 23,
+                                          child: Icon(Icons.favorite_outline_sharp,color: Colors.white,size: 25,)),
                                     ),
-                                  ),
-                                  InkWell(
-                                    onTap: (){
-                                      controller.saveImage();
-                                    },
-                                    child: const SizedBox(
-                                        height: 23,
-                                        width: 23,
-                                        child: Icon(Icons.file_download_outlined,color: Colors.white,size: 25,)),
-                                  ),
-                                  SizedBox(
-                                    width: Get.width * 0.06,
-                                  ),
-                                  InkWell(
-                                    onTap: ()async{
-                                      controller.onTapShare();
-                                     // Share.share();
-                                      // controller.simg.forEach((element) {
-                                      //
-                                      // Share.share(element);
-                                      // });
-                                      // List<ShareItParameters> list =[];
-                                      // controller.simg.forEach((element) {
-                                      //   list.add(ShareItParameters(type: ShareItFileType.image,path: element));
-                                      // });
-                                      // ShareIt.list(parameters: list);
 
-                                     // ShareExtend.shareMultiple(controller.simg, 'image');
-                                   //   List i = [];
-                                   // controller.simg.forEach((element) async{
-                                   //  ByteData b = await rootBundle.load(element);
-                                   //  Map io ={
-                                   //    "image":element,
-                                   //    "byteData":b
-                                   //  };
-                                   //   i.add(io);
-                                   // });
-                                   // Map data= {};
-                                   //
-                                   // i.forEach((element) {
-                                   //   data['element'] = element['byteData'].buffer.asUint8List();
-                                   // });
-                                   //
-                                   // print(data);
-                                      // await
-                                      // VocsyShare.files('esys images',
-                                      //     {
-                                      //     'esys.png': bytes1.buffer.asUint8List(),
-                                      //     'bluedan.png': bytes2.buffer.asUint8List(),
-                                      //     'addresses.csv': bytes3.buffer.asUint8List(),
-                                      //     },
-                                      //     '*/*',
-                                      //     text: 'My optional text.'
-                                      // );
+                                    // SizedBox(
+                                    //   width: Get.width * 0.06,
+                                    // ),
 
-                                      // Map i ={};
-                                      // List bufferData=[];
-                                      // controller.simg.forEach((element) async{
-                                      //   await rootBundle.load(element);
-                                      // });
-                                    //  VocsyShare.files(, files, mimeType)
-                                    },
-                                    child: SizedBox(
-                                        height: 23,
-                                        width: 23,
-                                        child: Image.asset(AssetRes.shareIcon)),
-                                  ),
-                                  SizedBox(
-                                    width: Get.width * 0.06,
-                                  ),
-                                ],
+                                    InkWell(
+                                      onTap: (){
+                                        controller.saveImage();
+                                      },
+                                      child: const SizedBox(
+                                          height: 23,
+                                          width: 23,
+                                          child: Icon(Icons.file_download_outlined,color: Colors.white,size: 25,)),
+                                    ),
+
+                                    InkWell(
+                                      onTap: ()async{
+                                        controller.onTapShare();
+                                       // Share.share();
+                                        // controller.simg.forEach((element) {
+                                        //
+                                        // Share.share(element);
+                                        // });
+                                        // List<ShareItParameters> list =[];
+                                        // controller.simg.forEach((element) {
+                                        //   list.add(ShareItParameters(type: ShareItFileType.image,path: element));
+                                        // });
+                                        // ShareIt.list(parameters: list);
+
+                                       // ShareExtend.shareMultiple(controller.simg, 'image');
+                                     //   List i = [];
+                                     // controller.simg.forEach((element) async{
+                                     //  ByteData b = await rootBundle.load(element);
+                                     //  Map io ={
+                                     //    "image":element,
+                                     //    "byteData":b
+                                     //  };
+                                     //   i.add(io);
+                                     // });
+                                     // Map data= {};
+                                     //
+                                     // i.forEach((element) {
+                                     //   data['element'] = element['byteData'].buffer.asUint8List();
+                                     // });
+                                     //
+                                     // print(data);
+                                        // await
+                                        // VocsyShare.files('esys images',
+                                        //     {
+                                        //     'esys.png': bytes1.buffer.asUint8List(),
+                                        //     'bluedan.png': bytes2.buffer.asUint8List(),
+                                        //     'addresses.csv': bytes3.buffer.asUint8List(),
+                                        //     },
+                                        //     '*/*',
+                                        //     text: 'My optional text.'
+                                        // );
+
+                                        // Map i ={};
+                                        // List bufferData=[];
+                                        // controller.simg.forEach((element) async{
+                                        //   await rootBundle.load(element);
+                                        // });
+                                      //  VocsyShare.files(, files, mimeType)
+                                      },
+                                      child: SizedBox(
+                                          height: 23,
+                                          width: 23,
+                                          child: Image.asset(AssetRes.shareIcon)),
+                                    ),
+
+
+
+                                    // SizedBox(
+                                    //   width: Get.width * 0.06,
+                                    // ),
+                                  ],
+                                ),
                               ),
-                            )
+                            ),
+
+
                     ],
                   ),
                   (controller.isMore == true)
@@ -602,7 +761,7 @@ class _MyFolderScreenState extends State<MyFolderScreen> {
             ],
           ),
         ),
-     /*   endDrawer: Drawer(shape: const OutlineInputBorder(borderRadius: BorderRadius.only(bottomLeft:
+        endDrawer: Drawer(shape: const OutlineInputBorder(borderRadius: BorderRadius.only(bottomLeft:
         Radius.circular(55),topLeft: Radius.circular(55))),child: Column(children: [
           SizedBox(height: Get.height * 0.1,),
           Center(
@@ -616,24 +775,19 @@ class _MyFolderScreenState extends State<MyFolderScreen> {
               itemCount: myFolderController.drawerTitleList.length,
               itemBuilder: (context, index) {
                 return ListTile(onTap: () {
-                if(index==1)
+                  if(index==0)
                   {
+                    Get.back();
+                  }
+                  else if (index == 1) {
                     Get.toNamed(AppRoutes.languageConfirmPage);
-                  }
-                else if(index==2)
-                  {
+                  } else if (index == 2) {
                     Get.toNamed(AppRoutes.favourite);
-                  }
-                else if(index==3)
-                {
-                  Get.toNamed(AppRoutes.contactUs);
-                }
-                else if(index==4)
-                {
-                  Get.toNamed(AppRoutes.setting);
-                }
-                else
-                  {
+                  } else if (index == 3) {
+                    Get.toNamed(AppRoutes.contactUs);
+                  } else if (index == 4) {
+                    Get.toNamed(AppRoutes.setting);
+                  } else {
                     showDialogs(context);
                   }
                 },
@@ -648,12 +802,132 @@ class _MyFolderScreenState extends State<MyFolderScreen> {
             ),
           ),
           SizedBox(height: Get.height * 0.05,),
-        ],)),*/
-        endDrawer: CommonDrawer(context),
+        ],)),
+        // endDrawer: CommonDrawer(context),
       ),
     );
   }
 }
+
+
+// ...
+
+Future<void> toggleLike(int index, MyFolderController controller, String image) async {
+  try {
+
+    if (PrefService.getBool(PrefKeys.login) == false) {
+      Get.toNamed(AppRoutes.login);
+    } else {
+      // String image = controller.getBoardInfoModel.data![index].image!.toString();
+      String userId = PrefService.getString(PrefKeys.userId);
+
+      // Get the current user's favorites from shared preferences
+      List<String> favorites = PrefService.getList(userId) ?? [];
+
+      // Check if the image is already in favorites
+      bool isAlreadyLiked = favorites.contains(image);
+
+      if (!isAlreadyLiked) {
+        // If not liked, add the image to favorites in shared preferences
+        favorites.add(image);
+      } else {
+        // If already liked, remove the image from favorites in shared preferences
+        favorites.remove(image);
+      }
+
+      // Save the updated favorites to shared preferences
+      PrefService.setValue(userId, favorites);
+
+      // Update the local state
+      controller.isLike[index] = !isAlreadyLiked;
+      PrefService.setValue(PrefKeys.isLike + userId, controller.isLike.map((liked) => liked ? '1' : '0').toList());
+
+
+      controller.update(['fldr']);
+    }
+  } catch (e) {
+    print('Error toggling like: $e');
+  }
+}
+
+
+/*Future<void> toggleLike(int index, MyFolderController controller, String image) async {
+  try {
+    final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+
+
+    if (PrefService.getBool(PrefKeys.login)==false) {
+      Get.toNamed(AppRoutes.login);
+    } else {
+
+      if (controller.isLike[index] == false) {
+        controller.isLike[index] = true;
+
+        // Add the image to favorites in Firestore
+        await _firestore.collection('users').doc(PrefService.getString(PrefKeys.userId)).update({
+          'favorites': FieldValue.arrayUnion([{
+            'imageUrl': image,
+          }])
+        });
+      } else {
+        controller.isLike[index] = false;
+
+        // Remove the image from favorites in Firestore
+        await _firestore.collection('users').doc(PrefService.getString(PrefKeys.userId)).update({
+          'favorites': FieldValue.arrayRemove([{
+            'imageUrl': image,
+          }])
+        });
+      }
+
+      controller.update(['fldr']);
+    }
+  } catch (e) {
+    print('Error toggling like: $e');
+  }
+}*/
+
+/*Future<void> toggleLike(int index, MyFolderController controller, String image) async {
+  try {
+    final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+
+    if (PrefService.getBool(PrefKeys.login) == false) {
+      Get.toNamed(AppRoutes.login);
+    } else {
+      String userId = PrefService.getString(PrefKeys.userId);
+
+      // Get the current user's document reference
+      DocumentReference userRef = _firestore.collection('users').doc(userId);
+
+      // Fetch the current favorites array
+      DocumentSnapshot userSnapshot = await userRef.get();
+      List<Map<String, dynamic>> favorites = List<Map<String, dynamic>>.from(userSnapshot.get('favorites'));
+
+      // Check if the image is already in favorites
+      bool isAlreadyLiked = favorites.any((fav) => fav['imageUrl'] == image);
+
+      if (!isAlreadyLiked) {
+        // If not liked, add the image to favorites in Firestore
+        favorites.add({'imageUrl': image});
+      } else {
+        // If already liked, remove the image from favorites in Firestore
+        favorites.removeWhere((fav) => fav['imageUrl'] == image);
+      }
+
+      // Update the favorites array in Firestore
+      await userRef.update({'favorites': favorites});
+
+      // Update the local state
+      controller.isLike[index] = !isAlreadyLiked;
+
+      controller.update(['fldr']);
+    }
+  } catch (e) {
+    print('Error toggling like: $e');
+  }
+}*/
+
+
 
 
 
@@ -675,8 +949,9 @@ appBar({String? boardName}) {
       children: [
         InkWell(
           onTap: () {
-            if(myFolderController.isPageView){
+            if(myFolderController.isPageView ||  myFolderController.isSelectedPageView){
               myFolderController.isPageView = false;
+              myFolderController.isSelectedPageView = false;
               myFolderController.update(['fldr']);
             }
             else
@@ -742,6 +1017,7 @@ void showDialogs(BuildContext context) {
           Expanded(
             child: CommonButton(
                 onTap: () {
+                  Get.offAllNamed( AppRoutes.login);
                 },
                 text: StringRes.yes),
           ),

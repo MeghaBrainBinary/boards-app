@@ -1,4 +1,7 @@
 
+import 'package:boards_app/services/pref_services.dart';
+import 'package:boards_app/utils/approutes.dart';
+import 'package:boards_app/utils/prefkeys.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
@@ -52,20 +55,24 @@ class SignUpController extends GetxController {
         email: email,
         password: password,
       );
-      // UserCredential userCredential = await _auth.createUserWithEmailAndPassword(
+      // UserCredential userCredential = await firebaseAuth.createUserWithEmailAndPassword(
       //   email: email,
       //   password: password,
       // );
-      // // Add user data to Firestore collection
-      // await _firestore.collection('auth').doc(userCredential.user!.uid).set({
+
+      PrefService.setValue(PrefKeys.userId,email);
+      // Store additional user information in Firestore
+      // await _firestore.collection('users').doc(userCredential.user!.uid).set({
       //   'username': userName,
       //   'email': email,
+      //   'favorites': [], // Initialize favorites as an empty array
       // });
       loader.value = false;
       Future.delayed(
         const Duration(seconds: 1),
             () async {
-
+              PrefService.setValue(PrefKeys.login, true);
+              Get.offAndToNamed(AppRoutes.boardsPage);
         },
       );
     } catch (e) {

@@ -4,6 +4,9 @@ class PrefKeys{
   static const languageCode ="languageCode";
   static const code ="code";
   static const login ="login";
+  static const userId ="userId";
+  static const isLike ="isLike";
+  static const userLikes ="userLikes";
 
   static const fcmToken = "fcmToken";
 }

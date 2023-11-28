@@ -33,6 +33,7 @@ class AssetRes {
   static String fileLoke = "${icons}fileLoke.png";
   static String emailIcon = "${icons}emailIcon.png";
   static String userIcon = "${icons}userIcon.png";
+  static String uploadeIcon = "${icons}uploadeIcon.png";
 
 
 

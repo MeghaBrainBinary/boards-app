@@ -1,7 +1,9 @@
 import 'package:boards_app/screens/my_folder_screen/api/get_board_info.dart';
 import 'package:boards_app/screens/my_folder_screen/model/get_board_info_model.dart';
+import 'package:boards_app/services/pref_services.dart';
 import 'package:boards_app/utils/asset_res.dart';
 import 'package:boards_app/utils/color_res.dart';
+import 'package:boards_app/utils/prefkeys.dart';
 import 'package:boards_app/utils/string_res.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
@@ -21,10 +23,25 @@ class MyFolderController extends GetxController {
   RxBool loader = false.obs;
   List checkImg = List.generate(4, (index) => false);
   bool isPageView = false;
+  bool isSelectedPageView = false;
   List<bool> isLike = [];
     String? selectedImage;
 
     var args = Get.arguments;
+
+
+
+
+  @override
+  void onInit() {
+    // TODO: implement onInit
+    super.onInit();
+
+    //isLike = (PrefService.getList(PrefKeys.isLike) as List<bool>?) ?? [];
+
+
+
+  }
 
   int(String id, {String? subBoardId})async{
     loader.value = true;
@@ -67,7 +84,7 @@ class MyFolderController extends GetxController {
     AssetRes.faqIcon,
     AssetRes.loginIcon,
   ];
-
+  List<bool> addSelectedImage = [];
 
   onTapSelect() {
     if (isSelect == false) {
@@ -84,6 +101,7 @@ onTapBack(){
   simg =[];
   selectedImg = false;
   checkImg = List.generate(getBoardInfoModel.data?.length??0, (index) => false);
+  addSelectedImage = List.generate(getBoardInfoModel.data?.length??0, (index) => false);
 
   update(['fldr']);
 

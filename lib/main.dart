@@ -82,7 +82,7 @@ class MyApp extends StatelessWidget {
               name: AppRoutes.languageConfirmPage,
               page: () => LanguageScreen22()),
         ],
-        home: LoginScreen()
+        home: SplashScreen()
         //SignUpScreen
         // LoginScreen
         // LanguageScreen22

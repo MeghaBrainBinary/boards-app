@@ -40,7 +40,7 @@ class FavouriteScreen extends StatelessWidget {
                   Expanded(
                     child: GridView.builder(
                         padding: const EdgeInsets.all(0),
-                        itemCount: 4,
+                        itemCount: controller.storedFavorites?.length ?? 0,
                         gridDelegate:
                         const SliverGridDelegateWithFixedCrossAxisCount(
                             crossAxisCount: 2,
@@ -79,7 +79,7 @@ class FavouriteScreen extends StatelessWidget {
                                           height: 170,
                                           width: Get.width,
                                           fit: BoxFit.fill,
-                                          imageUrl:"https://images.pexels.com/photos/2820884/pexels-photo-2820884.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
+                                          imageUrl:controller.storedFavorites?[index] ?? "",
 
                                           placeholder: (context, url) => Container(),
                                           errorWidget: (context, url, error) => Container(),
@@ -176,7 +176,7 @@ class FavouriteScreen extends StatelessWidget {
         children: [
           InkWell(
             onTap: () {
-
+              Get.back();
             },
             child: const Icon(
               Icons.arrow_back_ios,

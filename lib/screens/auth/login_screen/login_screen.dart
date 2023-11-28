@@ -191,7 +191,9 @@ class LoginScreen extends StatelessWidget {
           SizedBox(height: Get.height * 0.03,),
           CommonButton(
               onTap: () {
-                Get.back();
+
+                Get.offAndToNamed(AppRoutes.boardsPage);
+              //  Get.back();
               },
               text: StringRes.yes),
           SizedBox(height: Get.height * 0.04,),

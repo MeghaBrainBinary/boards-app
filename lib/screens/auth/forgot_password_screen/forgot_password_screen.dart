@@ -81,6 +81,8 @@ class ForgotPasswordScreen extends StatelessWidget {
                       Center(
                         child: CommonButton(
                             onTap: () {
+                              print("vcv");
+                              controller.validateEmail();
                               if (controller.emailErrorMessage.isEmpty) {
                                 controller.resetPassword(email: controller.emailIdController.text).then((value){
                                   Get.toNamed(AppRoutes.createNewPasswordScreen);

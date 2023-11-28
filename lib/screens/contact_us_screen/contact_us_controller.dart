@@ -12,5 +12,4 @@ class ContactUsController extends GetxController {
 
   RxBool loader = false.obs;
 
-
 }

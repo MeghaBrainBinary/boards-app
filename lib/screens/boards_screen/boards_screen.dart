@@ -375,7 +375,7 @@ class BoardsScreen extends StatelessWidget {
                                 SizedBox(height: 10,),
                                 /// list dynamic
                                 // create structure of list of sublist of sublist of sublist
-                                // now
+                                // now 28
                                 (con.getBoardModelData != null)
                                     ? GetBuilder<BoardsController>(
                                         id: 'board',
