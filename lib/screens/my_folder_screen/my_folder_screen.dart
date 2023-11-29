@@ -36,7 +36,23 @@ class _MyFolderScreenState extends State<MyFolderScreen> {
   ChewieController? chewieController;
 
 
+@override
+  void initState() {
+    // TODO: implement initState
+  String userId = PrefService.getString(PrefKeys.userId);
+  if (PrefService.getList(PrefKeys.isLike + userId)?.isNotEmpty == true) {
+    myFolderController.isLike = (PrefService.getList(PrefKeys.isLike + userId) ?? [])
+        .map((liked) => liked == '1').toList();
+    print("fgfgd---------------------------------------------------${myFolderController.isLike}");
 
+    // Your additional logic here based on myFolderController.isLike
+  } else {
+    // Handle the case when myFolderController.isLike is empty
+  }
+
+
+    super.initState();
+  }
 
 /*   @override
   void initState() {
@@ -81,11 +97,7 @@ class _MyFolderScreenState extends State<MyFolderScreen> {
   @override
 
   Widget build(BuildContext context) {
-    String userId = PrefService.getString(PrefKeys.userId);
-    myFolderController.isLike = (PrefService.getList(PrefKeys.isLike + userId) ?? [])
-        .map((liked) => liked == '1')
-        .toList();
-    print("fgfgd---------------------------------------------------${myFolderController.isLike}");
+
 
     return WillPopScope(
       onWillPop: ()async{
@@ -208,11 +220,12 @@ class _MyFolderScreenState extends State<MyFolderScreen> {
                                         width: Get.width *0.75,
                                         child: PageView.builder(
                                           controller: controller.pageController,
-                                            itemCount: controller.getBoardInfoModel.data!.length,
+                                            itemCount: controller.getBoardInfoModel.data?.length ?? 0,
                                             onPageChanged: (val){
                                             controller.onImageChanged(val);
                                             },
                                             itemBuilder: (context,index){
+                                             controller.selectedIndex;
                                               return Stack(
                                                 alignment: Alignment.bottomRight,
                                                 children: [
@@ -531,7 +544,9 @@ class _MyFolderScreenState extends State<MyFolderScreen> {
                                                 ? */
                                             InkWell(
                                               onTap:(){
+                                                controller.selectedIndex = index;
                                                 controller.onTapImage();
+
                                               },
                                               child: ClipRRect(
                                                       borderRadius:
@@ -579,7 +594,7 @@ class _MyFolderScreenState extends State<MyFolderScreen> {
                                                                 if (PrefService.getBool(PrefKeys.login) == false) {
                                                                   Get.toNamed(AppRoutes.login);
                                                                 } else {
-                                                                  await toggleLike(index,controller,controller.getBoardInfoModel.data![index].image!.toString());
+                                                                  await toggleLike(index,controller,controller.getBoardInfoModel.data![index].image!.toString(),controller.getBoardInfoModel.data?[index].id ?? 0);
 
                                                                   // You can optionally check the new state of isLike from the controller
                                                                   List<String>? storedFavorites = PrefService.getList( PrefService.getString(PrefKeys.userId));
@@ -904,6 +919,8 @@ class _MyFolderScreenState extends State<MyFolderScreen> {
                   } else if (index == 4) {
                     Get.back();
                     Get.toNamed(AppRoutes.setting);
+                  }  else if (index == 5) {
+                   Get.back();
                   } else {
                     Get.back();
                     showDialogs(context);
@@ -931,7 +948,43 @@ class _MyFolderScreenState extends State<MyFolderScreen> {
 
 // ...
 
-Future<void> toggleLike(int index, MyFolderController controller, String image) async {
+Future<void> toggleLike(int index, MyFolderController controller, String image, int imageId) async {
+  try {
+    if (PrefService.getBool(PrefKeys.login) == false) {
+      Get.toNamed(AppRoutes.login);
+    } else {
+      String userId = PrefService.getString(PrefKeys.userId);
+
+      // Get the current user's favorites from shared preferences
+      List<String> favorites = PrefService.getList(userId) ?? [];
+
+      // Check if the image is already in favorites based on imageId
+      bool isAlreadyLiked = favorites.any((fav) => fav.startsWith('$imageId:'));
+
+      if (!isAlreadyLiked) {
+        // If not liked, add the image to favorites in shared preferences
+        favorites.add('$imageId:$image');
+      } else {
+        // If already liked, remove the image from favorites in shared preferences
+        favorites.removeWhere((fav) => fav.startsWith('$imageId:'));
+      }
+
+      // Save the updated favorites to shared preferences
+      PrefService.setValue(userId, favorites);
+
+      // Update the local state
+      controller.isLike[index] = !isAlreadyLiked;
+      PrefService.setValue(PrefKeys.isLike + userId, controller.isLike.map((liked) => liked ? '1' : '0').toList());
+
+      controller.update(['fldr']);
+    }
+  } catch (e) {
+    print('Error toggling like: $e');
+  }
+}
+
+
+/*Future<void> toggleLike(int index, MyFolderController controller, String image, int imageId) async {
   try {
 
     if (PrefService.getBool(PrefKeys.login) == false) {
@@ -967,7 +1020,7 @@ Future<void> toggleLike(int index, MyFolderController controller, String image) 
   } catch (e) {
     print('Error toggling like: $e');
   }
-}
+}*/
 
 
 /*Future<void> toggleLike(int index, MyFolderController controller, String image) async {

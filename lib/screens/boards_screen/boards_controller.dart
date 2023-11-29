@@ -158,6 +158,8 @@ void onInit() {
     myFolderController.isMore = false;
 
     if(myFolderController.getBoardInfoModel.data != null && myFolderController.getBoardInfoModel.data!.length != 0 ){
+      print("---------------------------->${myFolderController.getBoardInfoModel.data?.length}");
+      myFolderController.isLike = List.generate(myFolderController.getBoardInfoModel.data?.length ?? 0, (index) => false);
     if(subBoardId == null){
       //Get.toNamed(AppRoutes.myFolderPage, arguments: name);
       Get.to(()=>MyFolderScreen(boardName: name,));

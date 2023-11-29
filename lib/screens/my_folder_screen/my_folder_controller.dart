@@ -70,6 +70,7 @@ class MyFolderController extends GetxController {
   bool isSelect = false;
   bool selectedImg = false;
   bool isMore = false;
+  int selectedIndex = 0;
 
   List<String> drawerTitleList = [
     StringRes.home,
