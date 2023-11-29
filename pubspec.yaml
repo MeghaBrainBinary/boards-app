@@ -60,6 +60,8 @@ dependencies:
   cached_network_image: ^3.2.3
   flutter_tree:
   fluttertoast: ^8.2.4
+  share_plus: ^7.2.1
+  permission_handler:
 #  dots_indicator: ^3.0.0
   smooth_page_indicator: ^1.1.0
 dev_dependencies:

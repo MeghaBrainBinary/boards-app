@@ -98,24 +98,7 @@ class _MyFolderScreenState extends State<IntroScreen> {
                 ],
               ),
              // SizedBox(height: 30,),
-              InkWell(
-                onTap: () {
-                  Get.offAndToNamed(AppRoutes.languagePage);
-                },
-                child: Container(
-                  height: 40,
-                  width: 70,
-                  margin: EdgeInsets.only(top: Get.height * 0.07,   right: Get.width * 0.07),
-                  alignment: Alignment.topRight,
-                  child: Text(
-                    StringRes.skip,
-                    style: appTextStyle(
-                        color: ColorRes.black,
-                        weight: FontWeight.w400,
-                        fontSize: 15),
-                  ),
-                ),
-              ),
+
               Stack(
                 children: [
                   Container(height: 10),
@@ -137,7 +120,25 @@ class _MyFolderScreenState extends State<IntroScreen> {
                     ),
                   ),
                 ],
-              )
+              ),
+              InkWell(
+                onTap: () {
+                  Get.offAndToNamed(AppRoutes.languagePage);
+                },
+                child: Container(
+                  height: 40,
+                  width: 70,
+                  margin: EdgeInsets.only(top: Get.height * 0.07,   right: Get.width * 0.07),
+                  alignment: Alignment.topRight,
+                  child: Text(
+                    StringRes.skip,
+                    style: appTextStyle(
+                        color: ColorRes.black,
+                        weight: FontWeight.w400,
+                        fontSize: 15),
+                  ),
+                ),
+              ),
             ],
           ),
         ),
