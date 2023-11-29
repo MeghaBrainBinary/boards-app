@@ -150,9 +150,9 @@ void onInit() {
     MyFolderController myFolderController = Get.put(MyFolderController());
 
     if(subBoardId == null){
-      await myFolderController.int(id);
+      await myFolderController.myInt(id);
     } else{
-      await myFolderController.int(id, subBoardId: subBoardId);
+      await myFolderController.myInt(id, subBoardId: subBoardId);
     }
 
     myFolderController.isMore = false;

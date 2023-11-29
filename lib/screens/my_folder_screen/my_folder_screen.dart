@@ -91,6 +91,7 @@ class _MyFolderScreenState extends State<MyFolderScreen> {
       onWillPop: ()async{
         if(myFolderController.isPageView){
           myFolderController.isPageView = false;
+          myFolderController.isSelectedPageView = false;
           myFolderController.update(['fldr']);
           return false;
         }
@@ -305,7 +306,8 @@ class _MyFolderScreenState extends State<MyFolderScreen> {
                                 (!controller.isPageView && controller.isSelectedPageView)?   SizedBox(
                                   height: Get.height * 0.7,
                                   width: Get.width,
-                                  child:(controller.getBoardInfoModel?.data!=null)? GridView.builder(
+                                  child:(controller.getBoardInfoModel?.data!=null)?
+                               /*   GridView.builder(
                                       padding: const EdgeInsets.all(0),
                                       itemCount: controller.getBoardInfoModel?.data?.length ?? 0,
                                       gridDelegate:
@@ -404,7 +406,108 @@ class _MyFolderScreenState extends State<MyFolderScreen> {
                                             ),
                                           ],
                                         );
-                                      }):const SizedBox(),
+                                      })*/
+                                  GridView.builder(
+                                    padding: const EdgeInsets.all(0),
+                                    itemCount: controller.getBoardInfoModel?.data?.length ?? 0,
+                                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                                      crossAxisCount: 2,
+                                      mainAxisSpacing: 6,
+                                      crossAxisSpacing: 19,
+                                    ),
+                                    itemBuilder: (context, index) {
+                                      return Stack(
+                                        alignment: Alignment.bottomRight,
+                                        children: [
+                                          InkWell(
+                                            onTap: () {
+                                              if (myFolderController.addSelectedImage[index] == false) {
+                                                myFolderController.addSelectedImage[index] = true;
+                                              } else {
+                                                myFolderController.addSelectedImage[index] = false;
+                                              }
+                                              myFolderController.update(['fldr']);
+                                            },
+                                            child: ClipRRect(
+                                              borderRadius: BorderRadius.circular(5),
+                                              child: Container(
+                                                height: Get.height * 0.199,
+                                                width: Get.width * 0.45,
+                                                padding: (myFolderController.checkImg[index] == false)
+                                                    ? const EdgeInsets.all(0)
+                                                    : const EdgeInsets.all(2),
+                                                decoration: BoxDecoration(
+                                                  color: myFolderController.checkImg[index] == true
+                                                      ? ColorRes.color305EBE
+                                                      : Colors.transparent,
+                                                  border: Border.all(
+                                                    color: myFolderController.checkImg[index] == true
+                                                        ? ColorRes.color305EBE
+                                                        : Colors.white,
+                                                  ),
+                                                  borderRadius: BorderRadius.circular(5),
+                                                ),
+                                                child: Stack(
+                                                  alignment: Alignment.bottomRight,
+                                                  children: [
+                                                    CachedNetworkImage(
+                                                      width: Get.width,
+                                                      fit: BoxFit.fitWidth,
+                                                      imageUrl: controller.getBoardInfoModel?.data?[index].image ?? "",
+                                                      placeholder: (context, url) => Container(),
+                                                      errorWidget: (context, url, error) => Container(),
+                                                    ),
+                                                    myFolderController.addSelectedImage[index] == true
+                                                        ? Padding(
+                                                      padding: const EdgeInsets.only(bottom: 10, right: 10),
+                                                      child: Image.asset(
+                                                        AssetRes.selectedImage,
+                                                        scale: 4,
+                                                      ),
+                                                    )
+                                                        : SizedBox(),
+                                                  ],
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                          (myFolderController.isSelect == false)
+                                              ? const SizedBox()
+                                              : InkWell(
+                                            onTap: () {
+                                              myFolderController.onTapCheck(
+                                                  myFolderController.getBoardInfoModel.data![index].image,
+                                                  index);
+                                            },
+                                            child: Container(
+                                              margin: const EdgeInsets.only(right: 10, bottom: 10),
+                                              height: 25,
+                                              width: 25,
+                                              decoration: BoxDecoration(
+                                                color: ColorRes.white,
+                                                shape: BoxShape.circle,
+                                              ),
+                                              child: (myFolderController.checkImg[index] == false)
+                                                  ? const SizedBox()
+                                                  : SizedBox(
+                                                height: 8,
+                                                width: 11,
+                                                child: Transform.scale(
+                                                  scale: 0.6,
+                                                  child: Icon(
+                                                    Icons.check_rounded,
+                                                    color: ColorRes.color305EBE,
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      );
+                                    },
+                                  )
+
+                                     :const SizedBox(),
                                 )
                                     :
                                 SizedBox(
@@ -611,6 +714,7 @@ class _MyFolderScreenState extends State<MyFolderScreen> {
 
                                     InkWell(
                                       onTap: (){
+                                        Get.toNamed(AppRoutes.favourite);
                                       },
                                       child: const SizedBox(
                                           height: 23,
@@ -634,7 +738,16 @@ class _MyFolderScreenState extends State<MyFolderScreen> {
 
                                     InkWell(
                                       onTap: ()async{
-                                        controller.onTapShare();
+                                        if(controller.isSelectedPageView==false)
+                                          {
+                                            controller.onTapShare();
+                                          }
+                                        else
+                                          {
+                                            controller.onSelectedTapShare();
+                                          }
+
+
                                        // Share.share();
                                         // controller.simg.forEach((element) {
                                         //
@@ -780,16 +893,22 @@ class _MyFolderScreenState extends State<MyFolderScreen> {
                     Get.back();
                   }
                   else if (index == 1) {
+                    Get.back();
                     Get.toNamed(AppRoutes.languageConfirmPage);
                   } else if (index == 2) {
+                    Get.back();
                     Get.toNamed(AppRoutes.favourite);
                   } else if (index == 3) {
+                    Get.back();
                     Get.toNamed(AppRoutes.contactUs);
                   } else if (index == 4) {
+                    Get.back();
                     Get.toNamed(AppRoutes.setting);
                   } else {
+                    Get.back();
                     showDialogs(context);
                   }
+
                 },
                  leading: Image.asset(myFolderController.drawerImageList[index],scale: 4,),
                   title: Text(myFolderController.drawerTitleList[index]),

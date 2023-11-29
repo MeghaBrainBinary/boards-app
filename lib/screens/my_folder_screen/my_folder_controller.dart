@@ -1,3 +1,9 @@
+
+
+import 'dart:core';
+
+
+import 'package:boards_app/common/toast_msg.dart';
 import 'package:boards_app/screens/my_folder_screen/api/get_board_info.dart';
 import 'package:boards_app/screens/my_folder_screen/model/get_board_info_model.dart';
 import 'package:boards_app/services/pref_services.dart';
@@ -43,7 +49,7 @@ class MyFolderController extends GetxController {
 
   }
 
-  int(String id, {String? subBoardId})async{
+  myInt(String id, {String? subBoardId})async{
     loader.value = true;
     if(subBoardId == null){
       getBoardInfoModel = await GetBoardInfoApi.getBoardInfoApi(id);
@@ -235,6 +241,49 @@ loader.value= false;
       update(['fldr']);
     }
   }
+  onSelectedTapShare() async {
+    if(addSelectedImage.any((selected) => selected)){
+
+
+    loader.value = true;
+
+    List<String> selectedImages = [];
+
+    for (int i = 0; i < addSelectedImage.length; i++) {
+      if (addSelectedImage[i]) {
+        selectedImages.add(getBoardInfoModel.data?[i].image ?? "");
+      }
+    }
+
+    if (selectedImages.isNotEmpty) {
+      try {
+        // Share the selected images
+        for (String selectedImage in selectedImages) {
+          http.Response response = await http.get(Uri.parse(selectedImage));
+          final bytes = response.bodyBytes;
+
+          await WcFlutterShare.share(
+            sharePopupTitle: 'share',
+            fileName: "share.${selectedImage.split(".").last}",
+            mimeType: 'image/${selectedImage.split(".").last}',
+            bytesOfFile: bytes,
+          );
+        }
+      } catch (e) {
+        print(e.toString());
+      }
+
+      loader.value = false;
+      // myFolderController.resetSelectedImages();
+      update(['fldr']);
+    }
+    }
+    else
+      {
+        errorTost("Please select an image to share");
+      }
+  }
+
 
   @override
   void dispose() {
