@@ -58,6 +58,9 @@ class SignUpScreen extends StatelessWidget {
                           onChanged: (value) => controller.setUser(value),
                           hintText: StringRes.userName,PrefixIcon: AssetRes.userIcon),
                       // user validation
+                      SizedBox(
+                        height: Get.height * 0.01,
+                      ),
                       controller
                           .userErrorMessage.isEmpty
                           ? const SizedBox()
@@ -73,6 +76,9 @@ class SignUpScreen extends StatelessWidget {
                           onChanged: (value) => controller.setEmail(value),
                           hintText: StringRes.emailID,PrefixIcon: AssetRes.emailIcon),
                       // email id validation
+                      SizedBox(
+                        height: Get.height * 0.01,
+                      ),
                       controller
                           .emailErrorMessage.isEmpty
                           ? const SizedBox()
@@ -98,6 +104,9 @@ class SignUpScreen extends StatelessWidget {
                           obscureText: controller.isObscureText,
                           onChanged: (value) => controller.setPassword(value),
                           controller: controller.passwordController,isShowViciblity: true,hintText: StringRes.password,PrefixIcon: AssetRes.fileLoke),
+                      SizedBox(
+                        height: Get.height * 0.01,
+                      ),
                       // validation
                       controller
                           .passwordErrorMessage.isEmpty
@@ -125,6 +134,9 @@ class SignUpScreen extends StatelessWidget {
                           obscureText: controller.isObscureConfirmText,
                           onChanged: (value) => controller.setConfirmNewPassword(value),
                           controller: controller.confirmPasswordController,isShowViciblity: true,hintText: StringRes.confirmPassword,PrefixIcon: AssetRes.fileLoke),
+                      SizedBox(
+                        height: Get.height * 0.01,
+                      ),
                       // validation
                       controller
                           .confirmPasswordErrorMessage.isEmpty

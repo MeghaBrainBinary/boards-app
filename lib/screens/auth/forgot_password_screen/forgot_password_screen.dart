@@ -65,6 +65,9 @@ class ForgotPasswordScreen extends StatelessWidget {
                       CommonTextFeild(controller: controller.emailIdController,
                           onChanged: (value) => controller.setEmail(value),
                           hintText: StringRes.emailID,PrefixIcon: AssetRes.emailIcon),
+                      SizedBox(
+                        height: Get.height * 0.01,
+                      ),
                       controller
                           .emailErrorMessage.isEmpty
                           ? const SizedBox()

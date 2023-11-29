@@ -190,6 +190,7 @@ class _MyFolderScreenState extends State<MyFolderScreen> {
                                     Text('${myFolderController.addSelectedImage.where((e) => e == true).length} ${StringRes.imageSelected}',style: appTextStyle(color: ColorRes.black,fontSize: 13,weight: FontWeight.w600),),
                                     GestureDetector(onTap: () {
                                       myFolderController.addSelectedImage = List.generate( controller.getBoardInfoModel.data?.length ?? 0, (index) => false);
+                                      controller.isSelectedPageView = false;
                                       controller.update(['fldr']);
                                     },child: Text(StringRes.cancel,style: appTextStyle(color: ColorRes.color305EBE,fontSize: 15,weight: FontWeight.w500),)),
                                   ],
@@ -596,7 +597,7 @@ class _MyFolderScreenState extends State<MyFolderScreen> {
                                                         height: 20,
                                                         width: 20,
                                                         margin: EdgeInsets.only(top: 12, right: 12),
-                                                        decoration: BoxDecoration(
+                                                        decoration: const BoxDecoration(
                                                           borderRadius: BorderRadius.all(Radius.circular(5)),
                                                           color: Colors.white,
                                                         ),
@@ -653,138 +654,138 @@ class _MyFolderScreenState extends State<MyFolderScreen> {
                           ),
                         ],
                       ),
-          // (controller.isPageView ==false && controller.isSelectedPageView == false)
-          //                 ? const SizedBox()
-          //                 : Container(
-          //                     height: 50,
-          //                     width: Get.width,
-          //                     color: ColorRes.color305EBE,
-          //                     child: Padding(
-          //                       padding: const EdgeInsets.symmetric(horizontal: 50),
-          //                       child: Row(
-          //                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          //                         children: [
-          //                           // const SizedBox(
-          //                           //   height: 23,
-          //                           //   width: 23,
-          //                           // ),
-          //                           // SizedBox(
-          //                           //   width: Get.width * 0.06,
-          //                           // ),
-          //                           // const SizedBox(
-          //                           //   height: 23,
-          //                           //   width: 23,
-          //                           // ),
-          //                           // SizedBox(
-          //                           //   width: Get.width * 0.06,
-          //                           // ),
-          //
-          //                           InkWell(
-          //                             onTap: (){
-          //                               Get.toNamed(AppRoutes.favourite);
-          //                             },
-          //                             child: const SizedBox(
-          //                                 height: 23,
-          //                                 width: 23,
-          //                                 child: Icon(Icons.favorite_outline_sharp,color: Colors.white,size: 25,)),
-          //                           ),
-          //
-          //                           // SizedBox(
-          //                           //   width: Get.width * 0.06,
-          //                           // ),
-          //
-          //                           InkWell(
-          //                             onTap: (){
-          //                               if(controller.isSelectedPageView==false)
-          //                                 {
-          //                                   controller.saveImage();
-          //                                 }
-          //                               else
-          //                                 {
-          //                                   controller.saveSelectedImages();
-          //                                 }
-          //
-          //
-          //                             },
-          //                             child: const SizedBox(
-          //                                 height: 23,
-          //                                 width: 23,
-          //                                 child: Icon(Icons.file_download_outlined,color: Colors.white,size: 25,)),
-          //                           ),
-          //
-          //                           InkWell(
-          //                             onTap: ()async{
-          //                               if(controller.isSelectedPageView==false)
-          //                                 {
-          //                                   controller.onTapShare();
-          //                                 }
-          //                               else
-          //                                 {
-          //                                   controller.onSelectedTapShare();
-          //                                 }
-          //
-          //
-          //                              // Share.share();
-          //                               // controller.simg.forEach((element) {
-          //                               //
-          //                               // Share.share(element);
-          //                               // });
-          //                               // List<ShareItParameters> list =[];
-          //                               // controller.simg.forEach((element) {
-          //                               //   list.add(ShareItParameters(type: ShareItFileType.image,path: element));
-          //                               // });
-          //                               // ShareIt.list(parameters: list);
-          //
-          //                              // ShareExtend.shareMultiple(controller.simg, 'image');
-          //                            //   List i = [];
-          //                            // controller.simg.forEach((element) async{
-          //                            //  ByteData b = await rootBundle.load(element);
-          //                            //  Map io ={
-          //                            //    "image":element,
-          //                            //    "byteData":b
-          //                            //  };
-          //                            //   i.add(io);
-          //                            // });
-          //                            // Map data= {};
-          //                            //
-          //                            // i.forEach((element) {
-          //                            //   data['element'] = element['byteData'].buffer.asUint8List();
-          //                            // });
-          //                            //
-          //                            // print(data);
-          //                               // await
-          //                               // VocsyShare.files('esys images',
-          //                               //     {
-          //                               //     'esys.png': bytes1.buffer.asUint8List(),
-          //                               //     'bluedan.png': bytes2.buffer.asUint8List(),
-          //                               //     'addresses.csv': bytes3.buffer.asUint8List(),
-          //                               //     },
-          //                               //     '*/*',
-          //                               //     text: 'My optional text.'
-          //                               // );
-          //
-          //                               // Map i ={};
-          //                               // List bufferData=[];
-          //                               // controller.simg.forEach((element) async{
-          //                               //   await rootBundle.load(element);
-          //                               // });
-          //                             //  VocsyShare.files(, files, mimeType)
-          //                             },
-          //                             child: SizedBox(
-          //                                 height: 23,
-          //                                 width: 23,
-          //                                 child: Image.asset(AssetRes.shareIcon)),
-          //                           ),
-          //
-          //
-          //
-          //                           // SizedBox(
-          //                           //   width: Get.width * 0.06,
-          //                           // ),
-          //                         ],
-          //                       ),
-          //                     ),
-          //                   ),
+          (controller.isPageView ==false)
+                          ? const SizedBox()
+                          : Container(
+                              height: 50,
+                              width: Get.width,
+                              color: ColorRes.color305EBE,
+                              child: Padding(
+                                padding: const EdgeInsets.symmetric(horizontal: 50),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    // const SizedBox(
+                                    //   height: 23,
+                                    //   width: 23,
+                                    // ),
+                                    // SizedBox(
+                                    //   width: Get.width * 0.06,
+                                    // ),
+                                    // const SizedBox(
+                                    //   height: 23,
+                                    //   width: 23,
+                                    // ),
+                                    // SizedBox(
+                                    //   width: Get.width * 0.06,
+                                    // ),
+
+                                    InkWell(
+                                      onTap: (){
+                                        Get.toNamed(AppRoutes.favourite);
+                                      },
+                                      child: const SizedBox(
+                                          height: 23,
+                                          width: 23,
+                                          child: Icon(Icons.favorite_outline_sharp,color: Colors.white,size: 25,)),
+                                    ),
+
+                                    // SizedBox(
+                                    //   width: Get.width * 0.06,
+                                    // ),
+
+                                    InkWell(
+                                      onTap: (){
+                                        // if(controller.isSelectedPageView==false)
+                                        //   {
+                                            controller.saveImage();
+                                      //    }
+                                      //   else
+                                      //     {
+                                      //       controller.saveSelectedImages();
+                                      //     }
+
+
+                                      },
+                                      child: const SizedBox(
+                                          height: 23,
+                                          width: 23,
+                                          child: Icon(Icons.file_download_outlined,color: Colors.white,size: 25,)),
+                                    ),
+
+                                    InkWell(
+                                      onTap: ()async{
+                                        // if(controller.isSelectedPageView==false)
+                                        //   {
+                                            controller.onTapShare();
+                                        //   }
+                                        // else
+                                        //   {
+                                         //   controller.onSelectedTapShare();
+                                          // }
+
+
+                                       // Share.share();
+                                        // controller.simg.forEach((element) {
+                                        //
+                                        // Share.share(element);
+                                        // });
+                                        // List<ShareItParameters> list =[];
+                                        // controller.simg.forEach((element) {
+                                        //   list.add(ShareItParameters(type: ShareItFileType.image,path: element));
+                                        // });
+                                        // ShareIt.list(parameters: list);
+
+                                       // ShareExtend.shareMultiple(controller.simg, 'image');
+                                     //   List i = [];
+                                     // controller.simg.forEach((element) async{
+                                     //  ByteData b = await rootBundle.load(element);
+                                     //  Map io ={
+                                     //    "image":element,
+                                     //    "byteData":b
+                                     //  };
+                                     //   i.add(io);
+                                     // });
+                                     // Map data= {};
+                                     //
+                                     // i.forEach((element) {
+                                     //   data['element'] = element['byteData'].buffer.asUint8List();
+                                     // });
+                                     //
+                                     // print(data);
+                                        // await
+                                        // VocsyShare.files('esys images',
+                                        //     {
+                                        //     'esys.png': bytes1.buffer.asUint8List(),
+                                        //     'bluedan.png': bytes2.buffer.asUint8List(),
+                                        //     'addresses.csv': bytes3.buffer.asUint8List(),
+                                        //     },
+                                        //     '*/*',
+                                        //     text: 'My optional text.'
+                                        // );
+
+                                        // Map i ={};
+                                        // List bufferData=[];
+                                        // controller.simg.forEach((element) async{
+                                        //   await rootBundle.load(element);
+                                        // });
+                                      //  VocsyShare.files(, files, mimeType)
+                                      },
+                                      child: SizedBox(
+                                          height: 23,
+                                          width: 23,
+                                          child: Image.asset(AssetRes.shareIcon)),
+                                    ),
+
+
+
+                                    // SizedBox(
+                                    //   width: Get.width * 0.06,
+                                    // ),
+                                  ],
+                                ),
+                              ),
+                            ),
 
 
                     ],

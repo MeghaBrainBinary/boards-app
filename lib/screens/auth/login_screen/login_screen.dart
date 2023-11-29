@@ -56,6 +56,9 @@ class LoginScreen extends StatelessWidget {
                       CommonTextFeild(controller: controller.emailIdController,
                           onChanged: (value) => controller.setEmail(value),
                           hintText: StringRes.emailID,PrefixIcon: AssetRes.emailIcon),
+                      SizedBox(
+                        height: Get.height * 0.01,
+                      ),
                       controller
                           .emailErrorMessage.isEmpty
                           ? const SizedBox()
@@ -82,6 +85,9 @@ class LoginScreen extends StatelessWidget {
                           onChanged: (value) => controller.setPassword(value),
                           controller: controller.passwordController,isShowViciblity: true,hintText: StringRes.password,PrefixIcon: AssetRes.fileLoke),
                       // validation
+                      SizedBox(
+                        height: Get.height * 0.01,
+                      ),
                       controller
                           .passwordErrorMessage.isEmpty
                           ? const SizedBox()
