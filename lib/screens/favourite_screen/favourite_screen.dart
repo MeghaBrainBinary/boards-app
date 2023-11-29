@@ -79,7 +79,7 @@ class FavouriteScreen extends StatelessWidget {
                                           height: 170,
                                           width: Get.width,
                                           fit: BoxFit.fill,
-                                          imageUrl:controller.storedFavorites?[index] ?? "",
+                                          imageUrl:controller.storedFavorites?[index]?.replaceAll(RegExp(r'^\d+:'), '') ?? "",
 
                                           placeholder: (context, url) => Container(),
                                           errorWidget: (context, url, error) => Container(),

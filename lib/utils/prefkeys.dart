@@ -5,6 +5,7 @@ class PrefKeys{
   static const code ="code";
   static const login ="login";
   static const userId ="userId";
+  static const imageId ="imageId";
   static const isLike ="isLike";
   static const userLikes ="userLikes";
 

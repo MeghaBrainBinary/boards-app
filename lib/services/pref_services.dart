@@ -19,6 +19,7 @@ class PrefService {
       await _prefs.setBool(key, value);
     } else if (value is List<String>) {
       await _prefs.setStringList(key, value);
+      await _prefs.setStringList(key, value);
     } else {
       // showToast(Strings.prefsError);
     }

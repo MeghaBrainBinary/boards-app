@@ -36,23 +36,24 @@ class _MyFolderScreenState extends State<MyFolderScreen> {
   ChewieController? chewieController;
 
 
-@override
-  void initState() {
-    // TODO: implement initState
-  String userId = PrefService.getString(PrefKeys.userId);
-  if (PrefService.getList(PrefKeys.isLike + userId)?.isNotEmpty == true) {
-    myFolderController.isLike = (PrefService.getList(PrefKeys.isLike + userId) ?? [])
-        .map((liked) => liked == '1').toList();
-    print("fgfgd---------------------------------------------------${myFolderController.isLike}");
-
-    // Your additional logic here based on myFolderController.isLike
-  } else {
-    // Handle the case when myFolderController.isLike is empty
-  }
-
-
-    super.initState();
-  }
+// @override
+//   void initState() {
+//     // TODO: implement initState
+//   String userId = PrefService.getString(PrefKeys.userId);
+//   String imageId = PrefService.getString(PrefKeys.imageId);
+//   if (PrefService.getList(PrefKeys.isLike + userId)?.isNotEmpty == true) {
+//     myFolderController.isLike = (PrefService.getList(PrefKeys.isLike + userId) ?? [])
+//         .map((liked) => liked == '1').toList();
+//     print("fgfgd---------------------------------------------------${myFolderController.isLike}");
+//
+//     // Your additional logic here based on myFolderController.isLike
+//   } else {
+//     // Handle the case when myFolderController.isLike is empty
+//   }
+//
+//
+//     super.initState();
+//   }
 
 /*   @override
   void initState() {
@@ -115,8 +116,8 @@ class _MyFolderScreenState extends State<MyFolderScreen> {
         }
       },
       child: Scaffold(
-        resizeToAvoidBottomInset: false,
         key: myFolderController.scaffoldKey,
+        resizeToAvoidBottomInset: false,
         body: GetBuilder<MyFolderController>(
           id: 'fldr',
           builder: (controller) => Stack(
@@ -526,172 +527,123 @@ class _MyFolderScreenState extends State<MyFolderScreen> {
                                 SizedBox(
                                   height: Get.height * 0.7,
                                   width: Get.width,
-                                  child:(controller.getBoardInfoModel.data!=null)? GridView.builder(
-                                      padding: const EdgeInsets.all(0),
-                                      itemCount: controller.getBoardInfoModel.data!.length,
-                                      gridDelegate:
-                                          const SliverGridDelegateWithFixedCrossAxisCount(
-                                              crossAxisCount: 2,
-                                              mainAxisSpacing: 6,
-                                              crossAxisSpacing: 19),
-                                      itemBuilder: (context, index) {
+                                  child:(controller.getBoardInfoModel.data!=null)?GridView.builder(
+                                    padding: const EdgeInsets.all(0),
+                                    itemCount: controller.getBoardInfoModel.data!.length,
+                                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                                      crossAxisCount: 2,
+                                      mainAxisSpacing: 6,
+                                      crossAxisSpacing: 19,
+                                    ),
+                                    itemBuilder: (context, index) {
+                                      String userId = PrefService.getString(PrefKeys.userId);
+                                      String? imageId = controller.getBoardInfoModel.data?[index].id.toString();
 
-                                        return Stack(
-                                          alignment: Alignment.bottomRight,
-                                          children: [
-                                           /* (controller.folderImgs[index]['type'] ==
-                                                    'img')
-                                                ? */
-                                            InkWell(
-                                              onTap:(){
-                                                controller.selectedIndex = index;
-                                                controller.onTapImage();
+                                      // Fetch likes information only once
+                                      if (controller.isLike.isEmpty) {
+                                        if (PrefService.getList(PrefKeys.isLike + userId)?.isNotEmpty == true) {
+                                          controller.isLike = (PrefService.getList(PrefKeys.isLike + userId) ?? [])
+                                              .map((liked) => liked == '1').toList();
+                                        } else {
+                                          // Handle the case when controller.isLike is empty
+                                          // For example, you might want to set default values or display a message.
+                                        }
+                                      }
 
-                                              },
-                                              child: ClipRRect(
-                                                      borderRadius:
-                                                          BorderRadius.circular(5),
+                                      String likeStatus = PrefService.getString('$imageId:$userId') ?? (controller.isLike[index] ? '1' : '0');
+
+                                      return Stack(
+                                        alignment: Alignment.bottomRight,
+                                        children: [
+                                          InkWell(
+                                            onTap: () {
+                                              controller.selectedIndex = index;
+                                              controller.onTapImage();
+                                            },
+                                            child: ClipRRect(
+                                              borderRadius: BorderRadius.circular(5),
+                                              child: Container(
+                                                height: Get.height * 0.199,
+                                                width: Get.width * 0.45,
+                                                padding: (controller.checkImg[index] == false)
+                                                    ? const EdgeInsets.all(0)
+                                                    : const EdgeInsets.all(2),
+                                                decoration: BoxDecoration(
+                                                  color: Colors.white,
+                                                  borderRadius: BorderRadius.circular(5),
+                                                ),
+                                                child: Stack(
+                                                  alignment: Alignment.topRight,
+                                                  children: [
+                                                    CachedNetworkImage(
+                                                      width: Get.width,
+                                                      fit: BoxFit.fitWidth,
+                                                      imageUrl: controller.getBoardInfoModel.data![index].image!.toString(),
+                                                      placeholder: (context, url) => Container(),
+                                                      errorWidget: (context, url, error) => Container(),
+                                                    ),
+                                                    GestureDetector(
+                                                      onTap: () async {
+                                                        if (PrefService.getBool(PrefKeys.login) == false) {
+                                                          Get.toNamed(AppRoutes.login);
+                                                        } else {
+                                                          await toggleLike(index, controller, controller.getBoardInfoModel.data![index].image!.toString(), controller.getBoardInfoModel.data?[index].id ?? 0);
+                                                          controller.update(['fldr']);
+                                                        }
+                                                        controller.update(['fldr']);
+                                                      },
                                                       child: Container(
-                                                        height: Get.height * 0.199,
-                                                        width: Get.width * 0.45,
-                                                        padding: (controller
-                                                                    .checkImg[index] ==
-                                                                false)
-                                                            ? const EdgeInsets.all(0)
-                                                            : const EdgeInsets.all(2),
+                                                        height: 20,
+                                                        width: 20,
+                                                        margin: EdgeInsets.only(top: 12, right: 12),
                                                         decoration: BoxDecoration(
+                                                          borderRadius: BorderRadius.all(Radius.circular(5)),
                                                           color: Colors.white,
-                                                          borderRadius:
-                                                              BorderRadius.circular(5),
                                                         ),
-                                                        child: Stack(alignment: Alignment.topRight,
-                                                          children: [
-                                                            CachedNetworkImage(
-                                                              width: Get.width,
-                                                              fit: BoxFit.fitWidth,
-                                                              imageUrl:controller.getBoardInfoModel.data![index].image!.toString(),
-
-                                                              placeholder: (context, url) => Container(),
-                                                              errorWidget: (context, url, error) => Container(),
-                                                            ),
-                                                            GestureDetector(
-                                                              onTap: () async {
-                                                                // if(PrefService.getBool(PrefKeys.login)==false)
-                                                                //   {
-                                                                //     Get.toNamed( AppRoutes.login);
-                                                                //   }
-                                                                // else
-                                                                //   {
-                                                                //     if(  controller.isLike[index]==false)
-                                                                //     {
-                                                                //       controller.isLike[index]=true;
-                                                                //     }
-                                                                //     else
-                                                                //     {
-                                                                //       controller.isLike[index]=false;
-                                                                //     }
-                                                                //   }
-                                                                if (PrefService.getBool(PrefKeys.login) == false) {
-                                                                  Get.toNamed(AppRoutes.login);
-                                                                } else {
-                                                                  await toggleLike(index,controller,controller.getBoardInfoModel.data![index].image!.toString(),controller.getBoardInfoModel.data?[index].id ?? 0);
-
-                                                                  // You can optionally check the new state of isLike from the controller
-                                                                  List<String>? storedFavorites = PrefService.getList( PrefService.getString(PrefKeys.userId));
-                                                                  print("storedFavorites--> ${storedFavorites}");
-                                                                  controller.update(['fldr']);
-                                                                }
-                                                              controller.update(['fldr']);
-                                                              },
-                                                              child: Container(height: 20,width: 20,
-                                                                margin: EdgeInsets.only(top: 12,right: 12),
-                                                                decoration: const BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(5)),
-                                                                    color: Colors.white),
-                                                              child:  controller.isLike[index]==true? Icon(Icons.favorite_outlined,size: 18,color: ColorRes.colorE16F55,):Icon(Icons.favorite_outline_sharp,size: 18,),
-                                                              ),
-                                                            ),
-                                                          ],
-                                                        ),
-                                                        // child: Image.network(
-                                                        //   controller.getBoardInfoModel.data![index]
-                                                        //       .image!.toString(),
-                                                        //   fit: BoxFit.cover,
-                                                        // ),
+                                                        child: likeStatus == '1'
+                                                            ? Icon(Icons.favorite_outlined, size: 18, color: ColorRes.colorE16F55)
+                                                            : Icon(Icons.favorite_outline_sharp, size: 18),
                                                       ),
                                                     ),
+                                                  ],
+                                                ),
+                                              ),
                                             ),
-                                                /*: Stack(
-                                                    alignment: Alignment.center,
-                                                    children: [
-                                                      ClipRRect(
-                                                        borderRadius:
-                                                            BorderRadius.circular(5),
-                                                        child: Container(
-                                                          height: Get.height * 0.199,
-                                                          width: Get.width * 0.45,
-                                                          padding: (controller
-                                                                          .checkImg[
-                                                                      index] ==
-                                                                  false)
-                                                              ? const EdgeInsets.all(
-                                                                  0)
-                                                              : const EdgeInsets.all(
-                                                                  2),
-                                                          color: ColorRes.color305EBE,
-                                                          child: Image.asset(
-                                                            controller
-                                                                    .folderImgs[index]
-                                                                ['url'],
-                                                            fit: BoxFit.cover,
-                                                          ),
-                                                          // VideoPlayer(
-                                                          //     videoPlayerController),
-                                                        ),
-                                                      ),
-                                                      SizedBox(
-                                                          height: 30,
-                                                          width: 30,
-                                                          child: Image.asset(
-                                                            AssetRes.playIcon,
-                                                          ))
-                                                    ],
-                                                  ),*/
-                                            (controller.isSelect == false)
-                                                ? const SizedBox()
-                                                : InkWell(
-                                                    onTap: () {
-                                                      controller.onTapCheck(controller.getBoardInfoModel.data![index].image,index);
-                                                    },
-                                                    child: Container(
-                                                      margin: const EdgeInsets.only(
-                                                          right: 10, bottom: 10),
-                                                      height: 25,
-                                                      width: 25,
-                                                      decoration: BoxDecoration(
-                                                        color: ColorRes.white,
-                                                        shape: BoxShape.circle,
-                                                      ),
-                                                      child: (controller
-                                                                  .checkImg[index] ==
-                                                              false)
-                                                          ? const SizedBox()
-                                                          : SizedBox(
-                                                              height: 8,
-                                                              width: 11,
-                                                              child: Transform.scale(
-                                                                scale: 0.6,
-                                                                child: Icon(
-                                                                  Icons.check_rounded,
-                                                                  color: ColorRes
-                                                                      .color305EBE,
-                                                                ),
-                                                              ),
-                                                            ),
-                                                    ),
+                                          ),
+                                          (controller.isSelect == false)
+                                              ? const SizedBox()
+                                              : InkWell(
+                                            onTap: () {
+                                              controller.onTapCheck(controller.getBoardInfoModel.data![index].image, index);
+                                            },
+                                            child: Container(
+                                              margin: const EdgeInsets.only(right: 10, bottom: 10),
+                                              height: 25,
+                                              width: 25,
+                                              decoration: BoxDecoration(
+                                                color: ColorRes.white,
+                                                shape: BoxShape.circle,
+                                              ),
+                                              child: (controller.checkImg[index] == false)
+                                                  ? const SizedBox()
+                                                  : SizedBox(
+                                                height: 8,
+                                                width: 11,
+                                                child: Transform.scale(
+                                                  scale: 0.6,
+                                                  child: Icon(
+                                                    Icons.check_rounded,
+                                                    color: ColorRes.color305EBE,
                                                   ),
-                                          ],
-                                        );
-                                      }):const SizedBox(),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      );
+                                    },
+                                  )
+        :const SizedBox(),
                                 ),
 
 
@@ -983,8 +935,8 @@ Future<void> toggleLike(int index, MyFolderController controller, String image, 
 
       // Update the local state
       controller.isLike[index] = !isAlreadyLiked;
-      PrefService.setValue(PrefKeys.isLike + userId, controller.isLike.map((liked) => liked ? '1' : '0').toList());
-
+   //   PrefService.setValue(PrefKeys.isLike + userId, controller.isLike.map((liked) => liked ? '1' : '0').toList());
+      PrefService.setValue('$imageId:$userId', controller.isLike[index] ? '1' : '0');
       controller.update(['fldr']);
     }
   } catch (e) {
