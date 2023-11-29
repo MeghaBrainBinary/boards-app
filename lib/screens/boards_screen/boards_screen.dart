@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:boards_app/common/common_button.dart';
 import 'package:boards_app/common/common_loader.dart';
 import 'package:boards_app/screens/boards_screen/boards_controller.dart';
 import 'package:boards_app/utils/approutes.dart';
@@ -21,7 +22,8 @@ class BoardsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async {
-        exit(0);
+        showDialogs(context);
+        return false;
       },
       child: Scaffold(
         body: Stack(
@@ -682,6 +684,52 @@ class BoardsScreen extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+
+
+  void showDialogs(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return SimpleDialog(contentPadding: EdgeInsets.symmetric(horizontal: 20),children: [
+          SizedBox(height: Get.height * 0.04,),
+
+          Text(StringRes.areYouSureExit,textAlign: TextAlign.center,style: appTextStyle(weight: FontWeight.w500,fontSize: 20,color: Colors.black),),
+          SizedBox(height: Get.height * 0.03,),
+          Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,children: [
+            Expanded(
+              child: CommonButton(
+                  onTap: () {
+                   exit(0);
+                  },
+                  text: StringRes.yes),
+            ),
+            SizedBox(width: Get.width * 0.01,),
+            Expanded(
+              child: GestureDetector(
+                onTap: () {
+                  Get.back();
+                },
+                child: Container(
+                  alignment: Alignment.center,
+                  height:  50,
+                  width: 234,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(5),
+                      border: Border.all(color: ColorRes.color305EBE)
+                  ),
+                  child: Text(
+                    StringRes.no,
+                    style: appTextStyle(color: ColorRes.color305EBE,fontSize: 18, weight: FontWeight.w600),
+                  ),
+                ),
+              ),
+            ),
+          ],),
+          SizedBox(height: Get.height * 0.04,),
+        ],);
+      },
     );
   }
 }

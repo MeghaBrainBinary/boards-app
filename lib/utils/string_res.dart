@@ -37,6 +37,7 @@ class StringRes {
   static String password = "Password".tr;
   static String areYouSure = "Are you sure you want to Delete Account?".tr;
   static String areYouSureLogOut = "Are you sure want to Log Out?".tr;
+  static String areYouSureExit = "Are you sure want to Exit?".tr;
 
   ///______________________________ Contact Us screen ______________________________///
   static String contactUs = "Contact Us".tr;
