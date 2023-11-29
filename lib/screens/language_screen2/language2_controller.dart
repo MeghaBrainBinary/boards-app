@@ -13,7 +13,7 @@ import 'package:get/get.dart';
 class Language2Controller2 extends GetxController {
   TextEditingController searchController = TextEditingController();
 RxBool loader = false.obs;
-  List<bool> isCheck = List.generate(9, (index) => false);
+
 GetBoardModel getBoardModel  = GetBoardModel();
 List filterList =[];
   List language = [
@@ -27,10 +27,25 @@ List filterList =[];
     StringRes.englishUk.tr,
     StringRes.japanese.tr,
   ];
+  List<bool> isCheck =[];
 
   String selectedLanguage="English";
   String languageCode ="en";
 
+
+  @override
+  void onInit() {
+    // TODO: implement onInit
+    super.onInit();
+    isCheck = List.generate(language.length, (index) => false);
+    // language.forEach((element) {
+    //
+    // if(PrefService.getString(PrefKeys.language) ==element)
+    //   {
+    //     isCheck[language.indexOf(element)] = true;
+    //   }
+    // });
+  }
 
   onSearch(dynamic val) {
     filterList = [];
@@ -38,7 +53,7 @@ List filterList =[];
       if(element.toString().toLowerCase().contains(val.toString().toLowerCase()) )
       {
         filterList.add(element);
-       isCheck = List.generate(filterList.length, (index) => false);
+       isCheck = List.generate(language.length, (index) => false);
 
 
       }});
@@ -47,15 +62,15 @@ List filterList =[];
     update(['lng']);
   }
 
-  onTapLanguage(String language,int index){
+  onTapLanguage(String language1,int index){
 
 
-    isCheck = List.generate(4, (index) => false);
+    isCheck = List.generate(language.length, (index) => false);
 
     isCheck[index] =true;
 
 
-    selectedLanguage = language;
+    selectedLanguage = language1;
     update(['lng']);
     update();
 
@@ -99,17 +114,5 @@ BoardsController boardsController  = Get.put(BoardsController());
     Get.offAndToNamed(AppRoutes.boardsPage,arguments: languageCode);
   }
 
-  @override
-  void onInit() {
-    // TODO: implement onInit
-    super.onInit();
 
-    // language.forEach((element) {
-    //
-    // if(PrefService.getString(PrefKeys.language) ==element)
-    //   {
-    //     isCheck[language.indexOf(element)] = true;
-    //   }
-    // });
-  }
 }
