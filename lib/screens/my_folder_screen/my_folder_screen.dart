@@ -448,15 +448,15 @@ class _MyFolderScreenState extends State<MyFolderScreen> {
                                               child: Container(
                                                 height: Get.height * 0.199,
                                                 width: Get.width * 0.45,
-                                                padding: (myFolderController.checkImg[index] == false)
-                                                    ? const EdgeInsets.all(0)
+                                                padding: ( myFolderController.addSelectedImage[index] == true)
+                                                    ? const EdgeInsets.all(2)
                                                     : const EdgeInsets.all(2),
                                                 decoration: BoxDecoration(
                                                   color: myFolderController.checkImg[index] == true
                                                       ? ColorRes.color305EBE
                                                       : Colors.transparent,
                                                   border: Border.all(
-                                                    color: myFolderController.checkImg[index] == true
+                                                    color:  myFolderController.addSelectedImage[index] == true
                                                         ? ColorRes.color305EBE
                                                         : Colors.white,
                                                   ),
