@@ -2,10 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>CLIENT_ID</key>
-	<string>660250529556-eanlkc0dckgfg2tifen17ulktp72lcni.apps.googleusercontent.com</string>
-	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.660250529556-eanlkc0dckgfg2tifen17ulktp72lcni</string>
 	<key>API_KEY</key>
 	<string>AIzaSyBcR-pjKdjMqfd-CC2DyMcVQKEbXWJSVrY</string>
 	<key>GCM_SENDER_ID</key>
@@ -13,7 +9,7 @@
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.filuet</string>
+	<string>com.app.boardapp</string>
 	<key>PROJECT_ID</key>
 	<string>inspiration-by-filuet</string>
 	<key>STORAGE_BUCKET</key>
@@ -29,6 +25,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:660250529556:ios:ff659b443c6b7a4d9d7c01</string>
+	<string>1:660250529556:ios:822441d2663a89469d7c01</string>
 </dict>
 </plist>
