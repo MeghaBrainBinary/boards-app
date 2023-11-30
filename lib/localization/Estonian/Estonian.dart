@@ -2,6 +2,12 @@ const Map<String, String> Estonian = {
   "Choose The Language": "Vali keel",
   "search language": "otsingu keel",
   "Continue": "Jätka",
+  "Already have account?": "Kas teil on juba konto?",
+  "Log In": "Logi sisse",
+  "Sign up": "Registreeri",
+  "Don’t have account? ": "Kas teil pole kontot? ",
+  "Successfully create your account": "Looge oma konto edukalt",
+  //baki
   "My Boards": "Minu tahvlid",
   "Motivation": "Motivatsioon",
   "My Folder": "Minu kaust",

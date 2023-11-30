@@ -29,7 +29,7 @@ class SettingsScreen extends StatelessWidget {
                   SizedBox(
                     height: Get.height * 0.025,
                   ),
-                  appBar(boardName: StringRes.settings),
+                  appBar(boardName: StringRes.settings.tr),
                   SizedBox(
                     height: Get.height * 0.03,
                   ),

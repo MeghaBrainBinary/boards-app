@@ -80,7 +80,7 @@ class MyFolderController extends GetxController {
     StringRes.favourite.tr,
     StringRes.contactUs.tr,
     StringRes.settings.tr,
-    StringRes.faq.tr,
+   // StringRes.faq.tr,
     StringRes.loginLogout.tr,
   ];
 
@@ -90,7 +90,7 @@ class MyFolderController extends GetxController {
     AssetRes.FavouriteIcon,
     AssetRes.contactUs,
     AssetRes.settingsIcon,
-    AssetRes.faqIcon,
+ //   AssetRes.faqIcon,
     AssetRes.loginIcon,
   ];
   List<bool> addSelectedImage = [];

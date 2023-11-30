@@ -602,13 +602,13 @@ class BoardsScreen extends StatelessWidget {
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  Text(StringRes.inspire,style: GoogleFonts.inder(
+                                  Text(StringRes.inspire.tr,style: GoogleFonts.inder(
                                     color: ColorRes.black,
                                     fontSize: 14,
                                     fontWeight: FontWeight.w500,
                                   ),),
                                   const SizedBox(width: 5,),
-                                  Text(StringRes.filuet,style: GoogleFonts.inder(
+                                  Text(StringRes.filuet.tr,style: GoogleFonts.inder(
                                     color: ColorRes.black,
                                     fontSize: 18,
                                     fontWeight: FontWeight.bold,

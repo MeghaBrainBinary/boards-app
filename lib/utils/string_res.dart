@@ -28,16 +28,16 @@ class StringRes {
   static String forgetPassword = "Forget Password?";
 
   ///______________________________ Settings screen ______________________________///
-  static String privacyPolicy = "Privacy Policy".tr;
-  static String changePassword = "Change Password".tr;
-  static String deleteAccount = "Delete Account".tr;
-  static String enterCurrentPassword = "enter current password".tr;
-  static String enterNewPassword = "enter new password".tr;
-  static String confirmNewPassword = "Confirm new password".tr;
-  static String password = "Password".tr;
-  static String areYouSure = "Are you sure you want to Delete Account?".tr;
-  static String areYouSureLogOut = "Are you sure want to Log Out?".tr;
-  static String areYouSureExit = "Are you sure want to Exit?".tr;
+  static String privacyPolicy = "Privacy Policy";
+  static String changePassword = "Change Password";
+  static String deleteAccount = "Delete Account";
+  static String enterCurrentPassword = "enter current password";
+  static String enterNewPassword = "enter new password";
+  static String confirmNewPassword = "Confirm new password";
+  static String password = "Password";
+  static String areYouSure = "Are you sure you want to Delete Account?";
+  static String areYouSureLogOut = "Are you sure want to Log Out?";
+  static String areYouSureExit = "Are you sure want to Exit?";
 
   ///______________________________ Contact Us screen ______________________________///
   static String contactUs = "Contact Us";
@@ -59,42 +59,42 @@ class StringRes {
   ///_______________________________ boards screen _______________________________///
   static String myBoards = "My Boards";
   static String motivation = "Motivation";
-  static String myFolder = "My Folder".tr;
-  static String challenge = "Challenge".tr;
-  static String weekend = "Weekend".tr;
-  static String holidays = "Holidays".tr;
-  static String tasty = "Tasty".tr;
-  static String events = "Events".tr;
+  static String myFolder = "My Folder";
+  static String challenge = "Challenge";
+  static String weekend = "Weekend";
+  static String holidays = "Holidays";
+  static String tasty = "Tasty";
+  static String events = "Events";
 
   ///______________________________ lnguage screen2 ______________________________///
-  static String language = "Language".tr;
-  static String cancel = "Cancel".tr;
-  static String confirm = "Confirm".tr;
+  static String language = "Language";
+  static String cancel = "Cancel";
+  static String confirm = "Confirm";
 
-  static String imageSelected = "Image Selected".tr;
+  static String imageSelected = "Image Selected";
 
-  static String english = "English".tr;
-  static String bengali = "Bengali".tr;
-  static String latvian = "Latvian".tr;
-  static String chinese = "Chinese".tr;
-  static String french = "French".tr;
-  static String german = "German".tr;
-  static String hindi = "Hindi".tr;
-  static String englishUS = "English (US)".tr;
-  static String englishUk = "English (UK)".tr;
-  static String japanese = "Japanese".tr;
-  static String arabic = "Arabic".tr;
-  static String estonian = "Estonian".tr;
-  static String lithuanian = "Lithuanian".tr;
-  static String error = "Error".tr;
-  static String success = "Success".tr;
-  static String select = "Select".tr;
-  static String inspire = "Designed by".tr;
-  static String filuet = "filuet".tr;
-  static String home = "Home".tr;
-  static String favourite = "Favourite".tr;
-  static String settings = "Settings".tr;
-  static String faq = "FAQ".tr;
-  static String loginLogout = "Login / Logout".tr;
+  static String english = "English";
+  static String bengali = "Bengali";
+  static String latvian = "Latvian";
+  static String chinese = "Chinese";
+  static String french = "French";
+  static String german = "German";
+  static String hindi = "Hindi";
+  static String englishUS = "English (US)";
+  static String englishUk = "English (UK)";
+  static String japanese = "Japanese";
+  static String arabic = "Arabic";
+  static String estonian = "Estonian";
+  static String lithuanian = "Lithuanian";
+  static String error = "Error";
+  static String success = "Success";
+  static String select = "Select";
+  static String inspire = "Designed by";
+  static String filuet = "filuet";
+  static String home = "Home";
+  static String favourite = "Favourite";
+  static String settings = "Settings";
+  static String faq = "FAQ";
+  static String loginLogout = "Login / Logout";
 
 }

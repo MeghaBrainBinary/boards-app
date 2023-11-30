@@ -32,12 +32,17 @@ Widget CommonDrawer(BuildContext context) {
               itemBuilder: (context, index) {
                 return ListTile(
                   onTap: () {
+                    print("Index: $index");
+
                     if(index==0)
                       {
                         Get.back();
                       }
                     else if (index == 1) {
+                      print("Index: $index");
+
                       Get.toNamed(AppRoutes.languageConfirmPage);
+
                       Get.back();
                     } else if (index == 2) {
                       Get.toNamed(AppRoutes.favourite);

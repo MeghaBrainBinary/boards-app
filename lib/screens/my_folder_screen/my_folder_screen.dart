@@ -180,19 +180,19 @@ class _MyFolderScreenState extends State<MyFolderScreen> {
                                     controller.isPageView = false;
                                     controller.update(['fldr']);
                                   },
-                                      child: Text(StringRes.select,
+                                      child: Text(StringRes.select.tr,
                                         style: appTextStyle(color: ColorRes.color305EBE,fontSize: 15,weight: FontWeight.w500),)) else SizedBox(),
 
 
 
                                 controller.isSelectedPageView ?  Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: [
-                                    Text('${myFolderController.addSelectedImage.where((e) => e == true).length} ${StringRes.imageSelected}',style: appTextStyle(color: ColorRes.black,fontSize: 13,weight: FontWeight.w600),),
+                                    Text('${myFolderController.addSelectedImage.where((e) => e == true).length} ${StringRes.imageSelected.tr}',style: appTextStyle(color: ColorRes.black,fontSize: 13,weight: FontWeight.w600),),
                                     GestureDetector(onTap: () {
                                       myFolderController.addSelectedImage = List.generate( controller.getBoardInfoModel.data?.length ?? 0, (index) => false);
                                       controller.isSelectedPageView = false;
                                       controller.update(['fldr']);
-                                    },child: Text(StringRes.cancel,style: appTextStyle(color: ColorRes.color305EBE,fontSize: 15,weight: FontWeight.w500),)),
+                                    },child: Text(StringRes.cancel.tr,style: appTextStyle(color: ColorRes.color305EBE,fontSize: 15,weight: FontWeight.w500),)),
                                   ],
                                 ):SizedBox(),
 
@@ -881,9 +881,7 @@ class _MyFolderScreenState extends State<MyFolderScreen> {
                   } else if (index == 4) {
                     Get.back();
                     Get.toNamed(AppRoutes.setting);
-                  }  else if (index == 5) {
-                   Get.back();
-                  } else {
+                  }  else {
                     Get.back();
                     showDialogs(context);
                   }

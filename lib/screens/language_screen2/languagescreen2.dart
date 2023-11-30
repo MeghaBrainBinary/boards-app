@@ -245,7 +245,7 @@ class LanguageScreen22 extends StatelessWidget {
                           borderRadius: BorderRadius.circular(5),
                         ),
                         child: Text(
-                          StringRes.confirm,
+                          StringRes.confirm.tr,
                           style:
                               appTextStyle(fontSize: 18, weight: FontWeight.w600),
                         ),

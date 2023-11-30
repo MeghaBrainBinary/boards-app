@@ -33,7 +33,7 @@ class FavouriteScreen extends StatelessWidget {
                   SizedBox(
                     height: Get.height * 0.025,
                   ),
-                  appBar(boardName: StringRes.favourite),
+                  appBar(boardName: StringRes.favourite.tr),
                   SizedBox(
                     height: Get.height * 0.03,
                   ),
