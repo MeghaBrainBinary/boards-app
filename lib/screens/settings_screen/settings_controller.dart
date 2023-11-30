@@ -1,6 +1,8 @@
 
+import 'package:boards_app/services/pref_services.dart';
 import 'package:boards_app/utils/approutes.dart';
 import 'package:boards_app/utils/asset_res.dart';
+import 'package:boards_app/utils/prefkeys.dart';
 import 'package:boards_app/utils/string_res.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
@@ -45,8 +47,13 @@ class SettingsController extends GetxController {
   }
 
   deleteAccount() async {
+
+    if(FirebaseAuth.instance.currentUser?.email == PrefService.getString(PrefKeys.userId))
+      {
     var user = await FirebaseAuth.instance.currentUser;
     user?.delete();
+
+      }
     Get.offAllNamed( AppRoutes.login);
   }
 
