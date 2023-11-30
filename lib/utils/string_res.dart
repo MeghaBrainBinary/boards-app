@@ -98,7 +98,7 @@ class StringRes {
   static String arabic = "Arabic";
   static String estonian = "Estonian";
   static String lithuanian = "Lithuanian";
-  static String error = "Error".tr;
+  static String error = "Error";
   static String success = "Success";
   static String select = "Select";
   static String inspire = "Designed by";
