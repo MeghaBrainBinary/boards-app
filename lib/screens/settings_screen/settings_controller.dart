@@ -34,29 +34,29 @@ class SettingsController extends GetxController {
 
   ];
 
-  Future<void> resetPassword({email}) async {
-    final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
-      if(firebaseAuth.currentUser == null)
-        {
-          Get.snackbar(StringRes.error.tr, StringRes.pleaseLoginBeforeResetting.tr,
-              snackPosition: SnackPosition.TOP,
-              backgroundColor: CupertinoColors.destructiveRed,
-              colorText: CupertinoColors.white);
-        }
-      else
-        {
-          try {
-            await firebaseAuth.sendPasswordResetEmail(email: email);
-            // Get.snackbar('Password Reset Email Sent',
-            //     'Check your email for instructions to reset your password.');
-            Get.snackbar(StringRes.passwordResetEmailSent.tr,
-                StringRes.checkYourEmail.tr);
-          } catch (e) {
-            debugPrint('Error $e');
-          }
-        }
-
-  }
+  // Future<void> resetPassword({email}) async {
+  //   final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
+  //     if(firebaseAuth.currentUser == null)
+  //       {
+  //         Get.snackbar(StringRes.error.tr, StringRes.pleaseLoginBeforeResetting.tr,
+  //             snackPosition: SnackPosition.TOP,
+  //             backgroundColor: CupertinoColors.destructiveRed,
+  //             colorText: CupertinoColors.white);
+  //       }
+  //     else
+  //       {
+  //         try {
+  //           await firebaseAuth.sendPasswordResetEmail(email: email);
+  //           // Get.snackbar('Password Reset Email Sent',
+  //           //     'Check your email for instructions to reset your password.');
+  //           Get.snackbar(StringRes.passwordResetEmailSent.tr,
+  //               StringRes.checkYourEmail.tr);
+  //         } catch (e) {
+  //           debugPrint('Error $e');
+  //         }
+  //       }
+  //
+  // }
 /*
   deleteAccount() async {
 
@@ -68,6 +68,36 @@ class SettingsController extends GetxController {
       }
     Get.offAllNamed( AppRoutes.login);
   }*/
+
+  Future<void> resetPassword({required String email}) async {
+    final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
+    if (firebaseAuth.currentUser == null) {
+      // User is not logged in, show an error snackbar
+      Get.snackbar(
+        StringRes.error.tr,
+        StringRes.pleaseLoginBeforeResetting.tr,
+        snackPosition: SnackPosition.TOP,
+        backgroundColor: CupertinoColors.destructiveRed,
+        colorText: CupertinoColors.white,
+      );
+      return; // Don't proceed with the password reset if the user is not logged in
+    }
+
+    try {
+      await firebaseAuth.sendPasswordResetEmail(email: email);
+      // Password reset email sent successfully, show a success snackbar
+      Get.snackbar(
+        StringRes.passwordResetEmailSent.tr,
+        StringRes.checkYourEmail.tr,
+        snackPosition: SnackPosition.TOP,
+        backgroundColor: CupertinoColors.systemGreen,
+        colorText: CupertinoColors.white,
+      );
+    } catch (e) {
+      // An error occurred during the password reset, show an error snackbar
+      debugPrint('Error $e');
+    }
+  }
 
   Future<void> deleteAccount() async {
     var currentUser = FirebaseAuth.instance.currentUser;
