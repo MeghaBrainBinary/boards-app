@@ -10,6 +10,7 @@ class TreeNodeData {
   List<TreeNodeData> children;
   String title;
   bool checked;
+  bool isTop;
   dynamic extra;
   final Color? checkBoxCheckColor;
   final MaterialStateProperty<Color>? checkBoxFillColor;
@@ -24,6 +25,7 @@ class TreeNodeData {
     required this.parent_id,
     required this.language,
     required this.name,
+    required this.isTop,
 
     this.title = '',
     this.extra,
@@ -50,6 +52,7 @@ class TreeNodeData {
         children: other.children.map((e) => TreeNodeData.from(e)).toList(),
         title: other.title,
         extra: other.extra,
+        isTop: other.isTop,
         checked: other.checked,
         checkBoxCheckColor: other.checkBoxCheckColor,
         checkBoxFillColor: other.checkBoxFillColor,
@@ -60,6 +63,6 @@ class TreeNodeData {
 
   @override
   String toString() {
-    return 'TreeNodeData{title: $title, extra: $extra, checked: $checked, expanded: $expanded, children: $children}';
+    return 'TreeNodeData{id: $id, expanded: $expanded, name: $name, language: $language, parent_id: $parent_id, sub_parent_id: $sub_parent_id, children: $children, title: $title, checked: $checked, isTop: $isTop, extra: $extra, checkBoxCheckColor: $checkBoxCheckColor, checkBoxFillColor: $checkBoxFillColor, backgroundColor: $backgroundColor, customActions: $customActions}';
   }
 }

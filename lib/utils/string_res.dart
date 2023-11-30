@@ -28,15 +28,16 @@ class StringRes {
   static String forgetPassword = "Forget Password?";
 
   ///______________________________ Settings screen ______________________________///
-  static String privacyPolicy = "Privacy Policy";
-  static String changePassword = "Change Password";
-  static String deleteAccount = "Delete Account";
-  static String enterCurrentPassword = "enter current password";
-  static String enterNewPassword = "enter new password";
-  static String confirmNewPassword = "Confirm new password";
-  static String password = "Password";
-  static String areYouSure = "Are you sure you want to Delete Account?";
-  static String areYouSureLogOut = "Are you sure want to Log Out?";
+  static String privacyPolicy = "Privacy Policy".tr;
+  static String changePassword = "Change Password".tr;
+  static String deleteAccount = "Delete Account".tr;
+  static String enterCurrentPassword = "enter current password".tr;
+  static String enterNewPassword = "enter new password".tr;
+  static String confirmNewPassword = "Confirm new password".tr;
+  static String password = "Password".tr;
+  static String areYouSure = "Are you sure you want to Delete Account?".tr;
+  static String areYouSureLogOut = "Are you sure want to Log Out?".tr;
+  static String areYouSureExit = "Are you sure want to Exit?".tr;
 
   ///______________________________ Contact Us screen ______________________________///
   static String contactUs = "Contact Us";

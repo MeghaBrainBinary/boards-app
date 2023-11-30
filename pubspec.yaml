@@ -59,6 +59,7 @@ dependencies:
   wc_flutter_share: ^0.4.0
   cached_network_image: ^3.2.3
   flutter_tree:
+    path: flutter_tree-2.0.3
   fluttertoast: ^8.2.4
   share_plus: ^7.2.1
   permission_handler:
