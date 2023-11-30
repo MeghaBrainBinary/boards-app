@@ -50,7 +50,7 @@ class SettingsScreen extends StatelessWidget {
 
                           if(index ==1)
                             {
-controller.resetPassword(email: PrefService.getString(PrefKeys.userId));
+                                controller.resetPassword(email: PrefService.getString(PrefKeys.userId));
                             }
                           if(index==2)
                             {
@@ -91,6 +91,7 @@ controller.resetPassword(email: PrefService.getString(PrefKeys.userId));
             Expanded(
               child: CommonButton(
                   onTap: () {
+                    Get.back();
                     settingsController.deleteAccount();
                   },
                   text: StringRes.yes.tr),

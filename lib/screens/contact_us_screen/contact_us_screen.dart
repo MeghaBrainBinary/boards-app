@@ -103,7 +103,7 @@ class ContactUsScreen extends StatelessWidget {
                         onTap: () {
                           launch("mailto:${contactUsController.emailIdController.text}");
                         },
-                        text: StringRes.send),
+                        text: StringRes.send.tr),
                   ]),
                 ),
               ),

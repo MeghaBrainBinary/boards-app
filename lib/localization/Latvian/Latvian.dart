@@ -79,4 +79,6 @@ const Map<String, String> Latvian = {
   "Please enter your User name": "Lūdzu, ievadiet savu lietotājvārdu",
   "Password Reset Email Sent": "Paroles atiestatīšanas e-pasts ir nosūtīts",
   "Check your email for instructions to reset your password.": "Norādījumus paroles atiestatīšanai skatiet savā e-pastā.",
+  "Please log in before delete Account.": "Lūdzu, piesakieties pirms konta dzēšanas.",
+  "Please log in before resetting your password.": "Lūdzu, piesakieties pirms paroles atiestatīšanas.",
 };

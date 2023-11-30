@@ -76,4 +76,6 @@ const Map<String, String> English = {
   "Please enter your current password.": "Please enter your current password.",
   "This account is already exits!": "This account is already exits!",
   "Please enter your User name": "Please enter your User name",
+  "Please log in before delete Account.": "Please log in before delete Account.",
+  "Please log in before resetting your password.": "Please log in before resetting your password.",
 };

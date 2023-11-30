@@ -695,7 +695,7 @@ class BoardsScreen extends StatelessWidget {
         return SimpleDialog(contentPadding: EdgeInsets.symmetric(horizontal: 20),children: [
           SizedBox(height: Get.height * 0.04,),
 
-          Text(StringRes.areYouSureExit,textAlign: TextAlign.center,style: appTextStyle(weight: FontWeight.w500,fontSize: 20,color: Colors.black),),
+          Text(StringRes.areYouSureExit.tr,textAlign: TextAlign.center,style: appTextStyle(weight: FontWeight.w500,fontSize: 20,color: Colors.black),),
           SizedBox(height: Get.height * 0.03,),
           Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,children: [
             Expanded(
@@ -703,7 +703,7 @@ class BoardsScreen extends StatelessWidget {
                   onTap: () {
                    exit(0);
                   },
-                  text: StringRes.yes),
+                  text: StringRes.yes.tr),
             ),
             SizedBox(width: Get.width * 0.01,),
             Expanded(
@@ -720,7 +720,7 @@ class BoardsScreen extends StatelessWidget {
                       border: Border.all(color: ColorRes.color305EBE)
                   ),
                   child: Text(
-                    StringRes.no,
+                    StringRes.no.tr,
                     style: appTextStyle(color: ColorRes.color305EBE,fontSize: 18, weight: FontWeight.w600),
                   ),
                 ),

@@ -36,16 +36,28 @@ class SettingsController extends GetxController {
 
   Future<void> resetPassword({email}) async {
     final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
+      if(firebaseAuth.currentUser == null)
+        {
+          Get.snackbar(StringRes.error.tr, StringRes.pleaseLoginBeforeResetting.tr,
+              snackPosition: SnackPosition.TOP,
+              backgroundColor: CupertinoColors.destructiveRed,
+              colorText: CupertinoColors.white);
+        }
+      else
+        {
+          try {
+            await firebaseAuth.sendPasswordResetEmail(email: email);
+            // Get.snackbar('Password Reset Email Sent',
+            //     'Check your email for instructions to reset your password.');
+            Get.snackbar(StringRes.passwordResetEmailSent.tr,
+                StringRes.checkYourEmail.tr);
+          } catch (e) {
+            debugPrint('Error $e');
+          }
+        }
 
-    try {
-      await firebaseAuth.sendPasswordResetEmail(email: email);
-      Get.snackbar('Password Reset Email Sent',
-          'Check your email for instructions to reset your password.');
-    } catch (e) {
-      debugPrint('Error $e');
-    }
   }
-
+/*
   deleteAccount() async {
 
     if(FirebaseAuth.instance.currentUser?.email == PrefService.getString(PrefKeys.userId))
@@ -55,6 +67,30 @@ class SettingsController extends GetxController {
 
       }
     Get.offAllNamed( AppRoutes.login);
+  }*/
+
+  Future<void> deleteAccount() async {
+    var currentUser = FirebaseAuth.instance.currentUser;
+
+    if (currentUser != null && currentUser.email == PrefService.getString(PrefKeys.userId)) {
+      try {
+        await currentUser.delete();
+        // If the account is successfully deleted, navigate to the login page
+        Get.offAllNamed(AppRoutes.login);
+      } catch (e) {
+        // Handle any errors that occurred during account deletion
+        print('Error deleting account: $e');
+        // You might want to show an error message to the user here
+      }
+    } else {
+      // Navigate to the login page if the condition is not met
+
+
+      Get.snackbar(StringRes.error.tr, StringRes.pleaseCheckLogin.tr,
+          snackPosition: SnackPosition.TOP,
+          backgroundColor: CupertinoColors.destructiveRed,
+          colorText: CupertinoColors.white);
+    }
   }
 
 }

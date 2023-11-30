@@ -76,4 +76,6 @@ const Map<String, String> Estonian = {
   "Please enter your User name": "Palun sisesta oma kasutajanimi",
   "Password Reset Email Sent": "Parooli lähtestamise e-kiri saadetud",
   "Check your email for instructions to reset your password.": "Parooli lähtestamise juhiste saamiseks kontrollige oma meili.",
+  "Please log in before delete Account.": "Enne konto kustutamist logige sisse.",
+  "Please log in before resetting your password.": "Enne parooli lähtestamist logige sisse.",
 };

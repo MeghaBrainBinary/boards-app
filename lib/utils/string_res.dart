@@ -21,6 +21,8 @@ class StringRes {
   ///______________________________ Create New Password screen ______________________________///
   static String createNewPassword = "Create New Password";
   static String rememberMe = "remember me";
+  static String pleaseCheckLogin = "Please log in before delete Account.";
+  static String pleaseLoginBeforeResetting = "Please log in before resetting your password.";
 
   ///______________________________ Forgot Password screen ______________________________///
   static String forgotPassword = "Forgot Password";
