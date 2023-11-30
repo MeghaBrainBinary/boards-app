@@ -51,6 +51,7 @@ Widget CommonDrawer(BuildContext context) {
                     } else if (index == 4) {
                       Get.toNamed(AppRoutes.setting);
                     } else {
+
                       showDialogs(context);
                     }
 

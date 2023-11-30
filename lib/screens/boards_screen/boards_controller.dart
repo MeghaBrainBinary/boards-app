@@ -43,37 +43,37 @@ void onInit() {
    // print(getBoardModel.data!.length);
 
     // isIcons = List.generate(getBoardModel.data?.length??0, (index) => false);
-    if(getBoardModelData != null){
+    if(getBoardModelData != null ){
 
       isIcons = List.generate(getBoardModelData['data'].length ?? 0, (index) => false);
     }
    // serverData = getBoardModelData['data'];
 
+    if(getBoardModelData['data'].length != 0) {
+      DateTime maxDate = DateTime.parse(
+          getBoardModelData['data'][0]['created_at']);
 
-      DateTime maxDate = DateTime.parse(getBoardModelData['data'][0]['created_at']);
+      getBoardModelData['data'].forEach((element) {
+        if (DateTime.parse(getBoardModelData['data'][0]['created_at']).isAfter(
+            maxDate)) {
+          maxDate = DateTime.parse(getBoardModelData['data'][0]['created_at']);
+        }
+      });
 
-    getBoardModelData['data'].forEach((element) {
-      if(DateTime.parse(getBoardModelData['data'][0]['created_at']).isAfter(maxDate)){
-        maxDate=DateTime.parse(getBoardModelData['data'][0]['created_at']);
-      }
-    });
-
-    getBoardModelData['data'].forEach((element) {
-
-      if(DateTime.parse(element['created_at']) == maxDate) {
-        serverData.add({
-          "id": element['id'],
-          "name": element['name'],
-          "parent_id": "0",
-          "sub_parent_id": "0",
-          "isTop": true,
-          "created_at": element['created_at'],
-          "language": element['language'],
-          "sub_board": element['sub_board'],
-        });
-      }
-      else
-        {
+      getBoardModelData['data'].forEach((element) {
+        if (DateTime.parse(element['created_at']) == maxDate) {
+          serverData.add({
+            "id": element['id'],
+            "name": element['name'],
+            "parent_id": "0",
+            "sub_parent_id": "0",
+            "isTop": true,
+            "created_at": element['created_at'],
+            "language": element['language'],
+            "sub_board": element['sub_board'],
+          });
+        }
+        else {
           serverData.add({
             "id": element['id'],
             "name": element['name'],
@@ -85,9 +85,8 @@ void onInit() {
             "sub_board": element['sub_board'],
           });
         }
-    });
-
-
+      });
+    }
 
    treeData = List.generate(
       serverData.length,

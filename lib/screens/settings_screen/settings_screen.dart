@@ -1,12 +1,15 @@
 
 import 'package:boards_app/common/common_button.dart';
 import 'package:boards_app/screens/settings_screen/settings_controller.dart';
+import 'package:boards_app/services/pref_services.dart';
 import 'package:boards_app/utils/appstyle.dart';
 import 'package:boards_app/utils/asset_res.dart';
 import 'package:boards_app/utils/color_res.dart';
+import 'package:boards_app/utils/prefkeys.dart';
 import 'package:boards_app/utils/string_res.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class SettingsScreen extends StatelessWidget {
   SettingsScreen({super.key});
@@ -39,7 +42,16 @@ class SettingsScreen extends StatelessWidget {
                       // physics: NeverScrollableScrollPhysics(),
                       itemCount: controller.settingTitleList.length,
                       itemBuilder: (context, index) {
-                        return ListTile(onTap: () {
+                        return ListTile(onTap: () async {
+                          if(index ==0)
+                            {
+                              await launchUrl(Uri.parse("https://blt.myfiluet.com/contactus"));
+                            }
+
+                          if(index ==1)
+                            {
+controller.resetPassword(email: PrefService.getString(PrefKeys.userId));
+                            }
                           if(index==2)
                             {
                               _showDialog(context);
@@ -79,6 +91,7 @@ class SettingsScreen extends StatelessWidget {
             Expanded(
               child: CommonButton(
                   onTap: () {
+                    settingsController.deleteAccount();
                   },
                   text: StringRes.yes.tr),
             ),
