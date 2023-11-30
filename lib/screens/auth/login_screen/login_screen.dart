@@ -131,9 +131,10 @@ class LoginScreen extends StatelessWidget {
                                   if(value)
                                         {
                                           _showDialog(context);
+                                          controller.emailIdController.text="";
+                                          controller.passwordController.text="";
                                         }
-                                  controller.emailIdController.text="";
-                                  controller.passwordController.text="";
+
                                 });
 
                               }

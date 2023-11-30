@@ -1,6 +1,7 @@
 
 import 'package:boards_app/services/pref_services.dart';
 import 'package:boards_app/utils/prefkeys.dart';
+import 'package:boards_app/utils/string_res.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
@@ -39,7 +40,7 @@ class LoginController extends GetxController {
     } catch (e) {
       loader.value = false;
 
-      Get.snackbar('Error', 'Invalid username/password!',
+      Get.snackbar(StringRes.error.tr, StringRes.invalidUserName.tr,
           snackPosition: SnackPosition.TOP,
           backgroundColor: CupertinoColors.destructiveRed,
           colorText: CupertinoColors.white);
@@ -61,9 +62,9 @@ class LoginController extends GetxController {
       r'^[\w-]+(\.[\w-]+)*@([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,7}$',
     );
     if (email.isEmpty) {
-      emailErrorMessage = 'Email can not be empty';
+      emailErrorMessage = StringRes.emailCanNot.tr;
     } else if (!emailRegex.hasMatch(email)) {
-      emailErrorMessage = 'Invalid email format';
+      emailErrorMessage = StringRes.invalidEmailFormat.tr;
     } else {
       emailErrorMessage = "";
     }
@@ -80,7 +81,7 @@ class LoginController extends GetxController {
 
   validatePassword() {
     if (password.isEmpty) {
-      passwordErrorMessage = 'Please enter your current password.';
+      passwordErrorMessage = StringRes.pleaseEnterCurrentPassword.tr;
     }  else {
       passwordErrorMessage = "";
     }

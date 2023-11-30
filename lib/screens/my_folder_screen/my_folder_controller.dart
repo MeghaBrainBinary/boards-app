@@ -25,7 +25,7 @@ import 'package:wc_flutter_share/wc_flutter_share.dart';
 
 class MyFolderController extends GetxController {
 
-   GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
+   // GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
   GetBoardInfoModel getBoardInfoModel = GetBoardInfoModel();
   PageController pageController= PageController();
   RxBool loader = false.obs;

@@ -8,6 +8,8 @@ class PrefKeys{
   static const imageId ="imageId";
   static const isLike ="isLike";
   static const userLikes ="userLikes";
+  static const selectedLanguageIndex ="selectedLanguageIndex";
+  static const selectedLanguage ="selectedLanguage";
 
   static const fcmToken = "fcmToken";
 }

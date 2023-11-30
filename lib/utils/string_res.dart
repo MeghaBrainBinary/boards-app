@@ -10,6 +10,10 @@ class StringRes {
   ///______________________________ login screen ______________________________///
   static String logIn = "Log In";
   static String signUp = "Sign up";
+  static String emailCanNot = "Email can not be empty";
+  static String invalidEmailFormat = "Invalid email format";
+  static String invalidUserName = "Invalid username/password!";
+  static String pleaseEnterCurrentPassword = "Please enter your current password.";
   static String dontHaveAccount = "Don’t have account? ";
   static String successfully = "Successfully create your account";
   static String successfullyCreate = "successfully create your account now enjoy our apps";
@@ -20,12 +24,20 @@ class StringRes {
 
   ///______________________________ Forgot Password screen ______________________________///
   static String forgotPassword = "Forgot Password";
+  static String passwordResetEmailSent = "Password Reset Email Sent";
+  static String checkYourEmail = "Check your email for instructions to reset your password.";
   static String pleaseEnterYourValidEmail = "Please enter your valid email ID. we will send you 6-digit code to verify your account.";
 
   ///______________________________ sign up screen ______________________________///
   static String userName = "User name";
   static String confirmPassword = "Confirm password";
   static String forgetPassword = "Forget Password?";
+  static String pleaseEnterYourUserName = "Please enter your User name";
+  static String thisAccountIsAlreadyExits = "This account is already exits!";
+  static String passwordDoNotMatch = "Passwords do not match.";
+  static String pleaseEnterYourConfirm = "Please enter your Confirm password.";
+  static String pleaseEnterYourPassword = "Please enter your password.";
+  static String passwordMustBe = "Password must be at least 8 characters";
 
   ///______________________________ Settings screen ______________________________///
   static String privacyPolicy = "Privacy Policy";
@@ -86,7 +98,7 @@ class StringRes {
   static String arabic = "Arabic";
   static String estonian = "Estonian";
   static String lithuanian = "Lithuanian";
-  static String error = "Error";
+  static String error = "Error".tr;
   static String success = "Success";
   static String select = "Select";
   static String inspire = "Designed by";

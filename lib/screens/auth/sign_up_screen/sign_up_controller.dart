@@ -2,6 +2,7 @@
 import 'package:boards_app/services/pref_services.dart';
 import 'package:boards_app/utils/approutes.dart';
 import 'package:boards_app/utils/prefkeys.dart';
+import 'package:boards_app/utils/string_res.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
@@ -37,7 +38,7 @@ class SignUpController extends GetxController {
 
   validateUserName() {
     if (user.isEmpty) {
-      userErrorMessage = 'Please enter your User name';
+      userErrorMessage = StringRes.pleaseEnterYourUserName.tr;
     }  else {
       userErrorMessage = "";
     }
@@ -78,7 +79,7 @@ class SignUpController extends GetxController {
     } catch (e) {
       loader.value = false;
 
-      Get.snackbar('Error', 'This account is already exits!',
+      Get.snackbar(StringRes.error.tr, StringRes.thisAccountIsAlreadyExits.tr,
           snackPosition: SnackPosition.TOP,
           backgroundColor: CupertinoColors.destructiveRed,
           colorText: CupertinoColors.white);
@@ -98,9 +99,9 @@ class SignUpController extends GetxController {
       r'^[\w-]+(\.[\w-]+)*@([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,7}$',
     );
     if (email.isEmpty) {
-      emailErrorMessage = 'Email can not be empty';
+      emailErrorMessage = StringRes.emailCanNot.tr;
     } else if (!emailRegex.hasMatch(email)) {
-      emailErrorMessage = 'Invalid email format';
+      emailErrorMessage = StringRes.invalidEmailFormat.tr;
     } else {
       emailErrorMessage = "";
     }
@@ -117,9 +118,9 @@ class SignUpController extends GetxController {
 
   validatePassword() {
     if (password.isEmpty) {
-      passwordErrorMessage = 'Please enter your  password.';
+      passwordErrorMessage = StringRes.pleaseEnterYourPassword.tr;
     } else if (password.length < 8) {
-      passwordErrorMessage = 'Password must be at least 8 characters';
+      passwordErrorMessage = StringRes.passwordMustBe.tr;
     } else {
       passwordErrorMessage = "";
     }
@@ -135,9 +136,9 @@ class SignUpController extends GetxController {
 
   validateConfirmNewPassword() {
     if (confirmPassword.isEmpty) {
-      confirmPasswordErrorMessage = 'Please enter your Confirm password.';
+      confirmPasswordErrorMessage = StringRes.pleaseEnterYourConfirm.tr;
     }  else if (confirmPassword != passwordController.text) {
-      confirmPasswordErrorMessage = 'Passwords do not match.';
+      confirmPasswordErrorMessage = StringRes.passwordDoNotMatch.tr;
     } else {
       confirmPasswordErrorMessage = "";
     }

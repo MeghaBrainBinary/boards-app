@@ -24,7 +24,7 @@ class LanguageController extends GetxController {
     StringRes.english.tr,
   ];
   List filterLst = [];
-  List clrs = List.generate(9, (index) => false);
+  List clrs = List.generate(4, (index) => false);
 
   onSearch(dynamic val) {
     filterLst = [];
@@ -49,6 +49,8 @@ class LanguageController extends GetxController {
     }
     clrs[i] = true;
     selectedLanguage = language;
+    PrefService.setValue(PrefKeys.selectedLanguageIndex,i);
+    PrefService.setValue(PrefKeys.selectedLanguage,selectedLanguage);
     print(selectedLanguage);
 
     update(['lng']);

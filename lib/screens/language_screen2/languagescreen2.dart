@@ -113,7 +113,7 @@ class LanguageScreen22 extends StatelessWidget {
                         builder: (con) {
                           con.update();
                           return SizedBox(
-                              height: Get.height * 0.54,
+                              height: Get.height * 0.44,
                               child: (languageController.searchController.text.isNotEmpty)
                                   ? ListView.builder(
                                       shrinkWrap: true,

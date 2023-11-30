@@ -17,15 +17,10 @@ RxBool loader = false.obs;
 GetBoardModel getBoardModel  = GetBoardModel();
 List filterList =[];
   List language = [
-    StringRes.arabic.tr,
-    StringRes.bengali.tr,
-    StringRes.chinese.tr,
-    StringRes.french.tr,
-    StringRes.german.tr,
-    StringRes.hindi.tr,
-    StringRes.englishUS.tr,
-    StringRes.englishUk.tr,
-    StringRes.japanese.tr,
+    StringRes.latvian,
+    StringRes.estonian,
+    StringRes.lithuanian,
+    StringRes.english,
   ];
   List<bool> isCheck =[];
 
@@ -35,18 +30,14 @@ List filterList =[];
 
   @override
   void onInit() {
-    // TODO: implement onInit
     super.onInit();
+    // Initialize isCheck and selectedLanguage when the controller is created
     isCheck = List.generate(language.length, (index) => false);
-    // language.forEach((element) {
-    //
-    // if(PrefService.getString(PrefKeys.language) ==element)
-    //   {
-    //     isCheck[language.indexOf(element)] = true;
-    //   }
-    // });
-  }
+   // selectedLanguage = '';
 
+    // Load the state from storage
+    _loadState();
+  }
   onSearch(dynamic val) {
     filterList = [];
     language.forEach((element) {
@@ -62,6 +53,18 @@ List filterList =[];
     update(['lng']);
   }
 
+  void _loadState() async {
+    int? storedIndex = PrefService.getInt(PrefKeys.selectedLanguageIndex);
+    String? storedLanguage =PrefService.getString(PrefKeys.selectedLanguage);
+
+    if (storedIndex != null && storedLanguage != null) {
+      // Update the controller state with the retrieved values
+      isCheck = List.generate(language.length, (index) => index == storedIndex);
+      selectedLanguage = storedLanguage;
+      update(['lng']);
+    }
+  }
+
   onTapLanguage(String language1,int index){
 
 
@@ -71,6 +74,8 @@ List filterList =[];
 
 
     selectedLanguage = language1;
+    PrefService.setValue(PrefKeys.selectedLanguageIndex,index);
+    PrefService.setValue(PrefKeys.selectedLanguage,selectedLanguage);
     update(['lng']);
     update();
 
@@ -110,8 +115,11 @@ loader.value = true;
     loader.value = false;
 
 BoardsController boardsController  = Get.put(BoardsController());
+    Get.deleteAll(force: true);
  await boardsController.init(languageCode);
+
     Get.offAndToNamed(AppRoutes.boardsPage,arguments: languageCode);
+
   }
 
 

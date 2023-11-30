@@ -34,7 +34,7 @@ class _MyFolderScreenState extends State<MyFolderScreen> {
   MySelectFolderController mySelectFolderController = Get.put(MySelectFolderController());
   late VideoPlayerController videoPlayerController;
   ChewieController? chewieController;
-
+  final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
 // @override
 //   void initState() {
@@ -116,7 +116,7 @@ class _MyFolderScreenState extends State<MyFolderScreen> {
         }
       },
       child: Scaffold(
-        key: myFolderController.scaffoldKey,
+        key: scaffoldKey,
         resizeToAvoidBottomInset: false,
         body: GetBuilder<MyFolderController>(
           id: 'fldr',
@@ -903,6 +903,79 @@ class _MyFolderScreenState extends State<MyFolderScreen> {
       ),
     );
   }
+
+  appBar({String? boardName}) {
+    MyFolderController myFolderController = Get.put(MyFolderController());
+    GetBoardModel getBoardModel = GetBoardModel();
+
+    return Container(
+      alignment: Alignment.bottomCenter,
+      padding: EdgeInsets.only(
+        left: Get.width * 0.05,
+        right: Get.width * 0.05,
+      ),
+      height: Get.height * 0.18,
+      width: Get.width,
+      // color: ColorRes.white,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: [
+          InkWell(
+            onTap: () {
+              if(myFolderController.isPageView ||  myFolderController.isSelectedPageView){
+                myFolderController.isPageView = false;
+                myFolderController.isSelectedPageView = false;
+                myFolderController.update(['fldr']);
+              }
+              else
+              {
+                Get.back();
+                myFolderController.onTapBack();
+              }
+            },
+            child: const Icon(
+              Icons.arrow_back_ios,
+              size: 20,
+            ),
+          ),
+          Expanded(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                SizedBox(
+                    height: 20,
+                    width: 20,
+                    child: Image.asset(AssetRes.myfolderIcon)),
+                const SizedBox(
+                  width: 15,
+                ),
+                Text(
+                  boardName ?? "My folder",
+                  style: appTextStyle(
+                      fontSize: 24,
+                      weight: FontWeight.w400,
+                      color: ColorRes.black),
+                ),
+              ],
+            ),
+          ),
+          InkWell(
+            onTap: () {
+              // myFolderController.onTapMore();
+              scaffoldKey.currentState?.openEndDrawer();
+            },
+            child: Container(
+              // alignment: Alignment.centerRight,
+              // color: ColorRes.color305EBE,
+              // height: 25,
+              // width: 25,
+                child:Image.asset(AssetRes.moreOption,scale: 3,)
+            ),
+          ),
+        ],
+      ),
+    );
+  }
 }
 
 
@@ -1063,78 +1136,6 @@ Future<void> toggleLike(int index, MyFolderController controller, String image, 
 
 
 
-appBar({String? boardName}) {
-  MyFolderController myFolderController = Get.put(MyFolderController());
-  GetBoardModel getBoardModel = GetBoardModel();
-
-  return Container(
-    alignment: Alignment.bottomCenter,
-    padding: EdgeInsets.only(
-      left: Get.width * 0.05,
-      right: Get.width * 0.05,
-    ),
-    height: Get.height * 0.18,
-    width: Get.width,
-    // color: ColorRes.white,
-    child: Row(
-      mainAxisAlignment: MainAxisAlignment.spaceAround,
-      children: [
-        InkWell(
-          onTap: () {
-            if(myFolderController.isPageView ||  myFolderController.isSelectedPageView){
-              myFolderController.isPageView = false;
-              myFolderController.isSelectedPageView = false;
-              myFolderController.update(['fldr']);
-            }
-            else
-              {
-                  Get.back();
-                  myFolderController.onTapBack();
-              }
-          },
-          child: const Icon(
-            Icons.arrow_back_ios,
-            size: 20,
-          ),
-        ),
-        Expanded(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              SizedBox(
-                  height: 20,
-                  width: 20,
-                  child: Image.asset(AssetRes.myfolderIcon)),
-              const SizedBox(
-                width: 15,
-              ),
-              Text(
-                boardName ?? "My folder",
-                style: appTextStyle(
-                    fontSize: 24,
-                    weight: FontWeight.w400,
-                    color: ColorRes.black),
-              ),
-            ],
-          ),
-        ),
-        InkWell(
-          onTap: () {
-            // myFolderController.onTapMore();
-            myFolderController.scaffoldKey.currentState?.openEndDrawer();
-          },
-          child: Container(
-            // alignment: Alignment.centerRight,
-            // color: ColorRes.color305EBE,
-            // height: 25,
-            // width: 25,
-            child:Image.asset(AssetRes.moreOption,scale: 3,)
-          ),
-        ),
-      ],
-    ),
-  );
-}
 void showDialogs(BuildContext context) {
   showDialog(
     context: context,
