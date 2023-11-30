@@ -39,7 +39,7 @@ class LoginScreen extends StatelessWidget {
                       ),
                       Center(
                         child: Text(
-                          StringRes.logIn,
+                          StringRes.logIn.tr,
                           style: appTextStyle(
                               fontSize: 30,
                               weight: FontWeight.w600,
@@ -55,7 +55,7 @@ class LoginScreen extends StatelessWidget {
                       ),
                       CommonTextFeild(controller: controller.emailIdController,
                           onChanged: (value) => controller.setEmail(value),
-                          hintText: StringRes.emailID,PrefixIcon: AssetRes.emailIcon),
+                          hintText: StringRes.emailID.tr,PrefixIcon: AssetRes.emailIcon),
                       SizedBox(
                         height: Get.height * 0.01,
                       ),
@@ -83,7 +83,7 @@ class LoginScreen extends StatelessWidget {
                       },
                           obscureText: controller.isObscureText,
                           onChanged: (value) => controller.setPassword(value),
-                          controller: controller.passwordController,isShowViciblity: true,hintText: StringRes.password,PrefixIcon: AssetRes.fileLoke),
+                          controller: controller.passwordController,isShowViciblity: true,hintText: StringRes.password.tr,PrefixIcon: AssetRes.fileLoke),
                       // validation
                       SizedBox(
                         height: Get.height * 0.01,
@@ -105,7 +105,7 @@ class LoginScreen extends StatelessWidget {
                             Get.toNamed( AppRoutes.forgotPasswordScreen);
                           },
                           child: Text(
-                            StringRes.forgetPassword,
+                            StringRes.forgetPassword.tr,
                             style: appTextStyle(
                                 fontSize: 12,
                                 weight: FontWeight.w600,
@@ -139,7 +139,7 @@ class LoginScreen extends StatelessWidget {
                               }
 
                             },
-                            text: StringRes.logIn),
+                            text: StringRes.logIn.tr),
                       ),
                       SizedBox(
                         height: Get.height * 0.03,
@@ -148,7 +148,7 @@ class LoginScreen extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                            Text(
-                            StringRes.dontHaveAccount,
+                            StringRes.dontHaveAccount.tr,
                             style: appTextStyle(
                                 fontSize: 15,
                                 weight: FontWeight.w500,
@@ -160,7 +160,7 @@ class LoginScreen extends StatelessWidget {
                                 Get.toNamed( AppRoutes.signUpScreen);
                             },
                             child:  Text(
-                               StringRes.signUp,
+                               StringRes.signUp.tr,
                               style:appTextStyle(
                                   fontSize: 15,
                                   weight: FontWeight.w600,
@@ -191,9 +191,9 @@ class LoginScreen extends StatelessWidget {
           SizedBox(height: Get.height * 0.04,),
           Image.asset(AssetRes.succesfullogin,height: Get.height * 0.14,),
           SizedBox(height: Get.height * 0.03,),
-          Text(StringRes.successfully,textAlign: TextAlign.center,style: appTextStyle(weight: FontWeight.w600,fontSize: 16,color: Colors.black),),
+          Text(StringRes.successfully.tr,textAlign: TextAlign.center,style: appTextStyle(weight: FontWeight.w600,fontSize: 16,color: Colors.black),),
           SizedBox(height: Get.height * 0.01,),
-          Text(StringRes.successfullyCreate,textAlign: TextAlign.center,style: appTextStyle(weight: FontWeight.w400,fontSize: 12,color: Colors.black.withOpacity(0.60)),),
+          Text(StringRes.successfullyCreate.tr,textAlign: TextAlign.center,style: appTextStyle(weight: FontWeight.w400,fontSize: 12,color: Colors.black.withOpacity(0.60)),),
           SizedBox(height: Get.height * 0.03,),
           CommonButton(
               onTap: () {
@@ -201,7 +201,7 @@ class LoginScreen extends StatelessWidget {
                 Get.offAndToNamed(AppRoutes.boardsPage);
               //  Get.back();
               },
-              text: StringRes.yes),
+              text: StringRes.yes.tr),
           SizedBox(height: Get.height * 0.04,),
         ],);
       },

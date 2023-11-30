@@ -39,7 +39,7 @@ class ForgotPasswordScreen extends StatelessWidget {
                       ),
                       Center(
                         child: Text(
-                          StringRes.forgotPassword,
+                          StringRes.forgotPassword.tr,
                           style: appTextStyle(
                               fontSize: 27,
                               weight: FontWeight.w600,
@@ -51,7 +51,7 @@ class ForgotPasswordScreen extends StatelessWidget {
                       ),
                       Center(
                         child: Text(
-                          StringRes.pleaseEnterYourValidEmail,
+                          StringRes.pleaseEnterYourValidEmail.tr,
                           textAlign: TextAlign.center,
                           style: appTextStyle(
                               fontSize: 12,
@@ -64,7 +64,7 @@ class ForgotPasswordScreen extends StatelessWidget {
                       ),
                       CommonTextFeild(controller: controller.emailIdController,
                           onChanged: (value) => controller.setEmail(value),
-                          hintText: StringRes.emailID,PrefixIcon: AssetRes.emailIcon),
+                          hintText: StringRes.emailID.tr,PrefixIcon: AssetRes.emailIcon),
                       SizedBox(
                         height: Get.height * 0.01,
                       ),
@@ -93,7 +93,7 @@ class ForgotPasswordScreen extends StatelessWidget {
                                 });
                               }
                             },
-                            text: StringRes.next),
+                            text: StringRes.next.tr),
                       ),
 
                       SizedBox(

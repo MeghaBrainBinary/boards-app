@@ -28,7 +28,7 @@ class PrivacyPolicyScreen extends StatelessWidget {
                 child: Column(
                   children: [
                     SizedBox(height: Get.height * 0.025),
-                    appBar(boardName: StringRes.privacyPolicy),
+                    appBar(boardName: StringRes.privacyPolicy.tr),
                     SizedBox(height: Get.height * 0.03),
                     Expanded(
                       child: ListView(

@@ -49,10 +49,10 @@ class _MyFolderScreenState extends State<IntroScreen> {
                   ),
                   Text(
                     controller.currentPage == 0
-                        ? StringRes.seeEveryDetails
+                        ? StringRes.seeEveryDetails.tr
                         : controller.currentPage == 1
-                            ? StringRes.easilyShareImages
-                            : StringRes.click,
+                            ? StringRes.easilyShareImages.tr
+                            : StringRes.click.tr,
                     textAlign: TextAlign.center,
                     style: appTextStyle(
                         color: ColorRes.black,
@@ -93,8 +93,8 @@ class _MyFolderScreenState extends State<IntroScreen> {
                         }
                       },
                       text: controller.currentPage == 2
-                          ? StringRes.getStarted
-                          : StringRes.next),
+                          ? StringRes.getStarted.tr
+                          : StringRes.next.tr),
                 ],
               ),
              // SizedBox(height: 30,),
@@ -131,7 +131,7 @@ class _MyFolderScreenState extends State<IntroScreen> {
                   margin: EdgeInsets.only(top: Get.height * 0.07,   right: Get.width * 0.07),
                   alignment: Alignment.topRight,
                   child: Text(
-                    StringRes.skip,
+                    StringRes.skip.tr,
                     style: appTextStyle(
                         color: ColorRes.black,
                         weight: FontWeight.w400,

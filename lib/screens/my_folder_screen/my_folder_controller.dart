@@ -75,13 +75,13 @@ class MyFolderController extends GetxController {
   int selectedIndex = 0;
 
   List<String> drawerTitleList = [
-    StringRes.home,
-    StringRes.language,
-    StringRes.favourite,
-    StringRes.contactUs,
-    StringRes.settings,
-    StringRes.faq,
-    StringRes.loginLogout,
+    StringRes.home.tr,
+    StringRes.language.tr,
+    StringRes.favourite.tr,
+    StringRes.contactUs.tr,
+    StringRes.settings.tr,
+    StringRes.faq.tr,
+    StringRes.loginLogout.tr,
   ];
 
   List<String> drawerImageList = [

@@ -13,9 +13,9 @@ class IntroController extends GetxController {
     AssetRes.OnePlus103,
   ];
   List<String> intoTextList=[
-    StringRes.seeEveryDetails,
-    StringRes.easilyShareImages,
-    StringRes.click,
+    StringRes.seeEveryDetails.tr,
+    StringRes.easilyShareImages.tr,
+    StringRes.click.tr,
   ];
   PageController pageController= PageController();
   int currentPage = 0;

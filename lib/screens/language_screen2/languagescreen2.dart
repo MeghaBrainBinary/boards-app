@@ -71,7 +71,7 @@ class LanguageScreen22 extends StatelessWidget {
                     //     ),
                     //   ],
                     // ),
-                    appBar(boardName: StringRes.language),
+                    appBar(boardName: StringRes.language.tr),
                     SizedBox(
                       height: Get.height * 0.0569,
                     ),

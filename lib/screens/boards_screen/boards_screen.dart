@@ -366,7 +366,7 @@ class BoardsScreen extends StatelessWidget {
                                 ),*/
                                 Padding(
                                   padding: const EdgeInsets.symmetric(horizontal: 20),
-                                  child: Text(StringRes.myBoards,style: GoogleFonts.inder(
+                                  child: Text(StringRes.myBoards.tr,style: GoogleFonts.inder(
                                     color: ColorRes.black,
                                     fontSize: 23,
                                     fontWeight: FontWeight.w600,

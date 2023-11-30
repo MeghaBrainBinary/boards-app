@@ -1145,7 +1145,7 @@ void showDialogs(BuildContext context) {
         SizedBox(height: Get.height * 0.04,),
         Image.asset(AssetRes.loginIcon,height: Get.height * 0.1,),
         SizedBox(height: Get.height * 0.03,),
-        Text(StringRes.areYouSureLogOut,textAlign: TextAlign.center,style: appTextStyle(weight: FontWeight.w500,fontSize: 20,color: Colors.black),),
+        Text(StringRes.areYouSureLogOut.tr,textAlign: TextAlign.center,style: appTextStyle(weight: FontWeight.w500,fontSize: 20,color: Colors.black),),
         SizedBox(height: Get.height * 0.03,),
         Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,children: [
           Expanded(
@@ -1154,7 +1154,7 @@ void showDialogs(BuildContext context) {
                   PrefService.setValue(PrefKeys.login, false);
                   Get.offAllNamed( AppRoutes.login);
                 },
-                text: StringRes.yes),
+                text: StringRes.yes.tr),
           ),
           SizedBox(width: Get.width * 0.01,),
           Expanded(
@@ -1171,7 +1171,7 @@ void showDialogs(BuildContext context) {
                     border: Border.all(color: ColorRes.color305EBE)
                 ),
                 child: Text(
-                  StringRes.no,
+                  StringRes.no.tr,
                   style: appTextStyle(color: ColorRes.color305EBE,fontSize: 18, weight: FontWeight.w600),
                 ),
               ),

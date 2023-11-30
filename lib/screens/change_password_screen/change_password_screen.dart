@@ -32,7 +32,7 @@ class ChangePasswordScreen extends StatelessWidget {
                     SizedBox(
                       height: Get.height * 0.025,
                     ),
-                    appBar(boardName: StringRes.changePassword),
+                    appBar(boardName: StringRes.changePassword.tr),
                     SizedBox(
                       height: Get.height * 0.05,
                     ),
@@ -49,7 +49,7 @@ class ChangePasswordScreen extends StatelessWidget {
                     },
                         obscureText: controller.isObscureText,
                         onChanged: (value) => controller.setPassword(value),
-                        controller: controller.passwordController,isShowViciblity: true,hintText: StringRes.enterCurrentPassword,PrefixIcon: AssetRes.fileLoke),
+                        controller: controller.passwordController,isShowViciblity: true,hintText: StringRes.enterCurrentPassword.tr,PrefixIcon: AssetRes.fileLoke),
                   // validation
                    controller
                         .passwordErrorMessage.isEmpty
@@ -73,7 +73,7 @@ class ChangePasswordScreen extends StatelessWidget {
                         controller.isObscureNewText=false;
                       }
                       controller.update(['changePassword']);
-                    },obscureText: controller.isObscureNewText,   onChanged: (value) => controller.setNewPassword(value),controller: controller.newPasswordController,isShowViciblity: true,hintText: StringRes.enterNewPassword,PrefixIcon: AssetRes.fileLoke),
+                    },obscureText: controller.isObscureNewText,   onChanged: (value) => controller.setNewPassword(value),controller: controller.newPasswordController,isShowViciblity: true,hintText: StringRes.enterNewPassword.tr,PrefixIcon: AssetRes.fileLoke),
                    // validation
                     controller
                         .newPasswordErrorMessage.isEmpty
@@ -101,7 +101,7 @@ class ChangePasswordScreen extends StatelessWidget {
                         controller: controller.confirmNewPasswordController,
                         onChanged: (value) => controller.setConfirmNewPassword(value),
                         isShowViciblity: true,
-                        hintText: StringRes.confirmNewPassword,PrefixIcon: AssetRes.fileLoke),
+                        hintText: StringRes.confirmNewPassword.tr,PrefixIcon: AssetRes.fileLoke),
                     // validation
                     controller
                         .confirmPasswordErrorMessage.isEmpty
@@ -121,7 +121,7 @@ class ChangePasswordScreen extends StatelessWidget {
                                 controller.validateNewPassword();
                                 controller.validateConfirmNewPassword();
                           },
-                          text: StringRes.send),
+                          text: StringRes.send.tr),
                     ),
                   ]),
                 ),

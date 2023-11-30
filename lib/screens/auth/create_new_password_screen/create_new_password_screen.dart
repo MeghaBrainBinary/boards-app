@@ -39,7 +39,7 @@ class CreateNewPasswordScreen extends StatelessWidget {
                       ),
                       Center(
                         child: Text(
-                          StringRes.createNewPassword,
+                          StringRes.createNewPassword.tr,
                           style: appTextStyle(
                               fontSize: 27,
                               weight: FontWeight.w600,
@@ -63,7 +63,7 @@ class CreateNewPasswordScreen extends StatelessWidget {
                       },
                           obscureText: controller.isObscureText,
                           onChanged: (value) => controller.setPassword(value),
-                          controller: controller.passwordController,isShowViciblity: true,hintText: StringRes.password,PrefixIcon: AssetRes.fileLoke),
+                          controller: controller.passwordController,isShowViciblity: true,hintText: StringRes.password.tr,PrefixIcon: AssetRes.fileLoke),
                       // validation
                       controller
                           .passwordErrorMessage.isEmpty
@@ -90,7 +90,7 @@ class CreateNewPasswordScreen extends StatelessWidget {
                       },
                           obscureText: controller.isObscureConfirmText,
                           onChanged: (value) => controller.setConfirmNewPassword(value),
-                          controller: controller.confirmPasswordController,isShowViciblity: true,hintText: StringRes.confirmPassword,PrefixIcon: AssetRes.fileLoke),
+                          controller: controller.confirmPasswordController,isShowViciblity: true,hintText: StringRes.confirmPassword.tr,PrefixIcon: AssetRes.fileLoke),
                       // validation
                       controller
                           .confirmPasswordErrorMessage.isEmpty
@@ -113,7 +113,7 @@ class CreateNewPasswordScreen extends StatelessWidget {
                               controller.update(['createNewPassword']);
                             },
                           ),
-                          Text(StringRes.rememberMe,style: appTextStyle(color: Colors.black.withOpacity(0.50),fontSize: 12,weight: FontWeight.w400),),
+                          Text(StringRes.rememberMe.tr,style: appTextStyle(color: Colors.black.withOpacity(0.50),fontSize: 12,weight: FontWeight.w400),),
                         ],
                       ),
                       SizedBox(
@@ -125,7 +125,7 @@ class CreateNewPasswordScreen extends StatelessWidget {
                             controller.validatePassword();
                             controller.validateConfirmNewPassword();
                             },
-                            text: StringRes.next),
+                            text: StringRes.next.tr),
                       ),
 
                       SizedBox(

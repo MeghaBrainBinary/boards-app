@@ -31,7 +31,7 @@ class ContactUsScreen extends StatelessWidget {
                     SizedBox(
                       height: Get.height * 0.025,
                     ),
-                    appBar(boardName: StringRes.contactUs),
+                    appBar(boardName: StringRes.contactUs.tr),
                     SizedBox(
                       height: Get.height * 0.05,
                     ),

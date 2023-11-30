@@ -73,14 +73,14 @@ class SettingsScreen extends StatelessWidget {
           SizedBox(height: Get.height * 0.04,),
               Image.asset(AssetRes.deleteAcountIcon,height: Get.height * 0.1,),
               SizedBox(height: Get.height * 0.03,),
-          Text(StringRes.areYouSure,textAlign: TextAlign.center,style: appTextStyle(weight: FontWeight.w500,fontSize: 20,color: Colors.black),),
+          Text(StringRes.areYouSure.tr,textAlign: TextAlign.center,style: appTextStyle(weight: FontWeight.w500,fontSize: 20,color: Colors.black),),
           SizedBox(height: Get.height * 0.03,),
           Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,children: [
             Expanded(
               child: CommonButton(
                   onTap: () {
                   },
-                  text: StringRes.yes),
+                  text: StringRes.yes.tr),
             ),
             SizedBox(width: Get.width * 0.01,),
             Expanded(
@@ -97,7 +97,7 @@ class SettingsScreen extends StatelessWidget {
                     border: Border.all(color: ColorRes.color305EBE)
                   ),
                   child: Text(
-                    StringRes.no,
+                    StringRes.no.tr,
                     style: appTextStyle(color: ColorRes.color305EBE,fontSize: 18, weight: FontWeight.w600),
                   ),
                 ),

@@ -40,7 +40,7 @@ class SignUpScreen extends StatelessWidget {
                       ),
                       Center(
                         child: Text(
-                          StringRes.signUp,
+                          StringRes.signUp.tr,
                           style: appTextStyle(
                               fontSize: 30,
                               weight: FontWeight.w600,
@@ -56,7 +56,7 @@ class SignUpScreen extends StatelessWidget {
                       ),
                       CommonTextFeild(controller: controller.userNameController,
                           onChanged: (value) => controller.setUser(value),
-                          hintText: StringRes.userName,PrefixIcon: AssetRes.userIcon),
+                          hintText: StringRes.userName.tr,PrefixIcon: AssetRes.userIcon),
                       // user validation
                       SizedBox(
                         height: Get.height * 0.01,
@@ -74,7 +74,7 @@ class SignUpScreen extends StatelessWidget {
                       ),
                       CommonTextFeild(controller: controller.emailIdController,
                           onChanged: (value) => controller.setEmail(value),
-                          hintText: StringRes.emailID,PrefixIcon: AssetRes.emailIcon),
+                          hintText: StringRes.emailID.tr,PrefixIcon: AssetRes.emailIcon),
                       // email id validation
                       SizedBox(
                         height: Get.height * 0.01,
@@ -103,7 +103,7 @@ class SignUpScreen extends StatelessWidget {
                       },
                           obscureText: controller.isObscureText,
                           onChanged: (value) => controller.setPassword(value),
-                          controller: controller.passwordController,isShowViciblity: true,hintText: StringRes.password,PrefixIcon: AssetRes.fileLoke),
+                          controller: controller.passwordController,isShowViciblity: true,hintText: StringRes.password.tr,PrefixIcon: AssetRes.fileLoke),
                       SizedBox(
                         height: Get.height * 0.01,
                       ),
@@ -133,7 +133,7 @@ class SignUpScreen extends StatelessWidget {
                       },
                           obscureText: controller.isObscureConfirmText,
                           onChanged: (value) => controller.setConfirmNewPassword(value),
-                          controller: controller.confirmPasswordController,isShowViciblity: true,hintText: StringRes.confirmPassword,PrefixIcon: AssetRes.fileLoke),
+                          controller: controller.confirmPasswordController,isShowViciblity: true,hintText: StringRes.confirmPassword.tr,PrefixIcon: AssetRes.fileLoke),
                       SizedBox(
                         height: Get.height * 0.01,
                       ),
@@ -178,7 +178,7 @@ class SignUpScreen extends StatelessWidget {
                                 });
                               }
                             },
-                            text: StringRes.signUp),
+                            text: StringRes.signUp.tr),
                       ),
                       SizedBox(
                         height: Get.height * 0.03,
@@ -187,7 +187,7 @@ class SignUpScreen extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                            Text(
-                            StringRes.alreadyHaveAccount,
+                            StringRes.alreadyHaveAccount.tr,
                             style: appTextStyle(
                                 fontSize: 15,
                                 weight: FontWeight.w500,
@@ -199,7 +199,7 @@ class SignUpScreen extends StatelessWidget {
                               Get.toNamed( AppRoutes.login);
                             },
                             child:  Text(
-                               StringRes.logIn,
+                               StringRes.logIn.tr,
                               style:appTextStyle(
                                   fontSize: 15,
                                   weight: FontWeight.w600,

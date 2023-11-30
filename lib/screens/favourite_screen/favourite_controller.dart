@@ -20,9 +20,9 @@ class FavouriteController extends GetxController {
 
 
   List<String> settingTitleList = [
-    StringRes.privacyPolicy,
-    StringRes.changePassword,
-    StringRes.deleteAccount,
+    StringRes.privacyPolicy.tr,
+    StringRes.changePassword.tr,
+    StringRes.deleteAccount.tr,
   ];
 
 
