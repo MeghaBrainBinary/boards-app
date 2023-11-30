@@ -1,4 +1,6 @@
 
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 
@@ -12,4 +14,10 @@ class ContactUsController extends GetxController {
 
   RxBool loader = false.obs;
 
+
+  @override
+  void onInit() {
+emailIdController.text ="filuet.rus@gmail.com";
+    super.onInit();
+  }
 }

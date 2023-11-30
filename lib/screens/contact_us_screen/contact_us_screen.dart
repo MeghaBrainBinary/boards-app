@@ -2,12 +2,16 @@
 
 import 'package:boards_app/common/common_button.dart';
 import 'package:boards_app/screens/contact_us_screen/contact_us_controller.dart';
+import 'package:boards_app/services/pref_services.dart';
 import 'package:boards_app/utils/app_text_field.dart';
 import 'package:boards_app/utils/appstyle.dart';
 import 'package:boards_app/utils/color_res.dart';
+import 'package:boards_app/utils/prefkeys.dart';
 import 'package:boards_app/utils/string_res.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ContactUsScreen extends StatelessWidget {
   ContactUsScreen({super.key});
@@ -35,6 +39,25 @@ class ContactUsScreen extends StatelessWidget {
                     SizedBox(
                       height: Get.height * 0.05,
                     ),
+                    // Container(
+                    //   height: Get.height * 0.075,
+                    //   width: Get.width,
+                    //   decoration: BoxDecoration(
+                    //       borderRadius: BorderRadius.circular(5),
+                    //       border: Border.all(color: ColorRes.colorD9D9D9)),
+                    //   child: appTextField(
+                    //     controller: controller.nameController,
+                    //     hintText: StringRes.name.tr,
+                    //     hintStyle: appTextStyle(
+                    //       color: ColorRes.black.withOpacity(0.3),
+                    //       fontSize: 13,
+                    //       weight: FontWeight.w400,
+                    //     ),
+                    //   ),
+                    // ),
+                    // SizedBox(
+                    //   height: Get.height * 0.03,
+                    // ),
                     Container(
                       height: Get.height * 0.075,
                       width: Get.width,
@@ -42,25 +65,7 @@ class ContactUsScreen extends StatelessWidget {
                           borderRadius: BorderRadius.circular(5),
                           border: Border.all(color: ColorRes.colorD9D9D9)),
                       child: appTextField(
-                        controller: controller.nameController,
-                        hintText: StringRes.name.tr,
-                        hintStyle: appTextStyle(
-                          color: ColorRes.black.withOpacity(0.3),
-                          fontSize: 13,
-                          weight: FontWeight.w400,
-                        ),
-                      ),
-                    ),
-                    SizedBox(
-                      height: Get.height * 0.03,
-                    ),
-                    Container(
-                      height: Get.height * 0.075,
-                      width: Get.width,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(5),
-                          border: Border.all(color: ColorRes.colorD9D9D9)),
-                      child: appTextField(
+                        enabled: false,
                         controller: controller.emailIdController,
                         hintText: StringRes.emailID.tr,
                         hintStyle: appTextStyle(
@@ -70,33 +75,33 @@ class ContactUsScreen extends StatelessWidget {
                         ),
                       ),
                     ),
-                    SizedBox(
-                      height: Get.height * 0.03,
-                    ),
-                    Container(
-                      height: Get.height * 0.3,
-                      width: Get.width,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(5),
-                          border: Border.all(color: ColorRes.colorD9D9D9)),
-                      child: appTextField(
-                        maxLines: 5,
-                        contentPaddingTop: 20,
-                        controller: controller.descriptionController,
-                        hintText: StringRes.description.tr,
-                        hintStyle: appTextStyle(
-                          color: ColorRes.black.withOpacity(0.3),
-                          fontSize: 13,
-                          weight: FontWeight.w400,
-                        ),
-                      ),
-                    ),
+                    // SizedBox(
+                    //   height: Get.height * 0.03,
+                    // ),
+                    // Container(
+                    //   height: Get.height * 0.3,
+                    //   width: Get.width,
+                    //   decoration: BoxDecoration(
+                    //       borderRadius: BorderRadius.circular(5),
+                    //       border: Border.all(color: ColorRes.colorD9D9D9)),
+                    //   child: appTextField(
+                    //     maxLines: 5,
+                    //     contentPaddingTop: 20,
+                    //     controller: controller.descriptionController,
+                    //     hintText: StringRes.description.tr,
+                    //     hintStyle: appTextStyle(
+                    //       color: ColorRes.black.withOpacity(0.3),
+                    //       fontSize: 13,
+                    //       weight: FontWeight.w400,
+                    //     ),
+                    //   ),
+                    // ),
                     SizedBox(
                       height: Get.height * 0.08,
                     ),
                     CommonButton(
                         onTap: () {
-
+                          launch("mailto:${contactUsController.emailIdController.text}");
                         },
                         text: StringRes.send),
                   ]),
