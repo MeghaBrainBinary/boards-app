@@ -7,13 +7,16 @@ class TreeView extends StatefulWidget {
   final List<TreeNodeData> data;
 
   final bool lazy;
+  final TextStyle? textStyle;
   final Widget icon;
+  final Widget? leftIcon;
   final double offsetLeft;
   final bool showFilter;
   final bool showActions;
   final bool showCheckBox;
 
   final Function(TreeNodeData node)? onTap;
+  final Function(TreeNodeData node)? onLastTap;
   final void Function(TreeNodeData node)? onLoad;
   final void Function(TreeNodeData node)? onExpand;
   final void Function(TreeNodeData node)? onCollapse;
@@ -27,7 +30,10 @@ class TreeView extends StatefulWidget {
   const TreeView({
     Key? key,
     required this.data,
+    this.textStyle,
     this.onTap,
+    this.onLastTap,
+    this.leftIcon,
     this.onCheck,
     this.onLoad,
     this.onExpand,
@@ -117,6 +123,7 @@ class _TreeViewState extends State<TreeView> {
       sub_parent_id: "0",
       parent_id: "0",
       title: '',
+      isTop: false,
       extra: null,
       checked: false,
       expanded: false,
@@ -146,13 +153,17 @@ class _TreeViewState extends State<TreeView> {
                 remove: remove,
                 append: append,
                 parent: _root,
+                isChildren: false,
+                textStyle: widget.textStyle ??TextStyle(),
                 data: _renderList[index],
                 icon: widget.icon,
+                leftIcon: widget.leftIcon ?? Container(),
                 lazy: widget.lazy,
                 offsetLeft: widget.offsetLeft,
                 showCheckBox: widget.showCheckBox,
                 showActions: widget.showActions,
                 onTap: widget.onTap ?? (n) {},
+                onLastTap: widget.onLastTap ?? (n) {},
                 onLoad: widget.onLoad ?? (n) {},
                 onCheck: widget.onCheck ?? (b, n) {},
                 onExpand: widget.onExpand ?? (n) {},
