@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:boards_app/localization/localization.dart';
 import 'package:boards_app/screens/boards_screen/api/language_api.dart';
 import 'package:boards_app/screens/boards_screen/model/get_board_model.dart';
@@ -34,6 +36,7 @@ void onInit() {
 }
 
   init(language)async{
+
     loader.value= true;
    // getBoardModel =await GetBoardApi.getBoardApi(language);
     getBoardModelData =await GetBoardApi.getBoardApi(language);
@@ -47,6 +50,9 @@ void onInit() {
 
       isIcons = List.generate(getBoardModelData['data'].length ?? 0, (index) => false);
     }
+
+
+
    // serverData = getBoardModelData['data'];
 
     if(getBoardModelData['data'].length != 0) {

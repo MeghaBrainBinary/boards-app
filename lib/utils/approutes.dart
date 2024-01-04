@@ -12,4 +12,6 @@ class AppRoutes {
   static String login = "/login";
   static String forgotPasswordScreen = "/forgotPasswordScreen";
   static String createNewPasswordScreen = "/createNewPasswordScreen";
+  static String viewImagesScreen = "/viewImages";
+  static String viewFullImagesScreen = "/viewFullImages";
 }

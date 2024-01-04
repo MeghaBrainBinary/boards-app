@@ -111,4 +111,7 @@ class StringRes {
   static String faq = "FAQ";
   static String loginLogout = "Login / Logout";
 
+  static String viewImages = "View Images";
+
+
 }

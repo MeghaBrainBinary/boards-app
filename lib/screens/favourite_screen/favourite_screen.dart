@@ -11,6 +11,7 @@ import 'package:boards_app/utils/string_res.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:shimmer/shimmer.dart';
 
 class FavouriteScreen extends StatelessWidget {
   FavouriteScreen({super.key});
@@ -80,8 +81,16 @@ class FavouriteScreen extends StatelessWidget {
                                           width: Get.width,
                                           fit: BoxFit.fill,
                                           imageUrl:controller.storedFavorites?[index]?.replaceAll(RegExp(r'^\d+:'), '') ?? "",
-
-                                          placeholder: (context, url) => Container(),
+                                          progressIndicatorBuilder: (context,strings,download){
+                                            return    Shimmer.fromColors(
+                                                baseColor: Colors.grey.shade300,
+                                                highlightColor: Colors.white,
+                                                enabled: true, child:
+                                            Container(
+                                              height: Get.width,width: Get.width,
+                                              color: Colors.white,
+                                            ));
+                                          },
                                           errorWidget: (context, url, error) => Container(),
                                         ),
                                         GestureDetector(

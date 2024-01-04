@@ -11,6 +11,8 @@ import 'package:boards_app/screens/my_folder_screen/my_folder_screen.dart';
 import 'package:boards_app/screens/privacy_policy_screen/privacy_policy_screen.dart';
 import 'package:boards_app/screens/settings_screen/settings_screen.dart';
 import 'package:boards_app/screens/splashScreen/splash_screen.dart';
+import 'package:boards_app/screens/view/view_full_image.dart';
+import 'package:boards_app/screens/view/view_screen.dart';
 import 'package:boards_app/services/notification_service.dart';
 import 'package:boards_app/services/pref_services.dart';
 import 'package:boards_app/utils/approutes.dart';
@@ -72,6 +74,8 @@ class MyApp extends StatelessWidget {
           GetPage(name: AppRoutes.myFolderPage, page: () => MyFolderScreen()),
           GetPage(name: AppRoutes.introPage, page: () => IntroScreen()),
           GetPage(name: AppRoutes.favourite, page: () => FavouriteScreen()),
+          GetPage(name: AppRoutes.viewImagesScreen, page: () => ViewImagesScreen(),arguments: []),
+          GetPage(name: AppRoutes.viewFullImagesScreen, page: () => ViewFullImageScreen(),arguments: ""),
           GetPage(name: AppRoutes.contactUs, page: () => ContactUsScreen()),
           GetPage(name: AppRoutes.setting, page: () => SettingsScreen()),
           GetPage(name: AppRoutes.login, page: () => LoginScreen()),

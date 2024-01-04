@@ -34,6 +34,7 @@ class AssetRes {
   static String emailIcon = "${icons}emailIcon.png";
   static String userIcon = "${icons}userIcon.png";
   static String uploadeIcon = "${icons}uploadeIcon.png";
+  static String grid = "${icons}grid.png";
 
 
 

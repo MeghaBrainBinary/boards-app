@@ -78,4 +78,5 @@ const Map<String, String> English = {
   "Please enter your User name": "Please enter your User name",
   "Please log in before delete Account.": "Please log in before delete Account.",
   "Please log in before resetting your password.": "Please log in before resetting your password.",
+  "View Images":"View Images",
 };

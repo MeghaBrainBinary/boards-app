@@ -19,6 +19,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:shimmer/shimmer.dart';
 import 'package:video_player/video_player.dart';
 
 class MyFolderScreen extends StatefulWidget {
@@ -125,384 +126,293 @@ class _MyFolderScreenState extends State<MyFolderScreen> {
             children: [
               Stack(
                 children: [
-                  Stack(
-                    alignment: Alignment.bottomCenter,
-                    children: [
-                      Column(
-                        children: [
-                          appBar(boardName: widget.boardName),
-                          SizedBox(
-                            height: Get.height * 0.05,
-                          ),
-                          (controller.getBoardInfoModel==null)?const SizedBox():Padding(
-                            padding: EdgeInsets.only(
-                                left: Get.width * 0.05, right: Get.width * 0.06),
-                            child: Column(crossAxisAlignment: CrossAxisAlignment.end,
-                              children: [
-                               /* Row(
-                                  mainAxisAlignment: MainAxisAlignment.end,
+                  SingleChildScrollView(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        appBar(boardName: widget.boardName),
+                        SizedBox(
+                          height: Get.height * 0.05,
+                        ),
+                        (controller.getBoardInfoModel==null)?const SizedBox():Padding(
+                          padding: EdgeInsets.only(
+                              left: Get.width * 0.05, right: Get.width * 0.06),
+                          child: Column(crossAxisAlignment: CrossAxisAlignment.end,
+                            children: [
+                             /* Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  InkWell(
+                                    onTap: () {
+                                      controller.onTapSelect();
+                                    },
+                                    child: Container(
+                                      child: (controller.isSelect == false)
+                                          ? Text(
+                                              StringRes.select.tr,
+                                              style: appTextStyle(
+                                                  color: ColorRes.color305EBE,
+                                                  fontSize: 15,
+                                                  weight: FontWeight.w500),
+                                            )
+                                          : Text(
+                                              StringRes.cancel.tr,
+                                              style: appTextStyle(
+                                                  color: ColorRes.color305EBE,
+                                                  fontSize: 15,
+                                                  weight: FontWeight.w500),
+                                            ),
+                                    ),
+                                  )
+                                ],
+                              ),*/
+                              SizedBox(height: 10,),
+
+
+
+                              if (controller.isPageView==false && controller.isSelectedPageView==false)
+                                GestureDetector(onTap: () {
+
+                                MySelectFolderController mySelectFolderController = Get.put(MySelectFolderController());
+                                myFolderController.addSelectedImage = List.generate( controller.getBoardInfoModel?.data?.length ?? 0, (index) => false);
+                             //   Get.to(MySelectFolderScreen( FolderData: controller.getBoardInfoModel?.data ?? [],));
+                                  controller.isSelectedPageView = true;
+                                  controller.isPageView = false;
+                                  controller.update(['fldr']);
+                                },
+                                    child: Text(StringRes.select.tr,
+                                      style: appTextStyle(color: ColorRes.color305EBE,fontSize: 15,weight: FontWeight.w500),)) else SizedBox(),
+
+
+
+                              controller.isSelectedPageView ?  Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text('${myFolderController.addSelectedImage.where((e) => e == true).length} ${StringRes.imageSelected.tr}',style: appTextStyle(color: ColorRes.black,fontSize: 13,weight: FontWeight.w600),),
+                                  GestureDetector(onTap: () {
+                                    myFolderController.addSelectedImage = List.generate( controller.getBoardInfoModel.data?.length ?? 0, (index) => false);
+                                    controller.isSelectedPageView = false;
+                                    controller.update(['fldr']);
+                                  },child: Text(StringRes.cancel.tr,style: appTextStyle(color: ColorRes.color305EBE,fontSize: 15,weight: FontWeight.w500),)),
+                                ],
+                              ):SizedBox(),
+
+
+
+
+                              (controller.isPageView && !controller.isSelectedPageView)?
+                              Container(
+                                height: Get.height * 0.7,
+                                width: Get.width,
+                                alignment: Alignment.topCenter,
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
                                     InkWell(
-                                      onTap: () {
-                                        controller.onTapSelect();
-                                      },
-                                      child: Container(
-                                        child: (controller.isSelect == false)
-                                            ? Text(
-                                                StringRes.select.tr,
-                                                style: appTextStyle(
-                                                    color: ColorRes.color305EBE,
-                                                    fontSize: 15,
-                                                    weight: FontWeight.w500),
-                                              )
-                                            : Text(
-                                                StringRes.cancel.tr,
-                                                style: appTextStyle(
-                                                    color: ColorRes.color305EBE,
-                                                    fontSize: 15,
-                                                    weight: FontWeight.w500),
-                                              ),
-                                      ),
-                                    )
-                                  ],
-                                ),*/
-                                SizedBox(height: 10,),
-
-
-
-                                if (controller.isPageView==false && controller.isSelectedPageView==false)
-                                  GestureDetector(onTap: () {
-
-                                  MySelectFolderController mySelectFolderController = Get.put(MySelectFolderController());
-                                  myFolderController.addSelectedImage = List.generate( controller.getBoardInfoModel?.data?.length ?? 0, (index) => false);
-                               //   Get.to(MySelectFolderScreen( FolderData: controller.getBoardInfoModel?.data ?? [],));
-                                    controller.isSelectedPageView = true;
-                                    controller.isPageView = false;
-                                    controller.update(['fldr']);
-                                  },
-                                      child: Text(StringRes.select.tr,
-                                        style: appTextStyle(color: ColorRes.color305EBE,fontSize: 15,weight: FontWeight.w500),)) else SizedBox(),
-
-
-
-                                controller.isSelectedPageView ?  Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text('${myFolderController.addSelectedImage.where((e) => e == true).length} ${StringRes.imageSelected.tr}',style: appTextStyle(color: ColorRes.black,fontSize: 13,weight: FontWeight.w600),),
-                                    GestureDetector(onTap: () {
-                                      myFolderController.addSelectedImage = List.generate( controller.getBoardInfoModel.data?.length ?? 0, (index) => false);
-                                      controller.isSelectedPageView = false;
-                                      controller.update(['fldr']);
-                                    },child: Text(StringRes.cancel.tr,style: appTextStyle(color: ColorRes.color305EBE,fontSize: 15,weight: FontWeight.w500),)),
-                                  ],
-                                ):SizedBox(),
-
-
-
-
-                                (controller.isPageView && !controller.isSelectedPageView)?
-                                Container(
-                                  height: Get.height * 0.6,
-                                  width: Get.width,
-                                  alignment: Alignment.topCenter,
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                    crossAxisAlignment: CrossAxisAlignment.center,
-                                    children: [
-                                      InkWell(
-                                          onTap: () {
-                                            controller.tapForwardButton();
+                                        onTap: () {
+                                          controller.tapForwardButton();
+                                        },
+                                        child: const Icon(
+                                          Icons.arrow_back_ios_new_rounded,
+                                          color: Colors.black,
+                                          size: 25,
+                                        )),
+                                    Container(
+                                      alignment: Alignment.topCenter,
+                                      width: Get.width *0.75,
+                                      child: PageView.builder(
+                                        controller: controller.pageController,
+                                          itemCount: controller.getBoardInfoModel.data?.length ?? 0,
+                                          onPageChanged: (val){
+                                          controller.onImageChanged(val);
                                           },
-                                          child: const Icon(
-                                            Icons.arrow_back_ios_new_rounded,
-                                            color: Colors.black,
-                                            size: 25,
-                                          )),
-                                      Container(
-                                        alignment: Alignment.topCenter,
-                                        width: Get.width *0.75,
-                                        child: PageView.builder(
-                                          controller: controller.pageController,
-                                            itemCount: controller.getBoardInfoModel.data?.length ?? 0,
-                                            onPageChanged: (val){
-                                            controller.onImageChanged(val);
-                                            },
-                                            itemBuilder: (context,index){
-                                             controller.selectedIndex;
-                                              return Stack(
-                                                alignment: Alignment.bottomRight,
-                                                children: [
-                                                  InkWell(
-                                                    onTap:(){
-                                                      controller.onTapImage();
-                                                    },
-                                                    child: ClipRRect(
-                                                      borderRadius:
-                                                      BorderRadius.circular(5),
-                                                      child: Container(
-                                                        height: Get.height*0.6,
-                                                        width: Get.width*0.75,
-                                                        padding: (controller
-                                                            .checkImg[index] ==
-                                                            false)
-                                                            ? const EdgeInsets.all(0)
-                                                            : const EdgeInsets.all(2),
-                                                        decoration: BoxDecoration(
-                                                          color: Colors.transparent,
-                                                          borderRadius:
-                                                          BorderRadius.circular(5),
-                                                        ),
-                                                        child: CachedNetworkImage(
-                                                          fit: BoxFit.fitWidth,
-
-                                                          imageUrl:controller.getBoardInfoModel.data![index].image!.toString(),
-
-                                                          placeholder: (context, url) => Container(),
-                                                          errorWidget: (context, url, error) => Container(),
-                                                        ),
-                                                        // child: Image.network(
-                                                        //   controller.getBoardInfoModel.data![index]
-                                                        //       .image!.toString(),
-                                                        //   fit: BoxFit.fitWidth,
-                                                        //
-                                                        // ),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                  (controller.isSelect == false)
-                                                      ? const SizedBox()
-                                                      : InkWell(
-                                                    onTap: () {
-                                                      controller.onTapCheck(controller.getBoardInfoModel.data![index].image,index);
-                                                    },
-                                                    child: Container(
-                                                      margin: const EdgeInsets.only(
-                                                          right: 10, bottom: 10),
-                                                      height: 25,
-                                                      width: 25,
-                                                      decoration: BoxDecoration(
-                                                        color: ColorRes.white,
-                                                        shape: BoxShape.circle,
-                                                      ),
-                                                      child: (controller
-                                                          .checkImg[index] ==
-                                                          false)
-                                                          ? const SizedBox()
-                                                          : SizedBox(
-                                                        height: 8,
-                                                        width: 11,
-                                                        child: Transform.scale(
-                                                          scale: 0.6,
-                                                          child: Icon(
-                                                            Icons.check_rounded,
-                                                            color: ColorRes
-                                                                .color305EBE,
-                                                          ),
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ],
-                                              );
-                                            }),
-                                      ),
-                                      InkWell(
-                                          onTap: () {
-                                            controller.tapBackwardButton();
-                                          },
-                                          child: const Icon(
-                                            Icons.arrow_forward_ios_rounded,
-                                            color: Colors.black,
-                                            size: 25,
-                                          )),
-                                    ],
-                                  ),
-                                )
-                                :
-                                (!controller.isPageView && controller.isSelectedPageView)?   SizedBox(
-                                  height: Get.height * 0.7,
-                                  width: Get.width,
-                                  child:(controller.getBoardInfoModel?.data!=null)?
-                               /*   GridView.builder(
-                                      padding: const EdgeInsets.all(0),
-                                      itemCount: controller.getBoardInfoModel?.data?.length ?? 0,
-                                      gridDelegate:
-                                      const SliverGridDelegateWithFixedCrossAxisCount(
-                                          crossAxisCount: 2,
-                                          mainAxisSpacing: 6,
-                                          crossAxisSpacing: 19),
-                                      itemBuilder: (context, index) {
-
-                                        return Stack(
-                                          alignment: Alignment.bottomRight,
-                                          children: [
-
-                                            InkWell(
-                                              onTap:(){
-                                                if( myFolderController.addSelectedImage[index]==false)
-                                                {
-                                                  myFolderController.addSelectedImage[index]=true;
-                                                }
-                                                else
-                                                {
-                                                  myFolderController.addSelectedImage[index]=false;
-                                                }
-                                                myFolderController.update(['fldr']);
-                                              },
-                                              child: ClipRRect(
-                                                borderRadius:
-                                                BorderRadius.circular(5),
-                                                child: Container(
-                                                  height: Get.height * 0.199,
-                                                  width: Get.width * 0.45,
-                                                  padding: (myFolderController.checkImg[index] == false)
-                                                      ? const EdgeInsets.all(0)
-                                                      : const EdgeInsets.all(2),
-                                                  decoration: BoxDecoration(
-                                                    color:myFolderController.checkImg[index]==true?
-                                                    ColorRes.color305EBE:Colors.transparent,
-                                                    border: Border.all(color:myFolderController.checkImg[index]==true?
-                                                    ColorRes.color305EBE:Colors.white ),
+                                          itemBuilder: (context,index){
+                                           controller.selectedIndex;
+                                            return Stack(
+                                              alignment: Alignment.bottomRight,
+                                              children: [
+                                                InkWell(
+                                                  onTap:(){
+                                                    controller.onTapImage();
+                                                  },
+                                                  child: ClipRRect(
                                                     borderRadius:
                                                     BorderRadius.circular(5),
-                                                  ),
-                                                  child: Stack(alignment: Alignment.bottomRight,
-                                                    children: [
-                                                      CachedNetworkImage(
-
-                                                        width: Get.width,
+                                                    child: Container(
+                                                      height: Get.height*0.7,
+                                                      width: Get.width*0.75,
+                                                      padding: (controller
+                                                          .checkImg[index] ==
+                                                          false)
+                                                          ? const EdgeInsets.all(0)
+                                                          : const EdgeInsets.all(2),
+                                                      decoration: BoxDecoration(
+                                                        color: Colors.transparent,
+                                                        borderRadius:
+                                                        BorderRadius.circular(5),
+                                                      ),
+                                                      child: CachedNetworkImage(
                                                         fit: BoxFit.fitWidth,
-                                                        imageUrl:controller.getBoardInfoModel?.data?[index].image ?? "",
 
-                                                        placeholder: (context, url) => Container(),
+                                                        imageUrl:controller.getBoardInfoModel.data![index].image!.toString(),
+
+                                                        progressIndicatorBuilder: (context,strings,download){
+                                                          return    Shimmer.fromColors(
+                                                              baseColor: Colors.grey.shade300,
+                                                              highlightColor: Colors.white,
+                                                              enabled: true, child:
+                                                          Container(
+                                                            height: Get.width,width: Get.width,
+                                                            color: Colors.white,
+                                                          ));
+                                                        },
                                                         errorWidget: (context, url, error) => Container(),
                                                       ),
-                                                      myFolderController.addSelectedImage[index]==true? Padding(
-                                                        padding: const EdgeInsets.only(bottom: 10,right: 10),
-                                                        child: Image.asset(AssetRes.selectedImage,scale: 4,),
-                                                      ):SizedBox()
-                                                    ],
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-
-                                            (myFolderController.isSelect == false)
-                                                ? const SizedBox()
-                                                : InkWell(
-                                              onTap: () {
-                                                myFolderController.onTapCheck(myFolderController.getBoardInfoModel.data![index].image,index);
-                                              },
-                                              child: Container(
-                                                margin: const EdgeInsets.only(
-                                                    right: 10, bottom: 10),
-                                                height: 25,
-                                                width: 25,
-                                                decoration: BoxDecoration(
-                                                  color: ColorRes.white,
-                                                  shape: BoxShape.circle,
-                                                ),
-                                                child: (myFolderController
-                                                    .checkImg[index] ==
-                                                    false)
-                                                    ? const SizedBox()
-                                                    : SizedBox(
-                                                  height: 8,
-                                                  width: 11,
-                                                  child: Transform.scale(
-                                                    scale: 0.6,
-                                                    child: Icon(
-                                                      Icons.check_rounded,
-                                                      color: ColorRes
-                                                          .color305EBE,
+                                                      // child: Image.network(
+                                                      //   controller.getBoardInfoModel.data![index]
+                                                      //       .image!.toString(),
+                                                      //   fit: BoxFit.fitWidth,
+                                                      //
+                                                      // ),
                                                     ),
                                                   ),
                                                 ),
-                                              ),
-                                            ),
-                                          ],
-                                        );
-                                      })*/
-                                  GridView.builder(
+                                                (controller.isSelect == false)
+                                                    ? const SizedBox()
+                                                    : InkWell(
+                                                  onTap: () {
+                                                    controller.onTapCheck(controller.getBoardInfoModel.data![index].image,index);
+                                                  },
+                                                  child: Container(
+                                                    margin: const EdgeInsets.only(
+                                                        right: 10, bottom: 10),
+                                                    height: 25,
+                                                    width: 25,
+                                                    decoration: BoxDecoration(
+                                                      color: ColorRes.white,
+                                                      shape: BoxShape.circle,
+                                                    ),
+                                                    child: (controller
+                                                        .checkImg[index] ==
+                                                        false)
+                                                        ? const SizedBox()
+                                                        : SizedBox(
+                                                      height: 8,
+                                                      width: 11,
+                                                      child: Transform.scale(
+                                                        scale: 0.6,
+                                                        child: Icon(
+                                                          Icons.check_rounded,
+                                                          color: ColorRes
+                                                              .color305EBE,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
+                                            );
+                                          }),
+                                    ),
+                                    InkWell(
+                                        onTap: () {
+                                          controller.tapBackwardButton();
+                                        },
+                                        child: const Icon(
+                                          Icons.arrow_forward_ios_rounded,
+                                          color: Colors.black,
+                                          size: 25,
+                                        )),
+                                  ],
+                                ),
+                              )
+                              :
+                              (!controller.isPageView && controller.isSelectedPageView)?   SizedBox(
+                                height: Get.height * 0.7,
+                                width: Get.width,
+                                child:(controller.getBoardInfoModel?.data!=null)?
+                             /*   GridView.builder(
                                     padding: const EdgeInsets.all(0),
                                     itemCount: controller.getBoardInfoModel?.data?.length ?? 0,
-                                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                                      crossAxisCount: 2,
-                                      mainAxisSpacing: 6,
-                                      crossAxisSpacing: 19,
-                                    ),
+                                    gridDelegate:
+                                    const SliverGridDelegateWithFixedCrossAxisCount(
+                                        crossAxisCount: 2,
+                                        mainAxisSpacing: 6,
+                                        crossAxisSpacing: 19),
                                     itemBuilder: (context, index) {
+
                                       return Stack(
                                         alignment: Alignment.bottomRight,
                                         children: [
+
                                           InkWell(
-                                            onTap: () {
-                                              if (myFolderController.addSelectedImage[index] == false) {
-                                                myFolderController.addSelectedImage[index] = true;
-                                              } else {
-                                                myFolderController.addSelectedImage[index] = false;
+                                            onTap:(){
+                                              if( myFolderController.addSelectedImage[index]==false)
+                                              {
+                                                myFolderController.addSelectedImage[index]=true;
+                                              }
+                                              else
+                                              {
+                                                myFolderController.addSelectedImage[index]=false;
                                               }
                                               myFolderController.update(['fldr']);
                                             },
                                             child: ClipRRect(
-                                              borderRadius: BorderRadius.circular(5),
+                                              borderRadius:
+                                              BorderRadius.circular(5),
                                               child: Container(
                                                 height: Get.height * 0.199,
                                                 width: Get.width * 0.45,
-                                                padding: ( myFolderController.addSelectedImage[index] == true)
-                                                    ? const EdgeInsets.all(2)
+                                                padding: (myFolderController.checkImg[index] == false)
+                                                    ? const EdgeInsets.all(0)
                                                     : const EdgeInsets.all(2),
                                                 decoration: BoxDecoration(
-                                                  color: myFolderController.checkImg[index] == true
-                                                      ? ColorRes.color305EBE
-                                                      : Colors.transparent,
-                                                  border: Border.all(
-                                                    color:  myFolderController.addSelectedImage[index] == true
-                                                        ? ColorRes.color305EBE
-                                                        : Colors.white,
-                                                  ),
-                                                  borderRadius: BorderRadius.circular(5),
+                                                  color:myFolderController.checkImg[index]==true?
+                                                  ColorRes.color305EBE:Colors.transparent,
+                                                  border: Border.all(color:myFolderController.checkImg[index]==true?
+                                                  ColorRes.color305EBE:Colors.white ),
+                                                  borderRadius:
+                                                  BorderRadius.circular(5),
                                                 ),
-                                                child: Stack(
-                                                  alignment: Alignment.bottomRight,
+                                                child: Stack(alignment: Alignment.bottomRight,
                                                   children: [
                                                     CachedNetworkImage(
+
                                                       width: Get.width,
                                                       fit: BoxFit.fitWidth,
-                                                      imageUrl: controller.getBoardInfoModel?.data?[index].image ?? "",
+                                                      imageUrl:controller.getBoardInfoModel?.data?[index].image ?? "",
+
                                                       placeholder: (context, url) => Container(),
                                                       errorWidget: (context, url, error) => Container(),
                                                     ),
-                                                    myFolderController.addSelectedImage[index] == true
-                                                        ? Padding(
-                                                      padding: const EdgeInsets.only(bottom: 10, right: 10),
-                                                      child: Image.asset(
-                                                        AssetRes.selectedImage,
-                                                        scale: 4,
-                                                      ),
-                                                    )
-                                                        : SizedBox(),
+                                                    myFolderController.addSelectedImage[index]==true? Padding(
+                                                      padding: const EdgeInsets.only(bottom: 10,right: 10),
+                                                      child: Image.asset(AssetRes.selectedImage,scale: 4,),
+                                                    ):SizedBox()
                                                   ],
                                                 ),
                                               ),
                                             ),
                                           ),
+
                                           (myFolderController.isSelect == false)
                                               ? const SizedBox()
                                               : InkWell(
                                             onTap: () {
-                                              myFolderController.onTapCheck(
-                                                  myFolderController.getBoardInfoModel.data![index].image,
-                                                  index);
+                                              myFolderController.onTapCheck(myFolderController.getBoardInfoModel.data![index].image,index);
                                             },
                                             child: Container(
-                                              margin: const EdgeInsets.only(right: 10, bottom: 10),
+                                              margin: const EdgeInsets.only(
+                                                  right: 10, bottom: 10),
                                               height: 25,
                                               width: 25,
                                               decoration: BoxDecoration(
                                                 color: ColorRes.white,
                                                 shape: BoxShape.circle,
                                               ),
-                                              child: (myFolderController.checkImg[index] == false)
+                                              child: (myFolderController
+                                                  .checkImg[index] ==
+                                                  false)
                                                   ? const SizedBox()
                                                   : SizedBox(
                                                 height: 8,
@@ -511,7 +421,8 @@ class _MyFolderScreenState extends State<MyFolderScreen> {
                                                   scale: 0.6,
                                                   child: Icon(
                                                     Icons.check_rounded,
-                                                    color: ColorRes.color305EBE,
+                                                    color: ColorRes
+                                                        .color305EBE,
                                                   ),
                                                 ),
                                               ),
@@ -519,149 +430,269 @@ class _MyFolderScreenState extends State<MyFolderScreen> {
                                           ),
                                         ],
                                       );
-                                    },
-                                  )
-
-                                     :const SizedBox(),
+                                    })*/
+                                GridView.builder(
+                                  padding: const EdgeInsets.all(0),
+                                  itemCount: controller.getBoardInfoModel?.data?.length ?? 0,
+                                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                                    crossAxisCount: 2,
+                                    mainAxisSpacing: 6,
+                                    crossAxisSpacing: 19,
+                                  ),
+                                  itemBuilder: (context, index) {
+                                    return Stack(
+                                      alignment: Alignment.bottomRight,
+                                      children: [
+                                        InkWell(
+                                          onTap: () {
+                                            if (myFolderController.addSelectedImage[index] == false) {
+                                              myFolderController.addSelectedImage[index] = true;
+                                            } else {
+                                              myFolderController.addSelectedImage[index] = false;
+                                            }
+                                            myFolderController.update(['fldr']);
+                                          },
+                                          child: ClipRRect(
+                                            borderRadius: BorderRadius.circular(5),
+                                            child: Container(
+                                              height: Get.height * 0.199,
+                                              width: Get.width * 0.45,
+                                              padding: ( myFolderController.addSelectedImage[index] == true)
+                                                  ? const EdgeInsets.all(2)
+                                                  : const EdgeInsets.all(2),
+                                              decoration: BoxDecoration(
+                                                color: myFolderController.checkImg[index] == true
+                                                    ? ColorRes.color305EBE
+                                                    : Colors.transparent,
+                                                border: Border.all(
+                                                  color:  myFolderController.addSelectedImage[index] == true
+                                                      ? ColorRes.color305EBE
+                                                      : Colors.white,
+                                                ),
+                                                borderRadius: BorderRadius.circular(5),
+                                              ),
+                                              child: Stack(
+                                                alignment: Alignment.bottomRight,
+                                                children: [
+                                                  CachedNetworkImage(
+                                                    width: Get.width,
+                                                    fit: BoxFit.fitWidth,
+                                                    imageUrl: controller.getBoardInfoModel?.data?[index].image ?? "",
+                                                    progressIndicatorBuilder: (context,strings,download){
+                                                      return    Shimmer.fromColors(
+                                                          baseColor: Colors.grey.shade300,
+                                                          highlightColor: Colors.white,
+                                                          enabled: true, child:
+                                                      Container(
+                                                        height: Get.width,width: Get.width,
+                                                        color: Colors.white,
+                                                      ));
+                                                    },
+                                                    errorWidget: (context, url, error) => Container(),
+                                                  ),
+                                                  myFolderController.addSelectedImage[index] == true
+                                                      ? Padding(
+                                                    padding: const EdgeInsets.only(bottom: 10, right: 10),
+                                                    child: Image.asset(
+                                                      AssetRes.selectedImage,
+                                                      scale: 4,
+                                                    ),
+                                                  )
+                                                      : SizedBox(),
+                                                ],
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                        (myFolderController.isSelect == false)
+                                            ? const SizedBox()
+                                            : InkWell(
+                                          onTap: () {
+                                            myFolderController.onTapCheck(
+                                                myFolderController.getBoardInfoModel.data![index].image,
+                                                index);
+                                          },
+                                          child: Container(
+                                            margin: const EdgeInsets.only(right: 10, bottom: 10),
+                                            height: 25,
+                                            width: 25,
+                                            decoration: BoxDecoration(
+                                              color: ColorRes.white,
+                                              shape: BoxShape.circle,
+                                            ),
+                                            child: (myFolderController.checkImg[index] == false)
+                                                ? const SizedBox()
+                                                : SizedBox(
+                                              height: 8,
+                                              width: 11,
+                                              child: Transform.scale(
+                                                scale: 0.6,
+                                                child: Icon(
+                                                  Icons.check_rounded,
+                                                  color: ColorRes.color305EBE,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    );
+                                  },
                                 )
-                                    :
-                                SizedBox(
-                                  height: Get.height * 0.7,
-                                  width: Get.width,
-                                  child:(controller.getBoardInfoModel.data!=null)?GridView.builder(
-                                    padding: const EdgeInsets.all(0),
-                                    itemCount: controller.getBoardInfoModel.data!.length,
-                                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                                      crossAxisCount: 2,
-                                      mainAxisSpacing: 6,
-                                      crossAxisSpacing: 19,
-                                    ),
-                                    itemBuilder: (context, index) {
-                                      String userId = PrefService.getString(PrefKeys.userId);
-                                      String? imageId = controller.getBoardInfoModel.data?[index].id.toString();
 
-                                      // Fetch likes information only once
-                                      if (controller.isLike.isEmpty) {
-                                        if (PrefService.getList(PrefKeys.isLike + userId)?.isNotEmpty == true) {
-                                          controller.isLike = (PrefService.getList(PrefKeys.isLike + userId) ?? [])
-                                              .map((liked) => liked == '1').toList();
-                                        } else {
-                                          // Handle the case when controller.isLike is empty
-                                          // For example, you might want to set default values or display a message.
-                                        }
+                                   :const SizedBox(),
+                              )
+                                  :
+                              SizedBox(
+                                height: Get.height * 0.7,
+                                width: Get.width,
+                                child:(controller.getBoardInfoModel.data!=null)?GridView.builder(
+                                  padding: const EdgeInsets.all(0),
+                                  itemCount: controller.getBoardInfoModel.data!.length,
+                                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                                    crossAxisCount: 2,
+                                    mainAxisSpacing: 6,
+                                    crossAxisSpacing: 19,
+                                  ),
+                                  itemBuilder: (context, index) {
+                                    String userId = PrefService.getString(PrefKeys.userId);
+                                    String? imageId = controller.getBoardInfoModel.data?[index].id.toString();
+
+                                    // Fetch likes information only once
+                                    if (controller.isLike.isEmpty) {
+                                      if (PrefService.getList(PrefKeys.isLike + userId)?.isNotEmpty == true) {
+                                        controller.isLike = (PrefService.getList(PrefKeys.isLike + userId) ?? [])
+                                            .map((liked) => liked == '1').toList();
+                                      } else {
+                                        // Handle the case when controller.isLike is empty
+                                        // For example, you might want to set default values or display a message.
                                       }
+                                    }
 
-                                      String likeStatus = PrefService.getString('$imageId:$userId') ?? (controller.isLike[index] ? '1' : '0');
+                                    String likeStatus = PrefService.getString('$imageId:$userId') ?? (controller.isLike[index] ? '1' : '0');
 
-                                      return Stack(
-                                        alignment: Alignment.bottomRight,
-                                        children: [
-                                          InkWell(
-                                            onTap: () {
-                                              controller.selectedIndex = index;
-                                              controller.onTapImage();
-                                            },
-                                            child: ClipRRect(
-                                              borderRadius: BorderRadius.circular(5),
-                                              child: Container(
-                                                height: Get.height * 0.199,
-                                                width: Get.width * 0.45,
-                                                padding: (controller.checkImg[index] == false)
-                                                    ? const EdgeInsets.all(0)
-                                                    : const EdgeInsets.all(2),
-                                                decoration: BoxDecoration(
-                                                  color: Colors.white,
-                                                  borderRadius: BorderRadius.circular(5),
-                                                ),
-                                                child: Stack(
-                                                  alignment: Alignment.topRight,
-                                                  children: [
-                                                    CachedNetworkImage(
-                                                      width: Get.width,
-                                                      fit: BoxFit.fitWidth,
-                                                      imageUrl: controller.getBoardInfoModel.data![index].image!.toString(),
-                                                      placeholder: (context, url) => Container(),
-                                                      errorWidget: (context, url, error) => Container(),
-                                                    ),
-                                                    GestureDetector(
-                                                      onTap: () async {
-                                                        if (PrefService.getBool(PrefKeys.login) == false) {
-                                                          Get.toNamed(AppRoutes.login);
-                                                        } else {
-                                                          await toggleLike(index, controller, controller.getBoardInfoModel.data![index].image!.toString(), controller.getBoardInfoModel.data?[index].id ?? 0);
-                                                          controller.update(['fldr']);
-                                                        }
-                                                        controller.update(['fldr']);
-                                                      },
-                                                      child: Container(
-                                                        height: 20,
-                                                        width: 20,
-                                                        margin: EdgeInsets.only(top: 12, right: 12),
-                                                        decoration: const BoxDecoration(
-                                                          borderRadius: BorderRadius.all(Radius.circular(5)),
-                                                          color: Colors.white,
-                                                        ),
-                                                        child: likeStatus == '1'
-                                                            ? Icon(Icons.favorite_outlined, size: 18, color: ColorRes.colorE16F55)
-                                                            : Icon(Icons.favorite_outline_sharp, size: 18),
-                                                      ),
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                          (controller.isSelect == false)
-                                              ? const SizedBox()
-                                              : InkWell(
-                                            onTap: () {
-                                              controller.onTapCheck(controller.getBoardInfoModel.data![index].image, index);
-                                            },
+                                    return Stack(
+                                      alignment: Alignment.bottomRight,
+                                      children: [
+                                        InkWell(
+                                          onTap: () {
+                                            controller.selectedIndex = index;
+                                            controller.onTapImage();
+                                          },
+                                          child: ClipRRect(
+                                            borderRadius: BorderRadius.circular(5),
                                             child: Container(
-                                              margin: const EdgeInsets.only(right: 10, bottom: 10),
-                                              height: 25,
-                                              width: 25,
+                                              height: Get.height * 0.199,
+                                              width: Get.width * 0.45,
+                                              padding: (controller.checkImg[index] == false)
+                                                  ? const EdgeInsets.all(0)
+                                                  : const EdgeInsets.all(2),
                                               decoration: BoxDecoration(
-                                                color: ColorRes.white,
-                                                shape: BoxShape.circle,
+                                                color: Colors.white,
+                                                borderRadius: BorderRadius.circular(5),
                                               ),
-                                              child: (controller.checkImg[index] == false)
-                                                  ? const SizedBox()
-                                                  : SizedBox(
-                                                height: 8,
-                                                width: 11,
-                                                child: Transform.scale(
-                                                  scale: 0.6,
-                                                  child: Icon(
-                                                    Icons.check_rounded,
-                                                    color: ColorRes.color305EBE,
+                                              child: Stack(
+                                                alignment: Alignment.topRight,
+                                                children: [
+                                                  CachedNetworkImage(
+                                                    width: Get.width,
+                                                    fit: BoxFit.fitWidth,
+                                                    imageUrl: controller.getBoardInfoModel.data![index].image!.toString(),
+
+                                                    errorWidget: (context, url, error) => Container(),
+                                                    progressIndicatorBuilder: (context,strings,download){
+                                                      return    Shimmer.fromColors(
+                                                          baseColor: Colors.grey.shade300,
+                                                          highlightColor: Colors.white,
+                                                          enabled: true, child:
+                                                      Container(
+                                                        height: Get.width,width: Get.width,
+                                                        color: Colors.white,
+                                                      ));
+                                                    },
                                                   ),
+                                                  GestureDetector(
+                                                    onTap: () async {
+                                                      if (PrefService.getBool(PrefKeys.login) == false) {
+                                                        Get.toNamed(AppRoutes.login);
+                                                      } else {
+                                                        await toggleLike(index, controller, controller.getBoardInfoModel.data![index].image!.toString(), controller.getBoardInfoModel.data?[index].id ?? 0);
+                                                        controller.update(['fldr']);
+                                                      }
+                                                      controller.update(['fldr']);
+                                                    },
+                                                    child: Container(
+                                                      height: 20,
+                                                      width: 20,
+                                                      margin: EdgeInsets.only(top: 12, right: 12),
+                                                      decoration: const BoxDecoration(
+                                                        borderRadius: BorderRadius.all(Radius.circular(5)),
+                                                        color: Colors.white,
+                                                      ),
+                                                      child: likeStatus == '1'
+                                                          ? Icon(Icons.favorite_outlined, size: 18, color: ColorRes.colorE16F55)
+                                                          : Icon(Icons.favorite_outline_sharp, size: 18),
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                        (controller.isSelect == false)
+                                            ? const SizedBox()
+                                            : InkWell(
+                                          onTap: () {
+                                            controller.onTapCheck(controller.getBoardInfoModel.data![index].image, index);
+                                          },
+                                          child: Container(
+                                            margin: const EdgeInsets.only(right: 10, bottom: 10),
+                                            height: 25,
+                                            width: 25,
+                                            decoration: BoxDecoration(
+                                              color: ColorRes.white,
+                                              shape: BoxShape.circle,
+                                            ),
+                                            child: (controller.checkImg[index] == false)
+                                                ? const SizedBox()
+                                                : SizedBox(
+                                              height: 8,
+                                              width: 11,
+                                              child: Transform.scale(
+                                                scale: 0.6,
+                                                child: Icon(
+                                                  Icons.check_rounded,
+                                                  color: ColorRes.color305EBE,
                                                 ),
                                               ),
                                             ),
                                           ),
-                                        ],
-                                      );
-                                    },
-                                  )
+                                        ),
+                                      ],
+                                    );
+                                  },
+                                )
         :const SizedBox(),
-                                ),
+                              ),
 
 
 
-                              ],
-                            ),
+                            ],
                           ),
-                        ],
-                      ),
-          (controller.isPageView ==false)
-                          ? const SizedBox()
-                          : Container(
-                              height: 50,
-                              width: Get.width,
-                              color: ColorRes.color305EBE,
-                              child: Padding(
-                                padding: const EdgeInsets.symmetric(horizontal: 50),
+
+
+                        ),
+                        (controller.isPageView ==false)
+                            ? const SizedBox()
+                            : Column(
+                              children: [
+                                const SizedBox(height: 30,),
+                                Container(
+                          height: 50,
+                          width: Get.width,
+                          color: Colors.transparent,
+                          child: Padding(
+                                padding: const EdgeInsets.symmetric(horizontal: 20),
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: [
@@ -684,10 +715,18 @@ class _MyFolderScreenState extends State<MyFolderScreen> {
                                       onTap: (){
                                         Get.toNamed(AppRoutes.favourite);
                                       },
-                                      child: const SizedBox(
-                                          height: 23,
-                                          width: 23,
-                                          child: Icon(Icons.favorite_outline_sharp,color: Colors.white,size: 25,)),
+                                      child: Container(
+                                        width: 100,
+                                        height: 50,
+                                        decoration: BoxDecoration(
+                                          color: ColorRes.color305EBE,
+                                          borderRadius: BorderRadius.circular(25),
+                                        ),
+                                        child: const SizedBox(
+                                            height: 23,
+                                            width: 23,
+                                            child: Icon(Icons.favorite_outline_sharp,color: Colors.white,size: 25,)),
+                                      ),
                                     ),
 
                                     // SizedBox(
@@ -698,34 +737,42 @@ class _MyFolderScreenState extends State<MyFolderScreen> {
                                       onTap: (){
                                         // if(controller.isSelectedPageView==false)
                                         //   {
-                                            controller.saveImage();
-                                      //    }
-                                      //   else
-                                      //     {
-                                      //       controller.saveSelectedImages();
-                                      //     }
+                                        controller.saveImage();
+                                        //    }
+                                        //   else
+                                        //     {
+                                        //       controller.saveSelectedImages();
+                                        //     }
 
 
                                       },
-                                      child: const SizedBox(
-                                          height: 23,
-                                          width: 23,
-                                          child: Icon(Icons.file_download_outlined,color: Colors.white,size: 25,)),
+                                      child: Container(
+                                        width: 100,
+                                        height: 50,
+                                        decoration: BoxDecoration(
+                                          color: ColorRes.color305EBE,
+                                          borderRadius: BorderRadius.circular(25),
+                                        ),
+                                        child: const SizedBox(
+                                            height: 23,
+                                            width: 23,
+                                            child: Icon(Icons.file_download_outlined,color: Colors.white,size: 25,)),
+                                      ),
                                     ),
 
                                     InkWell(
                                       onTap: ()async{
                                         // if(controller.isSelectedPageView==false)
                                         //   {
-                                            controller.onTapShare();
+                                        controller.onTapShare();
                                         //   }
                                         // else
                                         //   {
-                                         //   controller.onSelectedTapShare();
-                                          // }
+                                        //   controller.onSelectedTapShare();
+                                        // }
 
 
-                                       // Share.share();
+                                        // Share.share();
                                         // controller.simg.forEach((element) {
                                         //
                                         // Share.share(element);
@@ -736,23 +783,23 @@ class _MyFolderScreenState extends State<MyFolderScreen> {
                                         // });
                                         // ShareIt.list(parameters: list);
 
-                                       // ShareExtend.shareMultiple(controller.simg, 'image');
-                                     //   List i = [];
-                                     // controller.simg.forEach((element) async{
-                                     //  ByteData b = await rootBundle.load(element);
-                                     //  Map io ={
-                                     //    "image":element,
-                                     //    "byteData":b
-                                     //  };
-                                     //   i.add(io);
-                                     // });
-                                     // Map data= {};
-                                     //
-                                     // i.forEach((element) {
-                                     //   data['element'] = element['byteData'].buffer.asUint8List();
-                                     // });
-                                     //
-                                     // print(data);
+                                        // ShareExtend.shareMultiple(controller.simg, 'image');
+                                        //   List i = [];
+                                        // controller.simg.forEach((element) async{
+                                        //  ByteData b = await rootBundle.load(element);
+                                        //  Map io ={
+                                        //    "image":element,
+                                        //    "byteData":b
+                                        //  };
+                                        //   i.add(io);
+                                        // });
+                                        // Map data= {};
+                                        //
+                                        // i.forEach((element) {
+                                        //   data['element'] = element['byteData'].buffer.asUint8List();
+                                        // });
+                                        //
+                                        // print(data);
                                         // await
                                         // VocsyShare.files('esys images',
                                         //     {
@@ -769,12 +816,20 @@ class _MyFolderScreenState extends State<MyFolderScreen> {
                                         // controller.simg.forEach((element) async{
                                         //   await rootBundle.load(element);
                                         // });
-                                      //  VocsyShare.files(, files, mimeType)
+                                        //  VocsyShare.files(, files, mimeType)
                                       },
-                                      child: SizedBox(
-                                          height: 23,
-                                          width: 23,
-                                          child: Image.asset(AssetRes.shareIcon)),
+                                      child: Container(
+                                        width: 100,
+                                        height: 50,
+                                        decoration: BoxDecoration(
+                                          color: ColorRes.color305EBE,
+                                          borderRadius: BorderRadius.circular(25),
+                                        ),
+                                        child: SizedBox(
+                                            height: 23,
+                                            width: 23,
+                                            child: Image.asset(AssetRes.shareIcon,color: ColorRes.white,scale:3,)),
+                                      ),
                                     ),
 
 
@@ -784,11 +839,12 @@ class _MyFolderScreenState extends State<MyFolderScreen> {
                                     // ),
                                   ],
                                 ),
-                              ),
+                          ),
+                        ),
+                              ],
                             ),
-
-
-                    ],
+                      ],
+                    ),
                   ),
                   (controller.isMore == true)
                       ? Stack(
@@ -872,13 +928,18 @@ class _MyFolderScreenState extends State<MyFolderScreen> {
                   else if (index == 1) {
                     Get.back();
                     Get.toNamed(AppRoutes.languageConfirmPage);
-                  } else if (index == 2) {
+                  }
+                  else if (index == 2) {
+                    Get.back();
+                    Get.toNamed(AppRoutes.viewImagesScreen,arguments: myFolderController.getBoardInfoModel?.data ?? []);
+                  }
+                  else if (index == 3) {
                     Get.back();
                     Get.toNamed(AppRoutes.favourite);
-                  } else if (index == 3) {
+                  } else if (index == 4) {
                     Get.back();
                     Get.toNamed(AppRoutes.contactUs);
-                  } else if (index == 4) {
+                  } else if (index == 5) {
                     Get.back();
                     Get.toNamed(AppRoutes.setting);
                   }  else {
@@ -887,7 +948,10 @@ class _MyFolderScreenState extends State<MyFolderScreen> {
                   }
 
                 },
-                 leading: Image.asset(myFolderController.drawerImageList[index],scale: 4,),
+                 leading: Padding(
+                   padding: const EdgeInsets.only(top: 5.0),
+                   child: Image.asset(myFolderController.drawerImageList[index],scale: 4,),
+                 ),
                   title: Text(myFolderController.drawerTitleList[index]),
                   trailing: const Icon(Icons.navigate_next),
                 );
@@ -914,7 +978,7 @@ class _MyFolderScreenState extends State<MyFolderScreen> {
         left: Get.width * 0.05,
         right: Get.width * 0.05,
       ),
-      height: Get.height * 0.18,
+      height: Get.height * 0.1,
       width: Get.width,
       // color: ColorRes.white,
       child: Row(

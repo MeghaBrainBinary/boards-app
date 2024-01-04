@@ -77,6 +77,7 @@ class MyFolderController extends GetxController {
   List<String> drawerTitleList = [
     StringRes.home.tr,
     StringRes.language.tr,
+    StringRes.viewImages.tr,
     StringRes.favourite.tr,
     StringRes.contactUs.tr,
     StringRes.settings.tr,
@@ -87,6 +88,7 @@ class MyFolderController extends GetxController {
   List<String> drawerImageList = [
     AssetRes.homeIcon,
     AssetRes.languageIcon,
+    AssetRes.grid,
     AssetRes.FavouriteIcon,
     AssetRes.contactUs,
     AssetRes.settingsIcon,

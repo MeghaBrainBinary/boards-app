@@ -78,4 +78,5 @@ const Map<String, String> Lithuanian = {
   "Check your email for instructions to reset your password.": "Patikrinkite el. paštą instrukcijų, kaip iš naujo nustatyti slaptažodį.",
   "Please log in before delete Account.": "Prieš ištrindami paskyrą prisijunkite.",
   "Please log in before resetting your password.": "Prieš nustatydami slaptažodį iš naujo, prisijunkite.",
+  "View Images":"Peržiūrėti vaizdus"
 };
