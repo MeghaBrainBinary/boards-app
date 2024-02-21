@@ -9,6 +9,7 @@ import 'package:boards_app/screens/language_screen2/languagescreen2.dart';
 import 'package:boards_app/screens/boards_screen/boards_screen.dart';
 import 'package:boards_app/screens/my_folder_screen/my_folder_screen.dart';
 import 'package:boards_app/screens/privacy_policy_screen/privacy_policy_screen.dart';
+import 'package:boards_app/screens/select_flow_screen/select_flow_screen.dart';
 import 'package:boards_app/screens/settings_screen/settings_screen.dart';
 import 'package:boards_app/screens/splashScreen/splash_screen.dart';
 import 'package:boards_app/screens/view/view_full_image.dart';
@@ -36,7 +37,6 @@ void main() async {
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   await PrefService.init();
 
-
   try {
     await FirebaseMessaging.instance.getToken().then((value) {
       PrefService.setValue(PrefKeys.fcmToken, value.toString());
@@ -48,7 +48,6 @@ void main() async {
     print(e);
   }
 
-
   runApp(const MyApp());
 }
 
@@ -59,8 +58,9 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-        locale: (PrefService.getString(PrefKeys.code) ==" ")?Locale("en,EN"):
-        LocalizationService.locale,
+        locale: (PrefService.getString(PrefKeys.code) == " ")
+            ? Locale("en,EN")
+            : LocalizationService.locale,
         fallbackLocale: LocalizationService.fallbackLocale,
         translations: LocalizationService(),
         debugShowCheckedModeBanner: false,
@@ -74,19 +74,30 @@ class MyApp extends StatelessWidget {
           GetPage(name: AppRoutes.myFolderPage, page: () => MyFolderScreen()),
           GetPage(name: AppRoutes.introPage, page: () => IntroScreen()),
           GetPage(name: AppRoutes.favourite, page: () => FavouriteScreen()),
-          GetPage(name: AppRoutes.viewImagesScreen, page: () => ViewImagesScreen(),arguments: []),
-          GetPage(name: AppRoutes.viewFullImagesScreen, page: () => ViewFullImageScreen(),arguments: ""),
+          GetPage(
+              name: AppRoutes.viewImagesScreen,
+              page: () => ViewImagesScreen(),
+              arguments: []),
+          GetPage(
+              name: AppRoutes.viewFullImagesScreen,
+              page: () => ViewFullImageScreen(),
+              arguments: ""),
           GetPage(name: AppRoutes.contactUs, page: () => ContactUsScreen()),
           GetPage(name: AppRoutes.setting, page: () => SettingsScreen()),
           GetPage(name: AppRoutes.login, page: () => LoginScreen()),
           GetPage(name: AppRoutes.signUpScreen, page: () => SignUpScreen()),
-          GetPage(name: AppRoutes.forgotPasswordScreen, page: () => ForgotPasswordScreen()),
-          GetPage(name: AppRoutes.createNewPasswordScreen, page: () => CreateNewPasswordScreen()),
+          GetPage(
+              name: AppRoutes.forgotPasswordScreen,
+              page: () => ForgotPasswordScreen()),
+          GetPage(
+              name: AppRoutes.createNewPasswordScreen,
+              page: () => CreateNewPasswordScreen()),
           GetPage(
               name: AppRoutes.languageConfirmPage,
               page: () => LanguageScreen22()),
         ],
-        home: SplashScreen()
+        // home: SplashScreen()
+        home: SelectFlowScreen()
         //SignUpScreen
         // LoginScreen
         // LanguageScreen22

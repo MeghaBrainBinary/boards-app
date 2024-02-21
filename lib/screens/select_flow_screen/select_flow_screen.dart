@@ -1,0 +1,126 @@
+import 'package:boards_app/screens/select_flow_screen/select_flow_controller.dart';
+import 'package:boards_app/screens/wallpaper_flow/wallpaper_dashboard/wallpaper_dashBoard_screen.dart';
+import 'package:boards_app/utils/approutes.dart';
+import 'package:boards_app/utils/appstyle.dart';
+import 'package:boards_app/utils/asset_res.dart';
+import 'package:boards_app/utils/color_res.dart';
+import 'package:boards_app/utils/string_res.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+
+class SelectFlowScreen extends StatelessWidget {
+  SelectFlowScreen({Key? key}) : super(key: key);
+  final SelectFlowController selectFlowController =
+      Get.put(SelectFlowController());
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        body: GetBuilder<SelectFlowController>(
+      id: 'select',
+      builder: (controller) {
+        return Container(
+          height: Get.height,
+          width: Get.width,
+          decoration: BoxDecoration(
+            image: DecorationImage(
+                image: AssetImage(
+                  AssetRes.gridImage,
+                ),
+                fit: BoxFit.cover),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 40),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                GestureDetector(
+                  child: Container(
+                    height: 50,
+                    width: Get.width,
+                    decoration: BoxDecoration(
+                      color: controller.isBoard
+                          ? ColorRes.color305EBE
+                          : Colors.white,
+                      borderRadius: BorderRadius.circular(
+                        6,
+                      ),
+                      border: Border.all(
+                        color: ColorRes.color305EBE,
+                      ),
+                    ),
+                    alignment: Alignment.center,
+                    child: Text(
+                      StringRes.myBoards,
+                      style: appTextStyle(
+                          color: controller.isBoard
+                              ? ColorRes.white
+                              : ColorRes.black,
+                          fontSize: 20,
+                          weight: FontWeight.w500),
+                    ),
+                  ),
+                  onTap: () {
+                    controller.isWallPaper = false;
+                    controller.isBoard = true;
+                    controller.update(['select']);
+
+                    Get.offAndToNamed(AppRoutes.boardsPage);
+                  },
+                ),
+                const SizedBox(
+                  height: 30,
+                ),
+                Text(
+                  'Or',
+                  style: appTextStyle(
+                      color: ColorRes.black,
+                      fontSize: 20,
+                      weight: FontWeight.w500),
+                ),
+                const SizedBox(
+                  height: 30,
+                ),
+                GestureDetector(
+                  onTap: () {
+                    controller.isBoard = false;
+                    controller.isWallPaper = true;
+                    controller.update(['select']);
+                    Get.to(() => WallPaperDashBoardScreen());
+                  },
+                  child: Container(
+                    height: 50,
+                    width: Get.width,
+                    decoration: BoxDecoration(
+                      color: controller.isWallPaper
+                          ? ColorRes.color305EBE
+                          : ColorRes.white,
+                      borderRadius: BorderRadius.circular(
+                        6,
+                      ),
+                      border: Border.all(
+                        color: ColorRes.color305EBE,
+                      ),
+                    ),
+                    alignment: Alignment.center,
+                    child: Text(
+                      StringRes.myWallpaper,
+                      style: appTextStyle(
+                          color: controller.isWallPaper
+                              ? ColorRes.white
+                              : ColorRes.black,
+                          fontSize: 20,
+                          weight: FontWeight.w500),
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: Get.height * 0.14,
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    ));
+  }
+}

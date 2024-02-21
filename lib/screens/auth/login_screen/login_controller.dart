@@ -1,4 +1,3 @@
-
 import 'package:boards_app/services/pref_services.dart';
 import 'package:boards_app/utils/prefkeys.dart';
 import 'package:boards_app/utils/string_res.dart';
@@ -9,8 +8,6 @@ import 'package:get/get.dart';
 class LoginController extends GetxController {
   TextEditingController passwordController = TextEditingController();
   TextEditingController emailIdController = TextEditingController();
-
-
 
   RxBool loader = false.obs;
   bool isObscureText = false;
@@ -31,8 +28,8 @@ class LoginController extends GetxController {
       loader.value = false;
       Future.delayed(
         const Duration(seconds: 1),
-            () {
-              PrefService.setValue(PrefKeys.userId,email);
+        () {
+          PrefService.setValue(PrefKeys.userId, email);
           PrefService.setValue(PrefKeys.login, true);
         },
       );
@@ -48,10 +45,7 @@ class LoginController extends GetxController {
     }
   }
 
-
 // email
-
-
 
   void setEmail(String value) {
     email = value.trim();
@@ -71,7 +65,6 @@ class LoginController extends GetxController {
     update(['login']);
   }
 
-
   // password
 
   void setPassword(String value) {
@@ -82,12 +75,9 @@ class LoginController extends GetxController {
   validatePassword() {
     if (password.isEmpty) {
       passwordErrorMessage = StringRes.pleaseEnterCurrentPassword.tr;
-    }  else {
+    } else {
       passwordErrorMessage = "";
     }
     update(['login']);
   }
-
-
-
 }

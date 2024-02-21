@@ -13,22 +13,27 @@ class StringRes {
   static String emailCanNot = "Email can not be empty";
   static String invalidEmailFormat = "Invalid email format";
   static String invalidUserName = "Invalid username/password!";
-  static String pleaseEnterCurrentPassword = "Please enter your current password.";
+  static String pleaseEnterCurrentPassword =
+      "Please enter your current password.";
   static String dontHaveAccount = "Don’t have account? ";
   static String successfully = "Successfully create your account";
-  static String successfullyCreate = "successfully create your account now enjoy our apps";
+  static String successfullyCreate =
+      "successfully create your account now enjoy our apps";
 
   ///______________________________ Create New Password screen ______________________________///
   static String createNewPassword = "Create New Password";
   static String rememberMe = "remember me";
   static String pleaseCheckLogin = "Please log in before delete Account.";
-  static String pleaseLoginBeforeResetting = "Please log in before resetting your password.";
+  static String pleaseLoginBeforeResetting =
+      "Please log in before resetting your password.";
 
   ///______________________________ Forgot Password screen ______________________________///
   static String forgotPassword = "Forgot Password";
   static String passwordResetEmailSent = "Password Reset Email Sent";
-  static String checkYourEmail = "Check your email for instructions to reset your password.";
-  static String pleaseEnterYourValidEmail = "Please enter your valid email ID. we will send you 6-digit code to verify your account.";
+  static String checkYourEmail =
+      "Check your email for instructions to reset your password.";
+  static String pleaseEnterYourValidEmail =
+      "Please enter your valid email ID. we will send you 6-digit code to verify your account.";
 
   ///______________________________ sign up screen ______________________________///
   static String userName = "User name";
@@ -64,7 +69,8 @@ class StringRes {
 
   ///______________________________ intro screen ______________________________///
   static String skip = "skip";
-  static String seeEveryDetails = "See Every Detail,\n Full Screen at Your Fingertips";
+  static String seeEveryDetails =
+      "See Every Detail,\n Full Screen at Your Fingertips";
   static String easilyShareImages = "Easily Share Images &\n Videos";
   static String click = "Click, Secure,Download\n Images & Videos easily";
   static String next = "Next";
@@ -112,6 +118,48 @@ class StringRes {
   static String loginLogout = "Login / Logout";
 
   static String viewImages = "View Images";
+  static String myWallpaper = "My Wallpaper";
 
-
+  static const Welcome = "Welcome";
+  static const exploreTheBest = "Explore the best wallpapers and ";
+  static const makeAnAwesome = "make an awesome";
+  static const LetsStart = "Let’s Start";
+  static const SelectAtLeast = "Select at least 4 themes";
+  static const Next = "Next";
+  static const Anime = "Anime";
+  static const NATURE = "NATURE";
+  static const SPACE = "SPACE";
+  static const MINIMALISTIC = "MINIMALISTIC";
+  static const NEONLIGHTS = "NEON LIGHTS";
+  static const DARK = "DARK";
+  static const KWallpapers = "4K Wallpapers";
+  static const Games = "Games";
+  static const Abstract = "Abstract";
+  static const cars = "cars";
+  static const Gradient = "Gradient";
+  static const Food = "Food";
+  static const Blurred = "Blurred";
+  static const Music = "Music";
+  static const black = "black";
+  static const ExploreTheBest = "Explore the best\n wallpapers...";
+  static const Nature = "Nature";
+  static const Minimalistic = "Minimalistic";
+  static const Categories = "Categories";
+  static const Favorites = "Favorites";
+  static const SignIn = "Sign in";
+  static const ForgotPassword = "Forgot Password";
+  static const ResetPassword = "Reset Password";
+  static const SignUn = "Sign up";
+  static const Signup = "Sign Up";
+  static const Signin = "Sign In";
+  static const ResetYourPassword = "enter your email id to reset your password";
+  static const Continue = "Continue";
+  static const TypeTheVerificationCode =
+      "Type the verification code we’ve sent you";
+  static const ChangePassword = "Change Password";
+  static const DownLoads = "Downloads";
+  static const Home = "Home";
+  static const LogOut = "Log out";
+  static const AreYouSure = "Are you sure you want to logout?";
+  static const Yes = "Yes";
 }
