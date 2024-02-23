@@ -36,8 +36,8 @@ class HomeController extends GetxController {
     AssetRes.like,
     AssetRes.contactUs,
     AssetRes.setting,
-    AssetRes.faqIcon,
-    AssetRes.wALLpAPER,
+   // AssetRes.faqIcon,
+   // AssetRes.wALLpAPER,
     AssetRes.loginIcon,
   ];
 
@@ -47,8 +47,8 @@ class HomeController extends GetxController {
     StringRes.Favorites,
     StringRes.contactUs,
     StringRes.settings,
-    StringRes.faq,
-    'Wallpapers',
+   // StringRes.faq,
+   // 'Wallpapers',
     StringRes.loginLogout
   ];
   List allImage = [];
