@@ -22,6 +22,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
+
 // ignore: depend_on_referenced_packages
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
@@ -54,7 +55,6 @@ void main() async {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
@@ -96,8 +96,8 @@ class MyApp extends StatelessWidget {
               name: AppRoutes.languageConfirmPage,
               page: () => LanguageScreen22()),
         ],
-        // home: SplashScreen()
-        home: SelectFlowScreen()
+        home: SplashScreen()
+        // home: SelectFlowScreen()
         //SignUpScreen
         // LoginScreen
         // LanguageScreen22

@@ -1,36 +1,26 @@
 {
   "project_info": {
-    "project_number": "660250529556",
-    "project_id": "inspiration-by-filuet",
-    "storage_bucket": "inspiration-by-filuet.appspot.com"
+    "project_number": "509240136427",
+    "project_id": "board-app-63030",
+    "storage_bucket": "board-app-63030.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:660250529556:android:0f540b475d0605b99d7c01",
+        "mobilesdk_app_id": "1:509240136427:android:3a77a14bb0d182ebc5e4ae",
         "android_client_info": {
           "package_name": "com.filuet"
         }
       },
-      "oauth_client": [
-        {
-          "client_id": "660250529556-fdapas1sca7lf2pk9aihjq0fegatil4b.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
+      "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyCNuLX-rBFRVqZVL29-ZCpENu59HydCUzQ"
+          "current_key": "AIzaSyCgOIZDhXZ43ykhg4PjmdEK2Enyqb9bpcA"
         }
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "660250529556-fdapas1sca7lf2pk9aihjq0fegatil4b.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
+          "other_platform_oauth_client": []
         }
       }
     }

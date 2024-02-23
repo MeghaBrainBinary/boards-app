@@ -5,6 +5,7 @@ import 'package:boards_app/common/common_loader.dart';
 import 'package:boards_app/common/common_textfild.dart';
 import 'package:boards_app/screens/auth/login_screen/login_controller.dart';
 import 'package:boards_app/screens/contact_us_screen/contact_us_controller.dart';
+import 'package:boards_app/screens/select_flow_screen/select_flow_screen.dart';
 import 'package:boards_app/utils/app_text_field.dart';
 import 'package:boards_app/utils/approutes.dart';
 import 'package:boards_app/utils/appstyle.dart';
@@ -232,7 +233,8 @@ class LoginScreen extends StatelessWidget {
             ),
             CommonButton(
                 onTap: () {
-                  Get.offAndToNamed(AppRoutes.boardsPage);
+                  Get.offAll(() => SelectFlowScreen(language: ''));
+                  // Get.offAndToNamed(AppRoutes.boardsPage);
                 },
                 text: StringRes.yes.tr),
             SizedBox(

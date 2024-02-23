@@ -11,6 +11,7 @@ import 'package:boards_app/screens/settings_screen/settings_screen.dart';
 import 'package:boards_app/screens/wallpaper_flow/downloads_screen/download_screen.dart';
 import 'package:boards_app/screens/wallpaper_flow/favorites_screen/favorites_screen.dart';
 import 'package:boards_app/screens/wallpaper_flow/home_screen/home_controller.dart';
+import 'package:boards_app/screens/wallpaper_flow/only_view_wallpaper_screen/only_view_wallpaper_screen.dart';
 import 'package:boards_app/screens/wallpaper_flow/wallpaper_dashboard/wallpaper_dashboard_controller.dart';
 import 'package:boards_app/screens/wallpaper_flow/wallpapers_screen/wallpaper_screen.dart';
 import 'package:boards_app/services/pref_services.dart';
@@ -115,7 +116,7 @@ class HomeScreen extends StatelessWidget {
                                           decoration: BoxDecoration(
                                               color: homeController
                                                       .aBoolList[index]
-                                                  ? ColorRes.splashButton
+                                                  ? ColorRes.color305EBE
                                                   : Colors.transparent,
                                               borderRadius:
                                                   BorderRadius.circular(17)),
@@ -127,8 +128,8 @@ class HomeScreen extends StatelessWidget {
                                                 fontSize: Get.width * 0.044,
                                                 color: homeController
                                                         .aBoolList[index]
-                                                    ? Colors.black
-                                                    : Colors.white,
+                                                    ? Colors.white
+                                                    : Colors.black,
                                                 fontFamily: "regularfont"),
                                           ),
                                         ),
@@ -186,19 +187,18 @@ class HomeScreen extends StatelessWidget {
                                           homeController.allImage[index]['id'],
                                           homeController.allImage.length);
                                     }
-                                    // Get.to(
-                                    //     () => OnlyViewWallpaperScreen(
-                                    //           image: homeController
-                                    //                   .allImage[index]
-                                    //               ['imageLink'],
-                                    //           docId: homeController
-                                    //               .allImage[index]['id'],
-                                    //           imageList:
-                                    //               homeController.allImage,
-                                    //           favBoolList:
-                                    //               homeController.myBoolList,
-                                    //         ),
-                                    //     arguments: index);
+                                    Get.to(
+                                        () => OnlyViewWallpaperScreen(
+                                              image: homeController
+                                                  .allImage[index]['imageLink'],
+                                              docId: homeController
+                                                  .allImage[index]['id'],
+                                              imageList:
+                                                  homeController.allImage,
+                                              favBoolList:
+                                                  homeController.myBoolList,
+                                            ),
+                                        arguments: index);
                                   },
                                   child: Stack(
                                     children: [
@@ -528,7 +528,7 @@ class HomeScreen extends StatelessWidget {
                           height: Get.height * 0.08,
                           width: Get.width * 0.45,
                           decoration: BoxDecoration(
-                              color: ColorRes.splashButton,
+                              color: ColorRes.color305EBE,
                               borderRadius: BorderRadius.circular(40)),
                           child: Text(
                             StringRes.Yes,

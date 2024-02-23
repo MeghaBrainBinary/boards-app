@@ -31,6 +31,7 @@ class AssetRes {
   static String lockIcon = "${icons}lockIcon.png";
   static String privacyPolicy = "${icons}privacyPolicy.png";
   static String fileLoke = "${icons}fileLoke.png";
+  static String add = "${icons}add.png";
   static String emailIcon = "${icons}emailIcon.png";
   static String userIcon = "${icons}userIcon.png";
   static String uploadeIcon = "${icons}uploadeIcon.png";

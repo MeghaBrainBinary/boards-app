@@ -13,6 +13,9 @@ class StringRes {
   static String emailCanNot = "Email can not be empty";
   static String invalidEmailFormat = "Invalid email format";
   static String invalidUserName = "Invalid username/password!";
+  static String toGetAds =
+      "To get this wallpaper you need to watch a video ad.";
+
   static String pleaseEnterCurrentPassword =
       "Please enter your current password.";
   static String dontHaveAccount = "Don’t have account? ";

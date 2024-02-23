@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:boards_app/screens/select_flow_screen/select_flow_screen.dart';
 import 'package:boards_app/screens/splashScreen/splash_screen_controller.dart';
 import 'package:boards_app/services/pref_services.dart';
 import 'package:boards_app/utils/approutes.dart';
@@ -16,8 +17,8 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-
-  SplashScreenController splashScreenController = Get.put(SplashScreenController());
+  SplashScreenController splashScreenController =
+      Get.put(SplashScreenController());
 
   @override
   void initState() {
@@ -26,15 +27,12 @@ class _SplashScreenState extends State<SplashScreen> {
     splashScreenController.addDeviceTokenApi();
 
     Timer(const Duration(seconds: 3), () {
-
-      if(PrefService.getBool(PrefKeys.isLanguage)==false) {
-       // Get.offAndToNamed(AppRoutes.languagePage);
-       Get.offAndToNamed(AppRoutes.introPage);
-     }
-     else
-       {
-        Get.offAndToNamed(AppRoutes.boardsPage);
-       }
+      if (PrefService.getBool(PrefKeys.isLanguage) == false) {
+        Get.offAndToNamed(AppRoutes.introPage);
+      } else {
+        // Get.offAndToNamed(AppRoutes.boardsPage);
+        Get.to(() => SelectFlowScreen(language: ''));
+      }
     });
   }
 
@@ -45,9 +43,7 @@ class _SplashScreenState extends State<SplashScreen> {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Center(
-              child: Image.asset(AssetRes.boards, width: Get.width * 0.5)
-          ),
+          Center(child: Image.asset(AssetRes.boards, width: Get.width * 0.5)),
         ],
       ),
     );

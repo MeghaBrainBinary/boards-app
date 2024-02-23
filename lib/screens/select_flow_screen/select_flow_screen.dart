@@ -9,7 +9,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class SelectFlowScreen extends StatelessWidget {
-  SelectFlowScreen({Key? key}) : super(key: key);
+  SelectFlowScreen({Key? key, required this.language}) : super(key: key);
+  final String language;
   final SelectFlowController selectFlowController =
       Get.put(SelectFlowController());
   @override
@@ -63,8 +64,12 @@ class SelectFlowScreen extends StatelessWidget {
                     controller.isWallPaper = false;
                     controller.isBoard = true;
                     controller.update(['select']);
-
-                    Get.offAndToNamed(AppRoutes.boardsPage);
+                    if (language != '') {
+                      Get.offAndToNamed(AppRoutes.boardsPage,
+                          arguments: language);
+                    } else {
+                      Get.offAndToNamed(AppRoutes.boardsPage);
+                    }
                   },
                 ),
                 const SizedBox(

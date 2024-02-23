@@ -1,4 +1,4 @@
-
+import 'package:boards_app/screens/select_flow_screen/select_flow_screen.dart';
 import 'package:boards_app/services/pref_services.dart';
 import 'package:boards_app/utils/approutes.dart';
 import 'package:boards_app/utils/prefkeys.dart';
@@ -13,7 +13,6 @@ class SignUpController extends GetxController {
   TextEditingController emailIdController = TextEditingController();
   TextEditingController userNameController = TextEditingController();
   TextEditingController confirmPasswordController = TextEditingController();
-
 
   RxBool loader = false.obs;
   bool isObscureText = false;
@@ -39,46 +38,41 @@ class SignUpController extends GetxController {
   validateUserName() {
     if (user.isEmpty) {
       userErrorMessage = StringRes.pleaseEnterYourUserName.tr;
-    }  else {
+    } else {
       userErrorMessage = "";
     }
     update(['signUp']);
   }
+
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
-
+  CollectionReference userC = FirebaseFirestore.instance.collection('user');
 
   final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
-  Future<void> signUp(String email, String password,String userName) async {
+  Future<void> signUp(String email, String password, String userName) async {
     try {
       loader.value = true;
       await firebaseAuth.createUserWithEmailAndPassword(
         email: email,
         password: password,
       );
-      // UserCredential userCredential = await firebaseAuth.createUserWithEmailAndPassword(
-      //   email: email,
-      //   password: password,
-      // );
 
-      PrefService.setValue(PrefKeys.userId,email);
-      // Store additional user information in Firestore
-      // await _firestore.collection('users').doc(userCredential.user!.uid).set({
-      //   'username': userName,
-      //   'email': email,
-      //   'favorites': [], // Initialize favorites as an empty array
-      // });
+      PrefService.setValue(PrefKeys.userId, email);
+
       loader.value = false;
       Future.delayed(
         const Duration(seconds: 1),
-            () async {
-              PrefService.setValue(PrefKeys.login, true);
-              Get.offAndToNamed(AppRoutes.boardsPage);
+        () async {
+          PrefService.setValue(PrefKeys.login, true);
+
+          // Get.offAndToNamed(AppRoutes.boardsPage);
+          Get.offAll(() => SelectFlowScreen(language: ''));
+
+          await userAddTOFirebase(email);
         },
       );
     } catch (e) {
       loader.value = false;
-
       Get.snackbar(StringRes.error.tr, StringRes.thisAccountIsAlreadyExits.tr,
           snackPosition: SnackPosition.TOP,
           backgroundColor: CupertinoColors.destructiveRed,
@@ -87,8 +81,6 @@ class SignUpController extends GetxController {
   }
 
 // email
-
-
 
   void setEmail(String value) {
     email = value.trim();
@@ -107,7 +99,6 @@ class SignUpController extends GetxController {
     }
     update(['signUp']);
   }
-
 
   // password
 
@@ -137,7 +128,7 @@ class SignUpController extends GetxController {
   validateConfirmNewPassword() {
     if (confirmPassword.isEmpty) {
       confirmPasswordErrorMessage = StringRes.pleaseEnterYourConfirm.tr;
-    }  else if (confirmPassword != passwordController.text) {
+    } else if (confirmPassword != passwordController.text) {
       confirmPasswordErrorMessage = StringRes.passwordDoNotMatch.tr;
     } else {
       confirmPasswordErrorMessage = "";
@@ -145,5 +136,10 @@ class SignUpController extends GetxController {
     update(['signUp']);
   }
 
-
+  Future<void> userAddTOFirebase(String email) async {
+    return userC.add({'email': email, 'favourite': []}).then((value) {
+      PrefService.setValue('docId', value.id);
+      PrefService.setValue('isUser', true);
+    }).catchError((error) {});
+  }
 }

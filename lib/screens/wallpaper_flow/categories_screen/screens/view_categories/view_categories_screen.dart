@@ -19,73 +19,72 @@ class ViewCategoryScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        backgroundColor: Colors.black,
-        appBar: AppBar(
-          centerTitle: true,
-          elevation: 0,
-          title: Text(
-            category ?? '',
-            style: const TextStyle(
-                color: Colors.white, fontWeight: FontWeight.w500, fontSize: 20),
+    return Scaffold(
+      backgroundColor: Colors.white,
+      appBar: AppBar(
+        centerTitle: true,
+        elevation: 0,
+        title: Text(
+          category ?? '',
+          style: const TextStyle(
+              color: Colors.black, fontWeight: FontWeight.w500, fontSize: 20),
+        ),
+        backgroundColor: Colors.white,
+        leading: GestureDetector(
+          onTap: () {
+            Get.back();
+          },
+          child: const Icon(
+            Icons.arrow_back_ios_rounded,
+            color: Colors.black,
           ),
-          backgroundColor: Colors.black,
-          leading: GestureDetector(
-              onTap: () {
-                Get.back();
-              },
-              child: const Icon(
-                Icons.arrow_back_ios_rounded,
-                color: Colors.white,
-              )),
         ),
-        body: Column(
-          children: [
-            Expanded(
-              child: GridView.builder(
-                scrollDirection: Axis.vertical,
-                itemCount: images?.length ?? 0,
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  mainAxisSpacing: 1,
-                  crossAxisSpacing: 1,
-                  childAspectRatio: 0.7,
-                ),
-                itemBuilder: (context, index) {
-                  return GestureDetector(
-                    onTap: () async {
-                      await viewCategoryController.onTapCatImage2(
-                          docId!, images!.length);
-                      Get.to(
-                          () => OnlyViewWallpaperScreen(
-                                image: images![index]['imageLink'],
-                                docId: docId!,
-                                imageList: images!,
-                                favBoolList: viewCategoryController.myBoolList,
-                              ),
-                          arguments: index);
-                    },
-                    child: CachedNetworkImage(
-                      height: Get.height * 0.184,
-                      width: Get.width * 0.86,
-                      imageUrl: images![index]['imageLink'],
-                      fit: BoxFit.cover,
-                      placeholder: (context, url) => Image.asset(
-                        AssetRes.imagePlaceholder,
-                        fit: BoxFit.cover,
-                      ),
-                      errorWidget: (context, url, error) => Image.asset(
-                        AssetRes.imagePlaceholder,
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                  );
-                },
+      ),
+      body: Column(
+        children: [
+          Expanded(
+            child: GridView.builder(
+              scrollDirection: Axis.vertical,
+              itemCount: images?.length ?? 0,
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                mainAxisSpacing: 1,
+                crossAxisSpacing: 1,
+                childAspectRatio: 0.7,
               ),
+              itemBuilder: (context, index) {
+                return GestureDetector(
+                  onTap: () async {
+                    await viewCategoryController.onTapCatImage2(
+                        docId!, images!.length);
+                    Get.to(
+                        () => OnlyViewWallpaperScreen(
+                              image: images![index]['imageLink'],
+                              docId: docId!,
+                              imageList: images!,
+                              favBoolList: viewCategoryController.myBoolList,
+                            ),
+                        arguments: index);
+                  },
+                  child: CachedNetworkImage(
+                    height: Get.height * 0.184,
+                    width: Get.width * 0.86,
+                    imageUrl: images![index]['imageLink'],
+                    fit: BoxFit.cover,
+                    placeholder: (context, url) => Image.asset(
+                      AssetRes.imagePlaceholder,
+                      fit: BoxFit.cover,
+                    ),
+                    errorWidget: (context, url, error) => Image.asset(
+                      AssetRes.imagePlaceholder,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                );
+              },
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

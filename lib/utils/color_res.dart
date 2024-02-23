@@ -12,7 +12,6 @@ class ColorRes {
   static Color skyWhiteBlue = const Color(0xFFBACCF1);
   static Color colorE16F55 = const Color(0xFFE16F55);
 
-  static const splashButton = Color(0XFFFFD800);
   static const stroke = Color(0xff3879E8);
   static const buttonColor = Color(0xFF4285F4);
   static const grey = Color(0xFFD6D8DB);

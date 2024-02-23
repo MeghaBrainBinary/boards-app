@@ -11,7 +11,17 @@ Widget bottomNavigationBar(BuildContext context) {
     height: 67,
     width: Get.width * 0.8,
     decoration: BoxDecoration(
-        color: Colors.white, borderRadius: BorderRadius.circular(30)),
+      color: Colors.white,
+      borderRadius: BorderRadius.circular(30),
+      boxShadow: [
+        BoxShadow(
+            color: ColorRes.color305EBE.withOpacity(
+              0.1,
+            ),
+            blurRadius: 20,
+            spreadRadius: 20)
+      ],
+    ),
     child: Padding(
       padding: EdgeInsets.only(left: Get.width * 0.07, right: Get.width * 0.07),
       child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [

@@ -1,6 +1,7 @@
 import 'package:boards_app/services/pref_services.dart';
 import 'package:boards_app/utils/prefkeys.dart';
 import 'package:boards_app/utils/string_res.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
@@ -18,6 +19,8 @@ class LoginController extends GetxController {
   String emailErrorMessage = "";
 
   final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
+
+  CollectionReference user = FirebaseFirestore.instance.collection('user');
   Future<bool> signIn(String email, String password) async {
     try {
       loader.value = true;
@@ -25,16 +28,20 @@ class LoginController extends GetxController {
         email: email,
         password: password,
       );
+      getUserDocId(email);
       loader.value = false;
       Future.delayed(
         const Duration(seconds: 1),
         () {
           PrefService.setValue(PrefKeys.userId, email);
           PrefService.setValue(PrefKeys.login, true);
+          PrefService.setValue('isUser', true);
         },
       );
+
       return true;
     } catch (e) {
+      print(e.toString());
       loader.value = false;
 
       Get.snackbar(StringRes.error.tr, StringRes.invalidUserName.tr,
@@ -46,6 +53,16 @@ class LoginController extends GetxController {
   }
 
 // email
+  getUserDocId(String email) async {
+    await user.get().then((value) {
+      value.docs.forEach((element) {
+        if (element['email'] == email) {
+          var id = element.id;
+          PrefService.setValue('docId', id);
+        } else {}
+      });
+    });
+  }
 
   void setEmail(String value) {
     email = value.trim();

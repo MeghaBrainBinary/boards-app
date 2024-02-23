@@ -4,12 +4,17 @@
 import 'dart:io';
 import 'dart:typed_data';
 
+import 'package:boards_app/common/common_button.dart';
 import 'package:boards_app/screens/wallpaper_flow/lock_screen/lock_screen.dart';
 import 'package:boards_app/screens/wallpaper_flow/only_view_wallpaper_screen/only_view_wallpaper_controller.dart';
+import 'package:boards_app/screens/wallpaper_flow/only_view_wallpaper_screen/widgets/download_bottomsheets.dart';
 import 'package:boards_app/screens/wallpaper_flow/wallpaper_preview_screen/wallpaper_preview_screen.dart';
 import 'package:boards_app/services/pref_services.dart';
+import 'package:boards_app/utils/appstyle.dart';
 import 'package:boards_app/utils/asset_res.dart';
+import 'package:boards_app/utils/color_res.dart';
 import 'package:boards_app/utils/prefkeys.dart';
+import 'package:boards_app/utils/string_res.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
@@ -20,6 +25,9 @@ import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:path_provider/path_provider.dart';
 
 import 'package:share_plus/share_plus.dart';
+
+OnlyViewWallpaperController onlyViewWallpaperController =
+    Get.put(OnlyViewWallpaperController());
 
 class OnlyViewWallpaperScreen extends StatelessWidget {
   String image;
@@ -295,35 +303,40 @@ class OnlyViewWallpaperScreen extends StatelessWidget {
                                   const Spacer(),
                                   GestureDetector(
                                     onTap: () async {
-                                      onlyViewWallpaperController.loader.value =
-                                          true;
-                                      var response = await Dio().get(
-                                          imageList[index]['imageLink'],
-                                          options: Options(
-                                              responseType:
-                                                  ResponseType.bytes));
+                                      // onlyViewWallpaperController.loader.value =
+                                      //     true;
+                                      // var response = await Dio().get(
+                                      //     imageList[index]['imageLink'],
+                                      //     options: Options(
+                                      //         responseType:
+                                      //             ResponseType.bytes));
+                                      //
+                                      // await ImageGallerySaver.saveImage(
+                                      //   Uint8List.fromList(response.data),
+                                      //   quality: 60,
+                                      //   name: "ohooho",
+                                      // );
+                                      // onlyViewWallpaperController.downloadImages
+                                      //     .add(imageList[index]['imageLink']);
+                                      // await PrefService.setValue(
+                                      //     PrefKeys.downloadImageList,
+                                      //     onlyViewWallpaperController
+                                      //         .downloadImages);
+                                      // var data = PrefService.getList(
+                                      //     PrefKeys.downloadImageList);
+                                      //
+                                      // onlyViewWallpaperController.loader.value =
+                                      //     false;
+                                      //
+                                      // Get.snackbar(
+                                      //     'Yay!!', "Image is downloaded",
+                                      //     snackPosition: SnackPosition.TOP,
+                                      //     backgroundColor: Colors.white);
 
-                                      await ImageGallerySaver.saveImage(
-                                        Uint8List.fromList(response.data),
-                                        quality: 60,
-                                        name: "ohooho",
-                                      );
-                                      onlyViewWallpaperController.downloadImages
-                                          .add(imageList[index]['imageLink']);
-                                      await PrefService.setValue(
-                                          PrefKeys.downloadImageList,
-                                          onlyViewWallpaperController
-                                              .downloadImages);
-                                      var data = PrefService.getList(
-                                          PrefKeys.downloadImageList);
-
-                                      onlyViewWallpaperController.loader.value =
-                                          false;
-
-                                      Get.snackbar(
-                                          'Yay!!', "Image is downloaded",
-                                          snackPosition: SnackPosition.TOP,
-                                          backgroundColor: Colors.white);
+                                      downloadBottomSheetUi(
+                                          context: context,
+                                          imageLink: imageList[index]
+                                              ['imageLink']);
                                     },
                                     child: Container(
                                       height: 50,
@@ -358,4 +371,80 @@ class OnlyViewWallpaperScreen extends StatelessWidget {
       })),
     );
   }
+}
+
+void showDialogOfAds(BuildContext context, imageLink) {
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return SimpleDialog(
+        contentPadding: EdgeInsets.symmetric(horizontal: 20),
+        children: [
+          SizedBox(
+            height: Get.height * 0.04,
+          ),
+          Text(
+            StringRes.toGetAds.tr,
+            textAlign: TextAlign.center,
+            style: appTextStyle(
+                weight: FontWeight.w400, fontSize: 16, color: Colors.black),
+          ),
+          SizedBox(
+            height: 30,
+          ),
+          Row(
+            children: [
+              Expanded(
+                child: Container(
+                  height: 50,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(8),
+                    border: Border.all(color: ColorRes.color305EBE),
+                  ),
+                  child: Text(
+                    'Cancel',
+                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+                  ),
+                  alignment: Alignment.center,
+                ),
+              ),
+              SizedBox(
+                width: 10,
+              ),
+              Expanded(
+                  child: CommonButton(
+                      onTap: () async {
+                        Get.back();
+                        onlyViewWallpaperController.loader.value = true;
+                        var response = await Dio().get(imageLink,
+                            options: Options(responseType: ResponseType.bytes));
+
+                        await ImageGallerySaver.saveImage(
+                          Uint8List.fromList(response.data),
+                          quality: 60,
+                          name: "ohooho",
+                        );
+                        onlyViewWallpaperController.downloadImages
+                            .add(imageLink);
+                        await PrefService.setValue(PrefKeys.downloadImageList,
+                            onlyViewWallpaperController.downloadImages);
+                        var data =
+                            PrefService.getList(PrefKeys.downloadImageList);
+
+                        onlyViewWallpaperController.loader.value = false;
+
+                        Get.snackbar('Yay!!', "Image is downloaded",
+                            snackPosition: SnackPosition.TOP,
+                            backgroundColor: Colors.white);
+                      },
+                      text: StringRes.continu.tr)),
+            ],
+          ),
+          SizedBox(
+            height: Get.height * 0.04,
+          ),
+        ],
+      );
+    },
+  );
 }
