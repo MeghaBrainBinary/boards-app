@@ -99,6 +99,7 @@ class _MyFolderScreenState extends State<MyFolderScreen> {
  */
   @override
   Widget build(BuildContext context) {
+    myFolderController.init();
     return WillPopScope(
       onWillPop: () async {
         if (myFolderController.isPageView ||
@@ -167,7 +168,7 @@ class _MyFolderScreenState extends State<MyFolderScreen> {
                                   )
                                 ],
                               ),*/
-                                    SizedBox(
+                                    const SizedBox(
                                       height: 10,
                                     ),
                                     if (controller.isPageView == false &&
@@ -199,7 +200,7 @@ class _MyFolderScreenState extends State<MyFolderScreen> {
                                                 weight: FontWeight.w500),
                                           ))
                                     else
-                                      SizedBox(),
+                                      const SizedBox(),
                                     controller.isSelectedPageView
                                         ? Row(
                                             mainAxisAlignment:
@@ -239,7 +240,7 @@ class _MyFolderScreenState extends State<MyFolderScreen> {
                                                   )),
                                             ],
                                           )
-                                        : SizedBox(),
+                                        : const SizedBox(),
                                     (controller.isPageView &&
                                             !controller.isSelectedPageView)
                                         ? Container(
@@ -292,7 +293,7 @@ class _MyFolderScreenState extends State<MyFolderScreen> {
                                                             InkWell(
                                                               onTap: () {
                                                                 controller
-                                                                    .onTapImage();
+                                                                    .onTapImage(index);
                                                               },
                                                               child: ClipRRect(
                                                                 borderRadius:
@@ -431,7 +432,7 @@ class _MyFolderScreenState extends State<MyFolderScreen> {
                                         : (!controller.isPageView &&
                                                 controller.isSelectedPageView)
                                             ? SizedBox(
-                                                height: Get.height * 0.7,
+                                                height: Get.height * 0.67,
                                                 width: Get.width,
                                                 child: (controller
                                                             .getBoardInfoModel
@@ -656,7 +657,7 @@ class _MyFolderScreenState extends State<MyFolderScreen> {
                                                                                   scale: 4,
                                                                                 ),
                                                                               )
-                                                                            : SizedBox(),
+                                                                            : const SizedBox(),
                                                                       ],
                                                                     ),
                                                                   ),
@@ -714,7 +715,7 @@ class _MyFolderScreenState extends State<MyFolderScreen> {
                                                     : const SizedBox(),
                                               )
                                             : SizedBox(
-                                                height: Get.height * 0.7,
+                                                height: Get.height * 0.67,
                                                 width: Get.width,
                                                 child: (controller
                                                             .getBoardInfoModel
@@ -736,48 +737,48 @@ class _MyFolderScreenState extends State<MyFolderScreen> {
                                                         ),
                                                         itemBuilder:
                                                             (context, index) {
-                                                          String userId =
-                                                              PrefService
-                                                                  .getString(
-                                                                      PrefKeys
-                                                                          .userId);
-                                                          String? imageId =
-                                                              controller
-                                                                  .getBoardInfoModel
-                                                                  .data?[index]
-                                                                  .id
-                                                                  .toString();
-
-                                                          // Fetch likes information only once
-                                                          if (controller
-                                                              .isLike.isEmpty) {
-                                                            if (PrefService.getList(
-                                                                        PrefKeys.isLike +
-                                                                            userId)
-                                                                    ?.isNotEmpty ==
-                                                                true) {
-                                                              controller
-                                                                  .isLike = (PrefService.getList(
-                                                                          PrefKeys.isLike +
-                                                                              userId) ??
-                                                                      [])
-                                                                  .map((liked) =>
-                                                                      liked ==
-                                                                      '1')
-                                                                  .toList();
-                                                            } else {
-                                                              // Handle the case when controller.isLike is empty
-                                                              // For example, you might want to set default values or display a message.
-                                                            }
-                                                          }
-
-                                                          String likeStatus =
-                                                              PrefService.getString(
-                                                                      '$imageId:$userId') ??
-                                                                  (controller.isLike[
-                                                                          index]
-                                                                      ? '1'
-                                                                      : '0');
+                                                          // String userId =
+                                                          //     PrefService
+                                                          //         .getString(
+                                                          //             PrefKeys
+                                                          //                 .userId);
+                                                          // String? imageId =
+                                                          //     controller
+                                                          //         .getBoardInfoModel
+                                                          //         .data?[index]
+                                                          //         .id
+                                                          //         .toString();
+                                                          //
+                                                          // // Fetch likes information only once
+                                                          // if (controller
+                                                          //     .isLike.isEmpty) {
+                                                          //   if (PrefService.getList(
+                                                          //               PrefKeys.isLike +
+                                                          //                   userId)
+                                                          //           ?.isNotEmpty ==
+                                                          //       true) {
+                                                          //     controller
+                                                          //         .isLike = (PrefService.getList(
+                                                          //                 PrefKeys.isLike +
+                                                          //                     userId) ??
+                                                          //             [])
+                                                          //         .map((liked) =>
+                                                          //             liked ==
+                                                          //             '1')
+                                                          //         .toList();
+                                                          //   } else {
+                                                          //     // Handle the case when controller.isLike is empty
+                                                          //     // For example, you might want to set default values or display a message.
+                                                          //   }
+                                                          // }
+                                                          //
+                                                          // String likeStatus =
+                                                          //     PrefService.getString(
+                                                          //             '$imageId:$userId') ??
+                                                          //         (controller.isLike[
+                                                          //                 index]
+                                                          //             ? '1'
+                                                          //             : '0');
 
                                                           return Stack(
                                                             alignment: Alignment
@@ -789,7 +790,7 @@ class _MyFolderScreenState extends State<MyFolderScreen> {
                                                                           .selectedIndex =
                                                                       index;
                                                                   controller
-                                                                      .onTapImage();
+                                                                      .onTapImage(index);
                                                                 },
                                                                 child:
                                                                     ClipRRect(
@@ -854,18 +855,19 @@ class _MyFolderScreenState extends State<MyFolderScreen> {
                                                                         GestureDetector(
                                                                           onTap:
                                                                               () async {
-                                                                            if (PrefService.getBool(PrefKeys.login) ==
-                                                                                false) {
-                                                                              Get.toNamed(AppRoutes.login);
-                                                                            } else {
-                                                                              await toggleLike(index, controller, controller.getBoardInfoModel.data![index].image!.toString(), controller.getBoardInfoModel.data?[index].id ?? 0);
+                                                                            // if (PrefService.getBool(PrefKeys.login) ==
+                                                                            //     false) {
+                                                                            //   Get.toNamed(AppRoutes.login);
+                                                                            // } else {
+                                                                              // await toggleLike(index,
+                                                                              //     controller, controller.getBoardInfoModel.data![index].image!.toString(),
+                                                                              //     controller.getBoardInfoModel.data?[index].id ?? 0);
+                                                                              await controller.likeUnlike(index);
                                                                               controller.update([
                                                                                 'fldr'
                                                                               ]);
-                                                                            }
-                                                                            controller.update([
-                                                                              'fldr'
-                                                                            ]);
+                                                                           // }
+
                                                                           },
                                                                           child:
                                                                               Container(
@@ -874,15 +876,15 @@ class _MyFolderScreenState extends State<MyFolderScreen> {
                                                                             width:
                                                                                 20,
                                                                             margin:
-                                                                                EdgeInsets.only(top: 12, right: 12),
+                                                                                const EdgeInsets.only(top: 12, right: 12),
                                                                             decoration:
                                                                                 const BoxDecoration(
                                                                               borderRadius: BorderRadius.all(Radius.circular(5)),
                                                                               color: Colors.white,
                                                                             ),
-                                                                            child: likeStatus == '1'
+                                                                            child: controller.isLike[index] == true
                                                                                 ? Icon(Icons.favorite_outlined, size: 18, color: ColorRes.colorE16F55)
-                                                                                : Icon(Icons.favorite_outline_sharp, size: 18),
+                                                                                : const Icon(Icons.favorite_outline_sharp, size: 18),
                                                                           ),
                                                                         ),
                                                                       ],
@@ -943,183 +945,245 @@ class _MyFolderScreenState extends State<MyFolderScreen> {
                                   ],
                                 ),
                               ),
-                        (controller.isPageView == false)
-                            ? const SizedBox()
-                            : Column(
-                                children: [
-                                  const SizedBox(
-                                    height: 30,
-                                  ),
-                                  Container(
-                                    height: 50,
-                                    width: Get.width,
-                                    color: Colors.transparent,
-                                    child: Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: 20),
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          // const SizedBox(
-                                          //   height: 23,
-                                          //   width: 23,
-                                          // ),
-                                          // SizedBox(
-                                          //   width: Get.width * 0.06,
-                                          // ),
-                                          // const SizedBox(
-                                          //   height: 23,
-                                          //   width: 23,
-                                          // ),
-                                          // SizedBox(
-                                          //   width: Get.width * 0.06,
-                                          // ),
+                        (controller.isPageView == true || controller.isSelectedPageView ==true)
+                            ? Column(
+                          children: [
+                            const SizedBox(
+                              height: 30,
+                            ),
+                            Container(
+                              height: 50,
+                              width: Get.width,
+                              color: Colors.transparent,
+                              child: Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 20),
+                                child: Row(
+                                  mainAxisAlignment:
+                                  MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    // const SizedBox(
+                                    //   height: 23,
+                                    //   width: 23,
+                                    // ),
+                                    // SizedBox(
+                                    //   width: Get.width * 0.06,
+                                    // ),
+                                    // const SizedBox(
+                                    //   height: 23,
+                                    //   width: 23,
+                                    // ),
+                                    // SizedBox(
+                                    //   width: Get.width * 0.06,
+                                    // ),
 
-                                          InkWell(
-                                            onTap: () {
-                                              Get.toNamed(AppRoutes.favourite);
-                                            },
-                                            child: Container(
-                                              width: 100,
-                                              height: 50,
-                                              decoration: BoxDecoration(
-                                                color: ColorRes.color305EBE,
-                                                borderRadius:
-                                                    BorderRadius.circular(25),
-                                              ),
-                                              child: const SizedBox(
-                                                  height: 23,
-                                                  width: 23,
-                                                  child: Icon(
-                                                    Icons
-                                                        .favorite_outline_sharp,
-                                                    color: Colors.white,
-                                                    size: 25,
-                                                  )),
-                                            ),
-                                          ),
-
-                                          // SizedBox(
-                                          //   width: Get.width * 0.06,
-                                          // ),
-
-                                          InkWell(
-                                            onTap: () {
-                                              // if(controller.isSelectedPageView==false)
-                                              //   {
-                                              controller.saveImage();
-                                              //    }
-                                              //   else
-                                              //     {
-                                              //       controller.saveSelectedImages();
-                                              //     }
-                                            },
-                                            child: Container(
-                                              width: 100,
-                                              height: 50,
-                                              decoration: BoxDecoration(
-                                                color: ColorRes.color305EBE,
-                                                borderRadius:
-                                                    BorderRadius.circular(25),
-                                              ),
-                                              child: const SizedBox(
-                                                  height: 23,
-                                                  width: 23,
-                                                  child: Icon(
-                                                    Icons
-                                                        .file_download_outlined,
-                                                    color: Colors.white,
-                                                    size: 25,
-                                                  )),
-                                            ),
-                                          ),
-
-                                          InkWell(
-                                            onTap: () async {
-                                              // if(controller.isSelectedPageView==false)
-                                              //   {
-                                              controller.onTapShare();
-                                              //   }
-                                              // else
-                                              //   {
-                                              //   controller.onSelectedTapShare();
-                                              // }
-
-                                              // Share.share();
-                                              // controller.simg.forEach((element) {
-                                              //
-                                              // Share.share(element);
-                                              // });
-                                              // List<ShareItParameters> list =[];
-                                              // controller.simg.forEach((element) {
-                                              //   list.add(ShareItParameters(type: ShareItFileType.image,path: element));
-                                              // });
-                                              // ShareIt.list(parameters: list);
-
-                                              // ShareExtend.shareMultiple(controller.simg, 'image');
-                                              //   List i = [];
-                                              // controller.simg.forEach((element) async{
-                                              //  ByteData b = await rootBundle.load(element);
-                                              //  Map io ={
-                                              //    "image":element,
-                                              //    "byteData":b
-                                              //  };
-                                              //   i.add(io);
-                                              // });
-                                              // Map data= {};
-                                              //
-                                              // i.forEach((element) {
-                                              //   data['element'] = element['byteData'].buffer.asUint8List();
-                                              // });
-                                              //
-                                              // print(data);
-                                              // await
-                                              // VocsyShare.files('esys images',
-                                              //     {
-                                              //     'esys.png': bytes1.buffer.asUint8List(),
-                                              //     'bluedan.png': bytes2.buffer.asUint8List(),
-                                              //     'addresses.csv': bytes3.buffer.asUint8List(),
-                                              //     },
-                                              //     '*/*',
-                                              //     text: 'My optional text.'
-                                              // );
-
-                                              // Map i ={};
-                                              // List bufferData=[];
-                                              // controller.simg.forEach((element) async{
-                                              //   await rootBundle.load(element);
-                                              // });
-                                              //  VocsyShare.files(, files, mimeType)
-                                            },
-                                            child: Container(
-                                              width: 100,
-                                              height: 50,
-                                              decoration: BoxDecoration(
-                                                color: ColorRes.color305EBE,
-                                                borderRadius:
-                                                    BorderRadius.circular(25),
-                                              ),
-                                              child: SizedBox(
-                                                  height: 23,
-                                                  width: 23,
-                                                  child: Image.asset(
-                                                    AssetRes.shareIcon,
-                                                    color: ColorRes.white,
-                                                    scale: 3,
-                                                  )),
-                                            ),
-                                          ),
-
-                                          // SizedBox(
-                                          //   width: Get.width * 0.06,
-                                          // ),
-                                        ],
+                                    InkWell(
+                                      onTap: () async {
+                                        if(controller.isSelectedPageView==false)
+                                        {
+                                        await  controller.likeUnlike(controller.selectedIndex);
+                                        }
+                                        else
+                                        {
+                                         await controller.likeUnlikeList();
+                                        }
+                                        myFolderController
+                                            .addSelectedImage =
+                                            List.generate(
+                                                controller
+                                                    .getBoardInfoModel
+                                                    .data
+                                                    ?.length ??
+                                                    0,
+                                                    (index) => false);
+                                        controller
+                                            .isSelectedPageView =
+                                        false;
+                                        controller.update(['fldr']);
+                                      },
+                                      child: Container(
+                                        width: 100,
+                                        height: 50,
+                                        decoration: BoxDecoration(
+                                          color: ColorRes.color305EBE,
+                                          borderRadius:
+                                          BorderRadius.circular(25),
+                                        ),
+                                        child:  SizedBox(
+                                            height: 23,
+                                            width: 23,
+                                            child: (controller.isPageView)?
+                                            controller.isLike[controller.selectedIndex] == true?
+                                            const Icon(
+                                              Icons
+                                                  .favorite_outlined,
+                                              color: Colors.white,
+                                              size: 25,
+                                            )
+                                                :const Icon(
+                                              Icons
+                                                  .favorite_outline_sharp,
+                                              color: Colors.white,
+                                              size: 25,
+                                            )
+                                                :const Icon(
+                                              Icons
+                                                  .favorite_outline_sharp,
+                                              color: Colors.white,
+                                              size: 25,
+                                            )),
                                       ),
                                     ),
-                                  ),
-                                ],
+
+                                    // SizedBox(
+                                    //   width: Get.width * 0.06,
+                                    // ),
+
+                                    InkWell(
+                                      onTap: () async {
+                                        if(controller.isSelectedPageView==false)
+                                          {
+                                       await controller.saveImage(context);
+                                           }
+                                          else
+                                            {
+                                           await   controller.saveSelectedImages(context);
+                                            }
+                                        myFolderController
+                                            .addSelectedImage =
+                                            List.generate(
+                                                controller
+                                                    .getBoardInfoModel
+                                                    .data
+                                                    ?.length ??
+                                                    0,
+                                                    (index) => false);
+                                        controller
+                                            .isSelectedPageView =
+                                        false;
+                                        controller.update(['fldr']);
+                                      },
+                                      child: Container(
+                                        width: 100,
+                                        height: 50,
+                                        decoration: BoxDecoration(
+                                          color: ColorRes.color305EBE,
+                                          borderRadius:
+                                          BorderRadius.circular(25),
+                                        ),
+                                        child: const SizedBox(
+                                            height: 23,
+                                            width: 23,
+                                            child: Icon(
+                                              Icons
+                                                  .file_download_outlined,
+                                              color: Colors.white,
+                                              size: 25,
+                                            )),
+                                      ),
+                                    ),
+
+                                    InkWell(
+                                      onTap: () async {
+                                        if(controller.isSelectedPageView==false)
+                                          {
+                                       await  controller.onTapShare();
+                                          }
+                                        else
+                                          {
+                                         await controller.onSelectedTapShare();
+                                        }
+                                        myFolderController
+                                            .addSelectedImage =
+                                            List.generate(
+                                                controller
+                                                    .getBoardInfoModel
+                                                    .data
+                                                    ?.length ??
+                                                    0,
+                                                    (index) => false);
+                                        controller
+                                            .isSelectedPageView =
+                                        false;
+                                        controller.update(['fldr']);
+                                        // Share.share();
+                                        // controller.simg.forEach((element) {
+                                        //
+                                        // Share.share(element);
+                                        // });
+                                        // List<ShareItParameters> list =[];
+                                        // controller.simg.forEach((element) {
+                                        //   list.add(ShareItParameters(type: ShareItFileType.image,path: element));
+                                        // });
+                                        // ShareIt.list(parameters: list);
+
+                                        // ShareExtend.shareMultiple(controller.simg, 'image');
+                                        //   List i = [];
+                                        // controller.simg.forEach((element) async{
+                                        //  ByteData b = await rootBundle.load(element);
+                                        //  Map io ={
+                                        //    "image":element,
+                                        //    "byteData":b
+                                        //  };
+                                        //   i.add(io);
+                                        // });
+                                        // Map data= {};
+                                        //
+                                        // i.forEach((element) {
+                                        //   data['element'] = element['byteData'].buffer.asUint8List();
+                                        // });
+                                        //
+                                        // print(data);
+                                        // await
+                                        // VocsyShare.files('esys images',
+                                        //     {
+                                        //     'esys.png': bytes1.buffer.asUint8List(),
+                                        //     'bluedan.png': bytes2.buffer.asUint8List(),
+                                        //     'addresses.csv': bytes3.buffer.asUint8List(),
+                                        //     },
+                                        //     '*/*',
+                                        //     text: 'My optional text.'
+                                        // );
+
+                                        // Map i ={};
+                                        // List bufferData=[];
+                                        // controller.simg.forEach((element) async{
+                                        //   await rootBundle.load(element);
+                                        // });
+                                        //  VocsyShare.files(, files, mimeType)
+                                      },
+                                      child: Container(
+                                        width: 100,
+                                        height: 50,
+                                        decoration: BoxDecoration(
+                                          color: ColorRes.color305EBE,
+                                          borderRadius:
+                                          BorderRadius.circular(25),
+                                        ),
+                                        child: SizedBox(
+                                            height: 23,
+                                            width: 23,
+                                            child: Image.asset(
+                                              AssetRes.shareIcon,
+                                              color: ColorRes.white,
+                                              scale: 3,
+                                            )),
+                                      ),
+                                    ),
+
+                                    // SizedBox(
+                                    //   width: Get.width * 0.06,
+                                    // ),
+                                  ],
+                                ),
                               ),
+                            ),
+                            const SizedBox(
+                              height: 10,
+                            ),
+                          ],
+                        )
+                            : const SizedBox(),
                       ],
                     ),
                   ),
@@ -1188,20 +1252,37 @@ class _MyFolderScreenState extends State<MyFolderScreen> {
           ),
         ),
         endDrawer: Drawer(
+          backgroundColor: Colors.white,
             shape: const OutlineInputBorder(
                 borderRadius: BorderRadius.only(
                     bottomLeft: Radius.circular(55),
                     topLeft: Radius.circular(55))),
             child: Column(
               children: [
-                SizedBox(
-                  height: Get.height * 0.1,
+                // SizedBox(
+                //   height: Get.height * 0.1,
+                // ),
+                // Center(
+                //     child:
+                //         Image.asset(AssetRes.boards, width: Get.width * 0.3)),
+                // SizedBox(
+                //   height: Get.height * 0.08,
+                // ),
+                const SizedBox(
+                    height: 20
                 ),
-                Center(
-                    child:
-                        Image.asset(AssetRes.boards, width: Get.width * 0.3)),
-                SizedBox(
-                  height: Get.height * 0.08,
+                // Center(
+                //     child:
+                //     Image.asset(AssetRes.boards, width: Get.width * 0.3)),
+                Padding(
+                  padding: const EdgeInsets.only(right: 20.0),
+                  child: Align(
+                    alignment: Alignment.centerRight,
+                    child: Image.asset(AssetRes.appNewLogo, scale: 4,),
+                  ),
+                ),
+                const SizedBox(
+                  height: 6,
                 ),
                 Expanded(
                   flex: 2,
@@ -1212,24 +1293,26 @@ class _MyFolderScreenState extends State<MyFolderScreen> {
                     itemBuilder: (context, index) {
                       return ListTile(
                         onTap: () {
-                          if (index == 0) {
+                         if (myFolderController.drawerTitleList[index] ==  StringRes.home.tr) {
                             Get.back();
-                          } else if (index == 1) {
+                          } else if (myFolderController.drawerTitleList[index] ==  StringRes.language.tr) {
                             Get.back();
                             Get.toNamed(AppRoutes.languageConfirmPage);
-                          } else if (index == 2) {
+                          } else if (myFolderController.drawerTitleList[index] ==  StringRes.viewImages.tr) {
                             Get.back();
-                            Get.toNamed(AppRoutes.viewImagesScreen,
-                                arguments:
-                                    myFolderController.getBoardInfoModel.data ??
-                                        []);
-                          } else if (index == 3) {
+                            Get.toNamed(
+                                AppRoutes.viewImagesScreen,
+                                arguments: []
+                            );
+                          } else if (myFolderController.drawerTitleList[index] ==  StringRes.favourite.tr) {
                             Get.back();
-                            Get.toNamed(AppRoutes.favourite);
-                          } else if (index == 4) {
+                            Get.toNamed(AppRoutes.favourite)?.then((e){
+                              myFolderController.init();
+                            });
+                          } else if (myFolderController.drawerTitleList[index] ==  StringRes.contactUs.tr) {
                             Get.back();
                             Get.toNamed(AppRoutes.contactUs);
-                          } else if (index == 5) {
+                          } else if (myFolderController.drawerTitleList[index] ==  StringRes.settings.tr) {
                             Get.back();
                             Get.toNamed(AppRoutes.setting);
                           } else {
@@ -1253,7 +1336,7 @@ class _MyFolderScreenState extends State<MyFolderScreen> {
                         height: 1,
                         width: 50,
                         color: ColorRes.black.withOpacity(0.30),
-                        margin: EdgeInsets.symmetric(horizontal: 19),
+                        margin: const EdgeInsets.symmetric(horizontal: 19),
                       );
                     },
                   ),
@@ -1345,7 +1428,7 @@ class _MyFolderScreenState extends State<MyFolderScreen> {
 
 // ...
 
-Future<void> toggleLike(
+/*Future<void> toggleLike(
     int index, MyFolderController controller, String image, int imageId) async {
   try {
     if (PrefService.getBool(PrefKeys.login) == false) {
@@ -1380,7 +1463,7 @@ Future<void> toggleLike(
   } catch (e) {
     print('Error toggling like: $e');
   }
-}
+}*/
 
 /*Future<void> toggleLike(int index, MyFolderController controller, String image, int imageId) async {
   try {
@@ -1496,12 +1579,16 @@ Future<void> toggleLike(
   }
 }*/
 
+
+
+
+
 void showDialogs(BuildContext context) {
   showDialog(
     context: context,
     builder: (BuildContext context) {
       return SimpleDialog(
-        contentPadding: EdgeInsets.symmetric(horizontal: 20),
+        contentPadding: const EdgeInsets.symmetric(horizontal: 20),
         children: [
           SizedBox(
             height: Get.height * 0.04,

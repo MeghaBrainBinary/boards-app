@@ -80,7 +80,7 @@ class FavouriteScreen extends StatelessWidget {
                                           height: 170,
                                           width: Get.width,
                                           fit: BoxFit.fill,
-                                          imageUrl:controller.storedFavorites?[index]?.replaceAll(RegExp(r'^\d+:'), '') ?? "",
+                                          imageUrl:controller.storedFavorites?[index]['image'] ?? "",
                                           progressIndicatorBuilder: (context,strings,download){
                                             return    Shimmer.fromColors(
                                                 baseColor: Colors.grey.shade300,
@@ -104,6 +104,7 @@ class FavouriteScreen extends StatelessWidget {
                                             //   controller.isLike[index]=false;
                                             // }
                                             // controller.update(['fldr']);
+                                            controller.removeFavorite(controller.storedFavorites?[index]['id'] ?? '');
                                           },
                                           child: Container(height: 20,width: 20,
                                             margin: EdgeInsets.only(top: 12,right: 12),

@@ -21,7 +21,27 @@ RxBool loader = false.obs;
   List isIcons = [];
   final serverData = [];
   List<TreeNodeData> treeData = [];
+  List<String> drawerTitleList = [
+    //StringRes.home.tr,
+    StringRes.language.tr,
+   // StringRes.viewImages.tr,
+    StringRes.favourite.tr,
+    StringRes.contactUs.tr,
+   // StringRes.settings.tr,
+    // StringRes.faq.tr,
+   // StringRes.loginLogout.tr,
+  ];
 
+  List<String> drawerImageList = [
+   // AssetRes.homeIcon,
+    AssetRes.languageIcon,
+   // AssetRes.grid,
+    AssetRes.FavouriteIcon,
+    AssetRes.contactUs,
+   // AssetRes.settingsIcon,
+    //   AssetRes.faqIcon,
+  //  AssetRes.loginIcon,
+  ];
   @override
 void onInit() {
   init(argumentData ?? PrefService.getString(PrefKeys.languageCode));

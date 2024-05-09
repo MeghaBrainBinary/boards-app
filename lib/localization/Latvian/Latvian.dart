@@ -81,5 +81,8 @@ const Map<String, String> Latvian = {
   "Check your email for instructions to reset your password.": "Norādījumus paroles atiestatīšanai skatiet savā e-pastā.",
   "Please log in before delete Account.": "Lūdzu, piesakieties pirms konta dzēšanas.",
   "Please log in before resetting your password.": "Lūdzu, piesakieties pirms paroles atiestatīšanas.",
-  "View Images":"Skatīt attēlus"
+  "View Images":"Skatīt attēlus",
+  "My Wallpaper":"Mana fona tapete",
+  "Or":"Or",
+
 };

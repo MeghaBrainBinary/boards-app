@@ -28,10 +28,11 @@ class _SplashScreenState extends State<SplashScreen> {
 
     Timer(const Duration(seconds: 3), () {
       if (PrefService.getBool(PrefKeys.isLanguage) == false) {
-        Get.offAndToNamed(AppRoutes.introPage);
+       // Get.offAndToNamed(AppRoutes.introPage);
+        Get.offAndToNamed( AppRoutes.languagePage);
       } else {
-        // Get.offAndToNamed(AppRoutes.boardsPage);
         Get.to(() => SelectFlowScreen(language: ''));
+        // Get.offAndToNamed(AppRoutes.boardsPage);
       }
     });
   }
@@ -39,11 +40,12 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Center(child: Image.asset(AssetRes.boards, width: Get.width * 0.5)),
+          Center(child: Image.asset(AssetRes.appNewLogo, width: Get.width * 0.5)),
         ],
       ),
     );

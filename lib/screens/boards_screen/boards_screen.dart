@@ -17,7 +17,7 @@ class BoardsScreen extends StatelessWidget {
   BoardsScreen({super.key});
 
   BoardsController boardsController = Get.put(BoardsController());
-
+  final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
@@ -26,6 +26,95 @@ class BoardsScreen extends StatelessWidget {
         return false;
       },
       child: Scaffold(
+        backgroundColor: Colors.white,
+        key: scaffoldKey,
+        endDrawer: Drawer(
+          backgroundColor: Colors.white,
+            shape: const OutlineInputBorder(
+                borderRadius: BorderRadius.only(
+                    bottomLeft: Radius.circular(55),
+                    topLeft: Radius.circular(55))),
+            child: Column(
+              children: [
+                // SizedBox(
+                //   height: Get.height * 0.1,
+                // ),
+                const SizedBox(
+                  height: 20
+                ),
+                // Center(
+                //     child:
+                //     Image.asset(AssetRes.boards, width: Get.width * 0.3)),
+                Padding(
+                  padding: const EdgeInsets.only(right: 20.0),
+                  child: Align(
+                    alignment: Alignment.centerRight,
+                    child: Image.asset(AssetRes.appNewLogo, scale: 4,),
+                  ),
+                ),
+                const SizedBox(
+                  height: 6,
+                ),
+                Expanded(
+                  flex: 2,
+                  child: ListView.separated(
+                    // shrinkWrap: true,
+                    // physics: NeverScrollableScrollPhysics(),
+                    itemCount: boardsController.drawerTitleList.length,
+                    itemBuilder: (context, index) {
+                      return ListTile(
+                        onTap: () {
+                          if (boardsController.drawerTitleList[index] ==  StringRes.home.tr) {
+                            Get.back();
+                          } else if (boardsController.drawerTitleList[index] ==  StringRes.language.tr) {
+                            Get.back();
+                            Get.toNamed(AppRoutes.languageConfirmPage);
+                          } else if (boardsController.drawerTitleList[index] ==  StringRes.viewImages.tr) {
+                            Get.back();
+                            Get.toNamed(
+                              AppRoutes.viewImagesScreen,
+                              arguments: []
+                            );
+                          } else if (boardsController.drawerTitleList[index] ==  StringRes.favourite.tr) {
+                            Get.back();
+                            Get.toNamed(AppRoutes.favourite);
+                          } else if (boardsController.drawerTitleList[index] ==  StringRes.contactUs.tr) {
+                            Get.back();
+                            Get.toNamed(AppRoutes.contactUs);
+                          } else if (boardsController.drawerTitleList[index] ==  StringRes.settings.tr) {
+                            Get.back();
+                            Get.toNamed(AppRoutes.setting);
+                          } else {
+                            Get.back();
+                            showDialogs(context);
+                          }
+                        },
+                        leading: Padding(
+                          padding: const EdgeInsets.only(top: 5.0),
+                          child: Image.asset(
+                            boardsController.drawerImageList[index],
+                            scale: 4,
+                          ),
+                        ),
+                        title: Text(boardsController.drawerTitleList[index]),
+                        trailing: const Icon(Icons.navigate_next),
+                      );
+                    },
+                    separatorBuilder: (BuildContext context, int index) {
+                      return Container(
+                        height: 1,
+                        width: 50,
+                        color: ColorRes.black.withOpacity(0.30),
+                        margin: const EdgeInsets.symmetric(horizontal: 19),
+                      );
+                    },
+                  ),
+                ),
+                SizedBox(
+                  height: Get.height * 0.05,
+                ),
+              ],
+            )),
         body: Stack(
           children: [
             GetBuilder<BoardsController>(
@@ -33,592 +122,649 @@ class BoardsScreen extends StatelessWidget {
                 builder: (con) {
                   return Stack(
                     children: [
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                 SizedBox(
-                                  height: Get.height * 0.13,
-                                ),
-
-                                /// top
-                                Align(alignment: Alignment.center,
-                                  child: Padding(
-                                    padding: EdgeInsets.only(
-                                        left: Get.width * 0.05,
-                                        right: Get.width * 0.05),
-                                    child: Image.asset(
-                                      AssetRes.boards,
-                                      width: 110,
+                      SizedBox(
+                       height:Get.height,
+                       width:Get.width,
+                        child: SingleChildScrollView(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    // SizedBox(
+                                    //   height: Get.height * 0.13,
+                                    // ),
+                                    const SizedBox(
+                                      height:20,
                                     ),
-                                  ),
-                                ),
-                                const SizedBox(
-                                    height:30
-                                ),
-                               /* const SizedBox(
-                                  height:20
-                                ),
-                                Padding(
-                                  padding: EdgeInsets.only(
-                                      left: Get.width * 0.05,
-                                      right: Get.width * 0.05),
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.end,
-                                    children: [
-                                      *//*const Visibility(
-                                        visible: false,
-                                        maintainState: true,
-                                        maintainSize: true,
-                                        maintainAnimation: true,
-                                        child: SizedBox(
-                                          child: Icon(
-                                            Icons.more_vert,
-                                            size: 25,
-                                          ),
-                                        ),
-                                      ),
-                                      const Spacer(),
-                                      Center(
-                                        child: Image.asset(
-                                          AssetRes.splashIcon,
-                                          width: 96,
-                                        ),
-                                      ),
-                                      const Spacer(),*//*
-                                      InkWell(
-                                        onTap: () {
-                                          boardsController.onTapMore();
-                                        },
-                                        child: Container(
-                                          // alignment: Alignment.centerRight,
-                                          // color: ColorRes.color305EBE,
-                                          // height: 25,
-                                          // width: 25,
-                                          child: const Icon(
-                                            Icons.more_vert,
-                                            size: 25,
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                const SizedBox(
-                                    height:30
-                                ),*/
-                                /// my boards
-                             /*   Padding(
-                                  padding: EdgeInsets.only(
-                                      left: Get.width * 0.05,
-                                      right: Get.width * 0.05),
-                                  child: Row(
-                                    children: [
-                                      Text(
-                                        StringRes.myBoards.tr,
-                                        style: appTextStyle(
-                                            color: ColorRes.black,
-                                            fontSize: 23,
-                                            weight: FontWeight.w600),
-                                      )
-                                    ],
-                                  ),
-                                ),
-*/
-                                /// list
-                                /*    GetBuilder<BoardsController>(
-                                  id: 'board',
-                                  builder: (controller) => SizedBox(
-                                    height: Get.height * 0.55,
-                                    width: Get.width,
-                                    child: (controller.getBoardModel.data != null)
-                                        ? ListView.builder(
-                                            itemCount: controller
-                                                .getBoardModel.data!.length,
-                                            itemBuilder: (context, index) {
-                                              List icons = List.generate(
-                                                controller
-                                                    .getBoardModel.data!.length,
-                                                (index) => Icon(
-                                                  Icons.arrow_right,
-                                                  color: ColorRes.black,
-                                                ),
-                                              );
-                                              return Padding(
-                                                padding: EdgeInsets.only(
-                                                    bottom: Get.height * 0.03),
-                                                child: InkWell(
-                                                  onTap: () {
-                                                    controller.onTapFolder(
-                                                         controller
-                                                            .getBoardModel
-                                                            .data![
-                                                        index]
-                                                            .id
-                                                            .toString(),
-                                                        controller
-                                                            .getBoardModel
-                                                            .data![
-                                                        index]
-                                                            .name
-                                                            .toString()
-
-                                                    );
-                                                  },
-                                                  child: Column(
-                                                    children: [
-                                                      Padding(
-                                                        padding: EdgeInsets.only(
-                                                            left: Get.width * 0.035,
-                                                            right:
-                                                                Get.width * 0.05),
-                                                        child: Row(
-                                                          children: [
-                                                            (controller.getBoardModel.data![index].sub_board!.isEmpty || controller.getBoardModel.data![index].sub_board!.length == 0)
-                                                                ? SizedBox()
-                                                                : InkWell(
-                                                                    onTap: () {
-                                                                      controller.onTapIcon(true, index);
-                                                                    },
-                                                                    child: (controller.isIcons[index] == true)
-                                                                        ? Transform.rotate(
-                                                                            angle:
-                                                                                pi / 2,
-                                                                            child: icons[index])
-                                                                        : icons[
-                                                                            index],
-                                                                  ),
-                                                            SizedBox(
-                                                              width: Get.width * 0.03,
-                                                            ),
-                                                         */
-                                /*   SizedBox(
-                                                              height: 30,
-                                                              width: 30,
-                                                              child:
-                                                                  CachedNetworkImage(
-                                                                imageUrl:
-                                                                    boardsController
-                                                                        .getBoardModel
-                                                                        .data![
-                                                                            index]
-                                                                        .icon!
-                                                                        .toString(),
-                                                                placeholder:
-                                                                    (context,
-                                                                            url) =>
-                                                                        Container(),
-                                                                errorWidget:
-                                                                    (context, url,
-                                                                            error) =>
-                                                                        Container(),
-                                                              ),
-                                                              // child: Image.network(
-                                                              //   boardsController.getBoardModel.data![index].icon!,
-                                                              // ),
-                                                            ),*/
-                                /*
-                                                            SizedBox(
-                                                              width:
-                                                                  Get.width * 0.06,
-                                                            ),
-                                                            Text(
-                                                              controller
-                                                                  .getBoardModel
-                                                                  .data![index]
-                                                                  .name
-                                                                  .toString(),
-                                                              style: appTextStyle(
-                                                                  fontSize: 17,
-                                                                  weight: FontWeight
-                                                                      .w500,
-                                                                  color: ColorRes
-                                                                      .black),
-                                                            ),
-                                                          ],
-                                                        ),
-                                                      ),
-                                                      (controller.getBoardModel.data![index].sub_board!.isNotEmpty) ?
-                                                      (controller.isIcons[index] == true)
-                                                          ? Column(
-                                                        children: List.generate(controller.getBoardModel.data![index].sub_board!.length, (i){
-                                                          return InkWell(
-                                                            focusColor: ColorRes
-                                                                .color305EBE,
-                                                            hoverColor: ColorRes
-                                                                .color305EBE,
-                                                            splashColor: ColorRes
-                                                                .color305EBE
-                                                                .withOpacity(0.1),
-                                                            overlayColor:
-                                                            MaterialStateProperty
-                                                                .all(ColorRes
-                                                                .color305EBE
-                                                                .withOpacity(
-                                                                0.1)),
-                                                            onTap: () {
-                                                              controller.onTapFolder(
-                                                                  controller
-                                                                      .getBoardModel
-                                                                      .data![index].id.toString(),
-                                                                  controller
-                                                                      .getBoardModel
-                                                                      .data![index].name.toString(),
-                                                                 sub_boardId: controller
-                                                                     .getBoardModel
-                                                                     .data![index]
-                                                                     .sub_board![i].id
-                                                                     .toString(),
-                                                                subName: controller
-                                                                    .getBoardModel
-                                                                    .data![index]
-                                                                    .sub_board![i].name
-                                                                    .toString(),
-                                                              );
-
-
-                                                            },
-
-                                                            child: Container(
-                                                              height: Get.height *
-                                                                  0.055,
-                                                              color: Colors
-                                                                  .transparent,
-                                                              padding:
-                                                              EdgeInsets.only(
-                                                                left: Get.width *
-                                                                    0.12,
-                                                              ),
-                                                              child: Row(
-                                                                children: [
-                                                                  InkWell(
-                                                                    onTap: () {},
-                                                                    focusColor:
-                                                                    ColorRes
-                                                                        .color305EBE,
-                                                                    hoverColor:
-                                                                    ColorRes
-                                                                        .color305EBE,
-                                                                    splashColor: ColorRes
-                                                                        .color305EBE
-                                                                        .withOpacity(
-                                                                        0.1),
-                                                                    overlayColor: MaterialStateProperty.all(ColorRes
-                                                                        .color305EBE
-                                                                        .withOpacity(
-                                                                        0.1)),
-                                                                    child: Icon(
-                                                                      Icons
-                                                                          .arrow_right,
-                                                                      color: ColorRes
-                                                                          .black
-                                                                          .withOpacity(
-                                                                          0.7),
-                                                                    ),
-                                                                  ),
-                                                                  SizedBox(
-                                                                    width:
-                                                                    Get.width *
-                                                                        0.03,
-                                                                  ),
-                                                                  SizedBox(
-                                                                    height: 20,
-                                                                    width: 20,
-                                                                    child: Image
-                                                                        .asset(
-                                                                      AssetRes
-                                                                          .myfolderIcon,
-                                                                    ),
-                                                                  ),
-                                                                  SizedBox(
-                                                                    width:
-                                                                    Get.width *
-                                                                        0.06,
-                                                                  ),
-                                                                  Text(
-                                                                    controller.getBoardModel.data![index].sub_board![i].name.toString(),
-                                                                    style: appTextStyle(
-                                                                        fontSize:
-                                                                        14,
-                                                                        weight: FontWeight
-                                                                            .w500,
-                                                                        color: ColorRes
-                                                                            .black
-                                                                            .withOpacity(
-                                                                            0.7)),
-                                                                  ),
-                                                                ],
-                                                              ),
-                                                            ),
-                                                          );
-                                                        }),
-                                                      )
-                                                          : const SizedBox()
-                                                      : SizedBox(),
-                                                    ],
-                                                  ),
-                                                ),
-                                              );
-                                            })
-                                        : SizedBox(),
-                                  ),
-                                ),*/
-                                Padding(
-                                  padding: const EdgeInsets.symmetric(horizontal: 20),
-                                  child: Text(StringRes.myBoards.tr,style: GoogleFonts.inder(
-                                    color: ColorRes.black,
-                                    fontSize: 23,
-                                    fontWeight: FontWeight.w600,
-                                  ),),
-                                ),
-                                SizedBox(height: 10,),
-                                /// list dynamic
-                                // create structure of list of sublist of sublist of sublist
-                                // now 28
-                                (con.getBoardModelData != null)
-                                    ? GetBuilder<BoardsController>(
-                                        id: 'board',
-                                        builder: (controller) => SizedBox(
-                                          height: Get.height * 0.55,
-                                          width: Get.width,
-                                          child: (controller
-                                                      .getBoardModelData['data'] !=
-                                                  null)
-                                              ? TreeView(
-                                                  leftIcon:Image.asset(AssetRes.success,scale:1.5,),
-                                                  icon: Icon(
-                                                    Icons.arrow_right,
-                                                    color: ColorRes.black,
-                                                  ),
-                                                  textStyle: GoogleFonts.inter(
-                                                    color: Colors.black,
-                                                    fontSize: 17,
-                                                    fontWeight: FontWeight.w500,
-                                                  ),
-                                                  data: controller.treeData,
-                                                  onTap: (node) {
-                                                    print(node.id);
-                                                    controller.onTapFolder(
-                                                      node.id
-                                                          .toString(),
-                                                      node.name,);
-                                                  },
-                                                  onLastTap: (node) {
-                                                    print(node.name);
-
-                                                      controller.onTapFolder(
-                                                          node.id
-                                                              .toString(),
-                                                          node.name,);
-
-                                                  })
-                                              : SizedBox(),
-                                        ),
-                                      )
-                                    : SizedBox(),
-                                /* GetBuilder<BoardsController>(
-                            id: 'board',
-                            builder: (controller) => SizedBox(
-                              height: Get.height * 0.55,
-                              width: Get.width,
-                              child: (controller.getBoardModel.data !=null)
-                                  ?ListView.builder(
-                                  itemCount: controller.getBoardModel.data!.length,
-                                  itemBuilder: (context, index) {
-                                    List icons = List.generate(
-                                      controller.getBoardModel.data!.length,
-                                      (index) => Icon(
-                                        Icons.arrow_right,
-                                        color: ColorRes.black,
-                                      ),
-                                    );
-                                    return Padding(
-                                      padding: EdgeInsets.only(bottom: Get.height * 0.03),
-                                      child: InkWell(
-                                        onTap: () {
-                                          controller.onTapIcon(true, index);
-                                        },
+                                    // /// top
+                                    // Align(
+                                    //   alignment: Alignment.center,
+                                    //   child: Padding(
+                                    //     padding: EdgeInsets.only(
+                                    //         left: Get.width * 0.05,
+                                    //         right: Get.width * 0.05),
+                                    //     child: Image.asset(
+                                    //       AssetRes.boards,
+                                    //       width: 110,
+                                    //     ),
+                                    //   ),
+                                    // ),
+                                    Padding(
+                                      padding: const EdgeInsets.only(right: 20.0),
+                                      child: Align(
+                                        alignment: Alignment.centerRight,
                                         child: Column(
+                                          crossAxisAlignment:CrossAxisAlignment.end,
                                           children: [
-                                            Padding(
-                                              padding: EdgeInsets.only(
-                                                  left: Get.width * 0.035,
-                                                  right: Get.width * 0.05),
-                                              child: Row(
-                                                children: [
-                                                  InkWell(
-                                                    onTap: () {
-                                                      controller.onTapIcon(true, index);
-                                                    },
-                                                    child: (controller.isIcons[index] == true)
-                                                        ? Transform.rotate(
-                                                            angle: pi / 2, child: icons[index])
-                                                        : icons[index],
-                                                  ),
-                                                  SizedBox(
-                                                    width: Get.width * 0.03,
-                                                  ),
-                                                  SizedBox(
-                                                    height: 30,
-                                                    width: 30,
-                                                    child: CachedNetworkImage(
-                                                      imageUrl: boardsController.getBoardModel.data![index].icon!.toString(),
-
-                                                      placeholder: (context, url) => Container(),
-                                                      errorWidget: (context, url, error) => Container(),
-                                                    ),
-                                                    // child: Image.network(
-                                                    //   boardsController.getBoardModel.data![index].icon!,
-                                                    // ),
-                                                  ),
-                                                  SizedBox(
-                                                    width: Get.width * 0.06,
-                                                  ),
-                                                  Text(
-                                                    controller.getBoardModel.data![index].name.toString(),
-                                                    style: appTextStyle(
-                                                        fontSize: 17,
-                                                        weight: FontWeight.w500,
-                                                        color: ColorRes.black),
-                                                  ),
-                                                ],
-                                              ),
+                                            Image.asset(AssetRes.appNewLogo,scale: 4, ),
+                                            const SizedBox(
+                                              height:6,
                                             ),
-                                            (controller.isIcons[index] == true)
-                                                ? InkWell(
-                                                    focusColor: ColorRes.color305EBE,
-                                                    hoverColor: ColorRes.color305EBE,
-                                                    splashColor:
-                                                        ColorRes.color305EBE.withOpacity(0.1),
-                                                    overlayColor: MaterialStateProperty.all(
-                                                        ColorRes.color305EBE.withOpacity(0.1)),
-                                                    onTap: () {
-                                                      controller.onTapFolder(
-                                                        id:controller.getBoardModel.data![index].id.toString()
-                                                      );
-                                                    },
-                                                    child: Container(
-                                                      height: Get.height * 0.055,
-                                                      color: Colors.transparent,
-                                                      padding: EdgeInsets.only(
-                                                        left: Get.width * 0.12,
-                                                      ),
-                                                      child: Row(
-                                                        children: [
-                                                          InkWell(
-                                                            onTap: () {},
-                                                            focusColor: ColorRes.color305EBE,
-                                                            hoverColor: ColorRes.color305EBE,
-                                                            splashColor: ColorRes.color305EBE
-                                                                .withOpacity(0.1),
-                                                            overlayColor:
-                                                                MaterialStateProperty.all(ColorRes
-                                                                    .color305EBE
-                                                                    .withOpacity(0.1)),
-                                                            child: Icon(
-                                                              Icons.arrow_right,
-                                                              color:
-                                                                  ColorRes.black.withOpacity(0.7),
-                                                            ),
-                                                          ),
-                                                          SizedBox(
-                                                            width: Get.width * 0.03,
-                                                          ),
-                                                          SizedBox(
-                                                            height: 20,
-                                                            width: 20,
-                                                            child: Image.asset(
-                                                              AssetRes.myfolderIcon,
-                                                            ),
-                                                          ),
-                                                          SizedBox(
-                                                            width: Get.width * 0.06,
-                                                          ),
-                                                          Text(
-                                                            StringRes.myFolder.tr.toString(),
-                                                            style: appTextStyle(
-                                                                fontSize: 14,
-                                                                weight: FontWeight.w500,
-                                                                color: ColorRes.black
-                                                                    .withOpacity(0.7)),
-                                                          ),
-                                                        ],
-                                                      ),
-                                                    ),
-                                                  )
-                                                : const SizedBox(),
+                                            InkWell(
+                                              onTap: () {
+                                                // myFolderController.onTapMore();
+                                                scaffoldKey.currentState?.openEndDrawer();
+                                              },
+                                              child: Container(
+                                                // alignment: Alignment.centerRight,
+                                                // color: ColorRes.color305EBE,
+                                                // height: 25,
+                                                // width: 25,
+                                                  child: Image.asset(
+                                                    AssetRes.moreOption,
+                                                    scale: 3,
+                                                  )),
+                                            ),
                                           ],
                                         ),
                                       ),
-                                    );
-                                  })
-                                  :SizedBox(),
-                            ),
-                          ),*/
-                              ]),
-                          Column(
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.only(right: 30.0),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  children: [
-                                    InkWell(
-                                      onTap: () {
-                                      },
-                                      child: Icon(
-                                        Icons.telegram,
-                                        color: ColorRes.black,
-                                        size: 30,
+                                    ),
+                                    const SizedBox(height: 30),
+                                    /* const SizedBox(
+                                      height:20
+                                    ),
+                                    Padding(
+                                      padding: EdgeInsets.only(
+                                          left: Get.width * 0.05,
+                                          right: Get.width * 0.05),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.end,
+                                        children: [
+                                          */
+                                    /*const Visibility(
+                                            visible: false,
+                                            maintainState: true,
+                                            maintainSize: true,
+                                            maintainAnimation: true,
+                                            child: SizedBox(
+                                              child: Icon(
+                                                Icons.more_vert,
+                                                size: 25,
+                                              ),
+                                            ),
+                                          ),
+                                          const Spacer(),
+                                          Center(
+                                            child: Image.asset(
+                                              AssetRes.splashIcon,
+                                              width: 96,
+                                            ),
+                                          ),
+                                          const Spacer(),*/
+                                    /*
+                                          InkWell(
+                                            onTap: () {
+                                              boardsController.onTapMore();
+                                            },
+                                            child: Container(
+                                              // alignment: Alignment.centerRight,
+                                              // color: ColorRes.color305EBE,
+                                              // height: 25,
+                                              // width: 25,
+                                              child: const Icon(
+                                                Icons.more_vert,
+                                                size: 25,
+                                              ),
+                                            ),
+                                          ),
+                                        ],
                                       ),
                                     ),
                                     const SizedBox(
-                                      width: 10,
+                                        height:30
+                                    ),*/
+                                    /// my boards
+                                    /*   Padding(
+                                      padding: EdgeInsets.only(
+                                          left: Get.width * 0.05,
+                                          right: Get.width * 0.05),
+                                      child: Row(
+                                        children: [
+                                          Text(
+                                            StringRes.myBoards.tr,
+                                            style: appTextStyle(
+                                                color: ColorRes.black,
+                                                fontSize: 23,
+                                                weight: FontWeight.w600),
+                                          )
+                                        ],
+                                      ),
                                     ),
-                                    InkWell(
-                                      onTap: () {
-                                      },
-                                      child: Container(
-                                        height: 25,
-                                        width: 25,
-                                        decoration: BoxDecoration(
+*/
+                                    /// list
+                                    /*    GetBuilder<BoardsController>(
+                                      id: 'board',
+                                      builder: (controller) => SizedBox(
+                                        height: Get.height * 0.55,
+                                        width: Get.width,
+                                        child: (controller.getBoardModel.data != null)
+                                            ? ListView.builder(
+                                                itemCount: controller
+                                                    .getBoardModel.data!.length,
+                                                itemBuilder: (context, index) {
+                                                  List icons = List.generate(
+                                                    controller
+                                                        .getBoardModel.data!.length,
+                                                    (index) => Icon(
+                                                      Icons.arrow_right,
+                                                      color: ColorRes.black,
+                                                    ),
+                                                  );
+                                                  return Padding(
+                                                    padding: EdgeInsets.only(
+                                                        bottom: Get.height * 0.03),
+                                                    child: InkWell(
+                                                      onTap: () {
+                                                        controller.onTapFolder(
+                                                             controller
+                                                                .getBoardModel
+                                                                .data![
+                                                            index]
+                                                                .id
+                                                                .toString(),
+                                                            controller
+                                                                .getBoardModel
+                                                                .data![
+                                                            index]
+                                                                .name
+                                                                .toString()
+
+                                                        );
+                                                      },
+                                                      child: Column(
+                                                        children: [
+                                                          Padding(
+                                                            padding: EdgeInsets.only(
+                                                                left: Get.width * 0.035,
+                                                                right:
+                                                                    Get.width * 0.05),
+                                                            child: Row(
+                                                              children: [
+                                                                (controller.getBoardModel.data![index].sub_board!.isEmpty || controller.getBoardModel.data![index].sub_board!.length == 0)
+                                                                    ? SizedBox()
+                                                                    : InkWell(
+                                                                        onTap: () {
+                                                                          controller.onTapIcon(true, index);
+                                                                        },
+                                                                        child: (controller.isIcons[index] == true)
+                                                                            ? Transform.rotate(
+                                                                                angle:
+                                                                                    pi / 2,
+                                                                                child: icons[index])
+                                                                            : icons[
+                                                                                index],
+                                                                      ),
+                                                                SizedBox(
+                                                                  width: Get.width * 0.03,
+                                                                ),
+                                                             */
+                                    /*   SizedBox(
+                                                                  height: 30,
+                                                                  width: 30,
+                                                                  child:
+                                                                      CachedNetworkImage(
+                                                                    imageUrl:
+                                                                        boardsController
+                                                                            .getBoardModel
+                                                                            .data![
+                                                                                index]
+                                                                            .icon!
+                                                                            .toString(),
+                                                                    placeholder:
+                                                                        (context,
+                                                                                url) =>
+                                                                            Container(),
+                                                                    errorWidget:
+                                                                        (context, url,
+                                                                                error) =>
+                                                                            Container(),
+                                                                  ),
+                                                                  // child: Image.network(
+                                                                  //   boardsController.getBoardModel.data![index].icon!,
+                                                                  // ),
+                                                                ),*/
+                                    /*
+                                                                SizedBox(
+                                                                  width:
+                                                                      Get.width * 0.06,
+                                                                ),
+                                                                Text(
+                                                                  controller
+                                                                      .getBoardModel
+                                                                      .data![index]
+                                                                      .name
+                                                                      .toString(),
+                                                                  style: appTextStyle(
+                                                                      fontSize: 17,
+                                                                      weight: FontWeight
+                                                                          .w500,
+                                                                      color: ColorRes
+                                                                          .black),
+                                                                ),
+                                                              ],
+                                                            ),
+                                                          ),
+                                                          (controller.getBoardModel.data![index].sub_board!.isNotEmpty) ?
+                                                          (controller.isIcons[index] == true)
+                                                              ? Column(
+                                                            children: List.generate(controller.getBoardModel.data![index].sub_board!.length, (i){
+                                                              return InkWell(
+                                                                focusColor: ColorRes
+                                                                    .color305EBE,
+                                                                hoverColor: ColorRes
+                                                                    .color305EBE,
+                                                                splashColor: ColorRes
+                                                                    .color305EBE
+                                                                    .withOpacity(0.1),
+                                                                overlayColor:
+                                                                MaterialStateProperty
+                                                                    .all(ColorRes
+                                                                    .color305EBE
+                                                                    .withOpacity(
+                                                                    0.1)),
+                                                                onTap: () {
+                                                                  controller.onTapFolder(
+                                                                      controller
+                                                                          .getBoardModel
+                                                                          .data![index].id.toString(),
+                                                                      controller
+                                                                          .getBoardModel
+                                                                          .data![index].name.toString(),
+                                                                     sub_boardId: controller
+                                                                         .getBoardModel
+                                                                         .data![index]
+                                                                         .sub_board![i].id
+                                                                         .toString(),
+                                                                    subName: controller
+                                                                        .getBoardModel
+                                                                        .data![index]
+                                                                        .sub_board![i].name
+                                                                        .toString(),
+                                                                  );
+
+
+                                                                },
+
+                                                                child: Container(
+                                                                  height: Get.height *
+                                                                      0.055,
+                                                                  color: Colors
+                                                                      .transparent,
+                                                                  padding:
+                                                                  EdgeInsets.only(
+                                                                    left: Get.width *
+                                                                        0.12,
+                                                                  ),
+                                                                  child: Row(
+                                                                    children: [
+                                                                      InkWell(
+                                                                        onTap: () {},
+                                                                        focusColor:
+                                                                        ColorRes
+                                                                            .color305EBE,
+                                                                        hoverColor:
+                                                                        ColorRes
+                                                                            .color305EBE,
+                                                                        splashColor: ColorRes
+                                                                            .color305EBE
+                                                                            .withOpacity(
+                                                                            0.1),
+                                                                        overlayColor: MaterialStateProperty.all(ColorRes
+                                                                            .color305EBE
+                                                                            .withOpacity(
+                                                                            0.1)),
+                                                                        child: Icon(
+                                                                          Icons
+                                                                              .arrow_right,
+                                                                          color: ColorRes
+                                                                              .black
+                                                                              .withOpacity(
+                                                                              0.7),
+                                                                        ),
+                                                                      ),
+                                                                      SizedBox(
+                                                                        width:
+                                                                        Get.width *
+                                                                            0.03,
+                                                                      ),
+                                                                      SizedBox(
+                                                                        height: 20,
+                                                                        width: 20,
+                                                                        child: Image
+                                                                            .asset(
+                                                                          AssetRes
+                                                                              .myfolderIcon,
+                                                                        ),
+                                                                      ),
+                                                                      SizedBox(
+                                                                        width:
+                                                                        Get.width *
+                                                                            0.06,
+                                                                      ),
+                                                                      Text(
+                                                                        controller.getBoardModel.data![index].sub_board![i].name.toString(),
+                                                                        style: appTextStyle(
+                                                                            fontSize:
+                                                                            14,
+                                                                            weight: FontWeight
+                                                                                .w500,
+                                                                            color: ColorRes
+                                                                                .black
+                                                                                .withOpacity(
+                                                                                0.7)),
+                                                                      ),
+                                                                    ],
+                                                                  ),
+                                                                ),
+                                                              );
+                                                            }),
+                                                          )
+                                                              : const SizedBox()
+                                                          : SizedBox(),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                  );
+                                                })
+                                            : SizedBox(),
+                                      ),
+                                    ),*/
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 20),
+                                      child: Text(
+                                        StringRes.myBoards.tr,
+                                        style: GoogleFonts.inder(
                                           color: ColorRes.black,
-                                          shape: BoxShape.circle,
-                                        ),
-                                        child: Icon(
-                                          Icons.cleaning_services,
-                                          color: ColorRes.white,
-                                          size: 10,
+                                          fontSize: 23,
+                                          fontWeight: FontWeight.w600,
                                         ),
                                       ),
                                     ),
-                                  ],
+                                    const SizedBox(
+                                      height: 10,
+                                    ),
+
+                                    /// list dynamic
+                                    // create structure of list of sublist of sublist of sublist
+                                    // now 28
+                                    (con.getBoardModelData != null)
+                                        ? GetBuilder<BoardsController>(
+                                            id: 'board',
+                                            builder: (controller) => SizedBox(
+                                              width: Get.width,
+                                              child: (controller.getBoardModelData[
+                                                          'data'] !=
+                                                      null)
+                                                  ? TreeView(
+                                                      leftIcon: Image.asset(
+                                                        AssetRes.success,
+                                                        scale: 1.5,
+                                                      ),
+                                                      icon: Icon(
+                                                        Icons.arrow_right,
+                                                        color: ColorRes.black,
+                                                      ),
+                                                      textStyle: GoogleFonts.inter(
+                                                        color: Colors.black,
+                                                        fontSize: 17,
+                                                        fontWeight: FontWeight.w500,
+                                                      ),
+                                                      data: controller.treeData,
+                                                      onTap: (node) {
+                                                        print(node.id);
+                                                        controller.onTapFolder(
+                                                          node.id.toString(),
+                                                          node.name,
+                                                        );
+                                                      },
+                                                      onLastTap: (node) {
+                                                        print(node.name);
+
+                                                        controller.onTapFolder(
+                                                          node.id.toString(),
+                                                          node.name,
+                                                        );
+                                                      })
+                                                  : const SizedBox(),
+                                            ),
+                                          )
+                                        : const SizedBox(),
+                                    /* GetBuilder<BoardsController>(
+                                id: 'board',
+                                builder: (controller) => SizedBox(
+                                  height: Get.height * 0.55,
+                                  width: Get.width,
+                                  child: (controller.getBoardModel.data !=null)
+                                      ?ListView.builder(
+                                      itemCount: controller.getBoardModel.data!.length,
+                                      itemBuilder: (context, index) {
+                                        List icons = List.generate(
+                                          controller.getBoardModel.data!.length,
+                                          (index) => Icon(
+                                            Icons.arrow_right,
+                                            color: ColorRes.black,
+                                          ),
+                                        );
+                                        return Padding(
+                                          padding: EdgeInsets.only(bottom: Get.height * 0.03),
+                                          child: InkWell(
+                                            onTap: () {
+                                              controller.onTapIcon(true, index);
+                                            },
+                                            child: Column(
+                                              children: [
+                                                Padding(
+                                                  padding: EdgeInsets.only(
+                                                      left: Get.width * 0.035,
+                                                      right: Get.width * 0.05),
+                                                  child: Row(
+                                                    children: [
+                                                      InkWell(
+                                                        onTap: () {
+                                                          controller.onTapIcon(true, index);
+                                                        },
+                                                        child: (controller.isIcons[index] == true)
+                                                            ? Transform.rotate(
+                                                                angle: pi / 2, child: icons[index])
+                                                            : icons[index],
+                                                      ),
+                                                      SizedBox(
+                                                        width: Get.width * 0.03,
+                                                      ),
+                                                      SizedBox(
+                                                        height: 30,
+                                                        width: 30,
+                                                        child: CachedNetworkImage(
+                                                          imageUrl: boardsController.getBoardModel.data![index].icon!.toString(),
+
+                                                          placeholder: (context, url) => Container(),
+                                                          errorWidget: (context, url, error) => Container(),
+                                                        ),
+                                                        // child: Image.network(
+                                                        //   boardsController.getBoardModel.data![index].icon!,
+                                                        // ),
+                                                      ),
+                                                      SizedBox(
+                                                        width: Get.width * 0.06,
+                                                      ),
+                                                      Text(
+                                                        controller.getBoardModel.data![index].name.toString(),
+                                                        style: appTextStyle(
+                                                            fontSize: 17,
+                                                            weight: FontWeight.w500,
+                                                            color: ColorRes.black),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                                (controller.isIcons[index] == true)
+                                                    ? InkWell(
+                                                        focusColor: ColorRes.color305EBE,
+                                                        hoverColor: ColorRes.color305EBE,
+                                                        splashColor:
+                                                            ColorRes.color305EBE.withOpacity(0.1),
+                                                        overlayColor: MaterialStateProperty.all(
+                                                            ColorRes.color305EBE.withOpacity(0.1)),
+                                                        onTap: () {
+                                                          controller.onTapFolder(
+                                                            id:controller.getBoardModel.data![index].id.toString()
+                                                          );
+                                                        },
+                                                        child: Container(
+                                                          height: Get.height * 0.055,
+                                                          color: Colors.transparent,
+                                                          padding: EdgeInsets.only(
+                                                            left: Get.width * 0.12,
+                                                          ),
+                                                          child: Row(
+                                                            children: [
+                                                              InkWell(
+                                                                onTap: () {},
+                                                                focusColor: ColorRes.color305EBE,
+                                                                hoverColor: ColorRes.color305EBE,
+                                                                splashColor: ColorRes.color305EBE
+                                                                    .withOpacity(0.1),
+                                                                overlayColor:
+                                                                    MaterialStateProperty.all(ColorRes
+                                                                        .color305EBE
+                                                                        .withOpacity(0.1)),
+                                                                child: Icon(
+                                                                  Icons.arrow_right,
+                                                                  color:
+                                                                      ColorRes.black.withOpacity(0.7),
+                                                                ),
+                                                              ),
+                                                              SizedBox(
+                                                                width: Get.width * 0.03,
+                                                              ),
+                                                              SizedBox(
+                                                                height: 20,
+                                                                width: 20,
+                                                                child: Image.asset(
+                                                                  AssetRes.myfolderIcon,
+                                                                ),
+                                                              ),
+                                                              SizedBox(
+                                                                width: Get.width * 0.06,
+                                                              ),
+                                                              Text(
+                                                                StringRes.myFolder.tr.toString(),
+                                                                style: appTextStyle(
+                                                                    fontSize: 14,
+                                                                    weight: FontWeight.w500,
+                                                                    color: ColorRes.black
+                                                                        .withOpacity(0.7)),
+                                                              ),
+                                                            ],
+                                                          ),
+                                                        ),
+                                                      )
+                                                    : const SizedBox(),
+                                              ],
+                                            ),
+                                          ),
+                                        );
+                                      })
+                                      :SizedBox(),
                                 ),
-                              ),
-                              Row(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                mainAxisAlignment: MainAxisAlignment.center,
+                              ),*/
+                                  ]),
+const SizedBox(height: 50,),
+                              Column(
                                 children: [
-                                  Text(StringRes.inspire.tr,style: GoogleFonts.inder(
-                                    color: ColorRes.black,
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w500,
-                                  ),),
-                                  const SizedBox(width: 5,),
-                                  Text(StringRes.filuet.tr,style: GoogleFonts.inder(
-                                    color: ColorRes.black,
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.bold,
-                                  ),),
+                               /*   Padding(
+                                    padding: const EdgeInsets.only(right: 30.0),
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.end,
+                                      children: [
+                                        InkWell(
+                                          onTap: () {},
+                                          child: Icon(
+                                            Icons.telegram,
+                                            color: ColorRes.black,
+                                            size: 30,
+                                          ),
+                                        ),
+                                        const SizedBox(
+                                          width: 10,
+                                        ),
+                                        InkWell(
+                                          onTap: () {},
+                                          child: Container(
+                                            height: 25,
+                                            width: 25,
+                                            decoration: BoxDecoration(
+                                              color: ColorRes.black,
+                                              shape: BoxShape.circle,
+                                            ),
+                                            child: Icon(
+                                              Icons.cleaning_services,
+                                              color: ColorRes.white,
+                                              size: 10,
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),*/
+                                  Row(
+                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Text(
+                                        StringRes.inspire.tr,
+                                        style: GoogleFonts.inder(
+                                          color: ColorRes.black,
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w500,
+                                        ),
+                                      ),
+                                      const SizedBox(
+                                        width: 5,
+                                      ),
+                                      // Text(
+                                      //   StringRes.filuet.tr,
+                                      //   style: GoogleFonts.inder(
+                                      //     color: ColorRes.black,
+                                      //     fontSize: 18,
+                                      //     fontWeight: FontWeight.bold,
+                                      //   ),
+                                      // ),
+                                      Image.asset(AssetRes.filuetLogo,scale: 8,),
+                                    ],
+                                  ),
+                                  const SizedBox(
+                                    height: 40,
+                                  ),
                                 ],
-                              ),
-                              const SizedBox(height: 40,),
+                              )
                             ],
-                          )
-                        ],
+                          ),
+                        ),
                       ),
                       (boardsController.isMore == true)
                           ? Stack(
@@ -687,48 +833,67 @@ class BoardsScreen extends StatelessWidget {
     );
   }
 
-
   void showDialogs(BuildContext context) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
-        return SimpleDialog(contentPadding: EdgeInsets.symmetric(horizontal: 20),children: [
-          SizedBox(height: Get.height * 0.04,),
-
-          Text(StringRes.areYouSureExit.tr,textAlign: TextAlign.center,style: appTextStyle(weight: FontWeight.w500,fontSize: 20,color: Colors.black),),
-          SizedBox(height: Get.height * 0.03,),
-          Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,children: [
-            Expanded(
-              child: CommonButton(
-                  onTap: () {
-                   exit(0);
-                  },
-                  text: StringRes.yes.tr),
+        return SimpleDialog(
+          contentPadding: const EdgeInsets.symmetric(horizontal: 20),
+          children: [
+            SizedBox(
+              height: Get.height * 0.04,
             ),
-            SizedBox(width: Get.width * 0.01,),
-            Expanded(
-              child: GestureDetector(
-                onTap: () {
-                  Get.back();
-                },
-                child: Container(
-                  alignment: Alignment.center,
-                  height:  50,
-                  width: 234,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(5),
-                      border: Border.all(color: ColorRes.color305EBE)
-                  ),
-                  child: Text(
-                    StringRes.no.tr,
-                    style: appTextStyle(color: ColorRes.color305EBE,fontSize: 18, weight: FontWeight.w600),
+            Text(
+              StringRes.areYouSureExit.tr,
+              textAlign: TextAlign.center,
+              style: appTextStyle(
+                  weight: FontWeight.w500, fontSize: 20, color: Colors.black),
+            ),
+            SizedBox(
+              height: Get.height * 0.03,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Expanded(
+                  child: CommonButton(
+                      onTap: () {
+                        exit(0);
+                      },
+                      text: StringRes.yes.tr),
+                ),
+                SizedBox(
+                  width: Get.width * 0.01,
+                ),
+                Expanded(
+                  child: GestureDetector(
+                    onTap: () {
+                      Get.back();
+                    },
+                    child: Container(
+                      alignment: Alignment.center,
+                      height: 50,
+                      width: 234,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(5),
+                          border: Border.all(color: ColorRes.color305EBE)),
+                      child: Text(
+                        StringRes.no.tr,
+                        style: appTextStyle(
+                            color: ColorRes.color305EBE,
+                            fontSize: 18,
+                            weight: FontWeight.w600),
+                      ),
+                    ),
                   ),
                 ),
-              ),
+              ],
             ),
-          ],),
-          SizedBox(height: Get.height * 0.04,),
-        ],);
+            SizedBox(
+              height: Get.height * 0.04,
+            ),
+          ],
+        );
       },
     );
   }

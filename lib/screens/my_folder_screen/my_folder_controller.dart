@@ -8,6 +8,7 @@ import 'package:boards_app/common/toast_msg.dart';
 import 'package:boards_app/screens/my_folder_screen/api/get_board_info.dart';
 import 'package:boards_app/screens/my_folder_screen/model/get_board_info_model.dart';
 import 'package:boards_app/services/pref_services.dart';
+import 'package:boards_app/services/sqlite_helper.dart';
 import 'package:boards_app/utils/asset_res.dart';
 import 'package:boards_app/utils/color_res.dart';
 import 'package:boards_app/utils/prefkeys.dart';
@@ -19,9 +20,12 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:http/http.dart' as http;
+import 'package:path_provider/path_provider.dart';
 import 'package:share_plus/share_plus.dart';
 
 import 'package:wc_flutter_share/wc_flutter_share.dart';
+
+import '../../utils/appstyle.dart';
 
 class MyFolderController extends GetxController {
 
@@ -64,7 +68,7 @@ class MyFolderController extends GetxController {
 
    checkImg = List.generate(getBoardInfoModel.data?.length ??0, (index) => false);
     isLike = List.generate(getBoardInfoModel.data?.length ?? 0, (index) => false);
-
+await init();
   update(['fldr']);
   }
   List<String> simg = [];
@@ -75,25 +79,25 @@ class MyFolderController extends GetxController {
   int selectedIndex = 0;
 
   List<String> drawerTitleList = [
-    StringRes.home.tr,
+   // StringRes.home.tr,
     StringRes.language.tr,
-    StringRes.viewImages.tr,
+  //  StringRes.viewImages.tr,
     StringRes.favourite.tr,
     StringRes.contactUs.tr,
-    StringRes.settings.tr,
+  //  StringRes.settings.tr,
    // StringRes.faq.tr,
-    StringRes.loginLogout.tr,
+  //  StringRes.loginLogout.tr,
   ];
 
   List<String> drawerImageList = [
-    AssetRes.homeIcon,
+    //AssetRes.homeIcon,
     AssetRes.languageIcon,
-    AssetRes.grid,
+  //  AssetRes.grid,
     AssetRes.FavouriteIcon,
     AssetRes.contactUs,
-    AssetRes.settingsIcon,
+   // AssetRes.settingsIcon,
  //   AssetRes.faqIcon,
-    AssetRes.loginIcon,
+   // AssetRes.loginIcon,
   ];
   List<bool> addSelectedImage = [];
 
@@ -136,9 +140,11 @@ onTapBack(){
     }
     update(['fldr']);
   }
-  onTapImage(){
+  onTapImage(index)async{
       isPageView = true;
-
+      await Future.delayed(Duration(seconds: 1),(){});
+pageController =PageController(initialPage: index);
+      selectedImage = getBoardInfoModel.data![index].image.toString();
     update(['fldr']);
   }
 
@@ -149,28 +155,35 @@ onTapBack(){
       {
 
     selectedImage = getBoardInfoModel.data![i].image.toString();
+        selectedIndex =  pageController.page!.round();
 
-    print(selectedImage);
+
 
       }
+    update(['fldr']);
   }
 
   tapBackwardButton(){
     if(pageController.page!.round() != getBoardInfoModel.data!.length - 1) {
+
       pageController.animateToPage(
           pageController.page!.round() +1, duration: const Duration(milliseconds: 500),
           curve: Curves.easeInOut);
+      selectedIndex =  pageController.page!.round();
     }
+    update(['fldr']);
   }
   tapForwardButton(){
     if(pageController.page!.round() != 0) {
       pageController.animateToPage(
           pageController.page!.round() -1, duration: const Duration(milliseconds: 500),
           curve: Curves.easeInOut);
+      selectedIndex =  pageController.page!.round();
     }
+    update(['fldr']);
   }
 
-  saveImage()async{
+  saveImage(context)async{
 
     if(getBoardInfoModel.data!=null && getBoardInfoModel.data!.length !=0) {
       loader.value = true;
@@ -185,6 +198,57 @@ onTapBack(){
         name: "ra",
       );
       loader.value = false;
+      showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return Theme(
+              data: ThemeData(dialogBackgroundColor: Colors.white),
+              child: AlertDialog(
+                title:  Text(
+                  "Success",
+                  style: appTextStyle(
+                      weight: FontWeight.w500, fontSize: 20, color: ColorRes.color305EBE),
+                ),
+                content:  Text(
+                  "Images Downloaded Successfully",
+                  style: appTextStyle(
+                      color: ColorRes.black,
+                      fontSize: 18,
+                      weight: FontWeight.w600),
+                ),
+                actions: <Widget>[
+
+                  ElevatedButton(
+                    style: ButtonStyle(
+                      shape: MaterialStateProperty.resolveWith<OutlinedBorder>(
+                            (Set<MaterialState> states) {
+                          return RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(100),
+                          );
+                        },
+                      ),
+                      side: MaterialStateProperty.all(
+                          const BorderSide(color: ColorRes.blue)),
+                      backgroundColor: MaterialStateProperty.all<Color>(
+                          Colors.white),
+                    ),
+                    onPressed: () {
+                      return Get.back();
+                    },
+                    child:  Text(
+                      "Okay",
+                      style: appTextStyle(
+                          color: ColorRes.color305EBE,
+                          fontSize: 18,
+                          weight: FontWeight.w600),
+                    ),
+                  ),
+
+                ],
+              ),
+            );
+          }
+      );
       selectedImage = null;
 
       // loader.value = true;
@@ -216,7 +280,7 @@ onTapBack(){
 
   }
 
-  Future<void> saveSelectedImages() async {
+  Future<void> saveSelectedImages(context) async {
     if (getBoardInfoModel.data != null && getBoardInfoModel.data!.length != 0) {
       loader.value = true;
 
@@ -245,7 +309,7 @@ onTapBack(){
 
 
       } catch (e) {
-        print("Error saving images: $e");
+
         Get.snackbar(
           "Error",
           "",
@@ -255,7 +319,63 @@ onTapBack(){
       }
 
       loader.value = false;
+      showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return Theme(
+              data: ThemeData(dialogBackgroundColor: Colors.white),
+              child: AlertDialog(
+                title:  Text(
+                  "Success",
+                  style: appTextStyle(
+                      weight: FontWeight.w500, fontSize: 20, color: ColorRes.color305EBE),
+                ),
+                content:  Text(
+                  "Images Downloaded Successfully",
+                  style: appTextStyle(
+                      color: ColorRes.black,
+                      fontSize: 18,
+                      weight: FontWeight.w600),
+                ),
+                actions: <Widget>[
 
+                  ElevatedButton(
+                    style: ButtonStyle(
+                      shape: MaterialStateProperty.resolveWith<OutlinedBorder>(
+                            (Set<MaterialState> states) {
+                          return RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(100),
+                          );
+                        },
+                      ),
+                      side: MaterialStateProperty.all(
+                          const BorderSide(color: ColorRes.blue)),
+                      backgroundColor: MaterialStateProperty.all<Color>(
+                          Colors.white),
+                    ),
+                    onPressed: () {
+                      return Get.back();
+                    },
+                    child:  Text(
+                      "Okay",
+                      style: appTextStyle(
+                          color: ColorRes.color305EBE,
+                          fontSize: 18,
+                          weight: FontWeight.w600),
+                    ),
+                  ),
+
+                ],
+              ),
+            );
+          }
+      );
+      // Get.snackbar(
+      //   "Success",
+      //   "Images Downloaded Successfully",
+      //   backgroundColor: Colors.green,
+      //   colorText: ColorRes.white,
+      // );
       // Reset selected images
       addSelectedImage = List.generate(getBoardInfoModel.data?.length ?? 0, (index) => false);
       update(['fldr']);
@@ -265,7 +385,7 @@ onTapBack(){
 
   onTapShare()async{
     loader.value = true;
-    print(selectedImage);
+
     if(getBoardInfoModel.data!=null && getBoardInfoModel.data!.length !=0) {
 
       try {
@@ -283,17 +403,17 @@ onTapBack(){
                     .last}',
             bytesOfFile: bytes);
       }catch(e){
-        print(e.toString());
+
         loader.value = false;
       }
      // Share.share(selectedImage ?? getBoardInfoModel.data![0].image.toString(),);
       selectedImage = null;
 loader.value= false;
-      print(selectedImage);
+
       update(['fldr']);
     }
   }
- /* Future<void> onSelectedTapShare() async {
+  Future<void> onSelectedTapShare() async {
     if (addSelectedImage.any((selected) => selected)) {
       loader.value = true;
 
@@ -310,7 +430,7 @@ loader.value= false;
           // Share the selected images
           await shareMultipleImages(selectedImages);
         } catch (e) {
-          print(e.toString());
+
         }
 
         loader.value = false;
@@ -339,7 +459,7 @@ loader.value= false;
         subject: 'Share Multiple Images Subject',
       );
     } catch (e) {
-      print('Error sharing images: $e');
+
     }
   }
 
@@ -355,7 +475,101 @@ loader.value= false;
     await file.writeAsBytes(bytes);
 
     return filePath;
-  }*/
+  }
+
+
+init() async {
+  isLike = List.generate(getBoardInfoModel.data?.length ?? 0, (index) => false);
+   var listLike =  await SqliteHelper.sqliteHelper.fetch();
+
+   if(getBoardInfoModel.data != null)
+     {
+       getBoardInfoModel.data!.forEach((e) {
+         if(listLike != null && listLike.length !=0)
+         {
+           listLike.forEach((element) {
+
+             if(element.imageId ==e.id.toString())
+               {
+                 isLike[getBoardInfoModel.data!.indexOf(e)] = true;
+               }
+           });
+         }
+       });
+     }
+update(['fldr']);
+}
+
+
+  likeUnlike(index){
+    var image =  getBoardInfoModel.data![index].image.toString();
+    var imageId =  getBoardInfoModel.data![index].id.toString();
+    if(isLike[index])
+      {
+
+
+        SqliteHelper.sqliteHelper.delete(imageID: imageId);
+        isLike[index] = false;
+      }
+    else
+      {
+        SqliteHelper.sqliteHelper.insertDb(imageID: imageId, imageUrl: image);
+        isLike[index] = true;
+      }
+  }
+  likeUnlikeList () async {
+
+
+List allIndex =[];
+List allIndexData =[];
+    if (getBoardInfoModel.data != null && getBoardInfoModel.data!.length != 0) {
+      loader.value = true;
+
+
+      for (int i = 0; i < addSelectedImage.length; i++) {
+        if (addSelectedImage[i]) {
+       allIndexData.add(i);
+        }
+
+        }
+      }
+
+
+    var data  = await SqliteHelper.sqliteHelper.fetch();
+
+
+    allIndexData.forEach((element) {
+
+      data.forEach((e) {
+        if(e.imageId == (getBoardInfoModel.data?[element].id.toString()  ?? ''))
+          {
+
+            allIndex.add(element);
+          }
+      });
+
+    });
+
+    allIndex.forEach((element) {
+      allIndexData.remove(element);
+    });
+allIndexData.forEach((element) {
+  SqliteHelper.sqliteHelper.insertDb(
+      imageID: getBoardInfoModel.data?[element].id.toString()  ?? '',
+      imageUrl: getBoardInfoModel.data?[element].image ?? '');
+  isLike[element] = true;
+});
+
+
+
+
+      loader.value = false;
+
+
+
+  }
+
+
   /*onSelectedTapShare() async {
     if(addSelectedImage.any((selected) => selected)){
 
@@ -385,7 +599,7 @@ loader.value= false;
           );
         }
       } catch (e) {
-        print(e.toString());
+
       }
 
       loader.value = false;

@@ -51,7 +51,7 @@ class SelectFlowScreen extends StatelessWidget {
                     ),
                     alignment: Alignment.center,
                     child: Text(
-                      StringRes.myBoards,
+                      StringRes.myBoards.tr,
                       style: appTextStyle(
                           color: controller.isBoard
                               ? ColorRes.white
@@ -76,7 +76,7 @@ class SelectFlowScreen extends StatelessWidget {
                   height: 30,
                 ),
                 Text(
-                  'Or',
+                  'Or'.tr,
                   style: appTextStyle(
                       color: ColorRes.black,
                       fontSize: 20,
@@ -108,7 +108,7 @@ class SelectFlowScreen extends StatelessWidget {
                     ),
                     alignment: Alignment.center,
                     child: Text(
-                      StringRes.myWallpaper,
+                      StringRes.myWallpaper.tr,
                       style: appTextStyle(
                           color: controller.isWallPaper
                               ? ColorRes.white

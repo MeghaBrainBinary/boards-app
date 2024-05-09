@@ -126,6 +126,8 @@ class AssetRes {
   static const backgroundImage = "${image}backgroundImage.png";
   static const DroverIcon = "${image}DroverIcon.png";
   static const appLogo = "${image}appLogo.png";
+  static const appNewLogo = "${image}app_new_logo.jpeg";
+  static const filuetLogo = "${image}filuet_logo.png";
   static const categoriesIcon = "${image}categoriesIcon.png";
   static const draverLikeIcon = "${image}draverLikeIcon.png";
   static const LogOutIcon = "${image}LogOutIcon.png";
