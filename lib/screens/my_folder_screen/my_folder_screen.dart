@@ -241,6 +241,7 @@ class _MyFolderScreenState extends State<MyFolderScreen> {
                                             ],
                                           )
                                         : const SizedBox(),
+                                    const SizedBox(height: 20,),
                                     (controller.isPageView &&
                                             !controller.isSelectedPageView)
                                         ? Container(
