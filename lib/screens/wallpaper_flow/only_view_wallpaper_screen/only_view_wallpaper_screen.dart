@@ -399,7 +399,7 @@ void showDialogOfAds(BuildContext context, imageLink) {
                   height: 50,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(8),
-                    border: Border.all(color: ColorRes.color305EBE),
+                    border: Border.all(color: ColorRes.appColor),
                   ),
                   child: Text(
                     'Cancel',

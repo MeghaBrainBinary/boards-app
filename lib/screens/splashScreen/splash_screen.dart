@@ -31,8 +31,8 @@ class _SplashScreenState extends State<SplashScreen> {
        // Get.offAndToNamed(AppRoutes.introPage);
         Get.offAndToNamed( AppRoutes.languagePage);
       } else {
-        Get.to(() => SelectFlowScreen(language: ''));
-        // Get.offAndToNamed(AppRoutes.boardsPage);
+       // Get.to(() => SelectFlowScreen(language: ''));
+         Get.offAndToNamed(AppRoutes.boardsPage);
       }
     });
   }

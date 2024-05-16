@@ -116,7 +116,7 @@ class HomeScreen extends StatelessWidget {
                                           decoration: BoxDecoration(
                                               color: homeController
                                                       .aBoolList[index]
-                                                  ? ColorRes.color305EBE
+                                                  ? ColorRes.appColor
                                                   : Colors.transparent,
                                               borderRadius:
                                                   BorderRadius.circular(17)),
@@ -281,7 +281,7 @@ class HomeScreen extends StatelessWidget {
                 alignment: Alignment.bottomCenter,
                 padding: EdgeInsets.only(left: 20, bottom: 30),
                 decoration: BoxDecoration(
-                  color: ColorRes.color305EBE,
+                  color: ColorRes.appColor,
                   borderRadius: BorderRadius.only(
                     bottomRight: Radius.circular(33),
                     bottomLeft: Radius.circular(33),
@@ -367,7 +367,7 @@ class HomeScreen extends StatelessWidget {
                     },
                     leading: Image.asset(
                       homeController.drawerImageList[index],
-                      color: ColorRes.color305EBE,
+                      color: ColorRes.appColor,
                       height: 23,
                       width: 23,
                       fit: BoxFit.contain,
@@ -528,7 +528,7 @@ class HomeScreen extends StatelessWidget {
                           height: Get.height * 0.08,
                           width: Get.width * 0.45,
                           decoration: BoxDecoration(
-                              color: ColorRes.color305EBE,
+                              color: ColorRes.appColor,
                               borderRadius: BorderRadius.circular(40)),
                           child: Text(
                             StringRes.Yes,

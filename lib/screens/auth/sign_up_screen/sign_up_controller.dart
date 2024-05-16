@@ -65,8 +65,8 @@ class SignUpController extends GetxController {
         () async {
           PrefService.setValue(PrefKeys.login, true);
 
-          // Get.offAndToNamed(AppRoutes.boardsPage);
-          Get.offAll(() => SelectFlowScreen(language: ''));
+           Get.offAndToNamed(AppRoutes.boardsPage);
+          //Get.offAll(() => SelectFlowScreen(language: ''));
 
           await userAddTOFirebase(email);
         },

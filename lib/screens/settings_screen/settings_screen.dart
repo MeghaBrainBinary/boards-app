@@ -108,11 +108,11 @@ class SettingsScreen extends StatelessWidget {
                   width: 234,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(5),
-                    border: Border.all(color: ColorRes.color305EBE)
+                    border: Border.all(color: ColorRes.appColor)
                   ),
                   child: Text(
                     StringRes.no.tr,
-                    style: appTextStyle(color: ColorRes.color305EBE,fontSize: 18, weight: FontWeight.w600),
+                    style: appTextStyle(color: ColorRes.appColor,fontSize: 18, weight: FontWeight.w600),
                   ),
                 ),
               ),

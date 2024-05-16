@@ -44,7 +44,7 @@ class SignUpScreen extends StatelessWidget {
                           style: appTextStyle(
                               fontSize: 30,
                               weight: FontWeight.w600,
-                              color: ColorRes.color305EBE),
+                              color: ColorRes.appColor),
                         ),
                       ),
                       SizedBox(
@@ -203,7 +203,7 @@ class SignUpScreen extends StatelessWidget {
                               style:appTextStyle(
                                   fontSize: 15,
                                   weight: FontWeight.w600,
-                                  color: ColorRes.color305EBE),
+                                  color: ColorRes.appColor),
                             ),
                           ),
                         ],

@@ -72,7 +72,7 @@ class _MyFolderScreenState extends State<IntroScreen> {
                       dotHeight: 04.0,
                       paintStyle: PaintingStyle.fill,
                       dotColor: ColorRes.colorBEBEBE,
-                      activeDotColor: ColorRes.color305EBE,
+                      activeDotColor: ColorRes.appColor,
                     ),
                   ),
                   SizedBox(

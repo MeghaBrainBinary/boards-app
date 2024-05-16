@@ -126,7 +126,7 @@ class AssetRes {
   static const backgroundImage = "${image}backgroundImage.png";
   static const DroverIcon = "${image}DroverIcon.png";
   static const appLogo = "${image}appLogo.png";
-  static const appNewLogo = "${image}app_new_logo.jpeg";
+  static const appNewLogo = "${image}app_new_logo.png";
   static const filuetLogo = "${image}filuet_logo.png";
   static const categoriesIcon = "${image}categoriesIcon.png";
   static const draverLikeIcon = "${image}draverLikeIcon.png";
@@ -152,4 +152,8 @@ class AssetRes {
   static const jio = "${image}jio.png";
   static const pubg = "${image}pubg.jpg";
   static const downLoad = "${image}download.jpg";
+  static const english = "${image}english.png";
+  static const estonian = "${image}estonian.png";
+  static const latvin = "${image}latvin.png";
+  static const lithunian = "${image}lithunian.png";
 }

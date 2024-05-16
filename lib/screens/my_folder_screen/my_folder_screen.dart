@@ -153,14 +153,14 @@ class _MyFolderScreenState extends State<MyFolderScreen> {
                                           ? Text(
                                               StringRes.select.tr,
                                               style: appTextStyle(
-                                                  color: ColorRes.color305EBE,
+                                                  color: ColorRes.appColor,
                                                   fontSize: 15,
                                                   weight: FontWeight.w500),
                                             )
                                           : Text(
                                               StringRes.cancel.tr,
                                               style: appTextStyle(
-                                                  color: ColorRes.color305EBE,
+                                                  color: ColorRes.appColor,
                                                   fontSize: 15,
                                                   weight: FontWeight.w500),
                                             ),
@@ -195,7 +195,7 @@ class _MyFolderScreenState extends State<MyFolderScreen> {
                                           child: Text(
                                             StringRes.select.tr,
                                             style: appTextStyle(
-                                                color: ColorRes.color305EBE,
+                                                color: ColorRes.appColor,
                                                 fontSize: 15,
                                                 weight: FontWeight.w500),
                                           ))
@@ -233,7 +233,7 @@ class _MyFolderScreenState extends State<MyFolderScreen> {
                                                     StringRes.cancel.tr,
                                                     style: appTextStyle(
                                                         color: ColorRes
-                                                            .color305EBE,
+                                                            .appColor,
                                                         fontSize: 15,
                                                         weight:
                                                             FontWeight.w500),
@@ -406,7 +406,7 @@ class _MyFolderScreenState extends State<MyFolderScreen> {
                                                                                 scale: 0.6,
                                                                                 child: Icon(
                                                                                   Icons.check_rounded,
-                                                                                  color: ColorRes.color305EBE,
+                                                                                  color: ColorRes.appColor,
                                                                                 ),
                                                                               ),
                                                                             ),
@@ -477,9 +477,9 @@ class _MyFolderScreenState extends State<MyFolderScreen> {
                                                     : const EdgeInsets.all(2),
                                                 decoration: BoxDecoration(
                                                   color:myFolderController.checkImg[index]==true?
-                                                  ColorRes.color305EBE:Colors.transparent,
+                                                  ColorRes.appColor:Colors.transparent,
                                                   border: Border.all(color:myFolderController.checkImg[index]==true?
-                                                  ColorRes.color305EBE:Colors.white ),
+                                                  ColorRes.appColor:Colors.white ),
                                                   borderRadius:
                                                   BorderRadius.circular(5),
                                                 ),
@@ -531,7 +531,7 @@ class _MyFolderScreenState extends State<MyFolderScreen> {
                                                   child: Icon(
                                                     Icons.check_rounded,
                                                     color: ColorRes
-                                                        .color305EBE,
+                                                        .appColor,
                                                   ),
                                                 ),
                                               ),
@@ -605,7 +605,7 @@ class _MyFolderScreenState extends State<MyFolderScreen> {
                                                                       color: myFolderController.checkImg[index] ==
                                                                               true
                                                                           ? ColorRes
-                                                                              .color305EBE
+                                                                              .appColor
                                                                           : Colors
                                                                               .transparent,
                                                                       border:
@@ -613,7 +613,7 @@ class _MyFolderScreenState extends State<MyFolderScreen> {
                                                                               .all(
                                                                         color: myFolderController.addSelectedImage[index] ==
                                                                                 true
-                                                                            ? ColorRes.color305EBE
+                                                                            ? ColorRes.appColor
                                                                             : Colors.white,
                                                                       ),
                                                                       borderRadius:
@@ -703,7 +703,7 @@ class _MyFolderScreenState extends State<MyFolderScreen> {
                                                                                   scale: 0.6,
                                                                                   child: Icon(
                                                                                     Icons.check_rounded,
-                                                                                    color: ColorRes.color305EBE,
+                                                                                    color: ColorRes.appColor,
                                                                                   ),
                                                                                 ),
                                                                               ),
@@ -931,7 +931,7 @@ class _MyFolderScreenState extends State<MyFolderScreen> {
                                                                                   scale: 0.6,
                                                                                   child: Icon(
                                                                                     Icons.check_rounded,
-                                                                                    color: ColorRes.color305EBE,
+                                                                                    color: ColorRes.appColor,
                                                                                   ),
                                                                                 ),
                                                                               ),
@@ -1006,7 +1006,7 @@ class _MyFolderScreenState extends State<MyFolderScreen> {
                                         width: 100,
                                         height: 50,
                                         decoration: BoxDecoration(
-                                          color: ColorRes.color305EBE,
+                                          color: ColorRes.appColor,
                                           borderRadius:
                                           BorderRadius.circular(25),
                                         ),
@@ -1068,7 +1068,7 @@ class _MyFolderScreenState extends State<MyFolderScreen> {
                                         width: 100,
                                         height: 50,
                                         decoration: BoxDecoration(
-                                          color: ColorRes.color305EBE,
+                                          color: ColorRes.appColor,
                                           borderRadius:
                                           BorderRadius.circular(25),
                                         ),
@@ -1157,7 +1157,7 @@ class _MyFolderScreenState extends State<MyFolderScreen> {
                                         width: 100,
                                         height: 50,
                                         decoration: BoxDecoration(
-                                          color: ColorRes.color305EBE,
+                                          color: ColorRes.appColor,
                                           borderRadius:
                                           BorderRadius.circular(25),
                                         ),
@@ -1270,7 +1270,7 @@ class _MyFolderScreenState extends State<MyFolderScreen> {
                 //   height: Get.height * 0.08,
                 // ),
                 const SizedBox(
-                    height: 20
+                    height: 50
                 ),
                 // Center(
                 //     child:
@@ -1326,6 +1326,7 @@ class _MyFolderScreenState extends State<MyFolderScreen> {
                           child: Image.asset(
                             myFolderController.drawerImageList[index],
                             scale: 4,
+                            color: ColorRes.appColor,
                           ),
                         ),
                         title: Text(myFolderController.drawerTitleList[index]),
@@ -1413,12 +1414,13 @@ class _MyFolderScreenState extends State<MyFolderScreen> {
             },
             child: Container(
                 // alignment: Alignment.centerRight,
-                // color: ColorRes.color305EBE,
+                // color: ColorRes.appColor,
                 // height: 25,
                 // width: 25,
                 child: Image.asset(
               AssetRes.moreOption,
               scale: 3,
+                  color: ColorRes.appColor,
             )),
           ),
         ],
@@ -1637,11 +1639,11 @@ void showDialogs(BuildContext context) {
                     width: 234,
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(5),
-                        border: Border.all(color: ColorRes.color305EBE)),
+                        border: Border.all(color: ColorRes.appColor)),
                     child: Text(
                       StringRes.no.tr,
                       style: appTextStyle(
-                          color: ColorRes.color305EBE,
+                          color: ColorRes.appColor,
                           fontSize: 18,
                           weight: FontWeight.w600),
                     ),

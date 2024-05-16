@@ -42,7 +42,7 @@ class LanguageScreen22 extends StatelessWidget {
                     //         child: Text(
                     //           StringRes.cancel.tr,
                     //           style: appTextStyle(
-                    //               color: ColorRes.color305EBE,
+                    //               color: ColorRes.appColor,
                     //               fontSize: 12,
                     //               weight: FontWeight.w500),
                     //         ),
@@ -64,7 +64,7 @@ class LanguageScreen22 extends StatelessWidget {
                     //       child: Text(
                     //         StringRes.cancel.tr,
                     //         style: appTextStyle(
-                    //             color: ColorRes.color305EBE,
+                    //             color: ColorRes.appColor,
                     //             fontSize: 12,
                     //             weight: FontWeight.w500),
                     //       ),
@@ -75,39 +75,39 @@ class LanguageScreen22 extends StatelessWidget {
                     SizedBox(
                       height: Get.height * 0.0569,
                     ),
-                    Container(
-                      height: Get.height * 0.065,
-                      width: Get.width,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(5),
-                          border: Border.all(color: ColorRes.colorD9D9D9)),
-                      child: appTextField(
-                        controller: languageController.searchController,
-                        onChanged: (value) {
-                          languageController
-                              .onSearch(value.toString().toLowerCase());
-                        },
-                        prefixIcon: Padding(
-                          padding: const EdgeInsets.only(left: 10),
-                          child: Transform.scale(
-                            scale: 0.4,
-                            child: Image.asset(
-                              AssetRes.searchIcon,
-                              height: 15,
-                            ),
-                          ),
-                        ),
-                        hintText: StringRes.searchLanguage.tr,
-                        hintStyle: appTextStyle(
-                          color: ColorRes.black.withOpacity(0.3),
-                          fontSize: 13,
-                          weight: FontWeight.w400,
-                        ),
-                      ),
-                    ),
-                    SizedBox(
-                      height: Get.height * 0.05,
-                    ),
+                    // Container(
+                    //   height: Get.height * 0.065,
+                    //   width: Get.width,
+                    //   decoration: BoxDecoration(
+                    //       borderRadius: BorderRadius.circular(5),
+                    //       border: Border.all(color: ColorRes.colorD9D9D9)),
+                    //   child: appTextField(
+                    //     controller: languageController.searchController,
+                    //     onChanged: (value) {
+                    //       languageController
+                    //           .onSearch(value.toString().toLowerCase());
+                    //     },
+                    //     prefixIcon: Padding(
+                    //       padding: const EdgeInsets.only(left: 10),
+                    //       child: Transform.scale(
+                    //         scale: 0.4,
+                    //         child: Image.asset(
+                    //           AssetRes.searchIcon,
+                    //           height: 15,
+                    //         ),
+                    //       ),
+                    //     ),
+                    //     hintText: StringRes.searchLanguage.tr,
+                    //     hintStyle: appTextStyle(
+                    //       color: ColorRes.black.withOpacity(0.3),
+                    //       fontSize: 13,
+                    //       weight: FontWeight.w400,
+                    //     ),
+                    //   ),
+                    // ),
+                    // SizedBox(
+                    //   height: Get.height * 0.05,
+                    // ),
                     GetBuilder<Language2Controller2>(
                         id: "lng",
                         builder: (con) {
@@ -127,24 +127,37 @@ class LanguageScreen22 extends StatelessWidget {
                                               onTap: () {
                                                 languageController.onTapLanguage(
                                                     languageController
-                                                        .filterList[index],
+                                                        .filterList[index]['name'],
                                                 index
                                                 );
                                               },
                                               child: Row(
                                                 mainAxisAlignment:
-                                                    MainAxisAlignment.start,
+                                                    MainAxisAlignment.center,
                                                 children: [
-                                                  SizedBox(
-                                                      height: Get.height * 0.041,
-                                                      child: Text(
-                                                        languageController
-                                                            .filterList[index],
-                                                        style: const TextStyle(
-                                                            fontSize: 14,
-                                                            fontWeight:
-                                                                FontWeight.w500),
-                                                      )),
+                                                  Container(
+                                                    height: 25,
+                                                    width: 25,
+                                                    decoration: BoxDecoration(
+                                                      shape:BoxShape.circle,
+                                                        image: DecorationImage(
+                                                            image: AssetImage(
+                                                                languageController.filterList[index]['image']
+                                                            ),
+                                                          fit: BoxFit.cover
+
+                                                        )
+                                                    ),
+                                                  ),
+                                                  const SizedBox(width: 20,),
+                                                  Text(
+                                                    languageController
+                                                        .filterList[index]['name'],
+                                                    style: const TextStyle(
+                                                        fontSize: 14,
+                                                        fontWeight:
+                                                            FontWeight.w500),
+                                                  ),
                                                   const Spacer(),
                                                   Column(
                                                     mainAxisAlignment:
@@ -159,7 +172,8 @@ class LanguageScreen22 extends StatelessWidget {
                                                                   0.03908,
                                                               child: Image.asset(
                                                                   AssetRes
-                                                                      .aerrowIcon),
+                                                                      .aerrowIcon,
+                                                              color: ColorRes.appColor,),
                                                             )
                                                           : const SizedBox(),
                                                     ],
@@ -184,22 +198,35 @@ class LanguageScreen22 extends StatelessWidget {
                                               onTap: () {
                                                 languageController.onTapLanguage(
                                                     languageController
-                                                        .language[index],index);
+                                                        .language[index]['name'],index);
                                               },
                                               child: Row(
                                                 mainAxisAlignment:
-                                                    MainAxisAlignment.start,
+                                                    MainAxisAlignment.center,
                                                 children: [
-                                                  SizedBox(
-                                                      height: Get.height * 0.041,
-                                                      child: Text(
-                                                        languageController
-                                                            .language[index],
-                                                        style: const TextStyle(
-                                                            fontSize: 14,
-                                                            fontWeight:
-                                                                FontWeight.w500),
-                                                      )),
+                                                  Container(
+                                                    height: 25,
+                                                    width: 25,
+                                                    decoration: BoxDecoration(
+                                                        shape:BoxShape.circle,
+                                                        image: DecorationImage(
+                                                            image: AssetImage(
+                                                                languageController.language[index]['image']
+                                                            ),
+                                                            fit: BoxFit.cover
+
+                                                        )
+                                                    ),
+                                                  ),
+                                                  const SizedBox(width: 20,),
+                                                  Text(
+                                                    languageController
+                                                        .language[index]['name'],
+                                                    style: const TextStyle(
+                                                        fontSize: 14,
+                                                        fontWeight:
+                                                            FontWeight.w500),
+                                                  ),
                                                   const Spacer(),
                                                   Column(
                                                     mainAxisAlignment:
@@ -214,7 +241,8 @@ class LanguageScreen22 extends StatelessWidget {
                                                                   0.03908,
                                                               child: Image.asset(
                                                                   AssetRes
-                                                                      .aerrowIcon),
+                                                                      .aerrowIcon,
+                                                              color:  ColorRes.appColor,),
                                                             )
                                                           : const SizedBox(),
                                                     ],
@@ -241,7 +269,7 @@ class LanguageScreen22 extends StatelessWidget {
                         height: 50,
                         width: 234,
                         decoration: BoxDecoration(
-                          color: ColorRes.color305EBE,
+                          color: ColorRes.appColor,
                           borderRadius: BorderRadius.circular(5),
                         ),
                         child: Text(

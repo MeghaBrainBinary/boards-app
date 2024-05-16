@@ -5,6 +5,7 @@ import 'package:boards_app/screens/boards_screen/model/get_board_model.dart';
 import 'package:boards_app/screens/boards_screen/model/get_board_model.dart';
 import 'package:boards_app/services/pref_services.dart';
 import 'package:boards_app/utils/approutes.dart';
+import 'package:boards_app/utils/asset_res.dart';
 import 'package:boards_app/utils/prefkeys.dart';
 import 'package:boards_app/utils/string_res.dart';
 import 'package:flutter/material.dart';
@@ -17,10 +18,22 @@ RxBool loader = false.obs;
 GetBoardModel getBoardModel  = GetBoardModel();
 List filterList =[];
   List language = [
-    StringRes.latvian,
-    StringRes.estonian,
-    StringRes.lithuanian,
-    StringRes.english,
+    {
+      "image":AssetRes.latvin,
+      "name":StringRes.latvian.tr,
+    },
+    {
+      "image":AssetRes.estonian,
+      "name":StringRes.estonian.tr,
+    },
+    {
+      "image":AssetRes.lithunian,
+      "name":StringRes.lithuanian.tr,
+    },
+    {
+      "image":AssetRes.english,
+      "name":StringRes.english.tr,
+    }
   ];
   List<bool> isCheck =[];
 
@@ -41,7 +54,7 @@ List filterList =[];
   onSearch(dynamic val) {
     filterList = [];
     language.forEach((element) {
-      if(element.toString().toLowerCase().contains(val.toString().toLowerCase()) )
+      if(element['name'].toString().toLowerCase().contains(val.toString().toLowerCase()) )
       {
         filterList.add(element);
        isCheck = List.generate(language.length, (index) => false);

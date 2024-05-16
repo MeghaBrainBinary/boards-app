@@ -6,6 +6,7 @@ import 'package:boards_app/screens/select_flow_screen/select_flow_controller.dar
 import 'package:boards_app/screens/select_flow_screen/select_flow_screen.dart';
 import 'package:boards_app/services/pref_services.dart';
 import 'package:boards_app/utils/approutes.dart';
+import 'package:boards_app/utils/asset_res.dart';
 import 'package:boards_app/utils/prefkeys.dart';
 import 'package:boards_app/utils/string_res.dart';
 import 'package:flutter/cupertino.dart';
@@ -20,10 +21,24 @@ class LanguageController extends GetxController {
   RxBool loader = false.obs;
 
   List lngs = [
-    StringRes.latvian.tr,
-    StringRes.estonian.tr,
-    StringRes.lithuanian.tr,
-    StringRes.english.tr,
+
+    {
+      "image":AssetRes.latvin,
+      "name":StringRes.latvian.tr,
+    },
+    {
+      "image":AssetRes.estonian,
+      "name":StringRes.estonian.tr,
+    },
+    {
+      "image":AssetRes.lithunian,
+      "name":StringRes.lithuanian.tr,
+    },
+    {
+      "image":AssetRes.english,
+      "name":StringRes.english.tr,
+    }
+
   ];
   List filterLst = [];
   List clrs = List.generate(4, (index) => false);
@@ -31,7 +46,7 @@ class LanguageController extends GetxController {
   onSearch(dynamic val) {
     filterLst = [];
     lngs.forEach((element) {
-      if (element
+      if (element['name']
           .toString()
           .toLowerCase()
           .contains(val.toString().toLowerCase())) {
@@ -87,10 +102,10 @@ class LanguageController extends GetxController {
     loader.value = false;
     PrefService.setValue(PrefKeys.isLanguage, true);
 
-    // Get.offAndToNamed(AppRoutes.boardsPage,arguments: languageCode);
-
-    Get.to(() => SelectFlowScreen(
-          language: languageCode,
-        ));
+    Get.offAndToNamed(AppRoutes.boardsPage,arguments: languageCode);
+    //
+    // Get.to(() => SelectFlowScreen(
+    //       language: languageCode,
+    //     ));
   }
 }

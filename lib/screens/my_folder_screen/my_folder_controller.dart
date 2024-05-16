@@ -207,7 +207,7 @@ pageController =PageController(initialPage: index);
                 title:  Text(
                   "Success",
                   style: appTextStyle(
-                      weight: FontWeight.w500, fontSize: 20, color: ColorRes.color305EBE),
+                      weight: FontWeight.w500, fontSize: 20, color: ColorRes.appColor),
                 ),
                 content:  Text(
                   "Images Downloaded Successfully",
@@ -238,7 +238,7 @@ pageController =PageController(initialPage: index);
                     child:  Text(
                       "Okay",
                       style: appTextStyle(
-                          color: ColorRes.color305EBE,
+                          color: ColorRes.appColor,
                           fontSize: 18,
                           weight: FontWeight.w600),
                     ),
@@ -328,7 +328,7 @@ pageController =PageController(initialPage: index);
                 title:  Text(
                   "Success",
                   style: appTextStyle(
-                      weight: FontWeight.w500, fontSize: 20, color: ColorRes.color305EBE),
+                      weight: FontWeight.w500, fontSize: 20, color: ColorRes.appColor),
                 ),
                 content:  Text(
                   "Images Downloaded Successfully",
@@ -359,7 +359,7 @@ pageController =PageController(initialPage: index);
                     child:  Text(
                       "Okay",
                       style: appTextStyle(
-                          color: ColorRes.color305EBE,
+                          color: ColorRes.appColor,
                           fontSize: 18,
                           weight: FontWeight.w600),
                     ),

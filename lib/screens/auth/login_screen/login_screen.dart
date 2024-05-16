@@ -46,7 +46,7 @@ class LoginScreen extends StatelessWidget {
                               style: appTextStyle(
                                   fontSize: 30,
                                   weight: FontWeight.w600,
-                                  color: ColorRes.color305EBE),
+                                  color: ColorRes.appColor),
                             ),
                           ),
                           SizedBox(
@@ -172,7 +172,7 @@ class LoginScreen extends StatelessWidget {
                                   style: appTextStyle(
                                       fontSize: 15,
                                       weight: FontWeight.w600,
-                                      color: ColorRes.color305EBE),
+                                      color: ColorRes.appColor),
                                 ),
                               ),
                             ],
@@ -233,7 +233,9 @@ class LoginScreen extends StatelessWidget {
             ),
             CommonButton(
                 onTap: () {
-                  Get.offAll(() => SelectFlowScreen(language: ''));
+                  Get.offAndToNamed(AppRoutes.boardsPage,
+                      arguments: '');
+                 // Get.offAll(() => SelectFlowScreen(language: ''));
                   // Get.offAndToNamed(AppRoutes.boardsPage);
                 },
                 text: StringRes.yes.tr),

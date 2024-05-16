@@ -40,7 +40,7 @@ class BoardsScreen extends StatelessWidget {
                 //   height: Get.height * 0.1,
                 // ),
                 const SizedBox(
-                  height: 20
+                  height: 50
                 ),
                 // Center(
                 //     child:
@@ -93,6 +93,7 @@ class BoardsScreen extends StatelessWidget {
                           padding: const EdgeInsets.only(top: 5.0),
                           child: Image.asset(
                             boardsController.drawerImageList[index],
+                            color: ColorRes.appColor,
                             scale: 4,
                           ),
                         ),
@@ -149,6 +150,7 @@ class BoardsScreen extends StatelessWidget {
                                   //     ),
                                   //   ),
                                   // ),
+                                  const SizedBox(height: 50,),
                                   Padding(
                                     padding: const EdgeInsets.only(right: 20.0),
                                     child: Align(
@@ -160,6 +162,8 @@ class BoardsScreen extends StatelessWidget {
                                           const SizedBox(
                                             height:6,
                                           ),
+                                          const SizedBox(height: 20,),
+
                                           InkWell(
                                             onTap: () {
                                               // myFolderController.onTapMore();
@@ -167,12 +171,13 @@ class BoardsScreen extends StatelessWidget {
                                             },
                                             child: Container(
                                               // alignment: Alignment.centerRight,
-                                              // color: ColorRes.color305EBE,
+                                              // color: ColorRes.appColor,
                                               // height: 25,
                                               // width: 25,
                                                 child: Image.asset(
                                                   AssetRes.moreOption,
                                                   scale: 3,
+                                                  color: ColorRes.appColor,
                                                 )),
                                           ),
                                         ],
@@ -219,7 +224,7 @@ class BoardsScreen extends StatelessWidget {
                                           },
                                           child: Container(
                                             // alignment: Alignment.centerRight,
-                                            // color: ColorRes.color305EBE,
+                                            // color: ColorRes.appColor,
                                             // height: 25,
                                             // width: 25,
                                             child: const Icon(
@@ -371,16 +376,16 @@ class BoardsScreen extends StatelessWidget {
                                                           children: List.generate(controller.getBoardModel.data![index].sub_board!.length, (i){
                                                             return InkWell(
                                                               focusColor: ColorRes
-                                                                  .color305EBE,
+                                                                  .appColor,
                                                               hoverColor: ColorRes
-                                                                  .color305EBE,
+                                                                  .appColor,
                                                               splashColor: ColorRes
-                                                                  .color305EBE
+                                                                  .appColor
                                                                   .withOpacity(0.1),
                                                               overlayColor:
                                                               MaterialStateProperty
                                                                   .all(ColorRes
-                                                                  .color305EBE
+                                                                  .appColor
                                                                   .withOpacity(
                                                                   0.1)),
                                                               onTap: () {
@@ -422,16 +427,16 @@ class BoardsScreen extends StatelessWidget {
                                                                       onTap: () {},
                                                                       focusColor:
                                                                       ColorRes
-                                                                          .color305EBE,
+                                                                          .appColor,
                                                                       hoverColor:
                                                                       ColorRes
-                                                                          .color305EBE,
+                                                                          .appColor,
                                                                       splashColor: ColorRes
-                                                                          .color305EBE
+                                                                          .appColor
                                                                           .withOpacity(
                                                                           0.1),
                                                                       overlayColor: MaterialStateProperty.all(ColorRes
-                                                                          .color305EBE
+                                                                          .appColor
                                                                           .withOpacity(
                                                                           0.1)),
                                                                       child: Icon(
@@ -490,18 +495,18 @@ class BoardsScreen extends StatelessWidget {
                                           : SizedBox(),
                                     ),
                                   ),*/
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 20),
-                                    child: Text(
-                                      StringRes.myBoards.tr,
-                                      style: GoogleFonts.inder(
-                                        color: ColorRes.black,
-                                        fontSize: 23,
-                                        fontWeight: FontWeight.w600,
-                                      ),
-                                    ),
-                                  ),
+                                  // Padding(
+                                  //   padding: const EdgeInsets.symmetric(
+                                  //       horizontal: 20),
+                                  //   child: Text(
+                                  //     StringRes.myBoards.tr,
+                                  //     style: GoogleFonts.inder(
+                                  //       color: ColorRes.black,
+                                  //       fontSize: 23,
+                                  //       fontWeight: FontWeight.w600,
+                                  //     ),
+                                  //   ),
+                                  // ),
                                   const SizedBox(
                                     height: 10,
                                   ),
@@ -622,12 +627,12 @@ class BoardsScreen extends StatelessWidget {
                                               ),
                                               (controller.isIcons[index] == true)
                                                   ? InkWell(
-                                                      focusColor: ColorRes.color305EBE,
-                                                      hoverColor: ColorRes.color305EBE,
+                                                      focusColor: ColorRes.appColor,
+                                                      hoverColor: ColorRes.appColor,
                                                       splashColor:
-                                                          ColorRes.color305EBE.withOpacity(0.1),
+                                                          ColorRes.appColor.withOpacity(0.1),
                                                       overlayColor: MaterialStateProperty.all(
-                                                          ColorRes.color305EBE.withOpacity(0.1)),
+                                                          ColorRes.appColor.withOpacity(0.1)),
                                                       onTap: () {
                                                         controller.onTapFolder(
                                                           id:controller.getBoardModel.data![index].id.toString()
@@ -643,13 +648,13 @@ class BoardsScreen extends StatelessWidget {
                                                           children: [
                                                             InkWell(
                                                               onTap: () {},
-                                                              focusColor: ColorRes.color305EBE,
-                                                              hoverColor: ColorRes.color305EBE,
-                                                              splashColor: ColorRes.color305EBE
+                                                              focusColor: ColorRes.appColor,
+                                                              hoverColor: ColorRes.appColor,
+                                                              splashColor: ColorRes.appColor
                                                                   .withOpacity(0.1),
                                                               overlayColor:
                                                                   MaterialStateProperty.all(ColorRes
-                                                                      .color305EBE
+                                                                      .appColor
                                                                       .withOpacity(0.1)),
                                                               child: Icon(
                                                                 Icons.arrow_right,
@@ -875,11 +880,11 @@ const Spacer(),
                       width: 234,
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(5),
-                          border: Border.all(color: ColorRes.color305EBE)),
+                          border: Border.all(color: ColorRes.appColor)),
                       child: Text(
                         StringRes.no.tr,
                         style: appTextStyle(
-                            color: ColorRes.color305EBE,
+                            color: ColorRes.appColor,
                             fontSize: 18,
                             weight: FontWeight.w600),
                       ),

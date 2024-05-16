@@ -15,7 +15,7 @@ Widget bottomNavigationBar(BuildContext context) {
       borderRadius: BorderRadius.circular(30),
       boxShadow: [
         BoxShadow(
-            color: ColorRes.color305EBE.withOpacity(
+            color: ColorRes.appColor.withOpacity(
               0.1,
             ),
             blurRadius: 20,
@@ -39,7 +39,7 @@ Widget bottomNavigationBar(BuildContext context) {
                       ? AssetRes.homeFilled
                       : AssetRes.home,
                   color: (dashBoardController.selectedItem.value == 0)
-                      ? ColorRes.color305EBE
+                      ? ColorRes.appColor
                       : ColorRes.black,
                 ),
               )),
@@ -58,7 +58,7 @@ Widget bottomNavigationBar(BuildContext context) {
                       ? AssetRes.categoryFilled
                       : AssetRes.category,
                   color: (dashBoardController.selectedItem.value == 1)
-                      ? ColorRes.color305EBE
+                      ? ColorRes.appColor
                       : ColorRes.black,
                 ),
               )),
@@ -77,7 +77,7 @@ Widget bottomNavigationBar(BuildContext context) {
                       ? AssetRes.likeFilled
                       : AssetRes.like,
                   color: (dashBoardController.selectedItem.value == 2)
-                      ? ColorRes.color305EBE
+                      ? ColorRes.appColor
                       : ColorRes.black,
                 ),
               )),

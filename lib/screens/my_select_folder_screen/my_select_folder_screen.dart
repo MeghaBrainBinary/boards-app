@@ -61,7 +61,7 @@ class MySelectFolderScreen extends StatelessWidget {
                                   GestureDetector(onTap: () {
                                     mySelectFolderController.addSelectedImage = List.generate( FolderData?.length ?? 0, (index) => false);
                                     controller.update(['fldr']);
-                                  },child: Text(StringRes.cancel,style: appTextStyle(color: ColorRes.color305EBE,fontSize: 15,weight: FontWeight.w500),)),
+                                  },child: Text(StringRes.cancel,style: appTextStyle(color: ColorRes.appColor,fontSize: 15,weight: FontWeight.w500),)),
                                 ],
                               ),
                               SizedBox(
@@ -104,9 +104,9 @@ class MySelectFolderScreen extends StatelessWidget {
                                                           : const EdgeInsets.all(2),
                                                       decoration: BoxDecoration(
                                                         color:myFolderController.checkImg[index]==true?
-                                                        ColorRes.color305EBE:Colors.transparent,
+                                                        ColorRes.appColor:Colors.transparent,
                                                         border: Border.all(color:myFolderController.checkImg[index]==true?
-                                                        ColorRes.color305EBE:Colors.white ),
+                                                        ColorRes.appColor:Colors.white ),
                                                         borderRadius:
                                                             BorderRadius.circular(5),
                                                       ),
@@ -158,7 +158,7 @@ class MySelectFolderScreen extends StatelessWidget {
                                                               child: Icon(
                                                                 Icons.check_rounded,
                                                                 color: ColorRes
-                                                                    .color305EBE,
+                                                                    .appColor,
                                                               ),
                                                             ),
                                                           ),
@@ -299,7 +299,7 @@ appBar({String? boardName}) {
           },
           child: Container(
             // alignment: Alignment.centerRight,
-            // color: ColorRes.color305EBE,
+            // color: ColorRes.appColor,
             // height: 25,
             // width: 25,
             child:Image.asset(AssetRes.moreOption,scale: 3,)

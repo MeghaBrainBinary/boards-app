@@ -33,7 +33,7 @@ class LanguageScreen extends StatelessWidget {
                   ),
                   Center(
                       child:
-                          Image.asset(AssetRes.lngaugeImg, width: Get.width * 0.3)),
+                          Image.asset(AssetRes.appNewLogo, width: Get.width * 0.3)),
                   SizedBox(
                     height: Get.height * 0.03,
                   ),
@@ -44,7 +44,7 @@ class LanguageScreen extends StatelessWidget {
                         fontSize: 20,
                         weight: FontWeight.w500),
                   ),
-                  SizedBox(
+                  /*SizedBox(
                     height: Get.height * 0.03,
                   ),
                   Container(
@@ -78,7 +78,7 @@ class LanguageScreen extends StatelessWidget {
                         weight: FontWeight.w400,
                       ),
                     ),
-                  ),
+                  ),*/
                   SizedBox(
                     height: Get.height * 0.025,
                   ),
@@ -93,33 +93,55 @@ class LanguageScreen extends StatelessWidget {
                               itemBuilder: (context, index) {
                                 return InkWell(
                                   onTap: () {
-                                    languageController.onTapContainer(language:languageController.filterLst[index],
+                                    languageController.onTapContainer(language:languageController.filterLst[index]['name'],
                                         val: true, i: index);
                                   },
-                                  focusColor: ColorRes.color305EBE,
-                                  hoverColor: ColorRes.color305EBE,
+                                  focusColor: ColorRes.appColor,
+                                  hoverColor: ColorRes.appColor,
                                   splashColor:
-                                      ColorRes.color305EBE.withOpacity(0.1),
+                                      ColorRes.appColor.withOpacity(0.1),
                                   overlayColor: MaterialStateProperty.all(
-                                      ColorRes.color305EBE.withOpacity(0.1)),
+                                      ColorRes.appColor.withOpacity(0.1)),
                                   child: Row(
                                     children: [
                                       (languageController.clrs[index] == true)
                                           ? Container(
                                               width: Get.width,
                                               alignment: Alignment.centerLeft,
-                                              color: ColorRes.color305EBE
+                                              color: ColorRes.appColor
                                                   .withOpacity(0.1),
                                               padding: EdgeInsets.only(
                                                   left: Get.width * 0.05),
                                               height: Get.height * 0.055,
-                                              child: Text(
-                                                languageController.filterLst[index]
-                                                    .toString(),
-                                                style: appTextStyle(
-                                                    color: ColorRes.black,
-                                                    fontSize: 15,
-                                                    weight: FontWeight.w500),
+                                              child: Row(
+                                                mainAxisAlignment: MainAxisAlignment.start,
+                                                crossAxisAlignment: CrossAxisAlignment.center,
+                                                children: [
+
+                                                  Container(
+                                                    height: 25,
+                                                    width: 25,
+                                                    decoration: BoxDecoration(
+                                                      shape: BoxShape.circle,
+                                                      image: DecorationImage(
+                                                        image: AssetImage(
+                                                            languageController.filterLst[index]['image']
+                                                        ),
+                                                        fit: BoxFit.cover
+
+                                                      )
+                                                    ),
+                                                  ),
+                                                  const SizedBox(width: 10,),
+                                                  Text(
+                                                    languageController.filterLst[index]['name']
+                                                        .toString(),
+                                                    style: appTextStyle(
+                                                        color: ColorRes.black,
+                                                        fontSize: 15,
+                                                        weight: FontWeight.w500),
+                                                  ),
+                                                ],
                                               ))
                                           : Container(
                                               width: Get.width,
@@ -128,13 +150,34 @@ class LanguageScreen extends StatelessWidget {
                                               padding: EdgeInsets.only(
                                                   left: Get.width * 0.05),
                                               height: Get.height * 0.055,
-                                              child: Text(
-                                                languageController.filterLst[index]
-                                                    .toString(),
-                                                style: appTextStyle(
-                                                    color: ColorRes.black,
-                                                    fontSize: 15,
-                                                    weight: FontWeight.w500),
+                                              child: Row(
+                                                mainAxisAlignment: MainAxisAlignment.start,
+                                                crossAxisAlignment: CrossAxisAlignment.center,
+                                                children: [
+                                                  Container(
+                                                    height: 50,
+                                                    width: 50,
+                                                    decoration: BoxDecoration(
+                                                        shape: BoxShape.circle,
+                                                        image: DecorationImage(
+                                                            image: AssetImage(
+                                                                languageController.filterLst[index]['image']
+                                                            ),
+                                                            fit: BoxFit.cover
+
+                                                        )
+                                                    ),
+                                                  ),
+                                                  const SizedBox(width: 10,),
+                                                  Text(
+                                                    languageController.filterLst[index]['name']
+                                                        .toString(),
+                                                    style: appTextStyle(
+                                                        color: ColorRes.black,
+                                                        fontSize: 15,
+                                                        weight: FontWeight.w500),
+                                                  ),
+                                                ],
                                               )),
                                     ],
                                   ),
@@ -147,33 +190,54 @@ class LanguageScreen extends StatelessWidget {
                                 return InkWell(
                                   onTap: () {
                                     languageController.onTapContainer(
-                                      language: languageController.lngs[index],
+                                      language: languageController.lngs[index]['name'],
                                         val: true, i: index);
                                   },
-                                  focusColor: ColorRes.color305EBE,
-                                  hoverColor: ColorRes.color305EBE,
+                                  focusColor: ColorRes.appColor,
+                                  hoverColor: ColorRes.appColor,
                                   splashColor:
-                                      ColorRes.color305EBE.withOpacity(0.1),
+                                      ColorRes.appColor.withOpacity(0.1),
                                   overlayColor: MaterialStateProperty.all(
-                                      ColorRes.color305EBE.withOpacity(0.1)),
+                                      ColorRes.appColor.withOpacity(0.1)),
                                   child: Row(
                                     children: [
                                       (languageController.clrs[index] == true)
                                           ? Container(
                                               width: Get.width,
                                               alignment: Alignment.centerLeft,
-                                              color: ColorRes.color305EBE
+                                              color: ColorRes.appColor
                                                   .withOpacity(0.1),
                                               padding: EdgeInsets.only(
                                                   left: Get.width * 0.05),
                                               height: Get.height * 0.055,
-                                              child: Text(
-                                                languageController.lngs[index]
-                                                    .toString(),
-                                                style: appTextStyle(
-                                                    color: ColorRes.black,
-                                                    fontSize: 15,
-                                                    weight: FontWeight.w500),
+                                              child: Row(
+                                                mainAxisAlignment: MainAxisAlignment.start,
+                                                crossAxisAlignment: CrossAxisAlignment.center,
+                                                children: [
+                                                  Container(
+                                                    height: 25,
+                                                    width: 25,
+                                                    decoration: BoxDecoration(
+                                                      shape: BoxShape.circle,
+                                                        image: DecorationImage(
+                                                            image: AssetImage(
+                                                                languageController.lngs[index]['image']
+                                                            ),
+                                                          fit: BoxFit.cover
+
+                                                        )
+                                                    ),
+                                                  ),
+                                                  const SizedBox(width: 20,),
+                                                  Text(
+                                                    languageController.lngs[index]['name']
+                                                        .toString(),
+                                                    style: appTextStyle(
+                                                        color: ColorRes.black,
+                                                        fontSize: 15,
+                                                        weight: FontWeight.w500),
+                                                  ),
+                                                ],
                                               ))
                                           : Container(
                                               width: Get.width,
@@ -182,13 +246,36 @@ class LanguageScreen extends StatelessWidget {
                                               padding: EdgeInsets.only(
                                                   left: Get.width * 0.05),
                                               height: Get.height * 0.055,
-                                              child: Text(
-                                                languageController.lngs[index]
-                                                    .toString(),
-                                                style: appTextStyle(
-                                                    color: ColorRes.black,
-                                                    fontSize: 15,
-                                                    weight: FontWeight.w500),
+                                              child: Row(
+                                                mainAxisAlignment: MainAxisAlignment.start,
+                                                crossAxisAlignment: CrossAxisAlignment.center,
+                                                children: [
+                                                  Container(
+                                                    height: 25,
+                                                    width: 25,
+                                                    decoration: BoxDecoration(
+
+                                                        shape: BoxShape.circle,
+                                                        image: DecorationImage(
+
+                                                            image: AssetImage(
+                                                                languageController.lngs[index]['image']
+                                                            ),
+                                                          fit: BoxFit.cover
+
+                                                        )
+                                                    ),
+                                                  ),
+                                                  const SizedBox(width: 20,),
+                                                  Text(
+                                                    languageController.lngs[index]['name']
+                                                        .toString(),
+                                                    style: appTextStyle(
+                                                        color: ColorRes.black,
+                                                        fontSize: 15,
+                                                        weight: FontWeight.w500),
+                                                  ),
+                                                ],
                                               )),
                                     ],
                                   ),
@@ -201,7 +288,7 @@ class LanguageScreen extends StatelessWidget {
                       height: 50,
                       width: 234,
                       decoration: BoxDecoration(
-                        color: ColorRes.color305EBE,
+                        color: ColorRes.appColor,
                         borderRadius: BorderRadius.circular(5),
                       ),
                       child: Text(

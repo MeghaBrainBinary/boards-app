@@ -40,13 +40,13 @@ class SelectFlowScreen extends StatelessWidget {
                     width: Get.width,
                     decoration: BoxDecoration(
                       color: controller.isBoard
-                          ? ColorRes.color305EBE
+                          ? ColorRes.appColor
                           : Colors.white,
                       borderRadius: BorderRadius.circular(
                         6,
                       ),
                       border: Border.all(
-                        color: ColorRes.color305EBE,
+                        color: ColorRes.appColor,
                       ),
                     ),
                     alignment: Alignment.center,
@@ -97,13 +97,13 @@ class SelectFlowScreen extends StatelessWidget {
                     width: Get.width,
                     decoration: BoxDecoration(
                       color: controller.isWallPaper
-                          ? ColorRes.color305EBE
+                          ? ColorRes.appColor
                           : ColorRes.white,
                       borderRadius: BorderRadius.circular(
                         6,
                       ),
                       border: Border.all(
-                        color: ColorRes.color305EBE,
+                        color: ColorRes.appColor,
                       ),
                     ),
                     alignment: Alignment.center,
