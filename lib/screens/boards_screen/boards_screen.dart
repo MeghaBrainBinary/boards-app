@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:boards_app/common/common_button.dart';
 import 'package:boards_app/common/common_loader.dart';
 import 'package:boards_app/screens/boards_screen/boards_controller.dart';
@@ -16,8 +15,9 @@ import 'package:google_fonts/google_fonts.dart';
 class BoardsScreen extends StatelessWidget {
   BoardsScreen({super.key});
 
-  BoardsController boardsController = Get.put(BoardsController());
+  final BoardsController boardsController = Get.put(BoardsController());
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
+
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
@@ -30,21 +30,10 @@ class BoardsScreen extends StatelessWidget {
         key: scaffoldKey,
         endDrawer: Drawer(
           backgroundColor: Colors.white,
-            shape: const OutlineInputBorder(
-                borderRadius: BorderRadius.only(
-                    bottomLeft: Radius.circular(55),
-                    topLeft: Radius.circular(55))),
+            shape: const OutlineInputBorder(borderRadius: BorderRadius.only(bottomLeft: Radius.circular(55), topLeft: Radius.circular(55))),
             child: Column(
               children: [
-                // SizedBox(
-                //   height: Get.height * 0.1,
-                // ),
-                const SizedBox(
-                  height: 50
-                ),
-                // Center(
-                //     child:
-                //     Image.asset(AssetRes.boards, width: Get.width * 0.3)),
+                const SizedBox(height: 50),
                 Padding(
                   padding: const EdgeInsets.only(right: 20.0),
                   child: Align(
@@ -52,9 +41,7 @@ class BoardsScreen extends StatelessWidget {
                     child: Image.asset(AssetRes.appNewLogo, scale: 4,),
                   ),
                 ),
-                const SizedBox(
-                  height: 6,
-                ),
+                const SizedBox(height: 6),
                 Expanded(
                   flex: 2,
                   child: ListView.separated(
@@ -111,9 +98,7 @@ class BoardsScreen extends StatelessWidget {
                     },
                   ),
                 ),
-                SizedBox(
-                  height: Get.height * 0.05,
-                ),
+                SizedBox(height: Get.height * 0.05),
               ],
             )),
         body: Stack(
@@ -131,26 +116,9 @@ class BoardsScreen extends StatelessWidget {
                             Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  // SizedBox(
-                                  //   height: Get.height * 0.13,
-                                  // ),
-                                  const SizedBox(
-                                    height:20,
-                                  ),
-                                  // /// top
-                                  // Align(
-                                  //   alignment: Alignment.center,
-                                  //   child: Padding(
-                                  //     padding: EdgeInsets.only(
-                                  //         left: Get.width * 0.05,
-                                  //         right: Get.width * 0.05),
-                                  //     child: Image.asset(
-                                  //       AssetRes.boards,
-                                  //       width: 110,
-                                  //     ),
-                                  //   ),
-                                  // ),
-                                  const SizedBox(height: 50,),
+
+                                  const SizedBox(height: 70),
+
                                   Padding(
                                     padding: const EdgeInsets.only(right: 20.0),
                                     child: Align(
@@ -158,27 +126,17 @@ class BoardsScreen extends StatelessWidget {
                                       child: Column(
                                         crossAxisAlignment:CrossAxisAlignment.end,
                                         children: [
-                                          Image.asset(AssetRes.appNewLogo,scale: 4, ),
-                                          const SizedBox(
-                                            height:6,
-                                          ),
-                                          const SizedBox(height: 20,),
+                                          Image.asset(AssetRes.appNewLogo,scale: 4),
+
+                                          const SizedBox(height: 26),
 
                                           InkWell(
                                             onTap: () {
-                                              // myFolderController.onTapMore();
                                               scaffoldKey.currentState?.openEndDrawer();
                                             },
                                             child: Container(
-                                              // alignment: Alignment.centerRight,
-                                              // color: ColorRes.appColor,
-                                              // height: 25,
-                                              // width: 25,
-                                                child: Image.asset(
-                                                  AssetRes.moreOption,
-                                                  scale: 3,
-                                                  color: ColorRes.appColor,
-                                                )),
+                                              child: Image.asset(AssetRes.moreOption, scale: 3, color: ColorRes.appColor),
+                                            ),
                                           ),
                                         ],
                                       ),
@@ -507,26 +465,21 @@ class BoardsScreen extends StatelessWidget {
                                   //     ),
                                   //   ),
                                   // ),
-                                  const SizedBox(
-                                    height: 10,
-                                  ),
+
+                                  const SizedBox(height: 10),
 
                                   /// list dynamic
-                                  // create structure of list of sublist of sublist of sublist
-                                  // now 28
                                   (con.getBoardModelData != null)
                                       ? GetBuilder<BoardsController>(
                                           id: 'board',
                                           builder: (controller) => SizedBox(
                                             width: Get.width,
                                             height: Get.height *0.55,
-                                            child: (controller.getBoardModelData[
-                                                        'data'] !=
-                                                    null)
+                                            child: (controller.getBoardModelData['data'] != null)
                                                 ? TreeView(
                                                     leftIcon: Image.asset(
                                                       AssetRes.success,
-                                                      scale: 1.5,
+                                                      scale: 1.5
                                                     ),
                                                     icon: Icon(
                                                       Icons.keyboard_arrow_down_rounded,
@@ -698,7 +651,8 @@ class BoardsScreen extends StatelessWidget {
                             ),*/
                                 ]),
 
-const Spacer(),
+                            const Spacer(),
+
                             Column(
                               children: [
                              /*   Padding(

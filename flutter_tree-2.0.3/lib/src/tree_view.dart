@@ -10,6 +10,7 @@ class TreeView extends StatefulWidget {
   final TextStyle? textStyle;
   final Widget icon;
   final Widget? leftIcon;
+  final Widget? rightIcon;
   final double offsetLeft;
   final bool showFilter;
   final bool showActions;
@@ -34,6 +35,7 @@ class TreeView extends StatefulWidget {
     this.onTap,
     this.onLastTap,
     this.leftIcon,
+    this.rightIcon,
     this.onCheck,
     this.onLoad,
     this.onExpand,
@@ -158,6 +160,7 @@ class _TreeViewState extends State<TreeView> {
                 data: _renderList[index],
                 icon: widget.icon,
                 leftIcon: widget.leftIcon ?? Container(),
+                rightIcon: widget.leftIcon ?? Container(),
                 lazy: widget.lazy,
                 offsetLeft: widget.offsetLeft,
                 showCheckBox: widget.showCheckBox,

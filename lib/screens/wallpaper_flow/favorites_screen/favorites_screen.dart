@@ -3,7 +3,6 @@ import 'package:boards_app/screens/wallpaper_flow/favorites_screen/favorites_con
 import 'package:boards_app/services/pref_services.dart';
 import 'package:boards_app/utils/asset_res.dart';
 import 'package:boards_app/utils/string_res.dart';
-
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -26,11 +25,9 @@ class WFavoritesScreen extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  SizedBox(
-                    height: Get.height * 0.06,
-                  ),
+                  SizedBox(height: Get.height * 0.06),
                   Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 20),
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
                     child: Text(
                       StringRes.Favorites,
                       style: TextStyle(
@@ -40,9 +37,8 @@ class WFavoritesScreen extends StatelessWidget {
                           fontFamily: "spleshfont"),
                     ),
                   ),
-                  SizedBox(
-                    height: Get.height * 0.04,
-                  ),
+
+                  SizedBox(height: Get.height * 0.04),
 
                   PrefService.getString('docId') == ''
                       ? const SizedBox()
@@ -56,17 +52,13 @@ class WFavoritesScreen extends StatelessWidget {
                                   .snapshots(),
                               builder: (context, snapshot) {
                                 return Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 20),
+                                  padding: const EdgeInsets.symmetric(horizontal: 20),
                                   child: GridView.builder(
                                     shrinkWrap: true,
-                                    physics:
-                                        const NeverScrollableScrollPhysics(),
+                                    physics: const NeverScrollableScrollPhysics(),
                                     scrollDirection: Axis.vertical,
-                                    itemCount:
-                                        snapshot.data?['favourite'].length ?? 0,
-                                    gridDelegate:
-                                        const SliverGridDelegateWithFixedCrossAxisCount(
+                                    itemCount: snapshot.data?['favourite'].length ?? 0,
+                                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                                       crossAxisCount: 3,
                                       mainAxisSpacing: 15,
                                       crossAxisSpacing: 15,
@@ -77,19 +69,12 @@ class WFavoritesScreen extends StatelessWidget {
                                         onTap: () {
                                           favoritesController.myBoolList = [];
                                           var list = [];
-                                          for (int i = 0;
-                                              i <
-                                                  snapshot.data?['favourite']
-                                                      .length;
-                                              i++) {
+                                          for (int i = 0; i < snapshot.data?['favourite'].length; i++) {
                                             list.add({
-                                              'imageLink':
-                                                  snapshot.data?['favourite'][i]
-                                                      ['image'],
+                                              'imageLink': snapshot.data?['favourite'][i]['image'],
                                               'isFav': true,
                                             });
-                                            favoritesController.myBoolList
-                                                .add(true);
+                                            favoritesController.myBoolList.add(true);
                                           }
 
                                           // Get.to(
@@ -113,12 +98,8 @@ class WFavoritesScreen extends StatelessWidget {
                                               clipBehavior: Clip.hardEdge,
                                               alignment: Alignment.center,
                                               decoration: BoxDecoration(
-                                                borderRadius:
-                                                    BorderRadius.circular(10),
-                                                border: Border.all(
-                                                    color: Colors.white
-                                                        .withOpacity(0.5),
-                                                    width: 0),
+                                                borderRadius: BorderRadius.circular(10),
+                                                border: Border.all(color: Colors.white.withOpacity(0.5), width: 0),
                                               ),
                                             ),
                                             Container(
@@ -127,12 +108,8 @@ class WFavoritesScreen extends StatelessWidget {
                                               clipBehavior: Clip.hardEdge,
                                               alignment: Alignment.center,
                                               decoration: BoxDecoration(
-                                                borderRadius:
-                                                    BorderRadius.circular(10),
-                                                border: Border.all(
-                                                    color: Colors.white
-                                                        .withOpacity(0.5),
-                                                    width: 0.5),
+                                                borderRadius: BorderRadius.circular(10),
+                                                border: Border.all(color: Colors.white.withOpacity(0.5), width: 0.5),
                                               ),
                                               child: Stack(
                                                 alignment: Alignment.topRight,
@@ -140,50 +117,28 @@ class WFavoritesScreen extends StatelessWidget {
                                                   CachedNetworkImage(
                                                     height: Get.height * 0.3,
                                                     width: Get.width * 0.28,
-                                                    imageUrl: snapshot
-                                                            .data?['favourite']
-                                                        [index]['image'],
+                                                    imageUrl: snapshot.data?['favourite'][index]['image'],
                                                     fit: BoxFit.cover,
-                                                    placeholder:
-                                                        (context, url) =>
-                                                            Image.asset(
-                                                      AssetRes.imagePlaceholder,
-                                                      fit: BoxFit.cover,
-                                                    ),
-                                                    errorWidget:
-                                                        (context, url, error) =>
-                                                            Image.asset(
-                                                      AssetRes.imagePlaceholder,
-                                                      fit: BoxFit.cover,
-                                                    ),
+                                                    placeholder: (context, url) => Image.asset(AssetRes.imagePlaceholder, fit: BoxFit.cover),
+                                                    errorWidget: (context, url, error) => Image.asset(AssetRes.imagePlaceholder, fit: BoxFit.cover),
                                                   ),
                                                   Padding(
-                                                    padding:
-                                                        const EdgeInsets.only(
-                                                            top: 4, right: 4),
+                                                    padding: const EdgeInsets.only(top: 4, right: 4),
                                                     child: GestureDetector(
                                                         onTap: () {
-                                                          favoritesController
-                                                              .onTapLikeUnlike(
-                                                                  index);
+                                                          favoritesController.onTapLikeUnlike(index);
                                                         },
                                                         child: SizedBox(
-                                                            height: (snapshot.data?['favourite']
-                                                                            [index]
-                                                                        [
-                                                                        'isFav'] ==
-                                                                    false)
-                                                                ? Get.height *
-                                                                    0.025
-                                                                : Get.height *
-                                                                    0.03,
+                                                            height: (snapshot.data?['favourite'][index]['isFav'] == false)
+                                                                ? Get.height * 0.025
+                                                                : Get.height * 0.03,
                                                             child: Image.asset(
-                                                                (snapshot.data?['favourite'][index]['isFav'] ==
-                                                                        false)
-                                                                    ? AssetRes
-                                                                        .LikeIcon
-                                                                    : AssetRes
-                                                                        .imageLike))),
+                                                                (snapshot.data?['favourite'][index]['isFav'] == false)
+                                                                    ? AssetRes.LikeIcon
+                                                                    : AssetRes.imageLike,
+                                                            ),
+                                                        ),
+                                                    ),
                                                   ),
                                                 ],
                                               ),

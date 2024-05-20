@@ -114,32 +114,13 @@ void onInit() {
       });
     }
 
-   treeData = List.generate(
-      serverData.length,
-          (index) => mapServerDataToTreeData(serverData[index]),
-    ).toList();
+   treeData = List.generate(serverData.length, (index) => mapServerDataToTreeData(serverData[index])).toList();
     loader.value= false;
 
     update(['board']);
     update(['all']);
 
   }
-  // List boards = [
-  //   StringRes.motivation,
-  //   StringRes.challenge,
-  //   StringRes.weekend,
-  //   StringRes.holidays,
-  //   StringRes.tasty,
-  //   StringRes.events,
-  // ];
-  // List boardsIcons = [
-  //   AssetRes.motivationIcon,
-  //   AssetRes.challengeIcon,
-  //   AssetRes.weekendIcon,
-  //   AssetRes.holidaysIcon,
-  //   AssetRes.testyIcon,
-  //   AssetRes.eventsIcon,
-  // ];
 
   bool isMyfolder = false;
   bool isIcon = false;
