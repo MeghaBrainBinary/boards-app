@@ -18,4 +18,6 @@ class PrefKeys {
   static const tryYourOwnLuck = "tryYourOwnLuck";
   static const isSplash = "isSplash";
   static const downloadImageList = "downloadImage";
+
+  static const firstTimeOrSecond = "firstOrSecond";
 }

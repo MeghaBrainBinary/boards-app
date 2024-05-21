@@ -2,10 +2,12 @@ import 'dart:io';
 import 'package:boards_app/common/common_button.dart';
 import 'package:boards_app/common/common_loader.dart';
 import 'package:boards_app/screens/boards_screen/boards_controller.dart';
+import 'package:boards_app/services/pref_services.dart';
 import 'package:boards_app/utils/approutes.dart';
 import 'package:boards_app/utils/appstyle.dart';
 import 'package:boards_app/utils/asset_res.dart';
 import 'package:boards_app/utils/color_res.dart';
+import 'package:boards_app/utils/prefkeys.dart';
 import 'package:boards_app/utils/string_res.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_tree/flutter_tree.dart';
@@ -466,49 +468,97 @@ class BoardsScreen extends StatelessWidget {
                                   //   ),
                                   // ),
 
-                                  const SizedBox(height: 10),
+                                  // InkWell(
+                                  //   onTap: () {
+                                  //
+                                  //   },
+                                  //   child: Container(
+                                  //     height: 100,
+                                  //     width: 100,
+                                  //     color: Colors.black,
+                                  //   ),
+                                  // ),
 
                                   /// list dynamic
                                   (con.getBoardModelData != null)
-                                      ? GetBuilder<BoardsController>(
-                                          id: 'board',
-                                          builder: (controller) => SizedBox(
-                                            width: Get.width,
-                                            height: Get.height *0.55,
-                                            child: (controller.getBoardModelData['data'] != null)
-                                                ? TreeView(
-                                                    leftIcon: Image.asset(
-                                                      AssetRes.success,
-                                                      scale: 1.5
+                                      ? Stack(
+                                          children: [
+                                            Column(
+                                              children: [
+                                                const SizedBox(height: 9),
+                                                Row(
+                                                  children: [
+                                                    const SizedBox(width: 29),
+                                                    SizedBox(
+                                                      height: 5,
+                                                      width: 5,
+                                                      key: boardsController.buttonKey,
                                                     ),
-                                                    icon: Icon(
-                                                      Icons.keyboard_arrow_down_rounded,
-                                                      color: ColorRes.black,
-                                                    ),
-                                                    textStyle: GoogleFonts.inter(
-                                                      color: Colors.black,
-                                                      fontSize: 17,
-                                                      fontWeight: FontWeight.w500,
-                                                    ),
-                                                    data: controller.treeData,
-                                                    onTap: (node) {
-                                                      print(node.id);
-                                                      controller.onTapFolder(
-                                                        node.id.toString(),
-                                                        node.name,
-                                                      );
-                                                    },
-                                                    onLastTap: (node) {
-                                                      print(node.name);
 
-                                                      controller.onTapFolder(
-                                                        node.id.toString(),
-                                                        node.name,
-                                                      );
-                                                    })
-                                                : const SizedBox(),
-                                          ),
-                                        )
+                                                    const SizedBox(width: 31),
+
+                                                    SizedBox(
+                                                      height: 15,
+                                                      width: 32,
+                                                      key: boardsController.secondButtonKey,
+                                                    ),
+                                                  ],
+                                                ),
+                                              ],
+                                            ),
+
+                                            GetBuilder<BoardsController>(
+                                              id: 'board',
+                                              initState: (state) {
+                                                if(con.getBoardModelData != null) {
+                                                  // if((PrefService.getBool(PrefKeys.firstTimeOrSecond) ?? true) == false) {
+                                                    boardsController.showTutorial(context: context);
+                                                    PrefService.setValue(PrefKeys.firstTimeOrSecond, true);
+                                                  // }
+                                                  boardsController.update(['board']);
+                                                }
+                                              },
+                                              builder: (controller) => SizedBox(
+                                                width: Get.width,
+                                                height: Get.height * 0.55,
+                                                child: (controller.getBoardModelData['data'] != null)
+                                                    ? TreeView(
+                                                      leftIcon: Image.asset(
+                                                          AssetRes.success,
+                                                          scale: 1.5
+                                                      ),
+                                                      icon: Icon(
+                                                        Icons.keyboard_arrow_down_rounded,
+                                                        color: ColorRes.black,
+                                                      ),
+                                                      textStyle: GoogleFonts.inter(
+                                                        color: Colors.black,
+                                                        fontSize: 17,
+                                                        fontWeight: FontWeight.w500,
+                                                      ),
+                                                      data: controller.treeData,
+                                                      onTap: (node) {
+                                                        print(node.id);
+                                                        controller.onTapFolder(
+                                                          node.id.toString(),
+                                                          node.name,
+                                                          node.icon,
+                                                        );
+                                                      },
+                                                      onLastTap: (node) {
+                                                        print(node.name);
+
+                                                        controller.onTapFolder(
+                                                          node.id.toString(),
+                                                          node.name,
+                                                          node.icon
+                                                        );
+                                                      })
+                                                    : const SizedBox(),
+                                              ),
+                                            ),
+                                          ],
+                                      )
                                       : const SizedBox(),
                                   /* GetBuilder<BoardsController>(
                               id: 'board',
@@ -784,7 +834,11 @@ class BoardsScreen extends StatelessWidget {
                 }),
             Obx(() => (boardsController.loader.value)
                 ? const CommonLoader()
-                : const SizedBox())
+                : const SizedBox()),
+
+            // Obx(() => (boardsController.categoryClickLoader.value)
+            //     ? const CommonLoader()
+            //     : const SizedBox())
           ],
         ),
       ),

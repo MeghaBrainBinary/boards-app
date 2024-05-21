@@ -81,5 +81,10 @@ const Map<String, String> Lithuanian = {
   "View Images":"Peržiūrėti vaizdus",
   "My Wallpaper":"Mano tapetai",
   "Or":"Arba",
+  "This is main category" : "Tai pagrindinė kategorija",
+  "Click main category for sub category." : "Spustelėkite pagrindinę kategoriją, kad pamatytumėte subkategoriją.",
 
+  "Click here to open main category's images" : "Spustelėkite čia, kad atidarytumėte pagrindinės kategorijos vaizdus",
+  "This is main category title" : "Tai yra pagrindinės kategorijos pavadinimas",
+  "Click here to open sub category's images" : "Spustelėkite čia, kad atidarytumėte subkategorijų vaizdus",
 };

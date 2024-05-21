@@ -19,8 +19,8 @@ import 'package:video_player/video_player.dart';
 
 class MyFolderScreen extends StatefulWidget {
   String? boardName;
-
-  MyFolderScreen({super.key, this.boardName});
+  String? icon;
+  MyFolderScreen({super.key, this.boardName, this.icon});
 
   @override
   State<MyFolderScreen> createState() => _MyFolderScreenState();
@@ -124,7 +124,7 @@ class _MyFolderScreenState extends State<MyFolderScreen> {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        appBar(boardName: widget.boardName),
+                        appBar(boardName: widget.boardName, icon: widget.icon),
                         SizedBox(height: Get.height * 0.05),
                         (controller.getBoardInfoModel == null)
                             ? const SizedBox()
@@ -176,8 +176,7 @@ class _MyFolderScreenState extends State<MyFolderScreen> {
                                             style: appTextStyle(color: ColorRes.appColor, fontSize: 15, weight: FontWeight.w500),
                                           ),
                                       )
-                                    else
-                                      const SizedBox(),
+                                    else const SizedBox(),
                                     controller.isSelectedPageView
                                         ? Row(
                                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -866,7 +865,7 @@ class _MyFolderScreenState extends State<MyFolderScreen> {
     );
   }
 
-  appBar({String? boardName}) {
+  appBar({String? boardName, String? icon}) {
     MyFolderController myFolderController = Get.put(MyFolderController());
     GetBoardModel getBoardModel = GetBoardModel();
 
@@ -896,7 +895,11 @@ class _MyFolderScreenState extends State<MyFolderScreen> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                SizedBox(height: 20, width: 20, child: Image.asset(AssetRes.myfolderIcon)),
+                Container(
+                  decoration: const BoxDecoration(shape: BoxShape.circle),
+                  height: 20,
+                  width: 20, child: icon != '' ? Image.network(icon ?? "") : Image.asset(AssetRes.myfolderIcon),
+                ),
                 const SizedBox(width: 15),
                 Text(
                   boardName ?? "My folder",

@@ -9,6 +9,7 @@ class TreeNodeData {
   String sub_parent_id;
   List<TreeNodeData> children;
   String title;
+  String icon;
   bool checked;
   bool isTop;
   dynamic extra;
@@ -28,6 +29,7 @@ class TreeNodeData {
     required this.isTop,
 
     this.title = '',
+    this.icon = '',
     this.extra,
     this.checked = false,
 
@@ -51,6 +53,7 @@ class TreeNodeData {
         sub_parent_id: other.sub_parent_id,
         children: other.children.map((e) => TreeNodeData.from(e)).toList(),
         title: other.title,
+        icon: other.icon,
         extra: other.extra,
         isTop: other.isTop,
         checked: other.checked,
@@ -63,6 +66,6 @@ class TreeNodeData {
 
   @override
   String toString() {
-    return 'TreeNodeData{id: $id, expanded: $expanded, name: $name, language: $language, parent_id: $parent_id, sub_parent_id: $sub_parent_id, children: $children, title: $title, checked: $checked, isTop: $isTop, extra: $extra, checkBoxCheckColor: $checkBoxCheckColor, checkBoxFillColor: $checkBoxFillColor, backgroundColor: $backgroundColor, customActions: $customActions}';
+    return 'TreeNodeData{id: $id, expanded: $expanded, name: $name, language: $language, parent_id: $parent_id, sub_parent_id: $sub_parent_id, children: $children, title: $title, icon: $icon, checked: $checked, isTop: $isTop, extra: $extra, checkBoxCheckColor: $checkBoxCheckColor, checkBoxFillColor: $checkBoxFillColor, backgroundColor: $backgroundColor, customActions: $customActions}';
   }
 }

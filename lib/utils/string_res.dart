@@ -165,4 +165,11 @@ class StringRes {
   static const LogOut = "Log out";
   static const AreYouSure = "Are you sure you want to logout?";
   static const Yes = "Yes";
+  static const categoryTitle = "This is main category";
+  static const categorySubTitle = "Click here to open main category's images";
+
+  static const subCategoryTitle = "This is main category title";
+  static const subCategorySubTitle = "Click here to open sub category's images";
+
+  static const categoryDes = "Click main category for sub category.";
 }

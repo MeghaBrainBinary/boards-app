@@ -1,21 +1,115 @@
-import 'dart:convert';
-
-import 'package:boards_app/localization/localization.dart';
+import 'package:boards_app/common/toast_msg.dart';
 import 'package:boards_app/screens/boards_screen/api/language_api.dart';
-import 'package:boards_app/screens/boards_screen/model/get_board_model.dart';
 import 'package:boards_app/screens/my_folder_screen/my_folder_controller.dart';
 import 'package:boards_app/screens/my_folder_screen/my_folder_screen.dart';
 import 'package:boards_app/services/pref_services.dart';
-import 'package:boards_app/utils/approutes.dart';
 import 'package:boards_app/utils/asset_res.dart';
 import 'package:boards_app/utils/prefkeys.dart';
 import 'package:boards_app/utils/string_res.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_tree/flutter_tree.dart';
 import 'package:get/get.dart';
+import 'package:tutorial_coach_mark/tutorial_coach_mark.dart';
 
 class BoardsController extends GetxController {
+
+  late TutorialCoachMark tutorialCoachMark;
+  GlobalKey buttonKey = GlobalKey();
+  GlobalKey secondButtonKey = GlobalKey();
+
+
+  void showTutorial({context}) {
+    tutorialCoachMark = TutorialCoachMark(
+      pulseEnable: true,
+      showSkipInLastTarget: true,
+      targets: _createTargets(),
+      colorShadow: Colors.black,
+      textSkip: StringRes.next,
+      paddingFocus: 10,
+      opacityShadow: 0.8,
+      onFinish: () {
+        debugPrint("Tutorial finished");
+      },
+      onClickTarget: (target) {
+        debugPrint("Target clicked");
+      },
+      onSkip: () {
+        debugPrint("Tutorial skipped");
+        return false;
+      },
+      onClickOverlay: (target) {
+        debugPrint("Overlay clicked");
+      },
+    )..show(context: context);
+    // isSee = true;
+  }
+
+  List<TargetFocus> _createTargets() {
+    return [
+      TargetFocus(
+        identify: "buttonKey",
+        keyTarget: buttonKey,
+        contents: [
+          TargetContent(
+            child: SizedBox(
+              height: Get.height,
+              width: Get.width,
+              child: Column(
+                children: <Widget>[
+                  SizedBox(height: Get.height * 0.3),
+                  Text(
+                    StringRes.categorySubTitle.tr,
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(fontWeight: FontWeight.bold, color: Colors.white, fontSize: 20.0),
+                  ),
+                  // Padding(
+                  //   padding: const EdgeInsets.only(top: 10.0),
+                  //   child: Text(
+                  //     StringRes.categorySubTitle.tr,
+                  //     style: const TextStyle(color: Colors.white),
+                  //   ),
+                  // )
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
+      TargetFocus(
+        identify: "secondButtonKey",
+        keyTarget: secondButtonKey,
+        contents: [
+          TargetContent(
+            child: SizedBox(
+              height: Get.height,
+              width: Get.width,
+              child: Column(
+                children: <Widget>[
+                  SizedBox(height: Get.height * 0.3),
+                  Text(
+                    StringRes.subCategorySubTitle.tr,
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(fontWeight: FontWeight.bold, color: Colors.white, fontSize: 20.0),
+                  ),
+                  // Padding(
+                  //   padding: const EdgeInsets.only(top: 10.0),
+                  //   child: Text(
+                  //     StringRes.subCategorySubTitle.tr,
+                  //     style: const TextStyle(color: Colors.white),
+                  //   ),
+                  // )
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
+    ];
+  }
+
   dynamic argumentData = Get.arguments;
-RxBool loader = false.obs;
+  RxBool loader = false.obs;
+
 //GetBoardModel getBoardModel = GetBoardModel();
   var getBoardModelData;
   List isIcons = [];
@@ -24,64 +118,59 @@ RxBool loader = false.obs;
   List<String> drawerTitleList = [
     //StringRes.home.tr,
     StringRes.language.tr,
-   // StringRes.viewImages.tr,
+    // StringRes.viewImages.tr,
     StringRes.favourite.tr,
     StringRes.contactUs.tr,
-   // StringRes.settings.tr,
+    // StringRes.settings.tr,
     // StringRes.faq.tr,
-   // StringRes.loginLogout.tr,
+    // StringRes.loginLogout.tr,
   ];
 
   List<String> drawerImageList = [
-   // AssetRes.homeIcon,
+    // AssetRes.homeIcon,
     AssetRes.languageIcon,
-   // AssetRes.grid,
+    // AssetRes.grid,
     AssetRes.FavouriteIcon,
     AssetRes.contactUs,
-   // AssetRes.settingsIcon,
+    // AssetRes.settingsIcon,
     //   AssetRes.faqIcon,
-  //  AssetRes.loginIcon,
+    //  AssetRes.loginIcon,
   ];
+
   @override
-void onInit() {
-  init(argumentData ?? PrefService.getString(PrefKeys.languageCode));
+  void onInit() {
+    init(argumentData ?? PrefService.getString(PrefKeys.languageCode));
 
-  // isIcons = List.generate(getBoardModel.data?.length ?? 6, (index) => false);
-  if(getBoardModelData != null){
+    // isIcons = List.generate(getBoardModel.data?.length ?? 6, (index) => false);
+    if (getBoardModelData != null) {
+      isIcons = List.generate(
+          getBoardModelData['data'].length ?? 0, (index) => false);
+    }
 
-   isIcons = List.generate(getBoardModelData['data'].length ?? 0, (index) => false);
+    super.onInit();
   }
 
-  super.onInit();
-}
 
-  init(language)async{
-
-    loader.value= true;
-   // getBoardModel =await GetBoardApi.getBoardApi(language);
-    getBoardModelData =await GetBoardApi.getBoardApi(language);
-
+  init(language) async {
+    loader.value = true;
+    // getBoardModel =await GetBoardApi.getBoardApi(language);
+    getBoardModelData = await GetBoardApi.getBoardApi(language);
 
     //print(getBoardModel.data![0].name);
-   // print(getBoardModel.data!.length);
+    // print(getBoardModel.data!.length);
 
     // isIcons = List.generate(getBoardModel.data?.length??0, (index) => false);
-    if(getBoardModelData != null ){
-
+    if (getBoardModelData != null) {
       isIcons = List.generate(getBoardModelData['data'].length ?? 0, (index) => false);
     }
 
+    // serverData = getBoardModelData['data'];
 
-
-   // serverData = getBoardModelData['data'];
-
-    if(getBoardModelData['data'].length != 0) {
-      DateTime maxDate = DateTime.parse(
-          getBoardModelData['data'][0]['created_at']);
+    if (getBoardModelData['data'].length != 0) {
+      DateTime maxDate = DateTime.parse(getBoardModelData['data'][0]['created_at']);
 
       getBoardModelData['data'].forEach((element) {
-        if (DateTime.parse(getBoardModelData['data'][0]['created_at']).isAfter(
-            maxDate)) {
+        if (DateTime.parse(getBoardModelData['data'][0]['created_at']).isAfter(maxDate)) {
           maxDate = DateTime.parse(getBoardModelData['data'][0]['created_at']);
         }
       });
@@ -91,6 +180,7 @@ void onInit() {
           serverData.add({
             "id": element['id'],
             "name": element['name'],
+            "icon" : element["icon"],
             "parent_id": "0",
             "sub_parent_id": "0",
             "isTop": true,
@@ -98,11 +188,11 @@ void onInit() {
             "language": element['language'],
             "sub_board": element['sub_board'],
           });
-        }
-        else {
+        } else {
           serverData.add({
             "id": element['id'],
             "name": element['name'],
+            "icon" : element["icon"],
             "parent_id": "0",
             "sub_parent_id": "0",
             "isTop": false,
@@ -114,13 +204,13 @@ void onInit() {
       });
     }
 
-   treeData = List.generate(serverData.length, (index) => mapServerDataToTreeData(serverData[index])).toList();
-    loader.value= false;
+    treeData = List.generate(serverData.length, (index) => mapServerDataToTreeData(serverData[index])).toList();
+    loader.value = false;
 
     update(['board']);
     update(['all']);
-
   }
+
 
   bool isMyfolder = false;
   bool isIcon = false;
@@ -147,41 +237,50 @@ void onInit() {
     update(['all']);
   }
 
-  onTapFolder(String id, String name, {String? subBoardId, String? subName}) async{
+  RxBool categoryClickLoader = false.obs;
+
+  onTapFolder(String id, String name, String icon ,{String? subBoardId, String? subName}) async{
     //isIcons = List.generate(6, (index) => false);
     isIcon = false;
     isMyfolder = false;
+    categoryClickLoader.value = true;
     update(['board']);
 
     MyFolderController myFolderController = Get.put(MyFolderController());
 
-    if(subBoardId == null){
+    if (subBoardId == null) {
       await myFolderController.myInt(id);
-    } else{
+    } else {
       await myFolderController.myInt(id, subBoardId: subBoardId);
     }
 
     myFolderController.isMore = false;
 
-    if(myFolderController.getBoardInfoModel.data != null && myFolderController.getBoardInfoModel.data!.length != 0 ){
+    if (myFolderController.getBoardInfoModel.data != null
+        && myFolderController.getBoardInfoModel.data!.length != 0
+    ) {
       print("---------------------------->${myFolderController.getBoardInfoModel.data?.length}");
       myFolderController.isLike = List.generate(myFolderController.getBoardInfoModel.data?.length ?? 0, (index) => false);
-    if(subBoardId == null){
-      //Get.toNamed(AppRoutes.myFolderPage, arguments: name);
-      Get.to(()=>MyFolderScreen(boardName: name,));
-    }else{
-      //Get.toNamed(AppRoutes.myFolderPage, arguments: subName);
-      Get.to(()=>MyFolderScreen(boardName: subName,));
-    }
+      if (subBoardId == null) {
+        //Get.toNamed(AppRoutes.myFolderPage, arguments: name);
+        Get.to(() => MyFolderScreen(boardName: name, icon: icon));
+        categoryClickLoader.value = false;
+      } else {
+        //Get.toNamed(AppRoutes.myFolderPage, arguments: subName);
+        Get.to(() => MyFolderScreen(boardName: subName, icon: icon));
+        categoryClickLoader.value = false;
+      }
+    } else {
+      errorTost("This category don't have images");
+      categoryClickLoader.value = false;
     }
   }
 
-  TreeNodeData mapServerDataToTreeData(Map data,{bool? isChild}){
-
-    if(isChild == null){
+  TreeNodeData mapServerDataToTreeData(Map data, {bool? isChild}) {
+    if (isChild == null) {
       isChild = false;
     }
-    if(isChild == false) {
+    if (isChild == false) {
       return TreeNodeData(
         parent_id: data['parent_id'].toString(),
         sub_parent_id: data['sub_parent_id'].toString(),
@@ -189,13 +288,13 @@ void onInit() {
         language: data['language'].toString(),
         name: data['name'].toString(),
         title: data['name'].toString(),
+        icon: data["icon"].toString(),
         isTop: data['isTop'],
         expanded: false,
         checked: true,
-        children: List.from(data['sub_board'].map((x) =>
-            mapServerDataToTreeData(x, isChild: true))),
+        children: List.from(data['sub_board'].map((x) => mapServerDataToTreeData(x, isChild: true))),
       );
-    }else{
+    } else {
       return TreeNodeData(
         parent_id: data['parent_id'].toString(),
         sub_parent_id: data['sub_parent_id'].toString(),
@@ -203,16 +302,15 @@ void onInit() {
         language: data['language'].toString(),
         name: data['name'].toString(),
         title: data['name'].toString(),
-        isTop:false,
+        icon: data["icon"].toString(),
+        isTop: false,
         expanded: false,
         checked: true,
-        children: List.from(data['sub_board'].map((x) =>
-            mapServerDataToTreeData(x, isChild: true))),
+        children: List.from(data['sub_board'].map((x) => mapServerDataToTreeData(x, isChild: true))),
       );
     }
   }
 
   /// Generate tree data
-
 
 }

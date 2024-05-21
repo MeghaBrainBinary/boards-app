@@ -1,7 +1,10 @@
-// ignore_for_file: unnecessary_null_comparison, depend_on_referenced_packages
+// ignore_for_file: depend_on_referenced_packages
 import 'package:flutter/material.dart';
 import '../flutter_tree.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:get/get.dart';
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:shimmer/shimmer.dart';
 
 class TreeNode extends StatefulWidget {
   final TreeNodeData data;
@@ -116,9 +119,9 @@ class _TreeNodeState extends State<TreeNode>
           widget.onCollapse(widget.data);
         }
       });
-    // if (_isExpaned) {
+    if (_isExpaned) {
       _rotationController.forward();
-    // }
+    }
   }
 
   @override
@@ -164,13 +167,23 @@ class _TreeNodeState extends State<TreeNode>
                     //   setState(() {});
                     // });
                   } else {
-                    widget.onTap(widget.data);
+                    // widget.onTap(widget.data);
                     // _isExpaned = !_isExpaned;
                     // if (_isExpaned) {
                     //   _rotationController.forward();
                     // } else {
                     //   _rotationController.reverse();
                     // }
+
+                    _isExpaned = !_isExpaned;
+                    // if(!_isExpaned) {
+                    //   widget.onTap(widget.data);
+                    // }
+                    if (_isExpaned) {
+                      _rotationController.forward();
+                    } else {
+                      _rotationController.reverse();
+                    }
                     setState(() {});
                   }
                 },
@@ -228,15 +241,51 @@ class _TreeNodeState extends State<TreeNode>
                         alignment: Alignment.centerLeft,
                         children: [
                           Padding(
-                            padding: const EdgeInsets.only(left: 25, right: 20),
-                            child: Text(widget.data.title, style: widget.textStyle),
+                            padding: const EdgeInsets.only(left: 5, right: 20),
+                            child: Row(
+                              children: [
+                                InkWell(
+                                  onTap: () {
+                                    widget.onTap(widget.data);
+                                  },
+                                  child: Container(
+                                    height: 32,
+                                    width: 36,
+                                    alignment: Alignment.center,
+                                    child: CachedNetworkImage(
+                                      height: 24,
+                                      width: 24,
+                                      imageUrl: widget.data.icon ?? "",
+                                      progressIndicatorBuilder: (context, strings, download) {
+                                        return Shimmer.fromColors(
+                                          baseColor: Colors.grey.shade300,
+                                          highlightColor: Colors.white,
+                                          enabled: true,
+                                          child: Container(
+                                            decoration: const BoxDecoration(
+                                              shape: BoxShape.circle,
+                                              color: Colors.white,
+                                            ),
+                                            height: 15,
+                                            width: 15,
+                                          ),
+                                        );
+                                      },
+                                      errorWidget: (context, url, error) => const SizedBox(height: 15, width: 15),
+                                    ),
+                                  ),
+                                ),
+                                const SizedBox(width: 4),
+                                Text(widget.data.title, style: widget.textStyle),
+                              ],
+                            ),
                           ),
                           (widget.isChildren == false)
                               ? (widget.data.isTop == true)
                                   ? (widget.leftIcon != null)
                                       ? Column(
-                                          children: [
-                                            widget.leftIcon!,
+                                          children: const [
+                                            // widget.leftIcon!,
                                             // const SizedBox(height: 10)
                                           ],
                                         )

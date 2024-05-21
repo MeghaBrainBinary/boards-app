@@ -81,5 +81,9 @@ const Map<String, String> Estonian = {
   "View Images":"Vaata pilte",
   "My Wallpaper":"Minu tapeet",
   "Or":"Või",
+  "This is main category" : "This is main category",
 
+  "Click here to open main category's images" : "Põhikategooria piltide avamiseks klõpsake siin",
+  "This is main category title" : "See on põhikategooria pealkiri",
+  "Click here to open sub category's images" : "Alamkategooria piltide avamiseks klõpsake siin",
 };

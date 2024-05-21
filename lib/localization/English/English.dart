@@ -81,4 +81,10 @@ const Map<String, String> English = {
   "View Images":"View Images",
   "My Wallpaper":"My Wallpaper",
   "Or":"Or",
+  "This is main category" : "This is main category",
+  "Click main category for sub category." : "Click main category for sub category.",
+
+  "Click here to open main category's images" : "Click here to open main category's images",
+  "This is main category title" : "This is main category title",
+  "Click here to open sub category's images" : "Click here to open sub category's images",
 };

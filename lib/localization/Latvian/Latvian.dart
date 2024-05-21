@@ -84,5 +84,10 @@ const Map<String, String> Latvian = {
   "View Images":"Skatīt attēlus",
   "My Wallpaper":"Mana fona tapete",
   "Or":"Or",
+  "This is main category" : "Šī ir galvenā kategorija",
+  "Click main category for sub category." : "Noklikšķiniet uz galvenās kategorijas, lai atvērtu apakškategoriju.",
 
+  "Click here to open main category's images" : "Noklikšķiniet šeit, lai atvērtu galvenās kategorijas attēlus",
+  "This is main category title" : "Šis ir galvenās kategorijas nosaukums",
+  "Click here to open sub category's images" : "Noklikšķiniet šeit, lai atvērtu apakškategorijas attēlus",
 };
