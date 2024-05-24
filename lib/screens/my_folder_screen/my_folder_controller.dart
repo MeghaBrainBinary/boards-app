@@ -7,6 +7,7 @@ import 'dart:io';
 import 'package:boards_app/common/toast_msg.dart';
 import 'package:boards_app/screens/my_folder_screen/api/get_board_info.dart';
 import 'package:boards_app/screens/my_folder_screen/model/get_board_info_model.dart';
+import 'package:boards_app/screens/my_folder_screen/my_folder_screen.dart';
 import 'package:boards_app/services/pref_services.dart';
 import 'package:boards_app/services/sqlite_helper.dart';
 import 'package:boards_app/utils/asset_res.dart';
@@ -101,16 +102,7 @@ await init();
   ];
   List<bool> addSelectedImage = [];
 
-  onTapSelect() {
-    if (isSelect == false) {
-      isSelect = true;
-    } else {
-      isSelect = false;
-    }
-    checkImg = List.generate(getBoardInfoModel.data?.length??0, (index) => false);
-    simg = [];
-    update(['fldr']);
-  }
+
 onTapBack(){
   isSelect = false;
   simg =[];
@@ -413,6 +405,7 @@ loader.value= false;
       update(['fldr']);
     }
   }
+
   Future<void> onSelectedTapShare() async {
     if (addSelectedImage.any((selected) => selected)) {
       loader.value = true;

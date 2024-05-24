@@ -122,13 +122,17 @@ class BoardsScreen extends StatelessWidget {
                                   const SizedBox(height: 70),
 
                                   Padding(
+                                    padding: const EdgeInsets.only(left: 20),
+                                    child: Image.asset(AssetRes.appNewLogo,scale: 3),
+                                  ),
+
+                                  Padding(
                                     padding: const EdgeInsets.only(right: 20.0),
                                     child: Align(
                                       alignment: Alignment.centerRight,
                                       child: Column(
                                         crossAxisAlignment:CrossAxisAlignment.end,
                                         children: [
-                                          Image.asset(AssetRes.appNewLogo,scale: 4),
 
                                           const SizedBox(height: 26),
 
@@ -136,9 +140,7 @@ class BoardsScreen extends StatelessWidget {
                                             onTap: () {
                                               scaffoldKey.currentState?.openEndDrawer();
                                             },
-                                            child: Container(
-                                              child: Image.asset(AssetRes.moreOption, scale: 3, color: ColorRes.appColor),
-                                            ),
+                                            child: Image.asset(AssetRes.moreOption, scale: 3, color: ColorRes.appColor),
                                           ),
                                         ],
                                       ),
@@ -511,10 +513,10 @@ class BoardsScreen extends StatelessWidget {
                                               id: 'board',
                                               initState: (state) {
                                                 if(con.getBoardModelData != null) {
-                                                  // if((PrefService.getBool(PrefKeys.firstTimeOrSecond) ?? true) == false) {
+                                                  if((PrefService.getBool(PrefKeys.firstTimeOrSecond) ?? true) == false) {
                                                     boardsController.showTutorial(context: context);
                                                     PrefService.setValue(PrefKeys.firstTimeOrSecond, true);
-                                                  // }
+                                                  }
                                                   boardsController.update(['board']);
                                                 }
                                               },
@@ -523,6 +525,7 @@ class BoardsScreen extends StatelessWidget {
                                                 height: Get.height * 0.55,
                                                 child: (controller.getBoardModelData['data'] != null)
                                                     ? TreeView(
+                                                      view: false,
                                                       leftIcon: Image.asset(
                                                           AssetRes.success,
                                                           scale: 1.5
@@ -538,17 +541,18 @@ class BoardsScreen extends StatelessWidget {
                                                       ),
                                                       data: controller.treeData,
                                                       onTap: (node) {
-                                                        print(node.id);
+                                                        print(node);
                                                         controller.onTapFolder(
+                                                          node: node,
                                                           node.id.toString(),
                                                           node.name,
                                                           node.icon,
                                                         );
                                                       },
                                                       onLastTap: (node) {
-                                                        print(node.name);
-
+                                                        print(node);
                                                         controller.onTapFolder(
+                                                          node: node,
                                                           node.id.toString(),
                                                           node.name,
                                                           node.icon
@@ -745,7 +749,7 @@ class BoardsScreen extends StatelessWidget {
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     Text(
-                                      StringRes.inspire.tr,
+                                      StringRes.inspire,
                                       style: GoogleFonts.inder(
                                         color: ColorRes.black,
                                         fontSize: 14,

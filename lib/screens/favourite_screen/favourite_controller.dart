@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:boards_app/common/toast_msg.dart';
 import 'package:boards_app/services/pref_services.dart';
 import 'package:boards_app/services/sqlite_helper.dart';
 import 'package:boards_app/utils/appstyle.dart';
@@ -12,6 +15,8 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:http/http.dart' as http;
+import 'package:path_provider/path_provider.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:wc_flutter_share/wc_flutter_share.dart';
 
 class FavouriteController extends GetxController {
@@ -20,24 +25,11 @@ class FavouriteController extends GetxController {
   TextEditingController descriptionController = TextEditingController();
 
   bool isPageView = false;
+  bool isSelectOn = false;
   String selectedLanguage = "English";
   String languageCode = "en";
 
-  List<bool> addSelectedImage = List.generate(4, (index) => false);
-
   RxBool loader = false.obs;
-
-  List<String> settingTitleList = [
-    StringRes.privacyPolicy.tr,
-    StringRes.changePassword.tr,
-    StringRes.deleteAccount.tr,
-  ];
-
-  List<String> settingImageList = [
-    AssetRes.privacyPolicy,
-    AssetRes.lockIcon,
-    AssetRes.deleteAcountIcon,
-  ];
 
   List<Map<String, dynamic>>? storedFavorites = [];
 
@@ -64,7 +56,7 @@ class FavouriteController extends GetxController {
 
   onTapImage(index) async {
     isPageView = true;
-    await Future.delayed(Duration(seconds: 1), () {});
+    await Future.delayed(const Duration(seconds: 1), () {});
     pageController = PageController(initialPage: index);
     selectedImage = storedFavorites![index]['image'].toString();
     update(['favourite']);
@@ -85,7 +77,7 @@ class FavouriteController extends GetxController {
           duration: const Duration(milliseconds: 500), curve: Curves.easeInOut);
       selectedIndex = pageController.page!.round();
     }
-    update(['fldr']);
+    update(['favourite']);
   }
 
   saveImage(context) async {
@@ -145,28 +137,102 @@ class FavouriteController extends GetxController {
             );
           });
       selectedImage = null;
-
-      // loader.value = true;
-      //
-      // simg.forEach((element) async{
-      //   var response = await Dio()
-      //       .get(element, options: Options(responseType: ResponseType.bytes));
-      //   await ImageGallerySaver.saveImage(
-      //     Uint8List.fromList(response.data),
-      //     quality: 60,
-      //     name: "ra",
-      //   );
-      // });
-      // loader.value = false;
-
-      // Get.snackbar(
-      //   "Success",
-      //   "Images Downloaded Successfully",
-      //   backgroundColor: Colors.green,
-      //   colorText: ColorRes.white,
-      // );
-
       update(['favourite']);
+    }
+  }
+
+  Future<void> saveSelectedImages(context) async {
+    if (storedFavorites != null && storedFavorites?.length != 0) {
+      loader.value = true;
+
+      List<String> selectedImages = [];
+
+      for (int i = 0; i < checkImage.length; i++) {
+        if (checkImage[i]) {
+          selectedImages.add(storedFavorites?[i]['image'] ?? "");
+        }
+      }
+
+      try {
+        // Save the selected images
+        for (String selectedImage in selectedImages) {
+          var response = await Dio().get(
+            selectedImage,
+            options: Options(responseType: ResponseType.bytes),
+          );
+
+          await ImageGallerySaver.saveImage(
+            Uint8List.fromList(response.data),
+            quality: 60,
+            name: "ra",
+          );
+        }
+
+
+      } catch (e) {
+
+        Get.snackbar(
+          "Error",
+          "",
+          backgroundColor: Colors.red,
+          colorText: Colors.white,
+        );
+      }
+
+      loader.value = false;
+      showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return Theme(
+              data: ThemeData(dialogBackgroundColor: Colors.white),
+              child: AlertDialog(
+                title:  Text(
+                  "Success",
+                  style: appTextStyle(
+                      weight: FontWeight.w500, fontSize: 20, color: ColorRes.appColor),
+                ),
+                content:  Text(
+                  "Images Downloaded Successfully",
+                  style: appTextStyle(
+                      color: ColorRes.black,
+                      fontSize: 18,
+                      weight: FontWeight.w600),
+                ),
+                actions: <Widget>[
+
+                  ElevatedButton(
+                    style: ButtonStyle(
+                      shape: MaterialStateProperty.resolveWith<OutlinedBorder>(
+                            (Set<MaterialState> states) {
+                          return RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(100),
+                          );
+                        },
+                      ),
+                      side: MaterialStateProperty.all(
+                          const BorderSide(color: ColorRes.blue)),
+                      backgroundColor: MaterialStateProperty.all<Color>(
+                          Colors.white),
+                    ),
+                    onPressed: () {
+                      return Get.back();
+                    },
+                    child:  Text(
+                      "Okay",
+                      style: appTextStyle(
+                          color: ColorRes.appColor,
+                          fontSize: 18,
+                          weight: FontWeight.w600),
+                    ),
+                  ),
+
+                ],
+              ),
+            );
+          }
+      );
+      checkImage = List.generate(storedFavorites?.length ?? 0, (index) => false);
+      update(['fldr']);
     }
   }
 
@@ -197,6 +263,71 @@ class FavouriteController extends GetxController {
     }
   }
 
+  Future<void> onSelectedTapShare() async {
+    if (checkImage.any((selected) => selected)) {
+      loader.value = true;
+
+      List<String> selectedImages = [];
+
+      for (int i = 0; i < checkImage.length; i++) {
+        if (checkImage[i]) {
+          selectedImages.add(storedFavorites?[i]['image'] ?? "");
+        }
+      }
+
+      if (selectedImages.isNotEmpty) {
+        try {
+          await shareMultipleImages(selectedImages);
+        } catch (e) {
+          debugPrint(e.toString());
+        }
+
+        loader.value = false;
+        update(['favourite']);
+      }
+    } else {
+      errorTost("Please select an image to share");
+    }
+  }
+
+  Future<void> shareMultipleImages(List<String> selectedImages) async {
+    List<String> filePaths = [];
+
+    // Save images temporarily and get file paths
+    for (int i = 0; i < selectedImages.length; i++) {
+      String filePath = await saveImageLocally(selectedImages[i], "image$i.jpg");
+      filePaths.add(filePath);
+    }
+
+    try {
+      // Share the images using share_plus
+      await Share.shareFiles(
+        filePaths,
+        text: 'Share Multiple Images',
+        subject: 'Share Multiple Images Subject',
+      );
+    } catch (e) {
+      debugPrint(e.toString());
+    }
+  }
+
+  Future<String> saveImageLocally(String imageUrl, String fileName) async {
+    http.Response response = await http.get(Uri.parse(imageUrl));
+    final bytes = response.bodyBytes;
+
+    Directory tempDir = await getTemporaryDirectory();
+    String tempPath = tempDir.path;
+    String filePath = '$tempPath/$fileName';
+
+    File file = File(filePath);
+    await file.writeAsBytes(bytes);
+
+    return filePath;
+  }
+
+
+  List<bool> checkImage = [];
+
   init() async {
     storedFavorites = [];
     var data = await SqliteHelper.sqliteHelper.fetch();
@@ -206,7 +337,8 @@ class FavouriteController extends GetxController {
         "image": element.imageUrl,
       });
     });
-
+    checkImage = List.generate((storedFavorites ?? []).length, (index) => false);
+    print("--------------------------------${checkImage.length}");
     update(['favourite']);
   }
 
@@ -217,4 +349,25 @@ class FavouriteController extends GetxController {
     await init();
     update(['favourite']);
   }
+
+  removeFavoriteList () async {
+    if (checkImage != null && checkImage.length != 0) {
+      loader.value = true;
+
+
+      for (int i = 0; i < (checkImage ?? []).length; i++) {
+        if (checkImage[i]) {
+          await SqliteHelper.sqliteHelper.delete(
+            imageID: storedFavorites?[i]['id'] ?? '',
+          );
+        }
+      }
+      loader.value = false;
+      await init();
+      update(['favourite']);
+    }
+  }
+
+
+
 }

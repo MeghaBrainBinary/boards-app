@@ -239,7 +239,7 @@ class BoardsController extends GetxController {
 
   RxBool categoryClickLoader = false.obs;
 
-  onTapFolder(String id, String name, String icon ,{String? subBoardId, String? subName}) async{
+  onTapFolder(String id, String name, String icon ,{String? subBoardId, String? subName, TreeNodeData? node}) async{
     //isIcons = List.generate(6, (index) => false);
     isIcon = false;
     isMyfolder = false;
@@ -256,6 +256,9 @@ class BoardsController extends GetxController {
 
     myFolderController.isMore = false;
 
+    print("--------------------------${myFolderController.getBoardInfoModel.data}");
+    print("--------------------------${myFolderController.getBoardInfoModel.data?.length}");
+
     if (myFolderController.getBoardInfoModel.data != null
         && myFolderController.getBoardInfoModel.data!.length != 0
     ) {
@@ -263,11 +266,11 @@ class BoardsController extends GetxController {
       myFolderController.isLike = List.generate(myFolderController.getBoardInfoModel.data?.length ?? 0, (index) => false);
       if (subBoardId == null) {
         //Get.toNamed(AppRoutes.myFolderPage, arguments: name);
-        Get.to(() => MyFolderScreen(boardName: name, icon: icon));
+        Get.to(() => MyFolderScreen(boardName: name, icon: icon, node: node));
         categoryClickLoader.value = false;
       } else {
         //Get.toNamed(AppRoutes.myFolderPage, arguments: subName);
-        Get.to(() => MyFolderScreen(boardName: subName, icon: icon));
+        Get.to(() => MyFolderScreen(boardName: subName, icon: icon,  node: node));
         categoryClickLoader.value = false;
       }
     } else {

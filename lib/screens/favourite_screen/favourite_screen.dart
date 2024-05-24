@@ -43,10 +43,53 @@ class FavouriteScreen extends StatelessWidget {
                   children: [
                     Padding(
                       padding: const EdgeInsets.only(left: 13, right: 13),
-                      child: Column(children: [
-                        SizedBox(height: Get.height * 0.025),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                          children: [
+                        // SizedBox(height: Get.height * 0.025),
 
                         appBar(boardName: StringRes.favourite.tr),
+
+                        const SizedBox(height: 10),
+
+                        if ((controller.storedFavorites ?? []).isNotEmpty)
+                        if (controller.isPageView == false && controller.isSelectOn == false)
+                          GestureDetector(
+                            onTap: () {
+                              controller.checkImage = List.generate(controller.storedFavorites?.length ?? 0, (index) => false);
+                              controller.isSelectOn = true;
+                              controller.isPageView = false;
+                              controller.update(['favourite']);
+                            },
+                            child: Text(
+                              StringRes.select.tr,
+                              style: appTextStyle(color: ColorRes.appColor, fontSize: 15, weight: FontWeight.w500),
+                            ),
+                          )
+                        else const SizedBox()  else const SizedBox(),
+
+                            controller.isSelectOn
+                                ? Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(
+                                        '${controller.checkImage.where((e) => e == true).length} ${StringRes.imageSelected.tr}',
+                                        style: appTextStyle(color: ColorRes.black, fontSize: 13, weight: FontWeight.w600),
+                                      ),
+                                      GestureDetector(
+                                        onTap: () {
+                                          controller.checkImage = List.generate(controller.checkImage.length ?? 0, (index) => false);
+                                          controller.isSelectOn = false;
+                                          controller.update(['favourite']);
+                                          },
+                                        child: Text(
+                                          StringRes.cancel.tr,
+                                          style: appTextStyle(color: ColorRes.appColor, fontSize: 15, weight: FontWeight.w500),
+                                        ),
+                                      ),
+                                    ],
+                                  )
+                                : const SizedBox(),
 
                         SizedBox(height: Get.height * 0.03),
 
@@ -161,46 +204,81 @@ class FavouriteScreen extends StatelessWidget {
                                                 borderRadius: BorderRadius.circular(5),
                                               ),
                                               child: Stack(
-                                                alignment: Alignment.topRight,
+                                                alignment: controller.isSelectOn == false ? Alignment.topRight : Alignment.bottomRight,
                                                 children: [
                                                   GestureDetector(
-                                                    onTap: () {
+                                                    onTap: controller.isSelectOn == false ? ()  {
                                                       controller.isPageView = true;
                                                       controller.onTapImage(index);
                                                       controller.update(['favourite']);
+                                                    } : () {
+                                                      if (controller.checkImage[index] == false) {
+                                                        controller.checkImage[index] = true;
+                                                      } else {
+                                                        controller.checkImage[index] = false;
+                                                      }
+                                                      controller.update(['favourite']);
                                                     },
-                                                    child: CachedNetworkImage(
-                                                      height: 170,
-                                                      width: Get.width,
-                                                      fit: BoxFit.cover,
-                                                      imageUrl: controller.storedFavorites?[index]['image'] ?? "",
-                                                      progressIndicatorBuilder: (context, strings, download) {
-                                                        return Shimmer.fromColors(
-                                                          baseColor: Colors.grey.shade300,
-                                                          highlightColor: Colors.white,
-                                                          enabled: true,
-                                                          child: Container(
-                                                            height: Get.width,
-                                                            width: Get.width,
-                                                            color: Colors.white,
+                                                    child: ClipRRect(
+                                                      borderRadius: BorderRadius.circular(5),
+                                                      child: Container(
+                                                        padding: (controller.checkImage[index] == true)
+                                                            ? const EdgeInsets.all(1)
+                                                            : const EdgeInsets.all(1),
+                                                        decoration: BoxDecoration(
+                                                          color: controller.checkImage[index] == true
+                                                              ? ColorRes.appColor
+                                                              : Colors.transparent,
+                                                          border: Border.all(
+                                                            color: controller.checkImage[index] == true
+                                                                ? ColorRes.appColor
+                                                                : Colors.white,
                                                           ),
-                                                        );
-                                                      },
-                                                      errorWidget: (context, url, error) => Container(),
+                                                          borderRadius: BorderRadius.circular(5),
+                                                        ),
+                                                        child: CachedNetworkImage(
+                                                          height: 170,
+                                                          width: Get.width,
+                                                          fit: BoxFit.cover,
+                                                          imageUrl: controller.storedFavorites?[index]['image'] ?? "",
+                                                          progressIndicatorBuilder: (context, strings, download) {
+                                                            return Shimmer.fromColors(
+                                                              baseColor: Colors.grey.shade300,
+                                                              highlightColor: Colors.white,
+                                                              enabled: true,
+                                                              child: Container(
+                                                                height: Get.width,
+                                                                width: Get.width,
+                                                                color: Colors.white,
+                                                              ),
+                                                            );
+                                                          },
+                                                          errorWidget: (context, url, error) => Container(),
+                                                        ),
+                                                      ),
                                                     ),
                                                   ),
-                                                  GestureDetector(
-                                                    onTap: () {
-                                                      controller.removeFavorite(controller.storedFavorites?[index]['id'] ?? '');
-                                                    },
-                                                    child: Container(
-                                                      height: 20,
-                                                      width: 20,
-                                                      margin: const EdgeInsets.only(top: 12, right: 12),
-                                                      decoration: const BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(5)), color: Colors.white),
-                                                      child: Icon(Icons.favorite_outlined, size: 18, color: ColorRes.colorE16F55),
-                                                    ),
-                                                  ),
+
+                                                  controller.checkImage[index] == true
+                                                      ? Padding(
+                                                          padding: const EdgeInsets.only(bottom: 10, right: 10),
+                                                          child: Image.asset(AssetRes.selectedImage, scale: 4),
+                                                        )
+                                                      : const SizedBox(),
+                                                  controller.isSelectOn == false
+                                                      ? GestureDetector(
+                                                          onTap: () {
+                                                            controller.removeFavorite(controller.storedFavorites?[index]['id'] ?? '');
+                                                          },
+                                                          child: Container(
+                                                            height: 20,
+                                                            width: 20,
+                                                            margin: const EdgeInsets.only(top: 12, right: 12),
+                                                            decoration: const BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(5)), color: Colors.white),
+                                                            child: Icon(Icons.favorite_outlined, size: 18, color: ColorRes.colorE16F55),
+                                                          ),
+                                                        )
+                                                      : const SizedBox(),
                                                   // controller.addSelectedImage[index]==true? Padding(
                                                   //   padding: const EdgeInsets.only(bottom: 10,right: 10),
                                                   //   child: Image.asset(AssetRes.selectedImage,scale: 4,),
@@ -209,47 +287,15 @@ class FavouriteScreen extends StatelessWidget {
                                               ),
                                             ),
                                           ),
-
-                                          /*   (myFolderController.isSelect == false)
-                                        ? const SizedBox()
-                                        : InkWell(
-                                      onTap: () {
-                                        myFolderController.onTapCheck(myFolderController.getBoardInfoModel.data![index].image,index);
-                                      },
-                                      child: Container(
-                                        margin: const EdgeInsets.only(
-                                            right: 10, bottom: 10),
-                                        height: 25,
-                                        width: 25,
-                                        decoration: BoxDecoration(
-                                          color: ColorRes.white,
-                                          shape: BoxShape.circle,
-                                        ),
-                                        child: (myFolderController
-                                            .checkImg[index] ==
-                                            false)
-                                            ? const SizedBox()
-                                            : SizedBox(
-                                          height: 8,
-                                          width: 11,
-                                          child: Transform.scale(
-                                            scale: 0.6,
-                                            child: Icon(
-                                              Icons.check_rounded,
-                                              color: ColorRes
-                                                  .appColor,
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ),*/
                                         ],
                                       );
                                     }),
                               ),
                       ]),
                     ),
-                    (controller.isPageView == true)
+
+
+                    (controller.isPageView == true || controller.isSelectOn == true)
                         ? Column(
                             children: [
                               const SizedBox(height: 30),
@@ -263,25 +309,15 @@ class FavouriteScreen extends StatelessWidget {
                                   child: Row(
                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                     children: [
-                                      // const SizedBox(
-                                      //   height: 23,
-                                      //   width: 23,
-                                      // ),
-                                      // SizedBox(
-                                      //   width: Get.width * 0.06,
-                                      // ),
-                                      // const SizedBox(
-                                      //   height: 23,
-                                      //   width: 23,
-                                      // ),
-                                      // SizedBox(
-                                      //   width: Get.width * 0.06,
-                                      // ),
-
                                       InkWell(
                                         onTap: () async {
-                                          controller.removeFavorite(controller.storedFavorites?[controller.selectedIndex]['id'] ?? '');
+                                          if(controller.isSelectOn == false) {
+                                            await controller.removeFavorite(controller.storedFavorites?[controller.selectedIndex]['id'] ?? '');
+                                          } else {
+                                            await controller.removeFavoriteList();
+                                          }
                                           controller.isPageView = false;
+                                          controller.isSelectOn = false;
                                           controller.update(['favourite']);
                                         },
                                         child: Container(
@@ -304,8 +340,12 @@ class FavouriteScreen extends StatelessWidget {
 
                                       InkWell(
                                         onTap: () async {
-                                          await controller.saveImage(context);
-
+                                          if(controller.isSelectOn == false) {
+                                            await controller.saveImage(context);
+                                          } else {
+                                            await controller.saveSelectedImages(context);
+                                            controller.isSelectOn = false;
+                                          }
                                           controller.update(['favourite']);
                                         },
                                         child: Container(
@@ -325,7 +365,12 @@ class FavouriteScreen extends StatelessWidget {
 
                                       InkWell(
                                         onTap: () async {
-                                          await controller.onTapShare();
+                                          if(controller.isSelectOn == false) {
+                                            await controller.onTapShare();
+                                          } else {
+                                            await controller.onSelectedTapShare();
+                                            controller.isSelectOn = false;
+                                          }
                                         },
                                         child: Container(
                                           width: 100,
@@ -365,11 +410,8 @@ class FavouriteScreen extends StatelessWidget {
   appBar({String? boardName}) {
     return Container(
       alignment: Alignment.bottomCenter,
-      padding: EdgeInsets.only(
-        left: Get.width * 0.05,
-        right: Get.width * 0.05,
-      ),
-      height: Get.height * 0.18,
+      padding: EdgeInsets.only(left: Get.width * 0.05, right: Get.width * 0.05),
+      height: Get.height * 0.1,
       width: Get.width,
       // color: ColorRes.white,
       child: Row(
