@@ -87,4 +87,5 @@ const Map<String, String> Lithuanian = {
   "Click here to open main category's images" : "Spustelėkite čia, kad atidarytumėte pagrindinės kategorijos vaizdus",
   "This is main category title" : "Tai yra pagrindinės kategorijos pavadinimas",
   "Click here to open sub category's images" : "Spustelėkite čia, kad atidarytumėte subkategorijų vaizdus",
+  "No data found" : "Duomenų nerasta",
 };

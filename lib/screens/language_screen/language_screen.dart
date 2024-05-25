@@ -17,6 +17,7 @@ class LanguageScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: ColorRes.white,
       body: Stack(
         children: [
           GetBuilder<LanguageController>(

@@ -78,6 +78,13 @@ List filterList =[];
     }
   }
 
+  List<String> languageList = [
+    "Latvian",
+    "Estonian",
+    "Lithuanian",
+    "English",
+  ];
+
   onTapLanguage(String language1,int index){
 
 
@@ -86,7 +93,8 @@ List filterList =[];
     isCheck[index] =true;
 
 
-    selectedLanguage = language1;
+    // selectedLanguage = language1;
+    selectedLanguage = languageList[index];
     PrefService.setValue(PrefKeys.selectedLanguageIndex,index);
     PrefService.setValue(PrefKeys.selectedLanguage,selectedLanguage);
     update(['lng']);

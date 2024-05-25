@@ -5,6 +5,7 @@ import './tree_node_data.dart';
 
 class TreeView extends StatefulWidget {
   final List<TreeNodeData> data;
+  final String selectedId;
   final bool view;
   final bool lazy;
   final TextStyle? textStyle;
@@ -49,7 +50,9 @@ class TreeView extends StatefulWidget {
     this.showFilter = false,
     this.showActions = false,
     this.showCheckBox = false,
-    this.icon = const Icon(Icons.expand_more, size: 16.0), required this.view,
+    this.icon = const Icon(Icons.expand_more, size: 16.0),
+    required this.view,
+    required this.selectedId,
   }) : super(key: key);
 
   @override
@@ -151,10 +154,12 @@ class _TreeViewState extends State<TreeView> {
             _renderList.length,
                 (int index) {
               return TreeNode(
+                selectedId: widget.selectedId,
                 load: load,
                 remove: remove,
                 append: append,
                 parent: _root,
+                view: widget.view,
                 isChildren: false,
                 textStyle: widget.textStyle ?? const TextStyle(),
                 data: _renderList[index],
@@ -179,5 +184,6 @@ class _TreeViewState extends State<TreeView> {
         ],
       ),
     );
+
   }
 }

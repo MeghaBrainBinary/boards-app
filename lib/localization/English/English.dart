@@ -87,4 +87,5 @@ const Map<String, String> English = {
   "Click here to open main category's images" : "Click here to open main category's images",
   "This is main category title" : "This is main category title",
   "Click here to open sub category's images" : "Click here to open sub category's images",
+  "No data found" : "No data found",
 };

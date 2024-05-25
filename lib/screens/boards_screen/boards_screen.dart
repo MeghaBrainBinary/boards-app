@@ -525,6 +525,7 @@ class BoardsScreen extends StatelessWidget {
                                                 height: Get.height * 0.55,
                                                 child: (controller.getBoardModelData['data'] != null)
                                                     ? TreeView(
+                                                      selectedId: "",
                                                       view: false,
                                                       leftIcon: Image.asset(
                                                           AssetRes.success,
@@ -541,7 +542,6 @@ class BoardsScreen extends StatelessWidget {
                                                       ),
                                                       data: controller.treeData,
                                                       onTap: (node) {
-                                                        print(node);
                                                         controller.onTapFolder(
                                                           node: node,
                                                           node.id.toString(),
@@ -550,7 +550,6 @@ class BoardsScreen extends StatelessWidget {
                                                         );
                                                       },
                                                       onLastTap: (node) {
-                                                        print(node);
                                                         controller.onTapFolder(
                                                           node: node,
                                                           node.id.toString(),

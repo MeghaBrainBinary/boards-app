@@ -37,6 +37,7 @@ class MyApp extends StatelessWidget {
       home: Scaffold(
         appBar: AppBar(title: const Text('Flutter Tree Example')),
         body: TreeView(
+          selectedId: "",
           data: treeData,
           lazy: true,
           load: _load,

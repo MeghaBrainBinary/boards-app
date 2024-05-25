@@ -1,3 +1,4 @@
+import 'package:animated_tree_view/tree_view/tree_node.dart';
 import 'package:boards_app/common/toast_msg.dart';
 import 'package:boards_app/screens/boards_screen/api/language_api.dart';
 import 'package:boards_app/screens/my_folder_screen/my_folder_controller.dart';
@@ -24,7 +25,7 @@ class BoardsController extends GetxController {
       showSkipInLastTarget: true,
       targets: _createTargets(),
       colorShadow: Colors.black,
-      textSkip: StringRes.next,
+      textSkip: StringRes.next.tr,
       paddingFocus: 10,
       opacityShadow: 0.8,
       onFinish: () {
@@ -241,12 +242,17 @@ class BoardsController extends GetxController {
 
   onTapFolder(String id, String name, String icon ,{String? subBoardId, String? subName, TreeNodeData? node}) async{
     //isIcons = List.generate(6, (index) => false);
+
     isIcon = false;
     isMyfolder = false;
     categoryClickLoader.value = true;
     update(['board']);
 
     MyFolderController myFolderController = Get.put(MyFolderController());
+
+    myFolderController.selectedId = id;
+
+    print("-------------------------------------------------${myFolderController.selectedId}");
 
     if (subBoardId == null) {
       await myFolderController.myInt(id);
@@ -260,17 +266,43 @@ class BoardsController extends GetxController {
     print("--------------------------${myFolderController.getBoardInfoModel.data?.length}");
 
     if (myFolderController.getBoardInfoModel.data != null
-        && myFolderController.getBoardInfoModel.data!.length != 0
+        // && myFolderController.getBoardInfoModel.data!.length != 0
     ) {
+
+
+      print("-------------------------$node");
+
+      TreeNode<dynamic> convertTreeNodeDataToDynamic(TreeNodeData nodeData) {
+        // Convert the current node
+        TreeNode<dynamic> treeNode = TreeNode<dynamic>(
+          data: nodeData, // Store TreeNodeData directly in the data property
+          isExpanded: nodeData.expanded, // Use the expanded property from TreeNodeData
+        );
+
+        // Convert and attach children
+        if (nodeData.children != null && nodeData.children.isNotEmpty) {
+          for (TreeNodeData childData in nodeData.children) {
+            TreeNode<dynamic> childNode = convertTreeNodeDataToDynamic(childData);
+            treeNode.children[childData.id.toString()] = childNode; // Add child to the parent TreeNode's children map
+            print("--------------------$childNode");
+          }
+        }
+
+        return treeNode;
+      }
+
+
+
       print("---------------------------->${myFolderController.getBoardInfoModel.data?.length}");
       myFolderController.isLike = List.generate(myFolderController.getBoardInfoModel.data?.length ?? 0, (index) => false);
       if (subBoardId == null) {
         //Get.toNamed(AppRoutes.myFolderPage, arguments: name);
-        Get.to(() => MyFolderScreen(boardName: name, icon: icon, node: node));
+        Get.to(() => MyFolderScreen(boardName: name, icon: icon, node: node?.children ?? []));
         categoryClickLoader.value = false;
       } else {
         //Get.toNamed(AppRoutes.myFolderPage, arguments: subName);
-        Get.to(() => MyFolderScreen(boardName: subName, icon: icon,  node: node));
+
+        Get.to(() => MyFolderScreen(boardName: subName, icon: icon,  node: node?.children ?? []));
         categoryClickLoader.value = false;
       }
     } else {

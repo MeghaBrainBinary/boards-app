@@ -118,18 +118,13 @@ class LanguageScreen22 extends StatelessWidget {
                                   ? ListView.builder(
                                       shrinkWrap: true,
                                       physics: const NeverScrollableScrollPhysics(),
-                                      itemCount:
-                                          languageController.filterList.length,
+                                      itemCount: languageController.filterList.length,
                                       itemBuilder: ((context, index) {
                                         return Column(
                                           children: [
                                             GestureDetector(
                                               onTap: () {
-                                                languageController.onTapLanguage(
-                                                    languageController
-                                                        .filterList[index]['name'],
-                                                index
-                                                );
+                                                languageController.onTapLanguage(languageController.filterList[index]['name'], index);
                                               },
                                               child: Row(
                                                 mainAxisAlignment:
@@ -151,29 +146,19 @@ class LanguageScreen22 extends StatelessWidget {
                                                   ),
                                                   const SizedBox(width: 20,),
                                                   Text(
-                                                    languageController
-                                                        .filterList[index]['name'],
-                                                    style: const TextStyle(
-                                                        fontSize: 14,
-                                                        fontWeight:
-                                                            FontWeight.w500),
+                                                    languageController.filterList[index]['name'],
+                                                    style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
                                                   ),
                                                   const Spacer(),
                                                   Column(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment.start,
+                                                    mainAxisAlignment: MainAxisAlignment.start,
                                                     children: [
                                                      languageController.isCheck[index]
                                                           ? Container(
                                                               color: Colors.white,
-                                                              height: Get.height *
-                                                                  0.020345,
-                                                              width: Get.width *
-                                                                  0.03908,
-                                                              child: Image.asset(
-                                                                  AssetRes
-                                                                      .aerrowIcon,
-                                                              color: ColorRes.appColor,),
+                                                              height: Get.height * 0.020345,
+                                                              width: Get.width * 0.03908,
+                                                              child: Image.asset(AssetRes.aerrowIcon, color: ColorRes.appColor),
                                                             )
                                                           : const SizedBox(),
                                                     ],
@@ -235,14 +220,9 @@ class LanguageScreen22 extends StatelessWidget {
                                                       languageController.isCheck[index] ==true
                                                           ? Container(
                                                               color: Colors.white,
-                                                              height: Get.height *
-                                                                  0.020345,
-                                                              width: Get.width *
-                                                                  0.03908,
-                                                              child: Image.asset(
-                                                                  AssetRes
-                                                                      .aerrowIcon,
-                                                              color:  ColorRes.appColor,),
+                                                              height: Get.height * 0.020345,
+                                                              width: Get.width * 0.03908,
+                                                              child: Image.asset(AssetRes.aerrowIcon, color:  ColorRes.appColor),
                                                             )
                                                           : const SizedBox(),
                                                     ],

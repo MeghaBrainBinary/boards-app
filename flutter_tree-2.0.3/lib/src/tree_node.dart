@@ -2,14 +2,16 @@
 import 'package:flutter/material.dart';
 import '../flutter_tree.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:get/get.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:shimmer/shimmer.dart';
+import 'package:boards_app/utils/color_res.dart';
+import 'package:boards_app/utils/appstyle.dart';
 
 class TreeNode extends StatefulWidget {
+  String selectedId;
   final TreeNodeData data;
   final TreeNodeData parent;
-
+  final bool view;
   final bool lazy;
   final bool isChildren;
   final Widget icon;
@@ -36,7 +38,7 @@ class TreeNode extends StatefulWidget {
   final void Function(TreeNodeData node) append;
   final void Function(TreeNodeData node, TreeNodeData parent) onAppend;
 
-  const TreeNode({
+  TreeNode({
     Key? key,
     required this.data,
     this.isChildren = false,
@@ -60,6 +62,8 @@ class TreeNode extends StatefulWidget {
     required this.onRemove,
     required this.onCollapse,
     required this.textStyle,
+    required this.view,
+    required this.selectedId,
   }) : super(key: key);
 
   @override
@@ -78,6 +82,7 @@ class _TreeNodeState extends State<TreeNode>
   List<TreeNode> _geneTreeNodes(List list, textStyle, isChildren) {
     return List.generate(list.length, (int index) {
       return TreeNode(
+        view: widget.view,
         textStyle: textStyle,
         data: list[index],
         parent: widget.data,
@@ -100,6 +105,7 @@ class _TreeNodeState extends State<TreeNode>
         onRemove: widget.onRemove,
         onAppend: widget.onAppend,
         onLastTap: widget.onLastTap,
+        selectedId: widget.selectedId,
       );
     });
   }
@@ -157,6 +163,8 @@ class _TreeNodeState extends State<TreeNode>
                       _showLoading = true;
                     });
                     // _isExpaned = false;
+                    print("-------------- id ---------------${widget.selectedId}");
+                    print("-------------- id ---------------${widget.data.id}");
                     widget.onLastTap(widget.data);
                     // widget.load(widget.data).then((value) {
                     //   if (value) {
@@ -192,7 +200,6 @@ class _TreeNodeState extends State<TreeNode>
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
-
                       // RotationTransition(
                       //   turns: _turnsTween.animate(_rotationController),
                       //   child: IconButton(
@@ -242,43 +249,55 @@ class _TreeNodeState extends State<TreeNode>
                         children: [
                           Padding(
                             padding: const EdgeInsets.only(left: 5, right: 20),
-                            child: Row(
-                              children: [
-                                InkWell(
-                                  onTap: () {
-                                    widget.onTap(widget.data);
-                                  },
-                                  child: Container(
-                                    height: 32,
-                                    width: 36,
+                            child: widget.view
+                                ? Container(
                                     alignment: Alignment.center,
-                                    child: CachedNetworkImage(
-                                      height: 24,
-                                      width: 24,
-                                      imageUrl: widget.data.icon ?? "",
-                                      progressIndicatorBuilder: (context, strings, download) {
-                                        return Shimmer.fromColors(
-                                          baseColor: Colors.grey.shade300,
-                                          highlightColor: Colors.white,
-                                          enabled: true,
-                                          child: Container(
-                                            decoration: const BoxDecoration(
-                                              shape: BoxShape.circle,
-                                              color: Colors.white,
-                                            ),
-                                            height: 15,
-                                            width: 15,
-                                          ),
-                                        );
-                                      },
-                                      errorWidget: (context, url, error) => const SizedBox(height: 15, width: 15),
+                                    height: 40,
+                                    decoration: BoxDecoration(
+                                        color: (widget.selectedId == (widget.data.id ?? "")) ? ColorRes.appColor : ColorRes.white,
+                                        borderRadius: BorderRadius.circular(15),
+                                        border: Border.all(color: ColorRes.appColor)
                                     ),
+                                    child: Padding(
+                                      padding: const EdgeInsets.symmetric(horizontal: 8),
+                                      child: Text(widget.data.title,
+                                        style: appTextStyle(color: (widget.selectedId == (widget.data.id ?? "")) ? ColorRes.white : ColorRes.appColor, fontSize: 15, weight: FontWeight.w500),),
+                                    ),
+                                  )
+                                : Row(
+                                    children: [
+                                      InkWell(
+                                        onTap: () {
+                                          widget.onTap(widget.data);
+                                        },
+                                        child: Container(
+                                          height: 32,
+                                          width: 36,
+                                          alignment: Alignment.center,
+                                          child: CachedNetworkImage(
+                                            height: 24,
+                                            width: 24,
+                                            imageUrl: widget.data.icon ?? "",
+                                            progressIndicatorBuilder: (context, strings, download) {
+                                              return Shimmer.fromColors(
+                                                baseColor: Colors.grey.shade300,
+                                                highlightColor: Colors.white,
+                                                enabled: true,
+                                                child: Container(
+                                                  decoration: const BoxDecoration(shape: BoxShape.circle, color: Colors.white),
+                                                  height: 15,
+                                                  width: 15,
+                                                ),
+                                              );
+                                            },
+                                            errorWidget: (context, url, error) => const SizedBox(height: 15, width: 15),
+                                          ),
+                                        ),
+                                      ),
+                                      const SizedBox(width: 4),
+                                      Text(widget.data.title, style: widget.textStyle),
+                                    ],
                                   ),
-                                ),
-                                const SizedBox(width: 4),
-                                Text(widget.data.title, style: widget.textStyle),
-                              ],
-                            ),
                           ),
                           (widget.isChildren == false)
                               ? (widget.data.isTop == true)
@@ -300,7 +319,8 @@ class _TreeNodeState extends State<TreeNode>
                             widget.append(widget.data);
                             widget.onAppend(widget.data, widget.parent);
                           },
-                          child: const Text('Add', style: TextStyle(fontSize: 12.0)),
+                          child: const Text('Add',
+                              style: TextStyle(fontSize: 12.0)),
                         ),
                       if (widget.showActions)
                         TextButton(
@@ -308,7 +328,8 @@ class _TreeNodeState extends State<TreeNode>
                             widget.remove(widget.data);
                             widget.onRemove(widget.data, widget.parent);
                           },
-                          child: const Text('Remove', style: TextStyle(fontSize: 12.0)),
+                          child: const Text('Remove',
+                              style: TextStyle(fontSize: 12.0)),
                         ),
                     ],
                   ),
@@ -324,7 +345,10 @@ class _TreeNodeState extends State<TreeNode>
             child: Column(
               children: _geneTreeNodes(
                 widget.data.children,
-                GoogleFonts.inter(color: Colors.black.withOpacity(0.7), fontSize: 14, fontWeight: FontWeight.w400),
+                GoogleFonts.inter(
+                    color: Colors.black.withOpacity(0.7),
+                    fontSize: 14,
+                    fontWeight: FontWeight.w400),
                 true,
               ),
             ),

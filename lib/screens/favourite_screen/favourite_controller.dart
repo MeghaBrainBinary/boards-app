@@ -47,16 +47,16 @@ class FavouriteController extends GetxController {
 
   onImageChanged(i) {
     if (storedFavorites?[i]['image'] != null) {
+      selectedImage = storedFavorites![i]['image'].toString();
       selectedIndex = pageController.page!.round();
 
-      selectedImage = storedFavorites![i]['image'].toString();
     }
     update(['favourite']);
   }
 
-  onTapImage(index) async {
+  onTapImage(index)async{
+    // await Future.delayed(const Duration(seconds: 1),(){});
     isPageView = true;
-    await Future.delayed(const Duration(seconds: 1), () {});
     pageController = PageController(initialPage: index);
     selectedImage = storedFavorites![index]['image'].toString();
     update(['favourite']);

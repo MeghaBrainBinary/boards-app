@@ -86,4 +86,5 @@ const Map<String, String> Estonian = {
   "Click here to open main category's images" : "Põhikategooria piltide avamiseks klõpsake siin",
   "This is main category title" : "See on põhikategooria pealkiri",
   "Click here to open sub category's images" : "Alamkategooria piltide avamiseks klõpsake siin",
+  "No data found" : "Andmeid ei leitud",
 };

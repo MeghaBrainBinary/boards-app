@@ -74,6 +74,7 @@ dependencies:
   path_provider:
   sqflite:
   tutorial_coach_mark: ^1.2.11
+  animated_tree_view:
 
 
 dev_dependencies:

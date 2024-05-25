@@ -172,4 +172,6 @@ class StringRes {
   static const subCategorySubTitle = "Click here to open sub category's images";
 
   static const categoryDes = "Click main category for sub category.";
+
+  static const noDataFound = "No data found";
 }

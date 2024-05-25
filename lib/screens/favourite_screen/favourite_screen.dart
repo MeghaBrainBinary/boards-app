@@ -122,39 +122,44 @@ class FavouriteScreen extends StatelessWidget {
                                             return Stack(
                                               alignment: Alignment.bottomRight,
                                               children: [
-                                                ClipRRect(
-                                                  borderRadius: BorderRadius.circular(5),
-                                                  child: Container(
-                                                    height: Get.height * 0.7,
-                                                    width: Get.width * 0.75,
-                                                    padding: const EdgeInsets.all(2),
-                                                    decoration: BoxDecoration(
-                                                      color: Colors.transparent,
-                                                      borderRadius: BorderRadius.circular(5),
+                                                InkWell(
+                                                  onTap: () {
+                                                    controller.onTapImage(index);
+                                                  },
+                                                  child: ClipRRect(
+                                                    borderRadius: BorderRadius.circular(5),
+                                                    child: Container(
+                                                      height: Get.height * 0.7,
+                                                      width: Get.width * 0.75,
+                                                      padding: const EdgeInsets.all(2),
+                                                      decoration: BoxDecoration(
+                                                        color: Colors.transparent,
+                                                        borderRadius: BorderRadius.circular(5),
+                                                      ),
+                                                      child: CachedNetworkImage(
+                                                        fit: BoxFit.fitWidth,
+                                                        imageUrl: controller.storedFavorites![index]['image']!.toString(),
+                                                        progressIndicatorBuilder: (context, strings, download) {
+                                                          return Shimmer.fromColors(
+                                                            baseColor: Colors.grey.shade300,
+                                                            highlightColor: Colors.white,
+                                                            enabled: true,
+                                                            child: Container(
+                                                              height: Get.width,
+                                                              width: Get.width,
+                                                              color: Colors.white,
+                                                            ),
+                                                          );
+                                                        },
+                                                        errorWidget: (context, url, error) => Container(),
+                                                      ),
+                                                      // child: Image.network(
+                                                      //   controller.getBoardInfoModel.data![index]
+                                                      //       .image!.toString(),
+                                                      //   fit: BoxFit.fitWidth,
+                                                      //
+                                                      // ),
                                                     ),
-                                                    child: CachedNetworkImage(
-                                                      fit: BoxFit.fitWidth,
-                                                      imageUrl: controller.storedFavorites![index]['image']!.toString(),
-                                                      progressIndicatorBuilder: (context, strings, download) {
-                                                        return Shimmer.fromColors(
-                                                          baseColor: Colors.grey.shade300,
-                                                          highlightColor: Colors.white,
-                                                          enabled: true,
-                                                          child: Container(
-                                                            height: Get.width,
-                                                            width: Get.width,
-                                                            color: Colors.white,
-                                                          ),
-                                                        );
-                                                      },
-                                                      errorWidget: (context, url, error) => Container(),
-                                                    ),
-                                                    // child: Image.network(
-                                                    //   controller.getBoardInfoModel.data![index]
-                                                    //       .image!.toString(),
-                                                    //   fit: BoxFit.fitWidth,
-                                                    //
-                                                    // ),
                                                   ),
                                                 ),
                                               ],
@@ -207,16 +212,21 @@ class FavouriteScreen extends StatelessWidget {
                                                 alignment: controller.isSelectOn == false ? Alignment.topRight : Alignment.bottomRight,
                                                 children: [
                                                   GestureDetector(
-                                                    onTap: controller.isSelectOn == false ? ()  {
-                                                      controller.isPageView = true;
-                                                      controller.onTapImage(index);
-                                                      controller.update(['favourite']);
-                                                    } : () {
-                                                      if (controller.checkImage[index] == false) {
-                                                        controller.checkImage[index] = true;
+                                                    onTap: ()  {
+
+                                                      print(index);
+
+                                                      if(controller.isSelectOn == false) {
+                                                        controller.onTapImage(index);
+                                                        controller.update(['favourite']);
                                                       } else {
-                                                        controller.checkImage[index] = false;
+                                                        if (controller.checkImage[index] == false) {
+                                                          controller.checkImage[index] = true;
+                                                        } else {
+                                                          controller.checkImage[index] = false;
+                                                        }
                                                       }
+
                                                       controller.update(['favourite']);
                                                     },
                                                     child: ClipRRect(
@@ -295,7 +305,7 @@ class FavouriteScreen extends StatelessWidget {
                     ),
 
 
-                    (controller.isPageView == true || controller.isSelectOn == true)
+                    (controller.isPageView == true || (controller.isSelectOn == true && controller.checkImage.where((e) => e == true).length > 0))
                         ? Column(
                             children: [
                               const SizedBox(height: 30),

@@ -1,21 +1,13 @@
-
-
 import 'dart:core';
 import 'dart:io';
-
-
 import 'package:boards_app/common/toast_msg.dart';
 import 'package:boards_app/screens/my_folder_screen/api/get_board_info.dart';
 import 'package:boards_app/screens/my_folder_screen/model/get_board_info_model.dart';
-import 'package:boards_app/screens/my_folder_screen/my_folder_screen.dart';
-import 'package:boards_app/services/pref_services.dart';
 import 'package:boards_app/services/sqlite_helper.dart';
 import 'package:boards_app/utils/asset_res.dart';
 import 'package:boards_app/utils/color_res.dart';
-import 'package:boards_app/utils/prefkeys.dart';
 import 'package:boards_app/utils/string_res.dart';
 import 'package:dio/dio.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -23,14 +15,11 @@ import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:http/http.dart' as http;
 import 'package:path_provider/path_provider.dart';
 import 'package:share_plus/share_plus.dart';
-
 import 'package:wc_flutter_share/wc_flutter_share.dart';
-
 import '../../utils/appstyle.dart';
 
 class MyFolderController extends GetxController {
 
-   // GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
   GetBoardInfoModel getBoardInfoModel = GetBoardInfoModel();
   PageController pageController= PageController();
   RxBool loader = false.obs;
@@ -38,9 +27,10 @@ class MyFolderController extends GetxController {
   bool isPageView = false;
   bool isSelectedPageView = false;
   List<bool> isLike = [];
-    String? selectedImage;
+  String? selectedImage;
+  String selectedId = "";
 
-    var args = Get.arguments;
+  var args = Get.arguments;
 
 
 
@@ -676,7 +666,5 @@ selectedImg = false;
   //     // autoInitialize: true,
   //   );
   // }
-
-
 
 }

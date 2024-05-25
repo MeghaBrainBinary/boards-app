@@ -22,7 +22,8 @@ import 'package:video_player/video_player.dart';
 class MyFolderScreen extends StatefulWidget {
   String? boardName;
   String? icon;
-  TreeNodeData? node;
+  List<TreeNodeData>? node;
+
   MyFolderScreen({super.key, this.boardName, this.icon, this.node});
 
   @override
@@ -32,21 +33,19 @@ class MyFolderScreen extends StatefulWidget {
 class _MyFolderScreenState extends State<MyFolderScreen> {
   MyFolderController myFolderController = Get.put(MyFolderController());
   BoardsController boardsController = Get.put(BoardsController());
-  MySelectFolderController mySelectFolderController =   Get.put(MySelectFolderController());
+  MySelectFolderController mySelectFolderController = Get.put(MySelectFolderController());
   late VideoPlayerController videoPlayerController;
   ChewieController? chewieController;
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   Widget build(BuildContext context) {
-
     print("------------------------${widget.node}");
 
     myFolderController.init();
     return WillPopScope(
       onWillPop: () async {
-        if (myFolderController.isPageView ||
-            myFolderController.isSelectedPageView) {
+        if (myFolderController.isPageView || myFolderController.isSelectedPageView) {
           myFolderController.isPageView = false;
           myFolderController.isSelectedPageView = false;
           myFolderController.update(['fldr']);
@@ -62,398 +61,394 @@ class _MyFolderScreenState extends State<MyFolderScreen> {
         resizeToAvoidBottomInset: false,
         body: GetBuilder<MyFolderController>(
           id: 'fldr',
-          builder: (controller) => Column(
+          builder: (controller) => Stack(
+            alignment: Alignment.center,
             children: [
-
-              Expanded(
-                child: ListView.separated(
-                  separatorBuilder: (context, index) => const SizedBox(width: 10),
-                  scrollDirection: Axis.horizontal,
-                  itemCount: widget.node!.children.length,
-                  itemBuilder: (context, index) => Container(
-                    height: 40,
-                    width: 120,
-                    color: Colors.red,
-                  ),
-                ),
-              ),
-
               Stack(
-                alignment: Alignment.center,
                 children: [
-
-                  Stack(
-                    children: [
-                      SingleChildScrollView(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            appBar(boardName: widget.boardName, icon: widget.icon),
-                            SizedBox(height: Get.height * 0.05),
-                            (controller.getBoardInfoModel == null)
-                                ? const SizedBox()
-                                : Padding(
-                                    padding: EdgeInsets.only(left: Get.width * 0.05, right: Get.width * 0.06),
-                                    child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.end,
-                                      children: [
-                                        /* Row(
-                                    mainAxisAlignment: MainAxisAlignment.end,
-                                    children: [
-                                      InkWell(
+                  SingleChildScrollView(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        appBar(boardName: widget.boardName, icon: widget.icon),
+                        SizedBox(height: Get.height * 0.05),
+                        (controller.getBoardInfoModel == null)
+                            ? const SizedBox()
+                            : Padding(
+                                padding: EdgeInsets.only(left: Get.width * 0.05, right: Get.width * 0.06),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.end,
+                                  children: [
+                                    const SizedBox(height: 10),
+                                    if ((controller.getBoardInfoModel.data ?? []).isEmpty)
+                                      const SizedBox()
+                                    else if (controller.isPageView == false && controller.isSelectedPageView == false)
+                                      GestureDetector(
                                         onTap: () {
-                                          controller.onTapSelect();
+                                          MySelectFolderController mySelectFolderController = Get.put(MySelectFolderController());
+                                          myFolderController.addSelectedImage = List.generate(controller.getBoardInfoModel?.data?.length ?? 0, (index) => false);
+                                          controller.isSelectedPageView = true;
+                                          controller.isPageView = false;
+                                          controller.update(['fldr']);
                                         },
-                                        child: Container(
-                                          child: (controller.isSelect == false)
-                                              ? Text(
-                                                  StringRes.select.tr,
-                                                  style: appTextStyle(
-                                                      color: ColorRes.appColor,
-                                                      fontSize: 15,
-                                                      weight: FontWeight.w500),
-                                                )
-                                              : Text(
-                                                  StringRes.cancel.tr,
-                                                  style: appTextStyle(
-                                                      color: ColorRes.appColor,
-                                                      fontSize: 15,
-                                                      weight: FontWeight.w500),
-                                                ),
+                                        child: Text(
+                                          StringRes.select.tr,
+                                          style: appTextStyle(color: ColorRes.appColor, fontSize: 15, weight: FontWeight.w500),
                                         ),
                                       )
-                                    ],
-                                  ),*/
-                                        const SizedBox(height: 10),
-                                        if (controller.isPageView == false &&
-                                            controller.isSelectedPageView == false)
-                                          GestureDetector(
-                                              onTap: () {
-                                                MySelectFolderController mySelectFolderController = Get.put(MySelectFolderController());
-                                                myFolderController.addSelectedImage = List.generate(controller.getBoardInfoModel?.data?.length ?? 0, (index) => false);
-                                                controller.isSelectedPageView = true;
-                                                controller.isPageView = false;
-                                                controller.update(['fldr']);
-                                              },
-                                              child: Text(
-                                                StringRes.select.tr,
-                                                style: appTextStyle(color: ColorRes.appColor, fontSize: 15, weight: FontWeight.w500),
+                                    else const SizedBox(),
+                                    controller.isSelectedPageView
+                                        ? Row(
+                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Text(
+                                                '${myFolderController.addSelectedImage.where((e) => e == true).length} ${StringRes.imageSelected.tr}',
+                                                style: appTextStyle(color: ColorRes.black, fontSize: 13, weight: FontWeight.w600),
                                               ),
+                                              GestureDetector(
+                                                onTap: () {
+                                                  myFolderController.addSelectedImage = List.generate(controller.getBoardInfoModel.data?.length ?? 0, (index) => false);
+                                                  controller.isSelectedPageView = false;
+                                                  controller.update(['fldr']);
+                                                },
+                                                child: Text(
+                                                  StringRes.cancel.tr,
+                                                  style: appTextStyle(color: ColorRes.appColor, fontSize: 15, weight: FontWeight.w500),
+                                                ),
+                                              ),
+                                            ],
                                           )
-                                        else const SizedBox(),
-                                        controller.isSelectedPageView
-                                            ? Row(
-                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                children: [
-                                                  Text(
-                                                    '${myFolderController.addSelectedImage.where((e) => e == true).length} ${StringRes.imageSelected.tr}',
-                                                    style: appTextStyle(color: ColorRes.black, fontSize: 13, weight: FontWeight.w600),
-                                                  ),
-                                                  GestureDetector(
-                                                      onTap: () {
-                                                        myFolderController.addSelectedImage = List.generate(controller.getBoardInfoModel.data?.length ?? 0, (index) => false);
-                                                        controller.isSelectedPageView = false;
-                                                        controller.update(['fldr']);
+                                        : const SizedBox(),
+                                    const SizedBox(height: 20),
+                                    (controller.isPageView && !controller.isSelectedPageView)
+                                        ? Container(
+                                            height: Get.height * 0.7,
+                                            width: Get.width,
+                                            alignment: Alignment.topCenter,
+                                            child: Row(
+                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                              crossAxisAlignment: CrossAxisAlignment.center,
+                                              children: [
+                                                InkWell(
+                                                  onTap: () {
+                                                    controller.tapForwardButton();
+                                                  },
+                                                  child: const Icon(Icons.arrow_back_ios_new_rounded, color: Colors.black, size: 25),
+                                                ),
+                                                Container(
+                                                  alignment: Alignment.topCenter,
+                                                  width: Get.width * 0.75,
+                                                  child: PageView.builder(
+                                                      controller: controller.pageController,
+                                                      itemCount: controller.getBoardInfoModel.data?.length ?? 0,
+                                                      onPageChanged: (val) {
+                                                        controller.onImageChanged(val);
                                                       },
-                                                      child: Text(
-                                                        StringRes.cancel.tr,
-                                                        style: appTextStyle(color: ColorRes.appColor, fontSize: 15, weight: FontWeight.w500),
-                                                      ),
-                                                  ),
-                                                ],
-                                              )
-                                            : const SizedBox(),
-                                        const SizedBox(height: 20),
-                                        (controller.isPageView && !controller.isSelectedPageView)
-                                            ? Container(
-                                                height: Get.height * 0.7,
-                                                width: Get.width,
-                                                alignment: Alignment.topCenter,
-                                                child: Row(
-                                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                                  children: [
-                                                    InkWell(
-                                                        onTap: () {
-                                                          controller.tapForwardButton();
-                                                        },
-                                                        child: const Icon(Icons.arrow_back_ios_new_rounded, color: Colors.black, size: 25),
-                                                    ),
-                                                    Container(
-                                                      alignment: Alignment.topCenter,
-                                                      width: Get.width * 0.75,
-                                                      child: PageView.builder(
-                                                          controller: controller.pageController,
-                                                          itemCount: controller.getBoardInfoModel.data?.length ?? 0,
-                                                          onPageChanged: (val) {
-                                                            controller.onImageChanged(val);
-                                                          },
-                                                          itemBuilder: (context, index) {
-                                                            controller.selectedIndex;
-                                                            return Stack(
-                                                              alignment: Alignment.bottomRight,
-                                                              children: [
-                                                                InkWell(
-                                                                  onTap: () {
-                                                                    controller.onTapImage(index);
-                                                                  },
-                                                                  child: ClipRRect(
+                                                      itemBuilder: (context, index) {
+                                                        controller.selectedIndex;
+                                                        return Stack(
+                                                          alignment: Alignment.bottomRight,
+                                                          children: [
+                                                            InkWell(
+                                                              onTap: () {
+                                                                controller.onTapImage(index);
+                                                              },
+                                                              child: ClipRRect(
+                                                                borderRadius: BorderRadius.circular(5),
+                                                                child: Container(
+                                                                  height: Get.height * 0.7,
+                                                                  width: Get.width * 0.75,
+                                                                  padding: (controller.checkImg[index] == false)
+                                                                      ? const EdgeInsets.all(0)
+                                                                      : const EdgeInsets.all(2),
+                                                                  decoration: BoxDecoration(
+                                                                    color: Colors.transparent,
                                                                     borderRadius: BorderRadius.circular(5),
+                                                                  ),
+                                                                  child: CachedNetworkImage(
+                                                                    fit: BoxFit.fitWidth,
+                                                                    imageUrl: controller.getBoardInfoModel.data![index].image!.toString(),
+                                                                    progressIndicatorBuilder:
+                                                                        (context, strings, download) {
+                                                                      return Shimmer.fromColors(
+                                                                        baseColor: Colors.grey.shade300,
+                                                                        highlightColor: Colors.white,
+                                                                        enabled: true,
+                                                                        child: Container(height: Get.width, width: Get.width, color: Colors.white),
+                                                                      );
+                                                                    },
+                                                                    errorWidget: (context, url, error) => Container(),
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                            ),
+                                                            (controller.isSelect == false)
+                                                                ? const SizedBox()
+                                                                : InkWell(
+                                                                    onTap: () {
+                                                                      controller.onTapCheck(controller.getBoardInfoModel.data![index].image, index);
+                                                                    },
                                                                     child: Container(
-                                                                      height: Get.height * 0.7,
-                                                                      width: Get.width * 0.75,
-                                                                      padding: (controller.checkImg[index] == false)
-                                                                          ? const EdgeInsets.all(0)
-                                                                          : const EdgeInsets.all(2),
-                                                                          decoration: BoxDecoration(
-                                                                              color: Colors.transparent,
-                                                                              borderRadius: BorderRadius.circular(5)),
-                                                                          child: CachedNetworkImage(
-                                                                            fit: BoxFit.fitWidth,
-                                                                            imageUrl: controller.getBoardInfoModel.data![index].image!.toString(),
-                                                                            progressIndicatorBuilder: (context, strings, download) {
-                                                                              return Shimmer.fromColors(
+                                                                      margin: const EdgeInsets.only(right: 10, bottom: 10),
+                                                                      height: 25,
+                                                                      width: 25,
+                                                                      decoration: BoxDecoration(
+                                                                        color: ColorRes.white,
+                                                                        shape: BoxShape.circle,
+                                                                      ),
+                                                                      child: (controller.checkImg[index] == false)
+                                                                          ? const SizedBox()
+                                                                          : SizedBox(
+                                                                              height: 8,
+                                                                              width: 11,
+                                                                              child: Transform.scale(
+                                                                                scale: 0.6,
+                                                                                child: Icon(Icons.check_rounded, color: ColorRes.appColor),
+                                                                              ),
+                                                                            ),
+                                                                    ),
+                                                                  ),
+                                                          ],
+                                                        );
+                                                      }),
+                                                ),
+                                                InkWell(
+                                                  onTap: () {
+                                                    controller.tapBackwardButton();
+                                                  },
+                                                  child: const Icon(Icons.arrow_forward_ios_rounded, color: Colors.black, size: 25),
+                                                ),
+                                              ],
+                                            ),
+                                          )
+                                        : (!controller.isPageView && controller.isSelectedPageView)
+                                            ? SizedBox(
+                                                height: Get.height * 0.67,
+                                                width: Get.width,
+                                                child: (controller.getBoardInfoModel?.data != null)
+                                                    ? GridView.builder(
+                                                        padding: const EdgeInsets.all(0),
+                                                        itemCount: controller.getBoardInfoModel?.data?.length ?? 0,
+                                                        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                                                          crossAxisCount: 2,
+                                                          mainAxisSpacing: 6,
+                                                          crossAxisSpacing: 19,
+                                                        ),
+                                                        itemBuilder: (context, index) {
+                                                          return Stack(
+                                                            alignment: Alignment.bottomRight,
+                                                            children: [
+                                                              InkWell(
+                                                                onTap: () {
+                                                                  if (myFolderController.addSelectedImage[index] == false) {
+                                                                    myFolderController.addSelectedImage[index] = true;
+                                                                  } else {
+                                                                    myFolderController.addSelectedImage[index] = false;
+                                                                  }
+                                                                  myFolderController.update(['fldr']);
+                                                                },
+                                                                child: ClipRRect(
+                                                                  borderRadius: BorderRadius.circular(5),
+                                                                  child: Container(
+                                                                    height: Get.height * 0.199,
+                                                                    width: Get.width * 0.45,
+                                                                    padding: (myFolderController.addSelectedImage[index] == true)
+                                                                        ? const EdgeInsets.all(2)
+                                                                        : const EdgeInsets.all(2),
+                                                                    decoration: BoxDecoration(
+                                                                      color: myFolderController.checkImg[index] == true
+                                                                          ? ColorRes.appColor
+                                                                          : Colors.transparent,
+                                                                      border: Border.all(
+                                                                        color: myFolderController.addSelectedImage[index] == true
+                                                                            ? ColorRes.appColor
+                                                                            : Colors.white,
+                                                                      ),
+                                                                      borderRadius: BorderRadius.circular(5),
+                                                                    ),
+                                                                    child: Stack(
+                                                                      alignment: Alignment.bottomRight,
+                                                                      children: [
+                                                                        CachedNetworkImage(
+                                                                          width: Get.width,
+                                                                          fit: BoxFit.fitWidth,
+                                                                          imageUrl: controller.getBoardInfoModel?.data?[index].image ?? "",
+                                                                          progressIndicatorBuilder: (context, strings, download) {
+                                                                            return Shimmer.fromColors(
                                                                                 baseColor: Colors.grey.shade300,
                                                                                 highlightColor: Colors.white,
                                                                                 enabled: true,
                                                                                 child: Container(height: Get.width, width: Get.width, color: Colors.white),
-                                                                              );
-                                                                              },
-                                                                            errorWidget: (context, url, error) => Container(),
-                                                                          ),
+                                                                            );
+                                                                          },
+                                                                          errorWidget: (context, url, error) => Container(),
                                                                         ),
-                                                                  ),
-                                                                ),
-                                                                (controller.isSelect == false)
-                                                                    ? const SizedBox()
-                                                                    : InkWell(
-                                                                        onTap: () {
-                                                                          controller.onTapCheck(controller.getBoardInfoModel.data![index].image, index);
-                                                                        },
-                                                                        child: Container(
-                                                                              margin: const EdgeInsets.only(right: 10, bottom: 10),
-                                                                              height: 25,
-                                                                              width: 25,
-                                                                              decoration: BoxDecoration(
-                                                                                color: ColorRes.white,
-                                                                                shape: BoxShape.circle,
-                                                                              ),
-                                                                              child: (controller.checkImg[index] == false)
-                                                                                  ? const SizedBox()
-                                                                                  : SizedBox(
-                                                                                      height: 8,
-                                                                                      width: 11,
-                                                                                      child: Transform.scale(
-                                                                                        scale: 0.6,
-                                                                                      child: Icon(Icons.check_rounded, color: ColorRes.appColor),
-                                                                                  ),
-                                                                                ),
-                                                                        ),
-                                                                      ),
-                                                              ],
-                                                            );
-                                                          }),
-                                                    ),
-                                                    InkWell(
-                                                      onTap: () {
-                                                        controller.tapBackwardButton();
-                                                      },
-                                                      child: const Icon(Icons.arrow_forward_ios_rounded, color: Colors.black, size: 25),
-                                                    ),
-                                                  ],
-                                                ),
-                                              )
-                                            : (!controller.isPageView && controller.isSelectedPageView)
-                                                ? SizedBox(
-                                                    height: Get.height * 0.67,
-                                                    width: Get.width,
-                                                    child: (controller.getBoardInfoModel?.data != null)
-                                                        ? GridView.builder(
-                                                            padding: const EdgeInsets.all(0),
-                                                            itemCount: controller.getBoardInfoModel?.data?.length ?? 0,
-                                                            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                                                              crossAxisCount: 2,
-                                                              mainAxisSpacing: 6,
-                                                              crossAxisSpacing: 19,
-                                                            ),
-                                                            itemBuilder: (context, index) {
-                                                              return Stack(
-                                                                alignment: Alignment.bottomRight,
-                                                                children: [
-                                                                  InkWell(
-                                                                    onTap: () {
-                                                                      if (myFolderController.addSelectedImage[index] == false) {
-                                                                        myFolderController.addSelectedImage[index] = true;
-                                                                      } else {
-                                                                        myFolderController.addSelectedImage[index] = false;
-                                                                      }
-                                                                      myFolderController.update(['fldr']);
-                                                                    },
-                                                                    child: ClipRRect(
-                                                                      borderRadius: BorderRadius.circular(5),
-                                                                      child: Container(
-                                                                        height: Get.height * 0.199,
-                                                                        width: Get.width * 0.45,
-                                                                        padding: (myFolderController.addSelectedImage[index] == true)
-                                                                            ? const EdgeInsets.all(2)
-                                                                            : const EdgeInsets.all(2),
-                                                                            decoration: BoxDecoration(
-                                                                              color: myFolderController.checkImg[index] == true
-                                                                                  ? ColorRes.appColor
-                                                                                  : Colors.transparent,
-                                                                              border: Border.all(
-                                                                                color: myFolderController.addSelectedImage[index] == true
-                                                                                    ? ColorRes.appColor
-                                                                                    : Colors.white,
-                                                                              ),
-                                                                              borderRadius: BorderRadius.circular(5),
-                                                                            ),
-                                                                            child: Stack(
-                                                                              alignment: Alignment.bottomRight,
-                                                                              children: [
-                                                                                CachedNetworkImage(
-                                                                                  width: Get.width,
-                                                                                  fit: BoxFit.fitWidth,
-                                                                                  imageUrl: controller.getBoardInfoModel?.data?[index].image ?? "",
-                                                                                  progressIndicatorBuilder: (context, strings, download) {
-                                                                                    return Shimmer.fromColors(
-                                                                                        baseColor: Colors.grey.shade300,
-                                                                                        highlightColor: Colors.white,
-                                                                                        enabled: true,
-                                                                                        child: Container(height: Get.width, width: Get.width, color: Colors.white)
-                                                                                    );
-                                                                                    },
-                                                                                  errorWidget: (context, url, error) => Container(),
-                                                                                ),
-                                                                                myFolderController.addSelectedImage[index] == true
-                                                                                    ? Padding(
-                                                                                        padding: const EdgeInsets.only(bottom: 10, right: 10),
-                                                                                        child: Image.asset(AssetRes.selectedImage, scale: 4),
-                                                                                    )
-                                                                                    : const SizedBox(),
-                                                                          ],
-                                                                        ),
-                                                                      ),
+                                                                        myFolderController.addSelectedImage[index] == true
+                                                                            ? Padding(
+                                                                                padding: const EdgeInsets.only(bottom: 10, right: 10),
+                                                                                child: Image.asset(AssetRes.selectedImage, scale: 4),
+                                                                              )
+                                                                            : const SizedBox(),
+                                                                      ],
                                                                     ),
                                                                   ),
-                                                                  (myFolderController.isSelect == false)
-                                                                      ? const SizedBox()
-                                                                      : InkWell(
-                                                                          onTap: () {
-                                                                            myFolderController.onTapCheck(myFolderController.getBoardInfoModel.data![index].image, index);
-                                                                          },
-                                                                          child: Container(
-                                                                            margin: const EdgeInsets.only(right: 10, bottom: 10),
-                                                                            height: 25,
-                                                                            width: 25,
-                                                                            decoration: BoxDecoration(
-                                                                              color: ColorRes.white,
-                                                                              shape: BoxShape.circle,
-                                                                            ),
-                                                                            child: (myFolderController.checkImg[index] == false)
-                                                                                ? const SizedBox()
-                                                                                : SizedBox(
-                                                                                    height: 8,
-                                                                                    width: 11,
-                                                                                    child: Transform.scale(
-                                                                                      scale: 0.6,
-                                                                                      child: Icon(Icons.check_rounded, color: ColorRes.appColor),
-                                                                                    ),
-                                                                                  ),
-                                                                          ),
-                                                                        ),
-                                                                ],
-                                                              );
-                                                            },
-                                                          )
-                                                        : const SizedBox(),
-                                                  )
-                                                : SizedBox(
-                                                    height: Get.height * 0.67,
-                                                    width: Get.width,
-                                                    child: (controller.getBoardInfoModel.data != null)
-                                                        ? GridView.builder(
-                                                            padding: const EdgeInsets.all(0),
-                                                            itemCount: controller.getBoardInfoModel.data!.length,
-                                                            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                                                              crossAxisCount: 2,
-                                                              mainAxisSpacing: 6,
-                                                              crossAxisSpacing: 19,
-                                                            ),
-                                                            itemBuilder: (context, index) {
-                                                              // String userId =
-                                                              //     PrefService
-                                                              //         .getString(
-                                                              //             PrefKeys
-                                                              //                 .userId);
-                                                              // String? imageId =
-                                                              //     controller
-                                                              //         .getBoardInfoModel
-                                                              //         .data?[index]
-                                                              //         .id
-                                                              //         .toString();
-                                                              //
-                                                              // // Fetch likes information only once
-                                                              // if (controller
-                                                              //     .isLike.isEmpty) {
-                                                              //   if (PrefService.getList(
-                                                              //               PrefKeys.isLike +
-                                                              //                   userId)
-                                                              //           ?.isNotEmpty ==
-                                                              //       true) {
-                                                              //     controller
-                                                              //         .isLike = (PrefService.getList(
-                                                              //                 PrefKeys.isLike +
-                                                              //                     userId) ??
-                                                              //             [])
-                                                              //         .map((liked) =>
-                                                              //             liked ==
-                                                              //             '1')
-                                                              //         .toList();
-                                                              //   } else {
-                                                              //     // Handle the case when controller.isLike is empty
-                                                              //     // For example, you might want to set default values or display a message.
-                                                              //   }
-                                                              // }
-                                                              //
-                                                              // String likeStatus =
-                                                              //     PrefService.getString(
-                                                              //             '$imageId:$userId') ??
-                                                              //         (controller.isLike[
-                                                              //                 index]
-                                                              //             ? '1'
-                                                              //             : '0');
-
-                                                              return Stack(
-                                                                alignment: Alignment.bottomRight,
-                                                                children: [
-                                                                  InkWell(
-                                                                    onTap: () {
-                                                                      controller.selectedIndex = index;
-                                                                      controller.onTapImage(index);
-                                                                    },
-                                                                    child: ClipRRect(
-                                                                      borderRadius: BorderRadius.circular(5),
+                                                                ),
+                                                              ),
+                                                              (myFolderController.isSelect == false)
+                                                                  ? const SizedBox()
+                                                                  : InkWell(
+                                                                      onTap: () {
+                                                                        myFolderController.onTapCheck(myFolderController.getBoardInfoModel.data![index].image, index);
+                                                                      },
                                                                       child: Container(
-                                                                        height: Get.height * 0.199,
-                                                                        width: Get.width * 0.45,
-                                                                        padding: (controller.checkImg[index] == false)
-                                                                            ? const EdgeInsets.all(0)
-                                                                            : const EdgeInsets.all(2),
+                                                                        margin: const EdgeInsets.only(right: 10, bottom: 10),
+                                                                        height: 25,
+                                                                        width: 25,
                                                                         decoration: BoxDecoration(
-                                                                          color: Colors.white,
-                                                                          borderRadius: BorderRadius.circular(5),
+                                                                          color: ColorRes.white,
+                                                                          shape: BoxShape.circle,
                                                                         ),
-                                                                        child: Stack(
-                                                                          alignment: Alignment.topRight,
-                                                                          children: [
-                                                                            CachedNetworkImage(
-                                                                              width: Get.width,
-                                                                              fit: BoxFit.fitWidth,
-                                                                              imageUrl: controller.getBoardInfoModel.data![index].image!.toString(),
-                                                                              errorWidget: (context, url, error) => Container(),
-                                                                              progressIndicatorBuilder: (context, strings, download) {
-                                                                                return Shimmer.fromColors(
+                                                                        child: (myFolderController.checkImg[index] == false)
+                                                                            ? const SizedBox()
+                                                                            : SizedBox(
+                                                                                height: 8,
+                                                                                width: 11,
+                                                                                child: Transform.scale(
+                                                                                  scale: 0.6,
+                                                                                  child: Icon(Icons.check_rounded, color: ColorRes.appColor),
+                                                                                ),
+                                                                              ),
+                                                                      ),
+                                                                    ),
+                                                            ],
+                                                          );
+                                                        },
+                                                      )
+                                                    : Center(
+                                                        child: Text(
+                                                          StringRes.noDataFound.tr,
+                                                          style: appTextStyle(color: ColorRes.appColor, fontSize: 15, weight: FontWeight.w500),
+                                                        ),
+                                                      ),
+                                                    )
+                                            : Column(
+                                                children: [
+
+                                                  // widget.node!.isEmpty
+                                                  //     ? const SizedBox()
+                                                  //     : TreeView(
+                                                  //         selectedId: controller.selectedId,
+                                                  //         view: true,
+                                                  //         leftIcon: Image.asset(AssetRes.success, scale: 1.5),
+                                                  //         icon: Icon(Icons.keyboard_arrow_down_rounded, color: ColorRes.black),
+                                                  //     textStyle: GoogleFonts.inter(
+                                                  //       color: Colors.black,
+                                                  //       fontSize: 17,
+                                                  //       fontWeight: FontWeight.w500,
+                                                  //     ),
+                                                  //     data: widget.node!,
+                                                  //     onTap: (node) {
+                                                  //       boardsController.onTapFolder(
+                                                  //         node: node,
+                                                  //         node.id.toString(),
+                                                  //         node.name,
+                                                  //         node.icon,
+                                                  //       );
+                                                  //     },
+                                                  //     onLastTap: (node) {
+                                                  //       boardsController.onTapFolder(
+                                                  //           node: node,
+                                                  //           node.id.toString(),
+                                                  //           node.name,
+                                                  //           node.icon
+                                                  //       );
+                                                  //     }),
+
+                                                  (widget.node ?? []).isEmpty
+                                                      ? const SizedBox()
+                                                      : Container(
+                                                          margin: EdgeInsets.only(bottom: 10),
+                                                          height: 40,
+                                                          child: ListView.separated(
+                                                            separatorBuilder: (context, index) => const SizedBox(width: 10),
+                                                            scrollDirection: Axis.horizontal,
+                                                            itemCount: widget.node!.length,
+                                                            itemBuilder: (context, index) => InkWell(
+                                                              onTap: () {
+                                                                controller.selectedId = widget.node?[index].id.toString() ?? "";
+                                                                controller.myInt(widget.node?[index].id.toString() ?? "");
+                                                              },
+                                                              child: Container(
+                                                                alignment: Alignment.center,
+                                                                height: 40,
+                                                                decoration: BoxDecoration(
+                                                                    color: (controller.selectedId == (widget.node?[index].id.toString() ?? ""))
+                                                                        ? ColorRes.appColor
+                                                                        : ColorRes.white,
+                                                                    borderRadius: BorderRadius.circular(15),
+                                                                    border: Border.all(color: ColorRes.appColor),
+                                                                ),
+                                                                child: Padding(
+                                                                  padding: const EdgeInsets.symmetric(horizontal: 8),
+                                                                  child: Text(
+                                                                    widget.node?[index].title ?? "",
+                                                                    style: appTextStyle(
+                                                                        color: (controller.selectedId == (widget.node?[index].id.toString() ?? ""))
+                                                                            ? ColorRes.white
+                                                                            : ColorRes.appColor,
+                                                                        fontSize: 15,
+                                                                        weight: FontWeight.w500,
+                                                                    ),
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        ),
+
+                                                  SizedBox(
+                                                      height: Get.height * 0.69,
+                                                      width: Get.width,
+                                                      child: ((controller.getBoardInfoModel.data ?? []).isNotEmpty)
+                                                          ? GridView.builder(
+                                                              padding: const EdgeInsets.all(0),
+                                                              itemCount: controller.getBoardInfoModel.data!.length,
+                                                              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                                                                crossAxisCount: 2,
+                                                                mainAxisSpacing: 6,
+                                                                crossAxisSpacing: 19,
+                                                              ),
+                                                              itemBuilder: (context, index) {
+                                                                return Stack(
+                                                                  alignment: Alignment.bottomRight,
+                                                                  children: [
+                                                                    InkWell(
+                                                                      onTap: () {
+                                                                        controller.selectedIndex = index;
+                                                                        controller.onTapImage(index);
+                                                                      },
+                                                                      child: ClipRRect(
+                                                                        borderRadius: BorderRadius.circular(5),
+                                                                        child: Container(
+                                                                          height: Get.height * 0.199,
+                                                                          width: Get.width * 0.45,
+                                                                          padding: (controller.checkImg[index] == false)
+                                                                              ? const EdgeInsets.all(0)
+                                                                              : const EdgeInsets.all(2),
+                                                                          decoration: BoxDecoration(
+                                                                            color: Colors.white,
+                                                                            borderRadius: BorderRadius.circular(5),
+                                                                          ),
+                                                                          child: Stack(
+                                                                            alignment: Alignment.topRight,
+                                                                            children: [
+                                                                              CachedNetworkImage(
+                                                                                width: Get.width,
+                                                                                fit: BoxFit.fitWidth,
+                                                                                imageUrl: controller.getBoardInfoModel.data![index].image!.toString(),
+                                                                                errorWidget: (context, url, error) => Container(),
+                                                                                progressIndicatorBuilder: (context, strings, download) {
+                                                                                  return Shimmer.fromColors(
                                                                                     baseColor: Colors.grey.shade300,
                                                                                     highlightColor: Colors.white,
                                                                                     enabled: true,
@@ -462,309 +457,241 @@ class _MyFolderScreenState extends State<MyFolderScreen> {
                                                                                       width: Get.width,
                                                                                       color: Colors.white,
                                                                                     ),
-                                                                                );
-                                                                              },
-                                                                            ),
-                                                                            GestureDetector(
-                                                                              onTap: () async {
-                                                                                // if (PrefService.getBool(PrefKeys.login) ==
-                                                                                //     false) {
-                                                                                //   Get.toNamed(AppRoutes.login);
-                                                                                // } else {
-                                                                                // await toggleLike(index,
-                                                                                //     controller, controller.getBoardInfoModel.data![index].image!.toString(),
-                                                                                //     controller.getBoardInfoModel.data?[index].id ?? 0);
-                                                                                await controller.likeUnlike(index);
-                                                                                controller.update(['fldr']);
-                                                                                // }
-                                                                              },
-                                                                              child: Container(
-                                                                                height: 20,
-                                                                                width: 20,
-                                                                                margin: const EdgeInsets.only(top: 12, right: 12),
-                                                                                decoration: const BoxDecoration(
-                                                                                  borderRadius: BorderRadius.all(Radius.circular(5)),
-                                                                                  color: Colors.white,
-                                                                                ),
-                                                                                child: controller.isLike[index] == true
-                                                                                    ? Icon(Icons.favorite_outlined, size: 18, color: ColorRes.colorE16F55)
-                                                                                    : const Icon(Icons.favorite_outline_sharp, size: 18),
+                                                                                  );
+                                                                                },
                                                                               ),
-                                                                            ),
-                                                                          ],
+                                                                              GestureDetector(
+                                                                                onTap: () async {
+                                                                                  await controller.likeUnlike(index);
+                                                                                  controller.update(['fldr']);
+                                                                                },
+                                                                                child: Container(
+                                                                                  height: 20,
+                                                                                  width: 20,
+                                                                                  margin: const EdgeInsets.only(top: 12, right: 12),
+                                                                                  decoration: const BoxDecoration(
+                                                                                    borderRadius: BorderRadius.all(Radius.circular(5)),
+                                                                                    color: Colors.white,
+                                                                                  ),
+                                                                                  child: controller.isLike[index] == true ? Icon(Icons.favorite_outlined, size: 18, color: ColorRes.colorE16F55) : const Icon(Icons.favorite_outline_sharp, size: 18),
+                                                                                ),
+                                                                              ),
+                                                                            ],
+                                                                          ),
                                                                         ),
                                                                       ),
                                                                     ),
-                                                                  ),
-                                                                  (controller.isSelect == false)
-                                                                      ? const SizedBox()
-                                                                      : InkWell(
-                                                                          onTap: () {
-                                                                            controller.onTapCheck(controller.getBoardInfoModel.data![index].image, index);
-                                                                          },
-                                                                          child: Container(
-                                                                            margin: const EdgeInsets.only(right: 10, bottom: 10),
-                                                                            height: 25,
-                                                                            width: 25,
-                                                                            decoration: BoxDecoration(color: ColorRes.white, shape: BoxShape.circle),
-                                                                            child: (controller.checkImg[index] == false)
-                                                                                ? const SizedBox()
-                                                                                : SizedBox(
-                                                                                    height: 8,
-                                                                                    width: 11,
-                                                                                    child: Transform.scale(
-                                                                                      scale: 0.6,
-                                                                                      child: Icon(Icons.check_rounded, color: ColorRes.appColor),
+                                                                    (controller.isSelect == false)
+                                                                        ? const SizedBox()
+                                                                        : InkWell(
+                                                                            onTap: () {
+                                                                              controller.onTapCheck(controller.getBoardInfoModel.data![index].image, index);
+                                                                            },
+                                                                            child: Container(
+                                                                              margin: const EdgeInsets.only(right: 10, bottom: 10),
+                                                                              height: 25,
+                                                                              width: 25,
+                                                                              decoration: BoxDecoration(color: ColorRes.white, shape: BoxShape.circle),
+                                                                              child: (controller.checkImg[index] == false)
+                                                                                  ? const SizedBox()
+                                                                                  : SizedBox(
+                                                                                      height: 8,
+                                                                                      width: 11,
+                                                                                      child: Transform.scale(
+                                                                                        scale: 0.6,
+                                                                                        child: Icon(Icons.check_rounded, color: ColorRes.appColor),
+                                                                                      ),
                                                                                     ),
-                                                                                  ),
+                                                                            ),
                                                                           ),
-                                                                        ),
-                                                                ],
-                                                              );
-                                                            },
-                                                          )
-                                                        : const SizedBox(),
+                                                                  ],
+                                                                );
+                                                              },
+                                                            )
+                                                          : Center(
+                                                              child: Text(
+                                                                StringRes.noDataFound.tr,
+                                                                style: appTextStyle(color: ColorRes.appColor, fontSize: 15, weight: FontWeight.w500),
+                                                              ),
+                                                      ),
                                                   ),
-                                      ],
-                                    ),
-                                  ),
-                            (controller.isPageView == true || controller.isSelectedPageView == true)
-                                ? Column(
-                                    children: [
-                                      const SizedBox(height: 30),
-                                      Container(
-                                        height: 50,
-                                        width: Get.width,
-                                        color: Colors.transparent,
-                                        child: Padding(
-                                          padding: const EdgeInsets.symmetric(horizontal: 20),
-                                          child: Row(
-                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                            children: [
-
-                                              InkWell(
-                                                onTap: () async {
-                                                  if (controller.isSelectedPageView == false) {
-                                                    await controller.likeUnlike(controller.selectedIndex);
-                                                  } else {
-                                                    await controller.likeUnlikeList();
-                                                  }
-                                                  myFolderController.addSelectedImage =
-                                                      List.generate(controller.getBoardInfoModel.data?.length ?? 0, (index) => false);
-                                                  controller.isSelectedPageView = false;
-                                                  controller.update(['fldr']);
-                                                },
-                                                child: Container(
-                                                  width: 100,
-                                                  height: 50,
-                                                  decoration: BoxDecoration(
-                                                    color: ColorRes.appColor,
-                                                    borderRadius: BorderRadius.circular(25),
-                                                  ),
-                                                  child: SizedBox(
-                                                      height: 23,
-                                                      width: 23,
-                                                      child: (controller.isPageView)
-                                                          ? controller.isLike[controller.selectedIndex] == true
-                                                              ? const Icon(Icons.favorite_outlined, color: Colors.white, size: 25)
-                                                              : const Icon(Icons.favorite_outline_sharp, color: Colors.white, size: 25)
-                                                          : const Icon(Icons.favorite_outline_sharp, color: Colors.white, size: 25),
-                                                  ),
-                                                ),
+                                                ],
                                               ),
-
-
-                                              InkWell(
-                                                onTap: () async {
-                                                  if (controller.isSelectedPageView == false) {
-                                                    await controller.saveImage(context);
-                                                  } else {
-                                                    await controller.saveSelectedImages(context);
-                                                  }
-                                                  myFolderController.addSelectedImage = List.generate(controller.getBoardInfoModel.data?.length ?? 0, (index) => false);
-                                                  controller.isSelectedPageView = false;
-                                                  controller.update(['fldr']);
-                                                },
-                                                child: Container(
-                                                  width: 100,
-                                                  height: 50,
-                                                  decoration: BoxDecoration(
-                                                    color: ColorRes.appColor,
-                                                    borderRadius: BorderRadius.circular(25),
-                                                  ),
-                                                  child: const SizedBox(
-                                                      height: 23,
-                                                      width: 23,
-                                                      child: Icon(Icons.file_download_outlined, color: Colors.white, size: 25),
-                                                  ),
-                                                ),
-                                              ),
-
-                                              InkWell(
-                                                onTap: () async {
-                                                  if (controller.isSelectedPageView == false) {
-                                                    await controller.onTapShare();
-                                                  } else {
-                                                    await controller.onSelectedTapShare();
-                                                  }
-                                                  myFolderController.addSelectedImage = List.generate(controller.getBoardInfoModel.data?.length ?? 0, (index) => false);
-                                                  controller.isSelectedPageView = false;
-                                                  controller.update(['fldr']);
-                                                  // Share.share();
-                                                  // controller.simg.forEach((element) {
-                                                  //
-                                                  // Share.share(element);
-                                                  // });
-                                                  // List<ShareItParameters> list =[];
-                                                  // controller.simg.forEach((element) {
-                                                  //   list.add(ShareItParameters(type: ShareItFileType.image,path: element));
-                                                  // });
-                                                  // ShareIt.list(parameters: list);
-
-                                                  // ShareExtend.shareMultiple(controller.simg, 'image');
-                                                  //   List i = [];
-                                                  // controller.simg.forEach((element) async{
-                                                  //  ByteData b = await rootBundle.load(element);
-                                                  //  Map io ={
-                                                  //    "image":element,
-                                                  //    "byteData":b
-                                                  //  };
-                                                  //   i.add(io);
-                                                  // });
-                                                  // Map data= {};
-                                                  //
-                                                  // i.forEach((element) {
-                                                  //   data['element'] = element['byteData'].buffer.asUint8List();
-                                                  // });
-                                                  //
-                                                  // print(data);
-                                                  // await
-                                                  // VocsyShare.files('esys images',
-                                                  //     {
-                                                  //     'esys.png': bytes1.buffer.asUint8List(),
-                                                  //     'bluedan.png': bytes2.buffer.asUint8List(),
-                                                  //     'addresses.csv': bytes3.buffer.asUint8List(),
-                                                  //     },
-                                                  //     '*/*',
-                                                  //     text: 'My optional text.'
-                                                  // );
-
-                                                  // Map i ={};
-                                                  // List bufferData=[];
-                                                  // controller.simg.forEach((element) async{
-                                                  //   await rootBundle.load(element);
-                                                  // });
-                                                  //  VocsyShare.files(, files, mimeType)
-                                                },
-                                                child: Container(
-                                                  width: 100,
-                                                  height: 50,
-                                                  decoration: BoxDecoration(
-                                                    color: ColorRes.appColor,
-                                                    borderRadius: BorderRadius.circular(25),
-                                                  ),
-                                                  child: SizedBox(
-                                                    height: 23,
-                                                    width: 23,
-                                                    child: Image.asset(AssetRes.shareIcon, color: ColorRes.white, scale: 3),
-                                                  ),
-                                                ),
-                                              ),
-
-                                              // SizedBox(
-                                              //   width: Get.width * 0.06,
-                                              // ),
-                                            ],
-                                          ),
-                                        ),
-                                      ),
-                                      const SizedBox(height: 10),
-                                    ],
-                                  )
-                                : const SizedBox(),
-                          ],
-                        ),
-                      ),
-                      (controller.isMore == true)
-                          ? Stack(
-                              children: [
-                                InkWell(
-                                  onTap: () {
-                                    myFolderController.onTapMore();
-                                  },
-                                  child: Container(
-                                    height: Get.height,
-                                    width: Get.width,
-                                    color: ColorRes.black.withOpacity(0.5),
-                                  ),
+                                  ],
                                 ),
-                                Positioned(
-                                  left: Get.width * 0.55,
-                                  top: Get.height * 0.12,
-                                  child: InkWell(
-                                    onTap: () {
-                                      controller.isMore = false;
-                                      controller.selectedImg = false;
-                                      controller.isSelect = false;
-                                      controller.isPageView = false;
-                                      controller.update(['fldr']);
-                                      Get.offAndToNamed(AppRoutes.languageConfirmPage);
-                                    },
-                                    child: Container(
-                                      height: 45,
-                                      width: 153,
-                                      color: ColorRes.white,
+                              ),
+                        (controller.isPageView == true || (controller.isSelectedPageView == true && controller.addSelectedImage.where((e) => e == true).length > 0))
+                            ? Column(
+                                children: [
+                                  const SizedBox(height: 30),
+                                  Container(
+                                    height: 50,
+                                    width: Get.width,
+                                    color: Colors.transparent,
+                                    child: Padding(
+                                      padding: const EdgeInsets.symmetric(horizontal: 20),
                                       child: Row(
-                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                         children: [
-                                          SizedBox(
-                                            height: 14,
-                                            width: 14,
-                                            child: Image.asset(AssetRes.langIcon),
+                                          InkWell(
+                                            onTap: () async {
+                                              if (controller.isSelectedPageView == false) {
+                                                await controller.likeUnlike(controller.selectedIndex);
+                                              } else {
+                                                await controller.likeUnlikeList();
+                                              }
+                                              myFolderController.addSelectedImage = List.generate(controller.getBoardInfoModel.data?.length ?? 0, (index) => false);
+                                              controller.isSelectedPageView = false;
+                                              controller.update(['fldr']);
+                                            },
+                                            child: Container(
+                                              width: 100,
+                                              height: 50,
+                                              decoration: BoxDecoration(
+                                                color: ColorRes.appColor,
+                                                borderRadius: BorderRadius.circular(25),
+                                              ),
+                                              child: SizedBox(
+                                                height: 23,
+                                                width: 23,
+                                                child: (controller.isPageView)
+                                                    ? controller.isLike[controller.selectedIndex] == true
+                                                        ? const Icon(Icons.favorite_outlined, color: Colors.white, size: 25)
+                                                        : const Icon(Icons.favorite_outline_sharp, color: Colors.white, size: 25)
+                                                    : const Icon(Icons.favorite_outline_sharp, color: Colors.white, size: 25),
+                                              ),
+                                            ),
                                           ),
-                                          SizedBox(width: Get.width * 0.03),
-                                          Text(
-                                            StringRes.language.tr,
-                                            style: appTextStyle(fontSize: 15, weight: FontWeight.w500, color: ColorRes.black),
-                                          )
+
+                                          InkWell(
+                                            onTap: () async {
+                                              if (controller.isSelectedPageView == false) {
+                                                await controller.saveImage(context);
+                                              } else {
+                                                await controller.saveSelectedImages(context);
+                                              }
+                                              myFolderController.addSelectedImage = List.generate(controller.getBoardInfoModel.data?.length ?? 0, (index) => false);
+                                              controller.isSelectedPageView = false;
+                                              controller.update(['fldr']);
+                                            },
+                                            child: Container(
+                                              width: 100,
+                                              height: 50,
+                                              decoration: BoxDecoration(
+                                                color: ColorRes.appColor,
+                                                borderRadius: BorderRadius.circular(25),
+                                              ),
+                                              child: const SizedBox(
+                                                height: 23,
+                                                width: 23,
+                                                child: Icon(Icons.file_download_outlined, color: Colors.white, size: 25),
+                                              ),
+                                            ),
+                                          ),
+
+                                          InkWell(
+                                            onTap: () async {
+                                              if (controller.isSelectedPageView == false) {
+                                                await controller.onTapShare();
+                                              } else {
+                                                await controller.onSelectedTapShare();
+                                              }
+                                              myFolderController.addSelectedImage = List.generate(controller.getBoardInfoModel.data?.length ?? 0, (index) => false);
+                                              controller.isSelectedPageView = false;
+                                              controller.update(['fldr']);
+                                            },
+                                            child: Container(
+                                              width: 100,
+                                              height: 50,
+                                              decoration: BoxDecoration(
+                                                color: ColorRes.appColor,
+                                                borderRadius: BorderRadius.circular(25),
+                                              ),
+                                              child: SizedBox(
+                                                height: 23,
+                                                width: 23,
+                                                child: Image.asset(AssetRes.shareIcon, color: ColorRes.white, scale: 3),
+                                              ),
+                                            ),
+                                          ),
                                         ],
                                       ),
                                     ),
                                   ),
-                                )
-                              ],
-                            )
-                          : const SizedBox()
-                    ],
+                                  const SizedBox(height: 10),
+                                ],
+                              )
+                            : const SizedBox(),
+                      ],
+                    ),
                   ),
-                  Obx(() => (controller.loader.value)
-                      ? const CommonLoader()
-                      : const SizedBox())
+                  (controller.isMore == true)
+                      ? Stack(
+                          children: [
+                            InkWell(
+                              onTap: () {
+                                myFolderController.onTapMore();
+                              },
+                              child: Container(
+                                height: Get.height,
+                                width: Get.width,
+                                color: ColorRes.black.withOpacity(0.5),
+                              ),
+                            ),
+                            Positioned(
+                              left: Get.width * 0.55,
+                              top: Get.height * 0.12,
+                              child: InkWell(
+                                onTap: () {
+                                  controller.isMore = false;
+                                  controller.selectedImg = false;
+                                  controller.isSelect = false;
+                                  controller.isPageView = false;
+                                  controller.update(['fldr']);
+                                  Get.offAndToNamed(AppRoutes.languageConfirmPage);
+                                },
+                                child: Container(
+                                  height: 45,
+                                  width: 153,
+                                  color: ColorRes.white,
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      SizedBox(
+                                        height: 14,
+                                        width: 14,
+                                        child: Image.asset(AssetRes.langIcon),
+                                      ),
+                                      SizedBox(width: Get.width * 0.03),
+                                      Text(
+                                        StringRes.language.tr,
+                                        style: appTextStyle(fontSize: 15, weight: FontWeight.w500, color: ColorRes.black),
+                                      )
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            )
+                          ],
+                        )
+                      : const SizedBox()
                 ],
               ),
+              Obx(() => (controller.loader.value)
+                  ? const CommonLoader()
+                  : const SizedBox())
             ],
           ),
         ),
         endDrawer: Drawer(
           backgroundColor: Colors.white,
           shape: const OutlineInputBorder(
-            borderRadius: BorderRadius.only(bottomLeft: Radius.circular(55), topLeft: Radius.circular(55)),
+            borderRadius: BorderRadius.only(
+                bottomLeft: Radius.circular(55), topLeft: Radius.circular(55)),
           ),
           child: Column(
             children: [
-              // SizedBox(
-              //   height: Get.height * 0.1,
-              // ),
-              // Center(
-              //     child:
-              //         Image.asset(AssetRes.boards, width: Get.width * 0.3)),
-              // SizedBox(
-              //   height: Get.height * 0.08,
-              // ),
               const SizedBox(height: 50),
-              // Center(
-              //     child:
-              //     Image.asset(AssetRes.boards, width: Get.width * 0.3)),
               Padding(
                 padding: const EdgeInsets.only(right: 20.0),
                 child: Align(
@@ -864,7 +791,8 @@ class _MyFolderScreenState extends State<MyFolderScreen> {
                 Container(
                   decoration: const BoxDecoration(shape: BoxShape.circle),
                   height: 20,
-                  width: 20, child: icon != '' ? Image.network(icon ?? "") : Image.asset(AssetRes.myfolderIcon),
+                  width: 20,
+                  child: icon != '' ? Image.network(icon ?? "") : Image.asset(AssetRes.myfolderIcon),
                 ),
                 const SizedBox(width: 15),
                 Text(
@@ -878,9 +806,7 @@ class _MyFolderScreenState extends State<MyFolderScreen> {
             onTap: () {
               scaffoldKey.currentState?.openEndDrawer();
             },
-            child: Container(
-              child: Image.asset(AssetRes.moreOption, scale: 3, color: ColorRes.appColor),
-            ),
+            child: Image.asset(AssetRes.moreOption, scale: 3, color: ColorRes.appColor),
           ),
         ],
       ),

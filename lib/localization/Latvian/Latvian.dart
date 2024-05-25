@@ -90,4 +90,5 @@ const Map<String, String> Latvian = {
   "Click here to open main category's images" : "Noklikšķiniet šeit, lai atvērtu galvenās kategorijas attēlus",
   "This is main category title" : "Šis ir galvenās kategorijas nosaukums",
   "Click here to open sub category's images" : "Noklikšķiniet šeit, lai atvērtu apakškategorijas attēlus",
+  "No data found" : "Dati nav atrasti",
 };
