@@ -59,6 +59,7 @@ class FavouriteController extends GetxController {
     isPageView = true;
     pageController = PageController(initialPage: index);
     selectedImage = storedFavorites![index]['image'].toString();
+
     update(['favourite']);
   }
 
@@ -67,6 +68,7 @@ class FavouriteController extends GetxController {
       pageController.animateToPage(pageController.page!.round() + 1,
           duration: const Duration(milliseconds: 500), curve: Curves.easeInOut);
       selectedIndex = pageController.page!.round();
+      selectedImage = storedFavorites![selectedIndex]['image'].toString();
     }
     update(['favourite']);
   }
@@ -76,6 +78,7 @@ class FavouriteController extends GetxController {
       pageController.animateToPage(pageController.page!.round() - 1,
           duration: const Duration(milliseconds: 500), curve: Curves.easeInOut);
       selectedIndex = pageController.page!.round();
+      selectedImage = storedFavorites![selectedIndex]['image'].toString();
     }
     update(['favourite']);
   }

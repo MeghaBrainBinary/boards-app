@@ -53,7 +53,7 @@ const Map<String, String> English = {
   "My Folder": "My Folder",
   "Challenge": "Challenge",
   "Weekend": "Weekend",
-  "Holidays": "Holidays",
+  "Holiday": "Holiday",
   "Tasty": "Tasty",
   "Events": "Events",
   "Email can not be empty": "Email can not be empty",
@@ -88,4 +88,8 @@ const Map<String, String> English = {
   "This is main category title" : "This is main category title",
   "Click here to open sub category's images" : "Click here to open sub category's images",
   "No data found" : "No data found",
+  "Just another magic day!":"Just another magic day!",
+  "Future depends on what you do today!":"Future depends on what you do today!",
+  "Can we start the weekend again? I was not ready!":"Can we start the weekend again? I was not ready!",
+  "Don’t limit your challenges. Challenge your limits.":"Don’t limit your challenges. Challenge your limits.",
 };

@@ -53,7 +53,7 @@ const Map<String, String> Latvian = {
   "My Folder": "Mana mape",
   "Challenge": "Izaicinājums",
   "Weekend": "Nedēļas nogale",
-  "Holidays": "Brīvdienas",
+  "Holiday": "Svētki",
   "Tasty": "Garšīgs",
   "Events": "Notikumi",
 
@@ -86,6 +86,11 @@ const Map<String, String> Latvian = {
   "Or":"Or",
   "This is main category" : "Šī ir galvenā kategorija",
   "Click main category for sub category." : "Noklikšķiniet uz galvenās kategorijas, lai atvērtu apakškategoriju.",
+
+  "Just another magic day!":"Vēl viena burvju diena!",
+  "Future depends on what you do today!":"Nākotne ir atkarīga no tā, ko jūs darāt šodien!",
+  "Can we start the weekend again? I was not ready!":"Vai varam atkal sākt nedēļas nogali? Es nebiju gatavs!",
+  "Don’t limit your challenges. Challenge your limits.":"Neierobežojiet savus izaicinājumus. Izaiciniet savas robežas.",
 
   "Click here to open main category's images" : "Noklikšķiniet šeit, lai atvērtu galvenās kategorijas attēlus",
   "This is main category title" : "Šis ir galvenās kategorijas nosaukums",

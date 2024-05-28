@@ -53,7 +53,7 @@ const Map<String, String> Lithuanian = {
   "My Folder": "Mano aplankas",
   "Challenge": "Iššūkis",
   "Weekend": "Savaitgalis",
-  "Holidays": "Atostogos",
+  "Holiday": "Svētki",
   "Tasty": "Skanus",
   "Events": "Įvykiai",
   "Language": "Kalba",
@@ -88,4 +88,9 @@ const Map<String, String> Lithuanian = {
   "This is main category title" : "Tai yra pagrindinės kategorijos pavadinimas",
   "Click here to open sub category's images" : "Spustelėkite čia, kad atidarytumėte subkategorijų vaizdus",
   "No data found" : "Duomenų nerasta",
+
+  "Just another magic day!":"Tiesiog dar viena stebuklinga diena!",
+  "Future depends on what you do today!":"Ateitis priklauso nuo to, ką veiksi šiandien!",
+  "Can we start the weekend again? I was not ready!":"Ar galime vėl pradėti savaitgalį? Aš nebuvau pasiruošęs!",
+  "Don’t limit your challenges. Challenge your limits.":"Neribokite savo iššūkių. Mesk iššūkį savo riboms.",
 };

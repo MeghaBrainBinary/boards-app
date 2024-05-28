@@ -9,7 +9,7 @@ import 'package:boards_app/utils/appstyle.dart';
 
 class TreeNode extends StatefulWidget {
   String selectedId;
-  final TreeNodeData data;
+   TreeNodeData data;
   final TreeNodeData parent;
   final bool view;
   final bool lazy;
@@ -22,8 +22,8 @@ class TreeNode extends StatefulWidget {
   final double offsetLeft;
   final TextStyle textStyle;
 
-  final Function(TreeNodeData node) onTap;
-  final Function(TreeNodeData node) onLastTap;
+  final Function(TreeNodeData parent,TreeNodeData node) onTap;
+  final Function(TreeNodeData parent,TreeNodeData node) onLastTap;
   final void Function(bool checked, TreeNodeData node) onCheck;
 
   final void Function(TreeNodeData node) onExpand;
@@ -165,7 +165,7 @@ class _TreeNodeState extends State<TreeNode>
                     // _isExpaned = false;
                     print("-------------- id ---------------${widget.selectedId}");
                     print("-------------- id ---------------${widget.data.id}");
-                    widget.onLastTap(widget.data);
+                    widget.onLastTap(widget.parent,widget.data);
                     // widget.load(widget.data).then((value) {
                     //   if (value) {
                     //     _rotationController.forward();
@@ -183,14 +183,18 @@ class _TreeNodeState extends State<TreeNode>
                     //   _rotationController.reverse();
                     // }
 
-                    _isExpaned = !_isExpaned;
+                   // _isExpaned = !_isExpaned;
                     // if(!_isExpaned) {
                     //   widget.onTap(widget.data);
                     // }
+
+
+                    _isExpaned = !_isExpaned;
                     if (_isExpaned) {
                       _rotationController.forward();
                     } else {
                       _rotationController.reverse();
+
                     }
                     setState(() {});
                   }
@@ -248,35 +252,68 @@ class _TreeNodeState extends State<TreeNode>
                         alignment: Alignment.centerLeft,
                         children: [
                           Padding(
-                            padding: const EdgeInsets.only(left: 5, right: 20),
+                            padding: const EdgeInsets.only(left: 5, right: 5),
                             child: widget.view
                                 ? Container(
                                     alignment: Alignment.center,
                                     height: 40,
                                     decoration: BoxDecoration(
-                                        color: (widget.selectedId == (widget.data.id ?? "")) ? ColorRes.appColor : ColorRes.white,
+                                        color: (widget.selectedId == (widget.data.id ?? "").toString()) ? ColorRes.appColor : ColorRes.white,
                                         borderRadius: BorderRadius.circular(15),
                                         border: Border.all(color: ColorRes.appColor)
                                     ),
-                                    child: Padding(
-                                      padding: const EdgeInsets.symmetric(horizontal: 8),
-                                      child: Text(widget.data.title,
-                                        style: appTextStyle(color: (widget.selectedId == (widget.data.id ?? "")) ? ColorRes.white : ColorRes.appColor, fontSize: 15, weight: FontWeight.w500),),
+                                    child: Row(
+                                      children: [
+                                        InkWell(
+                                          onTap: () {
+                                            widget.onTap(widget.parent,widget.data);
+                                          },
+                                          child: Container(
+                                            height: 32,
+                                            width: 36,
+                                            alignment: Alignment.center,
+                                            child: CachedNetworkImage(
+                                              height: 24,
+                                              width: 24,
+                                              imageUrl: widget.data.icon ?? "",
+                                              progressIndicatorBuilder: (context, strings, download) {
+                                                return Shimmer.fromColors(
+                                                  baseColor: Colors.grey.shade300,
+                                                  highlightColor: Colors.white,
+                                                  enabled: true,
+                                                  child: Container(
+                                                    decoration: const BoxDecoration(shape: BoxShape.circle, color: Colors.white),
+                                                    height: 15,
+                                                    width: 15,
+                                                  ),
+                                                );
+                                              },
+                                              errorWidget: (context, url, error) => const SizedBox(height: 15, width: 15),
+                                            ),
+                                          ),
+                                        ),
+                                        const SizedBox(width: 4),
+                                        Padding(
+                                          padding: const EdgeInsets.symmetric(horizontal: 8),
+                                          child: Text(widget.data.title,
+                                            style: appTextStyle(color: (widget.selectedId == (widget.data.id ?? "").toString()) ? ColorRes.white : ColorRes.appColor, fontSize: 15, weight: FontWeight.w500),),
+                                        ),
+                                      ],
                                     ),
                                   )
                                 : Row(
                                     children: [
                                       InkWell(
                                         onTap: () {
-                                          widget.onTap(widget.data);
+                                          widget.onTap(widget.parent,widget.data);
                                         },
                                         child: Container(
-                                          height: 32,
-                                          width: 36,
+                                          height: 40,
+                                          width: 46,
                                           alignment: Alignment.center,
                                           child: CachedNetworkImage(
-                                            height: 24,
-                                            width: 24,
+                                            height: 40,
+                                            width: 46,
                                             imageUrl: widget.data.icon ?? "",
                                             progressIndicatorBuilder: (context, strings, download) {
                                               return Shimmer.fromColors(

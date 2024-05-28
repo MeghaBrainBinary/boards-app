@@ -29,7 +29,7 @@ class MyFolderController extends GetxController {
   List<bool> isLike = [];
   String? selectedImage;
   String selectedId = "";
-
+List<bool> isSelectedNode =[];
   var args = Get.arguments;
 
 
@@ -152,6 +152,7 @@ pageController =PageController(initialPage: index);
           pageController.page!.round() +1, duration: const Duration(milliseconds: 500),
           curve: Curves.easeInOut);
       selectedIndex =  pageController.page!.round();
+      selectedImage = getBoardInfoModel.data![selectedIndex].image.toString();
     }
     update(['fldr']);
   }
@@ -161,6 +162,7 @@ pageController =PageController(initialPage: index);
           pageController.page!.round() -1, duration: const Duration(milliseconds: 500),
           curve: Curves.easeInOut);
       selectedIndex =  pageController.page!.round();
+      selectedImage = getBoardInfoModel.data![selectedIndex].image.toString();
     }
     update(['fldr']);
   }

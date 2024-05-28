@@ -18,7 +18,9 @@ class LanguageScreen22 extends StatelessWidget {
   Language2Controller2 languageController = Get.put(Language2Controller2());
   @override
   Widget build(BuildContext context) {
-    return Scaffold(body:  SafeArea(
+    return Scaffold(
+        backgroundColor: Colors.white,
+        body:  SafeArea(
         child: Stack(
           children: [
             Padding(

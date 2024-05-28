@@ -541,20 +541,23 @@ class BoardsScreen extends StatelessWidget {
                                                         fontWeight: FontWeight.w500,
                                                       ),
                                                       data: controller.treeData,
-                                                      onTap: (node) {
+                                                      onTap: (p,node) {
+
                                                         controller.onTapFolder(
-                                                          node: node,
+                                                          node: (p.id.toString() =="0") ?node:p,
                                                           node.id.toString(),
                                                           node.name,
                                                           node.icon,
+                                                          isFirst:(p.id.toString() =="0") ?true:false,
                                                         );
                                                       },
-                                                      onLastTap: (node) {
+                                                      onLastTap: (p,node) {
                                                         controller.onTapFolder(
-                                                          node: node,
+                                                          node:  (p.id.toString() =="0") ?node:p,
                                                           node.id.toString(),
                                                           node.name,
-                                                          node.icon
+                                                          node.icon,
+                                                            isFirst:p.id.toString() =="0"?true:false,
                                                         );
                                                       })
                                                     : const SizedBox(),

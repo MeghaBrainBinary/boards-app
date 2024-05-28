@@ -85,7 +85,7 @@ class StringRes {
   static String myFolder = "My Folder";
   static String challenge = "Challenge";
   static String weekend = "Weekend";
-  static String holidays = "Holidays";
+  static String holidays = "Holiday";
   static String tasty = "Tasty";
   static String events = "Events";
 
@@ -174,4 +174,8 @@ class StringRes {
   static const categoryDes = "Click main category for sub category.";
 
   static const noDataFound = "No data found";
+  static const holidayQuotes = "Just another magic day!";
+  static const motivationQuotes = "Future depends on what you do today!";
+  static const weekendQuotes = "Can we start the weekend again? I was not ready!";
+  static const challengesQuotes = "Don’t limit your challenges. Challenge your limits.";
 }

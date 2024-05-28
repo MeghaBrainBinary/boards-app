@@ -240,7 +240,7 @@ class BoardsController extends GetxController {
 
   RxBool categoryClickLoader = false.obs;
 
-  onTapFolder(String id, String name, String icon ,{String? subBoardId, String? subName, TreeNodeData? node}) async{
+  onTapFolder(String id, String name, String icon ,{String? subBoardId, String? subName, TreeNodeData? node,bool isFirst = false}) async{
     //isIcons = List.generate(6, (index) => false);
 
     isIcon = false;
@@ -295,16 +295,27 @@ class BoardsController extends GetxController {
 
       print("---------------------------->${myFolderController.getBoardInfoModel.data?.length}");
       myFolderController.isLike = List.generate(myFolderController.getBoardInfoModel.data?.length ?? 0, (index) => false);
+
+
       if (subBoardId == null) {
         //Get.toNamed(AppRoutes.myFolderPage, arguments: name);
-        Get.to(() => MyFolderScreen(boardName: name, icon: icon, node: node?.children ?? []));
+
+        myFolderController.selectedId =id.toString() ?? "";
+        myFolderController.myInt(id.toString() ?? "");
+        myFolderController.isSelectedNode = List.generate(node?.children.length ?? 0, (index) => false);
+        Get.to(() => MyFolderScreen(boardName: name, icon: icon, node: node?.children ?? [],isFirst :isFirst,parentId: id.toString(),));
         categoryClickLoader.value = false;
       } else {
         //Get.toNamed(AppRoutes.myFolderPage, arguments: subName);
+        myFolderController.selectedId =id.toString() ?? "";
+        myFolderController.myInt(id.toString() ?? "");
+        myFolderController.isSelectedNode = List.generate(node?.children.length ?? 0, (index) => false);
 
-        Get.to(() => MyFolderScreen(boardName: subName, icon: icon,  node: node?.children ?? []));
+        Get.to(() => MyFolderScreen(boardName: subName, icon: icon,  node: node?.children ?? [],isFirst :isFirst,parentId: id.toString(),));
         categoryClickLoader.value = false;
       }
+
+
     } else {
       errorTost("This category don't have images");
       categoryClickLoader.value = false;
