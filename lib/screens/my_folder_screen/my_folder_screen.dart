@@ -24,7 +24,9 @@ class MyFolderScreen extends StatefulWidget {
   String? boardName;
   String? icon;
   String? parentId;
+  String? quote;
   bool? isFirst;
+  bool? isFirstNode;
   List<TreeNodeData>? node;
 
   MyFolderScreen(
@@ -32,7 +34,9 @@ class MyFolderScreen extends StatefulWidget {
       this.boardName,
       this.icon,
       this.parentId,
+      this.quote,
       this.isFirst,
+      this.isFirstNode,
       this.node});
 
   @override
@@ -83,7 +87,7 @@ class _MyFolderScreenState extends State<MyFolderScreen> {
                       children: [
                         appBar(boardName: widget.boardName, icon: widget.icon),
                         SizedBox(height: Get.height * 0.05),
-                        Padding(
+                    /*    Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 30.0),
                           child: Text(
                             ((widget.boardName ?? '').toLowerCase().contains(
@@ -113,7 +117,7 @@ class _MyFolderScreenState extends State<MyFolderScreen> {
                                 weight: FontWeight.w500),
                           ),
                         ),
-                        SizedBox(height: Get.height * 0.05),
+                        SizedBox(height: Get.height * 0.05),*/
                         (controller.getBoardInfoModel == null)
                             ? const SizedBox()
                             : Padding(
@@ -130,7 +134,8 @@ class _MyFolderScreenState extends State<MyFolderScreen> {
                                       const SizedBox()
                                     else if (controller.isPageView == false &&
                                         controller.isSelectedPageView == false)
-                                      GestureDetector(
+      (widget.isFirstNode ?? false)?const SizedBox():
+      GestureDetector(
                                         onTap: () {
                                           MySelectFolderController
                                               mySelectFolderController =
@@ -157,7 +162,7 @@ class _MyFolderScreenState extends State<MyFolderScreen> {
                                     else
                                       const SizedBox(),
                                     controller.isSelectedPageView
-                                        ? Row(
+                                        ? (widget.isFirstNode ?? false)?const SizedBox():Row(
                                             mainAxisAlignment:
                                                 MainAxisAlignment.spaceBetween,
                                             children: [
@@ -381,7 +386,20 @@ class _MyFolderScreenState extends State<MyFolderScreen> {
                                           )
                                         : (!controller.isPageView &&
                                                 controller.isSelectedPageView)
-                                            ? SizedBox(
+                                            ?
+                                    widget.isFirstNode ?? false ?Container(
+                                        height: Get.height * 0.67,
+                                        width: Get.width,
+alignment: Alignment.center,
+                                        child:  Text((widget.quote ?? '') ,
+                                          textAlign: TextAlign.center,
+                                          style: appTextStyle(
+                                              color: ColorRes
+                                                  .appColor,
+                                              fontSize:
+                                              25,
+                                              weight: FontWeight
+                                                  .w500),)):SizedBox(
                                                 height: Get.height * 0.67,
                                                 width: Get.width,
                                                 child: (controller
@@ -626,25 +644,29 @@ class _MyFolderScreenState extends State<MyFolderScreen> {
                                                               onTap: () {
                                                                 if (widget
                                                                         .isFirst ??
-                                                                    false) {
+                                                                    false)
+                                                                {
                                                                   if (controller
                                                                           .isSelectedNode[
                                                                       index]) {
                                                                     controller.isSelectedNode[
                                                                             index] =
                                                                         false;
+                                                                    widget.isFirstNode= true;
+
                                                                     controller
                                                                             .selectedId =
                                                                         widget
                                                                             .parentId
                                                                             .toString();
-                                                                    controller.myInt(
-                                                                        widget.parentId.toString() ??
-                                                                            "");
+                                                                    // controller.myInt(
+                                                                    //     widget.parentId.toString() ??
+                                                                    //         "");
                                                                   } else {
                                                                     controller.isSelectedNode[
                                                                             index] =
                                                                         true;
+                                                                    widget.isFirstNode= false;
                                                                     controller
                                                                         .selectedId = widget
                                                                             .node?[index]
@@ -657,7 +679,8 @@ class _MyFolderScreenState extends State<MyFolderScreen> {
                                                                             .toString() ??
                                                                         "");
                                                                   }
-                                                                } else {
+                                                                }
+                                                                else {
                                                                   controller
                                                                       .selectedId = widget
                                                                           .node?[
@@ -672,6 +695,8 @@ class _MyFolderScreenState extends State<MyFolderScreen> {
                                                                           .toString() ??
                                                                       "");
                                                                 }
+
+
                                                                 setState(() {});
                                                               },
                                                               child: Container(
@@ -727,7 +752,21 @@ class _MyFolderScreenState extends State<MyFolderScreen> {
                                                           ),
                                                         ),
 
-                                                  SizedBox(
+                                                  widget.isFirstNode ?? false ?Container(
+
+                                                      height: Get.height * 0.67,
+                                                      width: Get.width,
+                                                      alignment: Alignment.center,
+
+                                                      child: Text((widget.quote ?? '') ,
+                                                      textAlign: TextAlign.center,
+                                                      style: appTextStyle(
+                                                          color: ColorRes
+                                                              .appColor,
+                                                          fontSize:
+                                                          25,
+                                                          weight: FontWeight
+                                                              .w500),)): SizedBox(
                                                     height: Get.height * 0.69,
                                                     width: Get.width,
                                                     child:
@@ -735,7 +774,8 @@ class _MyFolderScreenState extends State<MyFolderScreen> {
                                                                         .data ??
                                                                     [])
                                                                 .isNotEmpty)
-                                                            ? GridView.builder(
+                                                            ?
+                                                        GridView.builder(
                                                                 padding:
                                                                     const EdgeInsets
                                                                         .all(0),

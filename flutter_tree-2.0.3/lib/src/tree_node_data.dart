@@ -6,6 +6,7 @@ class TreeNodeData {
   String name;
   String language;
   String parent_id;
+  String quote;
   String sub_parent_id;
   List<TreeNodeData> children;
   String title;
@@ -23,6 +24,7 @@ class TreeNodeData {
     this.expanded = false,
     required this.children,
     required this.sub_parent_id,
+    required this.quote,
     required this.parent_id,
     required this.language,
     required this.name,
@@ -50,6 +52,7 @@ class TreeNodeData {
         expanded: other.expanded,
         language: other.language,
         parent_id: other.parent_id,
+        quote: other.quote ?? '',
         sub_parent_id: other.sub_parent_id,
         children: other.children.map((e) => TreeNodeData.from(e)).toList(),
         title: other.title,
@@ -66,6 +69,6 @@ class TreeNodeData {
 
   @override
   String toString() {
-    return 'TreeNodeData{id: $id, expanded: $expanded, name: $name, language: $language, parent_id: $parent_id, sub_parent_id: $sub_parent_id, children: $children, title: $title, icon: $icon, checked: $checked, isTop: $isTop, extra: $extra, checkBoxCheckColor: $checkBoxCheckColor, checkBoxFillColor: $checkBoxFillColor, backgroundColor: $backgroundColor, customActions: $customActions}';
+    return 'TreeNodeData{id: $id, expanded: $expanded, name: $name, language: $language, parent_id: $parent_id, sub_parent_id: $sub_parent_id, quote: $quote, children: $children, title: $title, icon: $icon, checked: $checked, isTop: $isTop, extra: $extra, checkBoxCheckColor: $checkBoxCheckColor, checkBoxFillColor: $checkBoxFillColor, backgroundColor: $backgroundColor, customActions: $customActions}';
   }
 }

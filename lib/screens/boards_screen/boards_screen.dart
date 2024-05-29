@@ -549,6 +549,7 @@ class BoardsScreen extends StatelessWidget {
                                                           node.name,
                                                           node.icon,
                                                           isFirst:(p.id.toString() =="0") ?true:false,
+                                                          quote:node.quote,
                                                         );
                                                       },
                                                       onLastTap: (p,node) {
@@ -558,6 +559,8 @@ class BoardsScreen extends StatelessWidget {
                                                           node.name,
                                                           node.icon,
                                                             isFirst:p.id.toString() =="0"?true:false,
+                                                          quote:node.quote,
+
                                                         );
                                                       })
                                                     : const SizedBox(),
