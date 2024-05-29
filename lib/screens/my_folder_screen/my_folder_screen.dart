@@ -641,7 +641,7 @@ alignment: Alignment.center,
                                                                 (context,
                                                                         index) =>
                                                                     InkWell(
-                                                              onTap: () {
+                                                              onTap: () async {
                                                                 if (widget
                                                                         .isFirst ??
                                                                     false)
@@ -666,18 +666,19 @@ alignment: Alignment.center,
                                                                     controller.isSelectedNode[
                                                                             index] =
                                                                         true;
-                                                                    widget.isFirstNode= false;
+
                                                                     controller
                                                                         .selectedId = widget
                                                                             .node?[index]
                                                                             .id
                                                                             .toString() ??
                                                                         "";
-                                                                    controller.myInt(widget
+                                                                    await controller.myInt(widget
                                                                             .node?[index]
                                                                             .id
                                                                             .toString() ??
                                                                         "");
+                                                                    widget.isFirstNode= false;
                                                                   }
                                                                 }
                                                                 else {
