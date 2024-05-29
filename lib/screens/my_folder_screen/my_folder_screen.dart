@@ -397,7 +397,7 @@ alignment: Alignment.center,
                                               color: ColorRes
                                                   .appColor,
                                               fontSize:
-                                              25,
+                                              20,
                                               weight: FontWeight
                                                   .w500),)):SizedBox(
                                                 height: Get.height * 0.67,
@@ -765,7 +765,7 @@ alignment: Alignment.center,
                                                           color: ColorRes
                                                               .appColor,
                                                           fontSize:
-                                                          25,
+                                                          20,
                                                           weight: FontWeight
                                                               .w500),)): SizedBox(
                                                     height: Get.height * 0.69,
