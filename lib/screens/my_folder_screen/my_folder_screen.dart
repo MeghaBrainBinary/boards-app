@@ -1166,7 +1166,7 @@ alignment: Alignment.center,
                 padding: const EdgeInsets.only(right: 20.0),
                 child: Align(
                   alignment: Alignment.centerRight,
-                  child: Image.asset(AssetRes.appNewLogo, scale: 4),
+                  child: Image.asset(AssetRes.appNewLogo, scale: 3),
                 ),
               ),
               const SizedBox(height: 6),

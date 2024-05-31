@@ -34,7 +34,7 @@ class LanguageScreen extends StatelessWidget {
                   ),
                   Center(
                       child:
-                          Image.asset(AssetRes.appNewLogo, width: Get.width * 0.3)),
+                          Image.asset(AssetRes.appNewLogo, width: Get.width * 0.4)),
                   SizedBox(
                     height: Get.height * 0.03,
                   ),

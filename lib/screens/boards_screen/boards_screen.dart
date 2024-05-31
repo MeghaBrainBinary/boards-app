@@ -40,7 +40,7 @@ class BoardsScreen extends StatelessWidget {
                   padding: const EdgeInsets.only(right: 20.0),
                   child: Align(
                     alignment: Alignment.centerRight,
-                    child: Image.asset(AssetRes.appNewLogo, scale: 4,),
+                    child: Image.asset(AssetRes.appNewLogo, scale: 3,),
                   ),
                 ),
                 const SizedBox(height: 6),
@@ -114,39 +114,54 @@ class BoardsScreen extends StatelessWidget {
                        height:Get.height,
                        width:Get.width,
                         child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
+
+                            Container(
+                              height: Get.height *0.28,
+                              alignment: Alignment.bottomCenter,
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    crossAxisAlignment: CrossAxisAlignment.end,
+                                    children: [
+                                      Padding(
+                                        padding: const EdgeInsets.only(left: 20),
+                                        child: Image.asset(AssetRes.appNewLogo,scale: 2.2),
+                                      ),
+
+                                      Padding(
+                                        padding: const EdgeInsets.only(right: 20.0),
+                                        child: Align(
+                                          alignment: Alignment.centerRight,
+                                          child: Column(
+                                            crossAxisAlignment:CrossAxisAlignment.end,
+                                            children: [
+
+
+                                              InkWell(
+                                                onTap: () {
+                                                  scaffoldKey.currentState?.openEndDrawer();
+                                                },
+                                                child: Image.asset(AssetRes.moreOption, scale: 3, color: ColorRes.appColor),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  const SizedBox(height: 20,),
+                                ],
+                              ),
+                            ),
                             Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
 
-                                  const SizedBox(height: 70),
 
-                                  Padding(
-                                    padding: const EdgeInsets.only(left: 20),
-                                    child: Image.asset(AssetRes.appNewLogo,scale: 3),
-                                  ),
-
-                                  Padding(
-                                    padding: const EdgeInsets.only(right: 20.0),
-                                    child: Align(
-                                      alignment: Alignment.centerRight,
-                                      child: Column(
-                                        crossAxisAlignment:CrossAxisAlignment.end,
-                                        children: [
-
-                                          const SizedBox(height: 26),
-
-                                          InkWell(
-                                            onTap: () {
-                                              scaffoldKey.currentState?.openEndDrawer();
-                                            },
-                                            child: Image.asset(AssetRes.moreOption, scale: 3, color: ColorRes.appColor),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                  const SizedBox(height: 30),
                                   /* const SizedBox(
                                     height:20
                                   ),
@@ -512,57 +527,60 @@ class BoardsScreen extends StatelessWidget {
                                             GetBuilder<BoardsController>(
                                               id: 'board',
                                               initState: (state) {
-                                                if(con.getBoardModelData != null) {
-                                                  if((PrefService.getBool(PrefKeys.firstTimeOrSecond) ?? true) == false) {
-                                                    boardsController.showTutorial(context: context);
-                                                    PrefService.setValue(PrefKeys.firstTimeOrSecond, true);
-                                                  }
-                                                  boardsController.update(['board']);
-                                                }
+                                                // if(con.getBoardModelData != null) {
+                                                //   if((PrefService.getBool(PrefKeys.firstTimeOrSecond) ?? true) == false) {
+                                                //     boardsController.showTutorial(context: context);
+                                                //     PrefService.setValue(PrefKeys.firstTimeOrSecond, true);
+                                                //   }
+                                                //   boardsController.update(['board']);
+                                                // }
                                               },
-                                              builder: (controller) => SizedBox(
+                                              builder: (controller) => Container(
+
                                                 width: Get.width,
-                                                height: Get.height * 0.55,
+                                                height: Get.height - (Get.height *0.08 + Get.height *0.28),
                                                 child: (controller.getBoardModelData['data'] != null)
-                                                    ? TreeView(
-                                                      selectedId: "",
-                                                      view: false,
-                                                      leftIcon: Image.asset(
-                                                          AssetRes.success,
-                                                          scale: 1.5
-                                                      ),
-                                                      icon: Icon(
-                                                        Icons.keyboard_arrow_down_rounded,
-                                                        color: ColorRes.black,
-                                                      ),
-                                                      textStyle: GoogleFonts.inter(
-                                                        color: Colors.black,
-                                                        fontSize: 17,
-                                                        fontWeight: FontWeight.w500,
-                                                      ),
-                                                      data: controller.treeData,
-                                                      onTap: (p,node) {
+                                                    ? SingleChildScrollView(
+                                                      child: TreeView(
+                                                        selectedId: "",
+                                                        view: false,
+                                                        leftIcon: Image.asset(
+                                                            AssetRes.success,
+                                                            scale: 1.5
+                                                        ),
+                                                        icon: Icon(
+                                                          Icons.keyboard_arrow_down_rounded,
+                                                          color: ColorRes.black,
+                                                        ),
+                                                        textStyle: GoogleFonts.inter(
+                                                          color: Colors.black,
+                                                          fontSize: 17,
+                                                          fontWeight: FontWeight.w500,
+                                                        ),
+                                                        data: controller.treeData,
+                                                        onTap: (p,node) {
 
-                                                        controller.onTapFolder(
-                                                          node: (p.id.toString() =="0") ?node:p,
-                                                          node.id.toString(),
-                                                          node.name,
-                                                          node.icon,
-                                                          isFirst:(p.id.toString() =="0") ?true:false,
-                                                          quote:node.quote,
-                                                        );
-                                                      },
-                                                      onLastTap: (p,node) {
-                                                        controller.onTapFolder(
-                                                          node:  (p.id.toString() =="0") ?node:p,
-                                                          node.id.toString(),
-                                                          node.name,
-                                                          node.icon,
-                                                            isFirst:p.id.toString() =="0"?true:false,
-                                                          quote:node.quote,
+                                                          controller.onTapFolder(
+                                                            node: (p.id.toString() =="0") ?node:p,
+                                                            node.id.toString(),
+                                                            node.name,
+                                                            node.icon,
+                                                            isFirst:(p.id.toString() =="0") ?true:false,
+                                                            quote:node.quote,
+                                                          );
+                                                        },
+                                                        onLastTap: (p,node) {
+                                                          controller.onTapFolder(
+                                                            node:  (p.id.toString() =="0") ?node:p,
+                                                            node.id.toString(),
+                                                            node.name,
+                                                            node.icon,
+                                                              isFirst:p.id.toString() =="0"?true:false,
+                                                            quote:node.quote,
 
-                                                        );
-                                                      })
+                                                          );
+                                                        }),
+                                                    )
                                                     : const SizedBox(),
                                               ),
                                             ),
@@ -710,75 +728,78 @@ class BoardsScreen extends StatelessWidget {
                             ),*/
                                 ]),
 
-                            const Spacer(),
 
-                            Column(
-                              children: [
-                             /*   Padding(
-                                  padding: const EdgeInsets.only(right: 30.0),
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.end,
+
+                            Container(
+                              height: Get.height *0.08,
+                              child: Column(
+                                children: [
+                               /*   Padding(
+                                    padding: const EdgeInsets.only(right: 30.0),
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.end,
+                                      children: [
+                                        InkWell(
+                                          onTap: () {},
+                                          child: Icon(
+                                            Icons.telegram,
+                                            color: ColorRes.black,
+                                            size: 30,
+                                          ),
+                                        ),
+                                        const SizedBox(
+                                          width: 10,
+                                        ),
+                                        InkWell(
+                                          onTap: () {},
+                                          child: Container(
+                                            height: 25,
+                                            width: 25,
+                                            decoration: BoxDecoration(
+                                              color: ColorRes.black,
+                                              shape: BoxShape.circle,
+                                            ),
+                                            child: Icon(
+                                              Icons.cleaning_services,
+                                              color: ColorRes.white,
+                                              size: 10,
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),*/
+                                  Row(
+                                    crossAxisAlignment: CrossAxisAlignment.end,
+                                    mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
-                                      InkWell(
-                                        onTap: () {},
-                                        child: Icon(
-                                          Icons.telegram,
+                                      Text(
+                                        StringRes.inspire,
+                                        style: GoogleFonts.inder(
                                           color: ColorRes.black,
-                                          size: 30,
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w500,
                                         ),
                                       ),
                                       const SizedBox(
-                                        width: 10,
+                                        width: 5,
                                       ),
-                                      InkWell(
-                                        onTap: () {},
-                                        child: Container(
-                                          height: 25,
-                                          width: 25,
-                                          decoration: BoxDecoration(
-                                            color: ColorRes.black,
-                                            shape: BoxShape.circle,
-                                          ),
-                                          child: Icon(
-                                            Icons.cleaning_services,
-                                            color: ColorRes.white,
-                                            size: 10,
-                                          ),
-                                        ),
-                                      ),
+                                      // Text(
+                                      //   StringRes.filuet.tr,
+                                      //   style: GoogleFonts.inder(
+                                      //     color: ColorRes.black,
+                                      //     fontSize: 18,
+                                      //     fontWeight: FontWeight.bold,
+                                      //   ),
+                                      // ),
+                                      Image.asset(AssetRes.filuetLogo,height: 20,),
                                     ],
                                   ),
-                                ),*/
-                                Row(
-                                  crossAxisAlignment: CrossAxisAlignment.end,
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Text(
-                                      StringRes.inspire,
-                                      style: GoogleFonts.inder(
-                                        color: ColorRes.black,
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w500,
-                                      ),
-                                    ),
-                                    const SizedBox(
-                                      width: 5,
-                                    ),
-                                    // Text(
-                                    //   StringRes.filuet.tr,
-                                    //   style: GoogleFonts.inder(
-                                    //     color: ColorRes.black,
-                                    //     fontSize: 18,
-                                    //     fontWeight: FontWeight.bold,
-                                    //   ),
-                                    // ),
-                                    Image.asset(AssetRes.filuetLogo,height: 20,),
-                                  ],
-                                ),
-                                const SizedBox(
-                                  height: 20,
-                                ),
-                              ],
+                                  const SizedBox(
+                                    height: 20,
+                                  ),
+                                ],
+                              ),
                             )
                           ],
                         ),
