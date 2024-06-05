@@ -183,6 +183,8 @@ class BoardsController extends GetxController {
             "name": element['name'],
             "icon" : element["icon"],
             "quote":element['quote'],
+            "font_family":element['font_family'],
+            "text_color":element['text_color'],
             "parent_id": "0",
             "sub_parent_id": "0",
             "isTop": true,
@@ -196,6 +198,8 @@ class BoardsController extends GetxController {
             "name": element['name'],
             "icon" : element["icon"],
             "quote":element['quote'],
+            "font_family":element['font_family'],
+            "text_color":element['text_color'],
             "parent_id": "0",
             "sub_parent_id": "0",
             "isTop": false,
@@ -242,7 +246,13 @@ class BoardsController extends GetxController {
 
   RxBool categoryClickLoader = false.obs;
 
-  onTapFolder(String id, String name, String icon ,{String? subBoardId, String? subName,String? quote, TreeNodeData? node,bool isFirst = false}) async{
+  onTapFolder(String id, String name, String icon ,{String? subBoardId, String? subName,String? quote, TreeNodeData? node,bool isFirst = false,
+
+   String?  quoteColor,
+    String? quoteFamily,
+   String?  color,
+   String?  family,
+  }) async{
     //isIcons = List.generate(6, (index) => false);
 
     isIcon = false;
@@ -305,7 +315,12 @@ class BoardsController extends GetxController {
         myFolderController.selectedId =id.toString() ?? "";
         myFolderController.myInt(id.toString() ?? "");
         myFolderController.isSelectedNode = List.generate(node?.children.length ?? 0, (index) => false);
-        Get.to(() => MyFolderScreen(boardName: name, icon: icon, node: node?.children ?? [],isFirst :isFirst,parentId: id.toString(),quote:quote ?? '',isFirstNode: isFirst,));
+        Get.to(() => MyFolderScreen(boardName: name, icon: icon, node: node?.children ?? [],isFirst :isFirst,parentId: id.toString(),quote:quote ?? '',isFirstNode: isFirst,
+          quoteColor:quoteColor,
+          quoteFamily:quoteFamily,
+          color:color,
+          family:family,
+        ));
         categoryClickLoader.value = false;
       } else {
         //Get.toNamed(AppRoutes.myFolderPage, arguments: subName);
@@ -313,7 +328,12 @@ class BoardsController extends GetxController {
         myFolderController.myInt(id.toString() ?? "");
         myFolderController.isSelectedNode = List.generate(node?.children.length ?? 0, (index) => false);
 
-        Get.to(() => MyFolderScreen(boardName: subName, icon: icon,  node: node?.children ?? [],isFirst :isFirst,parentId: id.toString(),quote:quote ?? '',isFirstNode: isFirst,));
+        Get.to(() => MyFolderScreen(boardName: subName, icon: icon,  node: node?.children ?? [],isFirst :isFirst,parentId: id.toString(),quote:quote ?? '',isFirstNode: isFirst,
+          quoteColor:quoteColor,
+          quoteFamily:quoteFamily,
+          color:color,
+          family:family,
+        ));
         categoryClickLoader.value = false;
       }
 
@@ -339,6 +359,8 @@ class BoardsController extends GetxController {
         icon: data["icon"].toString(),
         isTop: data['isTop'],
         quote: data['quote'] ?? '',
+        font_family: data['font_family'] ?? '',
+        text_color: data['text_color'] ?? '',
         expanded: false,
         checked: true,
         children: List.from(data['sub_board'].map((x) => mapServerDataToTreeData(x, isChild: true))),
@@ -353,7 +375,8 @@ class BoardsController extends GetxController {
         title: data['name'].toString(),
         icon: data["icon"].toString(),
         quote: data['quote'] ?? '',
-
+        font_family: data['font_family'] ?? '',
+        text_color: data['text_color'] ?? '',
         isTop: false,
         expanded: false,
         checked: true,

@@ -130,6 +130,8 @@ class _TreeViewState extends State<TreeView> {
       parent_id: "0",
       title: '',
       quote: '',
+      font_family: '',
+      text_color: '',
       isTop: false,
       extra: null,
       checked: false,
@@ -163,7 +165,16 @@ class _TreeViewState extends State<TreeView> {
                 parent: _root,
                 view: widget.view,
                 isChildren: false,
-                textStyle: widget.textStyle ?? const TextStyle(),
+                textStyle: widget.textStyle?.copyWith(
+
+                 // fontFamily: _renderList[index].font_family !=''?_renderList[index].font_family: widget.textStyle?.fontFamily,
+
+                  color:   _renderList[index].text_color !=''?  Color(int.parse(_renderList[index].text_color.substring(1, 7), radix: 16) + 0x80000000):Colors.black,)
+                 ??  TextStyle(
+
+                   // fontFamily: _renderList[index].font_family !=''?_renderList[index].font_family: widget.textStyle?.fontFamily,
+
+                    color:   _renderList[index].text_color !=''?  Color(int.parse(_renderList[index].text_color.substring(1, 7), radix: 16) + 0x80000000):Colors.black,),
                 data: _renderList[index],
                 icon: widget.icon,
                 leftIcon: widget.leftIcon ?? Container(),
@@ -317,6 +328,8 @@ class _TreeViewHorizontalState extends State<TreeViewHorizontal> {
       parent_id: "0",
       title: '',
       quote: '',
+      font_family: '',
+      text_color: '',
       isTop: false,
       extra: null,
       checked: false,
@@ -354,7 +367,16 @@ class _TreeViewHorizontalState extends State<TreeViewHorizontal> {
                 parent: _root,
                 view: widget.view,
                 isChildren: false,
-                textStyle: widget.textStyle ?? const TextStyle(),
+                textStyle:  widget.textStyle?.copyWith(
+
+              //fontFamily: _renderList[index].font_family !=''?_renderList[index].font_family: widget.textStyle?.fontFamily,
+
+                color:   _renderList[index].text_color !=''?  Color(int.parse(_renderList[index].text_color.substring(1, 7), radix: 16) + 0x80000000):Colors.black,)
+                  ??  TextStyle(
+
+                //    fontFamily: _renderList[index].font_family !=''?_renderList[index].font_family: widget.textStyle?.fontFamily,
+
+                    color:   _renderList[index].text_color !=''?  Color(int.parse(_renderList[index].text_color.substring(1, 7), radix: 16) + 0x80000000):Colors.black,),
                 data: _renderList[index],
                 icon: widget.icon,
                 leftIcon: widget.leftIcon ?? Container(),

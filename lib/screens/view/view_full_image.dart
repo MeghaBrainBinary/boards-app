@@ -1,3 +1,4 @@
+import 'package:boards_app/utils/asset_res.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:device_frame/device_frame.dart';
 import 'package:flutter/material.dart';
@@ -33,7 +34,12 @@ class ViewFullImageScreen extends StatelessWidget {
         width: Get.width,
         alignment: Alignment.center,
 
-
+        decoration: const BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage(AssetRes.background),
+              fit: BoxFit.fill,
+            )
+        ),
         child: Padding(
           padding: const EdgeInsets.all(20.0),
           child: DeviceFrame(

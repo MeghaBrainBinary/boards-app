@@ -79,11 +79,15 @@ class _TreeNodeState extends State<TreeNode>
   late AnimationController _rotationController;
   final Tween<double> _turnsTween = Tween<double>(begin: -0.25, end: 0.0);
 
-  List<TreeNode> _geneTreeNodes(List list, textStyle, isChildren) {
+  List<TreeNode> _geneTreeNodes(List list, isChildren) {
     return List.generate(list.length, (int index) {
       return TreeNode(
         view: widget.view,
-        textStyle: textStyle,
+        textStyle: TextStyle(
+fontSize: 14,
+           // fontFamily: list[index].font_family !=''?list[index].font_family: widget.textStyle.fontFamily,
+
+            color:   list[index].text_color !=''?  Color(int.parse(list[index].text_color.substring(1, 7), radix: 16) + 0x80000000):Colors.black,),
         data: list[index],
         parent: widget.data,
         remove: widget.remove,
@@ -382,10 +386,7 @@ class _TreeNodeState extends State<TreeNode>
             child: Column(
               children: _geneTreeNodes(
                 widget.data.children,
-                GoogleFonts.inter(
-                    color: Colors.black.withOpacity(0.7),
-                    fontSize: 14,
-                    fontWeight: FontWeight.w400),
+
                 true,
               ),
             ),

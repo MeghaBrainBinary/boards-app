@@ -106,6 +106,7 @@ flutter:
   assets:
       - assets/icons/
       - assets/images/
+      - assets/fonts/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
@@ -129,6 +130,45 @@ flutter:
   #       - asset: fonts/TrajanPro.ttf
   #       - asset: fonts/TrajanPro_Bold.ttf
   #         weight: 700
+  fonts:
+     - family: Cormorant_Garamond
+       fonts:
+         - asset: assets/fonts/Cormorant_Garamond/CormorantGaramond-Bold.ttf
+         - asset: assets/fonts/Cormorant_Garamond/CormorantGaramond-Light.ttf
+         - asset: assets/fonts/Cormorant_Garamond/CormorantGaramond-Medium.ttf
+         - asset: assets/fonts/Cormorant_Garamond/CormorantGaramond-Regular.ttf
+         - asset: assets/fonts/Cormorant_Garamond/CormorantGaramond-SemiBold.ttf
+     - family: Montserrat_Alternates
+       fonts:
+         - asset: assets/fonts/Montserrat_Alternates/MontserratAlternates-Bold.ttf
+         - asset: assets/fonts/Montserrat_Alternates/MontserratAlternates-ExtraBold.ttf
+         - asset: assets/fonts/Montserrat_Alternates/MontserratAlternates-ExtraLight.ttf
+         - asset: assets/fonts/Montserrat_Alternates/MontserratAlternates-Light.ttf
+         - asset: assets/fonts/Montserrat_Alternates/MontserratAlternates-Medium.ttf
+         - asset: assets/fonts/Montserrat_Alternates/MontserratAlternates-Regular.ttf
+         - asset: assets/fonts/Montserrat_Alternates/MontserratAlternates-SemiBold.ttf
+     - family: prompt
+       fonts:
+         - asset: assets/fonts/prompt/Prompt-Bold.ttf
+         - asset: assets/fonts/prompt/Prompt-ExtraBold.ttf
+         - asset: assets/fonts/prompt/Prompt-ExtraLight.ttf
+         - asset: assets/fonts/prompt/Prompt-Light.ttf
+         - asset: assets/fonts/prompt/Prompt-Medium.ttf
+         - asset: assets/fonts/prompt/Prompt-Regular.ttf
+         - asset: assets/fonts/prompt/Prompt-SemiBold.ttf
+     - family: roboto
+       fonts:
+         - asset: assets/fonts/roboto/Roboto-Bold.ttf
+         - asset: assets/fonts/roboto/Roboto-Light.ttf
+         - asset: assets/fonts/roboto/Roboto-Medium.ttf
+         - asset: assets/fonts/roboto/Roboto-Regular.ttf
+     - family: ubuntu
+       fonts:
+         - asset: assets/fonts/ubuntu/Ubuntu-Bold.ttf
+         - asset: assets/fonts/ubuntu/Ubuntu-Italic.ttf
+         - asset: assets/fonts/ubuntu/Ubuntu-Light.ttf
+         - asset: assets/fonts/ubuntu/Ubuntu-Medium.ttf
+         - asset: assets/fonts/ubuntu/Ubuntu-Regular.ttf
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages

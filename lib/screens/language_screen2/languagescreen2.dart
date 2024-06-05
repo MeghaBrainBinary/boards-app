@@ -21,255 +21,266 @@ class LanguageScreen22 extends StatelessWidget {
     return Scaffold(
         backgroundColor: Colors.white,
         body:  SafeArea(
-        child: Stack(
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(left: 20, right: 20),
-              child: SizedBox(
-                height: Get.height,
-                width: Get.width,
-                child: SingleChildScrollView(
-                  scrollDirection: Axis.vertical,
-                  physics: const BouncingScrollPhysics(),
-                  child: Column(children: [
+        child: Container(
+          height: Get.height,
+          width: Get.width,
 
-                    // Row(
-                    //   children: [
-                    //     Visibility(
-                    //       visible: false,
-                    //       maintainState: true,
-                    //       maintainSize: true,
-                    //       maintainAnimation: true,
-                    //       child: InkWell(
-                    //         child: Text(
-                    //           StringRes.cancel.tr,
-                    //           style: appTextStyle(
-                    //               color: ColorRes.appColor,
-                    //               fontSize: 12,
-                    //               weight: FontWeight.w500),
-                    //         ),
-                    //       ),
-                    //     ),
-                    //     const Spacer(),
-                    //     Text(
-                    //       StringRes.language.tr,
-                    //       style: appTextStyle(
-                    //           color: ColorRes.black,
-                    //           fontSize: 24,
-                    //           weight: FontWeight.w400),
-                    //     ),
-                    //     const Spacer(),
-                    //     InkWell(
-                    //       onTap: () {
-                    //         Get.offAndToNamed(AppRoutes.myFolderPage);
-                    //       },
-                    //       child: Text(
-                    //         StringRes.cancel.tr,
-                    //         style: appTextStyle(
-                    //             color: ColorRes.appColor,
-                    //             fontSize: 12,
-                    //             weight: FontWeight.w500),
-                    //       ),
-                    //     ),
-                    //   ],
-                    // ),
-                    appBar(boardName: StringRes.language.tr),
-                    SizedBox(
-                      height: Get.height * 0.0569,
-                    ),
-                    // Container(
-                    //   height: Get.height * 0.065,
-                    //   width: Get.width,
-                    //   decoration: BoxDecoration(
-                    //       borderRadius: BorderRadius.circular(5),
-                    //       border: Border.all(color: ColorRes.colorD9D9D9)),
-                    //   child: appTextField(
-                    //     controller: languageController.searchController,
-                    //     onChanged: (value) {
-                    //       languageController
-                    //           .onSearch(value.toString().toLowerCase());
-                    //     },
-                    //     prefixIcon: Padding(
-                    //       padding: const EdgeInsets.only(left: 10),
-                    //       child: Transform.scale(
-                    //         scale: 0.4,
-                    //         child: Image.asset(
-                    //           AssetRes.searchIcon,
-                    //           height: 15,
-                    //         ),
-                    //       ),
-                    //     ),
-                    //     hintText: StringRes.searchLanguage.tr,
-                    //     hintStyle: appTextStyle(
-                    //       color: ColorRes.black.withOpacity(0.3),
-                    //       fontSize: 13,
-                    //       weight: FontWeight.w400,
-                    //     ),
-                    //   ),
-                    // ),
-                    // SizedBox(
-                    //   height: Get.height * 0.05,
-                    // ),
-                    GetBuilder<Language2Controller2>(
-                        id: "lng",
-                        builder: (con) {
-                          con.update();
-                          return SizedBox(
-                              height: Get.height * 0.44,
-                              child: (languageController.searchController.text.isNotEmpty)
-                                  ? ListView.builder(
-                                      shrinkWrap: true,
-                                      physics: const NeverScrollableScrollPhysics(),
-                                      itemCount: languageController.filterList.length,
-                                      itemBuilder: ((context, index) {
-                                        return Column(
-                                          children: [
-                                            GestureDetector(
-                                              onTap: () {
-                                                languageController.onTapLanguage(languageController.filterList[index]['name'], index);
-                                              },
-                                              child: Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
-                                                children: [
-                                                  Container(
-                                                    height: 25,
-                                                    width: 25,
-                                                    decoration: BoxDecoration(
-                                                      shape:BoxShape.circle,
-                                                        image: DecorationImage(
-                                                            image: AssetImage(
-                                                                languageController.filterList[index]['image']
-                                                            ),
-                                                          fit: BoxFit.cover
+          decoration: const BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage(AssetRes.background),
+                fit: BoxFit.fill,
+              )
+          ),
+          child: Stack(
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(left: 20, right: 20),
+                child: SizedBox(
+                  height: Get.height,
+                  width: Get.width,
+                  child: SingleChildScrollView(
+                    scrollDirection: Axis.vertical,
+                    physics: const BouncingScrollPhysics(),
+                    child: Column(children: [
 
-                                                        )
-                                                    ),
-                                                  ),
-                                                  const SizedBox(width: 20,),
-                                                  Text(
-                                                    languageController.filterList[index]['name'],
-                                                    style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
-                                                  ),
-                                                  const Spacer(),
-                                                  Column(
-                                                    mainAxisAlignment: MainAxisAlignment.start,
-                                                    children: [
-                                                     languageController.isCheck[index]
-                                                          ? Container(
-                                                              color: Colors.white,
-                                                              height: Get.height * 0.020345,
-                                                              width: Get.width * 0.03908,
-                                                              child: Image.asset(AssetRes.aerrowIcon, color: ColorRes.appColor),
-                                                            )
-                                                          : const SizedBox(),
-                                                    ],
-                                                  )
-                                                ],
-                                              ),
-                                            ),
-                                            SizedBox(
-                                              height: Get.height * 0.0172,
-                                            ),
-                                          ],
-                                        );
-                                      }))
-                                  : ListView.builder(
-                                      shrinkWrap: true,
-                                      physics: const NeverScrollableScrollPhysics(),
-                                      itemCount: languageController.language.length,
-                                      itemBuilder: ((context, index) {
-                                        return Column(
-                                          children: [
-                                            InkWell(
-                                              onTap: () {
-                                                languageController.onTapLanguage(
-                                                    languageController
-                                                        .language[index]['name'],index);
-                                              },
-                                              child: Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
-                                                children: [
-                                                  Container(
-                                                    height: 25,
-                                                    width: 25,
-                                                    decoration: BoxDecoration(
+                      // Row(
+                      //   children: [
+                      //     Visibility(
+                      //       visible: false,
+                      //       maintainState: true,
+                      //       maintainSize: true,
+                      //       maintainAnimation: true,
+                      //       child: InkWell(
+                      //         child: Text(
+                      //           StringRes.cancel.tr,
+                      //           style: appTextStyle(
+                      //               color: ColorRes.appColor,
+                      //               fontSize: 12,
+                      //               weight: FontWeight.w500),
+                      //         ),
+                      //       ),
+                      //     ),
+                      //     const Spacer(),
+                      //     Text(
+                      //       StringRes.language.tr,
+                      //       style: appTextStyle(
+                      //           color: ColorRes.black,
+                      //           fontSize: 24,
+                      //           weight: FontWeight.w400),
+                      //     ),
+                      //     const Spacer(),
+                      //     InkWell(
+                      //       onTap: () {
+                      //         Get.offAndToNamed(AppRoutes.myFolderPage);
+                      //       },
+                      //       child: Text(
+                      //         StringRes.cancel.tr,
+                      //         style: appTextStyle(
+                      //             color: ColorRes.appColor,
+                      //             fontSize: 12,
+                      //             weight: FontWeight.w500),
+                      //       ),
+                      //     ),
+                      //   ],
+                      // ),
+                      appBar(boardName: StringRes.language.tr),
+                      SizedBox(
+                        height: Get.height * 0.0569,
+                      ),
+                      // Container(
+                      //   height: Get.height * 0.065,
+                      //   width: Get.width,
+                      //   decoration: BoxDecoration(
+                      //       borderRadius: BorderRadius.circular(5),
+                      //       border: Border.all(color: ColorRes.colorD9D9D9)),
+                      //   child: appTextField(
+                      //     controller: languageController.searchController,
+                      //     onChanged: (value) {
+                      //       languageController
+                      //           .onSearch(value.toString().toLowerCase());
+                      //     },
+                      //     prefixIcon: Padding(
+                      //       padding: const EdgeInsets.only(left: 10),
+                      //       child: Transform.scale(
+                      //         scale: 0.4,
+                      //         child: Image.asset(
+                      //           AssetRes.searchIcon,
+                      //           height: 15,
+                      //         ),
+                      //       ),
+                      //     ),
+                      //     hintText: StringRes.searchLanguage.tr,
+                      //     hintStyle: appTextStyle(
+                      //       color: ColorRes.black.withOpacity(0.3),
+                      //       fontSize: 13,
+                      //       weight: FontWeight.w400,
+                      //     ),
+                      //   ),
+                      // ),
+                      // SizedBox(
+                      //   height: Get.height * 0.05,
+                      // ),
+                      GetBuilder<Language2Controller2>(
+                          id: "lng",
+                          builder: (con) {
+                            con.update();
+                            return SizedBox(
+                                height: Get.height * 0.44,
+                                child: (languageController.searchController.text.isNotEmpty)
+                                    ? ListView.builder(
+                                        shrinkWrap: true,
+                                        physics: const NeverScrollableScrollPhysics(),
+                                        itemCount: languageController.filterList.length,
+                                        itemBuilder: ((context, index) {
+                                          return Column(
+                                            children: [
+                                              GestureDetector(
+                                                onTap: () {
+                                                  languageController.onTapLanguage(languageController.filterList[index]['name'], index);
+                                                },
+                                                child: Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.center,
+                                                  children: [
+                                                    Container(
+                                                      height: 25,
+                                                      width: 25,
+                                                      decoration: BoxDecoration(
                                                         shape:BoxShape.circle,
-                                                        image: DecorationImage(
-                                                            image: AssetImage(
-                                                                languageController.language[index]['image']
-                                                            ),
+                                                          image: DecorationImage(
+                                                              image: AssetImage(
+                                                                  languageController.filterList[index]['image']
+                                                              ),
                                                             fit: BoxFit.cover
 
-                                                        )
+                                                          )
+                                                      ),
                                                     ),
-                                                  ),
-                                                  const SizedBox(width: 20,),
-                                                  Text(
-                                                    languageController
-                                                        .language[index]['name'],
-                                                    style: const TextStyle(
-                                                        fontSize: 14,
-                                                        fontWeight:
-                                                            FontWeight.w500),
-                                                  ),
-                                                  const Spacer(),
-                                                  Column(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment.start,
-                                                    children: [
-                                                      languageController.isCheck[index] ==true
-                                                          ? Container(
-                                                              color: Colors.white,
-                                                              height: Get.height * 0.020345,
-                                                              width: Get.width * 0.03908,
-                                                              child: Image.asset(AssetRes.aerrowIcon, color:  ColorRes.appColor),
-                                                            )
-                                                          : const SizedBox(),
-                                                    ],
-                                                  )
-                                                ],
+                                                    const SizedBox(width: 20,),
+                                                    Text(
+                                                      languageController.filterList[index]['name'],
+                                                      style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
+                                                    ),
+                                                    const Spacer(),
+                                                    Column(
+                                                      mainAxisAlignment: MainAxisAlignment.start,
+                                                      children: [
+                                                       languageController.isCheck[index]
+                                                            ? Container(
+                                                                color: Colors.white,
+                                                                height: Get.height * 0.020345,
+                                                                width: Get.width * 0.03908,
+                                                                child: Image.asset(AssetRes.aerrowIcon, color: ColorRes.appColor),
+                                                              )
+                                                            : const SizedBox(),
+                                                      ],
+                                                    )
+                                                  ],
+                                                ),
                                               ),
-                                            ),
-                                            SizedBox(
-                                              height: Get.height * 0.0172,
-                                            ),
-                                          ],
-                                        );
-                                      })));
-                        }),
-                    SizedBox(
-                      height: Get.height * 0.05552,
-                    ),
-                    GestureDetector(
-                      onTap: () {
-                        languageController.onTapConfirm();
-                      },
-                      child: Container(
-                        alignment: Alignment.center,
-                        height: 50,
-                        width: 234,
-                        decoration: BoxDecoration(
-                          color: ColorRes.appColor,
-                          borderRadius: BorderRadius.circular(5),
-                        ),
-                        child: Text(
-                          StringRes.confirm.tr,
-                          style:
-                              appTextStyle(fontSize: 18, weight: FontWeight.w600),
+                                              SizedBox(
+                                                height: Get.height * 0.0172,
+                                              ),
+                                            ],
+                                          );
+                                        }))
+                                    : ListView.builder(
+                                        shrinkWrap: true,
+                                        physics: const NeverScrollableScrollPhysics(),
+                                        itemCount: languageController.language.length,
+                                        itemBuilder: ((context, index) {
+                                          return Column(
+                                            children: [
+                                              InkWell(
+                                                onTap: () {
+                                                  languageController.onTapLanguage(
+                                                      languageController
+                                                          .language[index]['name'],index);
+                                                },
+                                                child: Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.center,
+                                                  children: [
+                                                    Container(
+                                                      height: 25,
+                                                      width: 25,
+                                                      decoration: BoxDecoration(
+                                                          shape:BoxShape.circle,
+                                                          image: DecorationImage(
+                                                              image: AssetImage(
+                                                                  languageController.language[index]['image']
+                                                              ),
+                                                              fit: BoxFit.cover
+
+                                                          )
+                                                      ),
+                                                    ),
+                                                    const SizedBox(width: 20,),
+                                                    Text(
+                                                      languageController
+                                                          .language[index]['name'],
+                                                      style: const TextStyle(
+                                                          fontSize: 14,
+                                                          fontWeight:
+                                                              FontWeight.w500),
+                                                    ),
+                                                    const Spacer(),
+                                                    Column(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment.start,
+                                                      children: [
+                                                        languageController.isCheck[index] ==true
+                                                            ? Container(
+                                                                color: Colors.white,
+                                                                height: Get.height * 0.020345,
+                                                                width: Get.width * 0.03908,
+                                                                child: Image.asset(AssetRes.aerrowIcon, color:  ColorRes.appColor),
+                                                              )
+                                                            : const SizedBox(),
+                                                      ],
+                                                    )
+                                                  ],
+                                                ),
+                                              ),
+                                              SizedBox(
+                                                height: Get.height * 0.0172,
+                                              ),
+                                            ],
+                                          );
+                                        })));
+                          }),
+                      SizedBox(
+                        height: Get.height * 0.05552,
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          languageController.onTapConfirm();
+                        },
+                        child: Container(
+                          alignment: Alignment.center,
+                          height: 50,
+                          width: 234,
+                          decoration: BoxDecoration(
+                            color: ColorRes.appColor,
+                            borderRadius: BorderRadius.circular(5),
+                          ),
+                          child: Text(
+                            StringRes.confirm.tr,
+                            style:
+                                appTextStyle(fontSize: 18, weight: FontWeight.w600),
+                          ),
                         ),
                       ),
-                    ),
-                    SizedBox(
-                      height: Get.height * 0.05,
-                    ),
-                  ]),
+                      SizedBox(
+                        height: Get.height * 0.05,
+                      ),
+                    ]),
+                  ),
                 ),
               ),
-            ),
-            Obx(() => (languageController.loader.value)?CommonLoader():SizedBox()),
-          ],
+              Obx(() => (languageController.loader.value)?CommonLoader():SizedBox()),
+            ],
+          ),
         ),
       )
     );

@@ -19,60 +19,71 @@ class SettingsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Stack(
-        children: [
-          GetBuilder<SettingsController>(
-            id: "contactUs",
-            builder: (controller) => SizedBox(
-              height: Get.height,
-              width: Get.width,
-              child: Padding(
-                padding: const EdgeInsets.only(left: 13, right: 13),
-                child: Column(children: [
-                  SizedBox(
-                    height: Get.height * 0.025,
-                  ),
-                  appBar(boardName: StringRes.settings.tr),
-                  SizedBox(
-                    height: Get.height * 0.03,
-                  ),
-                  Expanded(
-                    child: ListView.separated(
-                      // shrinkWrap: true,
-                      // physics: NeverScrollableScrollPhysics(),
-                      itemCount: controller.settingTitleList.length,
-                      itemBuilder: (context, index) {
-                        return ListTile(onTap: () async {
-                          if(index ==0)
-                            {
-                              await launchUrl(Uri.parse("https://blt.myfiluet.com/contactus"));
-                            }
+      body: Container(
+        height: Get.height,
+        width: Get.width,
 
-                          if(index ==1)
-                            {
-                                controller.resetPassword(email: PrefService.getString(PrefKeys.userId));
-                            }
-                          if(index==2)
-                            {
-                              _showDialog(context);
-                            }
-                        },
-                          leading: Image.asset(controller.settingImageList[index],scale: 4,),
-                          title: Text(controller.settingTitleList[index],style: TextStyle(color: Colors.black),),
-                          trailing: const Icon(Icons.navigate_next,color: Colors.black),
-                        );
-                      },
-                      separatorBuilder: (BuildContext context, int index) {
-                        return Divider(endIndent: Get.width * 0.06,indent: Get.width * 0.04,);
-                      },
+        decoration: const BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage(AssetRes.background),
+              fit: BoxFit.fill,
+            )
+        ),
+        child: Stack(
+          children: [
+            GetBuilder<SettingsController>(
+              id: "contactUs",
+              builder: (controller) => SizedBox(
+                height: Get.height,
+                width: Get.width,
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 13, right: 13),
+                  child: Column(children: [
+                    SizedBox(
+                      height: Get.height * 0.025,
                     ),
-                  ),
-                ]),
+                    appBar(boardName: StringRes.settings.tr),
+                    SizedBox(
+                      height: Get.height * 0.03,
+                    ),
+                    Expanded(
+                      child: ListView.separated(
+                        // shrinkWrap: true,
+                        // physics: NeverScrollableScrollPhysics(),
+                        itemCount: controller.settingTitleList.length,
+                        itemBuilder: (context, index) {
+                          return ListTile(onTap: () async {
+                            if(index ==0)
+                              {
+                                await launchUrl(Uri.parse("https://blt.myfiluet.com/contactus"));
+                              }
+
+                            if(index ==1)
+                              {
+                                  controller.resetPassword(email: PrefService.getString(PrefKeys.userId));
+                              }
+                            if(index==2)
+                              {
+                                _showDialog(context);
+                              }
+                          },
+                            leading: Image.asset(controller.settingImageList[index],scale: 4,),
+                            title: Text(controller.settingTitleList[index],style: TextStyle(color: Colors.black),),
+                            trailing: const Icon(Icons.navigate_next,color: Colors.black),
+                          );
+                        },
+                        separatorBuilder: (BuildContext context, int index) {
+                          return Divider(endIndent: Get.width * 0.06,indent: Get.width * 0.04,);
+                        },
+                      ),
+                    ),
+                  ]),
+                ),
               ),
             ),
-          ),
 
-        ],
+          ],
+        ),
       ),
     );
   }

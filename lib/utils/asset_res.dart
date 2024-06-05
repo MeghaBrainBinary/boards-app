@@ -156,4 +156,5 @@ class AssetRes {
   static const estonian = "${image}estonian.png";
   static const latvin = "${image}latvin.png";
   static const lithunian = "${image}lithunian.png";
+  static const background = "${image}background.png";
 }
