@@ -75,6 +75,7 @@ dependencies:
   sqflite:
   tutorial_coach_mark: ^1.2.11
   animated_tree_view:
+  flutter_widget_from_html:
 
 
 dev_dependencies:
@@ -131,44 +132,94 @@ flutter:
   #       - asset: fonts/TrajanPro_Bold.ttf
   #         weight: 700
   fonts:
-     - family: Cormorant_Garamond
+     - family: CormorantGaramond_bold
        fonts:
-         - asset: assets/fonts/Cormorant_Garamond/CormorantGaramond-Bold.ttf
-         - asset: assets/fonts/Cormorant_Garamond/CormorantGaramond-Light.ttf
-         - asset: assets/fonts/Cormorant_Garamond/CormorantGaramond-Medium.ttf
-         - asset: assets/fonts/Cormorant_Garamond/CormorantGaramond-Regular.ttf
-         - asset: assets/fonts/Cormorant_Garamond/CormorantGaramond-SemiBold.ttf
-     - family: Montserrat_Alternates
+         - asset: assets/fonts/Cormorant_Garamond/CormorantGaramond_bold.ttf
+     - family: CormorantGaramond_light
        fonts:
-         - asset: assets/fonts/Montserrat_Alternates/MontserratAlternates-Bold.ttf
-         - asset: assets/fonts/Montserrat_Alternates/MontserratAlternates-ExtraBold.ttf
-         - asset: assets/fonts/Montserrat_Alternates/MontserratAlternates-ExtraLight.ttf
-         - asset: assets/fonts/Montserrat_Alternates/MontserratAlternates-Light.ttf
-         - asset: assets/fonts/Montserrat_Alternates/MontserratAlternates-Medium.ttf
-         - asset: assets/fonts/Montserrat_Alternates/MontserratAlternates-Regular.ttf
-         - asset: assets/fonts/Montserrat_Alternates/MontserratAlternates-SemiBold.ttf
-     - family: prompt
+         - asset: assets/fonts/Cormorant_Garamond/CormorantGaramond_light.ttf
+     - family: CormorantGaramond_medium
        fonts:
-         - asset: assets/fonts/prompt/Prompt-Bold.ttf
-         - asset: assets/fonts/prompt/Prompt-ExtraBold.ttf
-         - asset: assets/fonts/prompt/Prompt-ExtraLight.ttf
-         - asset: assets/fonts/prompt/Prompt-Light.ttf
-         - asset: assets/fonts/prompt/Prompt-Medium.ttf
-         - asset: assets/fonts/prompt/Prompt-Regular.ttf
-         - asset: assets/fonts/prompt/Prompt-SemiBold.ttf
-     - family: roboto
+         - asset: assets/fonts/Cormorant_Garamond/CormorantGaramond_medium.ttf
+     - family: CormorantGaramond_regular
        fonts:
-         - asset: assets/fonts/roboto/Roboto-Bold.ttf
-         - asset: assets/fonts/roboto/Roboto-Light.ttf
-         - asset: assets/fonts/roboto/Roboto-Medium.ttf
-         - asset: assets/fonts/roboto/Roboto-Regular.ttf
-     - family: ubuntu
+         - asset: assets/fonts/Cormorant_Garamond/CormorantGaramond_regular.ttf
+     - family: CormorantGaramond_semiBold
        fonts:
-         - asset: assets/fonts/ubuntu/Ubuntu-Bold.ttf
-         - asset: assets/fonts/ubuntu/Ubuntu-Italic.ttf
-         - asset: assets/fonts/ubuntu/Ubuntu-Light.ttf
-         - asset: assets/fonts/ubuntu/Ubuntu-Medium.ttf
-         - asset: assets/fonts/ubuntu/Ubuntu-Regular.ttf
+         - asset: assets/fonts/Cormorant_Garamond/CormorantGaramond_semiBold.ttf
+
+     - family: MontserratAlternates_bold
+       fonts:
+         - asset: assets/fonts/Montserrat_Alternates/MontserratAlternates_bold.ttf
+     - family: MontserratAlternates_extraBold
+       fonts:
+         - asset: assets/fonts/Montserrat_Alternates/MontserratAlternates_extraBold.ttf
+     - family: MontserratAlternates_extraLight
+       fonts:
+         - asset: assets/fonts/Montserrat_Alternates/MontserratAlternates_extraLight.ttf
+     - family: MontserratAlternates_light
+       fonts:
+         - asset: assets/fonts/Montserrat_Alternates/MontserratAlternates_light.ttf
+     - family: MontserratAlternates_medium
+       fonts:
+         - asset: assets/fonts/Montserrat_Alternates/MontserratAlternates_medium.ttf
+     - family: MontserratAlternates_regular
+       fonts:
+         - asset: assets/fonts/Montserrat_Alternates/MontserratAlternates_regular.ttf
+     - family: MontserratAlternates_semiBold
+       fonts:
+         - asset: assets/fonts/Montserrat_Alternates/MontserratAlternates_semiBold.ttf
+
+     - family: Prompt_bold
+       fonts:
+         - asset: assets/fonts/prompt/Prompt_bold.ttf
+     - family: Prompt_extraBold
+       fonts:
+         - asset: assets/fonts/prompt/Prompt_extraBold.ttf
+     - family: Prompt_extraLight
+       fonts:
+         - asset: assets/fonts/prompt/Prompt_extraLight.ttf
+     - family: Prompt_light
+       fonts:
+         - asset: assets/fonts/prompt/Prompt_light.ttf
+     - family: Prompt_medium
+       fonts:
+         - asset: assets/fonts/prompt/Prompt_medium.ttf
+     - family: Prompt_regular
+       fonts:
+         - asset: assets/fonts/prompt/Prompt_regular.ttf
+     - family: Prompt_semiBold
+       fonts:
+         - asset: assets/fonts/prompt/Prompt_semiBold.ttf
+
+     - family: Roboto_bold
+       fonts:
+         - asset: assets/fonts/roboto/Roboto_bold.ttf
+     - family: Roboto_light
+       fonts:
+         - asset: assets/fonts/roboto/Roboto_light.ttf
+     - family: Roboto_medium
+       fonts:
+         - asset: assets/fonts/roboto/Roboto_medium.ttf
+     - family: Roboto_regular
+       fonts:
+         - asset: assets/fonts/roboto/Roboto_regular.ttf
+
+     - family: Ubuntu_bold
+       fonts:
+         - asset: assets/fonts/ubuntu/Ubuntu_bold.ttf
+     - family: Ubuntu_italic
+       fonts:
+         - asset: assets/fonts/ubuntu/Ubuntu_italic.ttf
+     - family: Ubuntu_light
+       fonts:
+         - asset: assets/fonts/ubuntu/Ubuntu_light.ttf
+     - family: Ubuntu_medium
+       fonts:
+         - asset: assets/fonts/ubuntu/Ubuntu_medium.ttf
+     - family: Ubuntu_regular
+       fonts:
+         - asset: assets/fonts/ubuntu/Ubuntu_regular.ttf
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages

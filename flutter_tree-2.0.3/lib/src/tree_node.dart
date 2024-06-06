@@ -6,7 +6,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:boards_app/utils/color_res.dart';
 import 'package:boards_app/utils/appstyle.dart';
-
+import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 class TreeNode extends StatefulWidget {
   String selectedId;
    TreeNodeData data;
@@ -85,7 +85,7 @@ class _TreeNodeState extends State<TreeNode>
         view: widget.view,
         textStyle: TextStyle(
 fontSize: 14,
-           // fontFamily: list[index].font_family !=''?list[index].font_family: widget.textStyle.fontFamily,
+            fontFamily: list[index].font_family !=''?list[index].font_family: widget.textStyle.fontFamily,
 
             color:   list[index].text_color !=''?  Color(int.parse(list[index].text_color.substring(1, 7), radix: 16) + 0x80000000):Colors.black,),
         data: list[index],
@@ -299,9 +299,12 @@ fontSize: 14,
                                         const SizedBox(width: 4),
                                         Padding(
                                           padding: const EdgeInsets.symmetric(horizontal: 8),
-                                          child: Text(widget.data.title,
-                                            style: appTextStyle(color: (widget.selectedId == (widget.data.id ?? "").toString()) ? ColorRes.white : ColorRes.appColor, fontSize: 15, weight: FontWeight.w500),),
-                                        ),
+                                          child:     HtmlWidget(
+                                            widget.data.title,
+                                            renderMode: RenderMode.column,
+                                            textStyle:widget.textStyle,
+
+                                          ), ),
                                       ],
                                     ),
                                   )
@@ -336,7 +339,11 @@ fontSize: 14,
                                         ),
                                       ),
                                       const SizedBox(width: 4),
-                                      Text(widget.data.title, style: widget.textStyle),
+                                      // Text(widget.data.title, style: widget.textStyle),
+                                      HtmlWidget(
+    widget.data.title,
+                                        textStyle:widget.textStyle,
+                                      ),
                                     ],
                                   ),
                           ),

@@ -10,6 +10,7 @@ import 'package:boards_app/utils/string_res.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_tree/flutter_tree.dart';
 import 'package:get/get.dart';
+import 'package:html/parser.dart';
 import 'package:tutorial_coach_mark/tutorial_coach_mark.dart';
 
 class BoardsController extends GetxController {
@@ -178,9 +179,10 @@ class BoardsController extends GetxController {
 
       getBoardModelData['data'].forEach((element) {
         if (DateTime.parse(element['created_at']) == maxDate) {
+
           serverData.add({
             "id": element['id'],
-            "name": element['name'],
+            "name":element['name'],
             "icon" : element["icon"],
             "quote":element['quote'],
             "font_family":element['font_family'],
@@ -193,9 +195,11 @@ class BoardsController extends GetxController {
             "sub_board": element['sub_board'],
           });
         } else {
+
+
           serverData.add({
             "id": element['id'],
-            "name": element['name'],
+            "name":element['name'],
             "icon" : element["icon"],
             "quote":element['quote'],
             "font_family":element['font_family'],
