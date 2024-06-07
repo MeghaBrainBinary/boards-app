@@ -251,6 +251,7 @@ class BoardsController extends GetxController {
   RxBool categoryClickLoader = false.obs;
 
   onTapFolder(String id, String name, String icon ,{String? subBoardId, String? subName,String? quote, TreeNodeData? node,bool isFirst = false,
+    String? mainCategory,
 
    String?  quoteColor,
     String? quoteFamily,
@@ -324,6 +325,7 @@ class BoardsController extends GetxController {
           quoteFamily:quoteFamily,
           color:color,
           family:family,
+          mainCategory:mainCategory,
         ));
         categoryClickLoader.value = false;
       } else {
@@ -337,6 +339,8 @@ class BoardsController extends GetxController {
           quoteFamily:quoteFamily,
           color:color,
           family:family,
+          mainCategory:mainCategory,
+
         ));
         categoryClickLoader.value = false;
       }

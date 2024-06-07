@@ -169,12 +169,12 @@ class _TreeViewState extends State<TreeView> {
 
                   fontFamily: _renderList[index].font_family !=''?_renderList[index].font_family: widget.textStyle?.fontFamily,
 
-                  color:   _renderList[index].text_color !=''?  Color(int.parse(_renderList[index].text_color.substring(1, 7), radix: 16) + 0x80000000):Colors.black,)
+                  color:   _renderList[index].text_color !=''?  Color(int.parse(_renderList[index].text_color.substring(1, 7), radix: 16) + 0xFF000000):Colors.black,)
                  ??  TextStyle(
 
                     fontFamily: _renderList[index].font_family !=''?_renderList[index].font_family: widget.textStyle?.fontFamily,
 
-                    color:   _renderList[index].text_color !=''?  Color(int.parse(_renderList[index].text_color.substring(1, 7), radix: 16) + 0x80000000):Colors.black,),
+                    color:   _renderList[index].text_color !=''?  Color(int.parse(_renderList[index].text_color.substring(1, 7), radix: 16) + 0xFF000000):Colors.black,),
                 data: _renderList[index],
                 icon: widget.icon,
                 leftIcon: widget.leftIcon ?? Container(),
@@ -371,12 +371,12 @@ class _TreeViewHorizontalState extends State<TreeViewHorizontal> {
 
               fontFamily: _renderList[index].font_family !=''?_renderList[index].font_family: widget.textStyle?.fontFamily,
 
-                color:   _renderList[index].text_color !=''?  Color(int.parse(_renderList[index].text_color.substring(1, 7), radix: 16) + 0x80000000):Colors.black,)
+                color:   _renderList[index].text_color !=''?  Color(int.parse(_renderList[index].text_color.substring(1, 7), radix: 16) + 0xFF000000):Colors.black,)
                   ??  TextStyle(
 
                    fontFamily: _renderList[index].font_family !=''?_renderList[index].font_family: widget.textStyle?.fontFamily,
 
-                    color:   _renderList[index].text_color !=''?  Color(int.parse(_renderList[index].text_color.substring(1, 7), radix: 16) + 0x80000000):Colors.black,),
+                    color:   _renderList[index].text_color !=''?  Color(int.parse(_renderList[index].text_color.substring(1, 7), radix: 16) + 0xFF000000):Colors.black,),
                 data: _renderList[index],
                 icon: widget.icon,
                 leftIcon: widget.leftIcon ?? Container(),

@@ -128,40 +128,38 @@ class BoardsScreen extends StatelessWidget {
                             children: [
 
                               Container(
-                                height: Get.height *0.28,
+                                height: Get.height *0.35,
                                 alignment: Alignment.bottomCenter,
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.end,
+
                                   children: [
-                                    Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                      crossAxisAlignment: CrossAxisAlignment.end,
-                                      children: [
-                                        Padding(
-                                          padding: const EdgeInsets.only(left: 20),
-                                          child: Image.asset(AssetRes.appNewLogo,scale: 2.2),
-                                        ),
+                                  const SizedBox(height: 30,),
+                                    Center(
+                                      child: Padding(
+                                        padding: const EdgeInsets.only(left: 20),
+                                        child: Image.asset(AssetRes.appNewLogo,scale: 2.2),
+                                      ),
+                                    ),
+                                    const SizedBox(height: 30,),
+                                    Padding(
+                                      padding: const EdgeInsets.only(right: 20.0),
+                                      child: Align(
+                                        alignment: Alignment.centerRight,
+                                        child: Column(
+                                          crossAxisAlignment:CrossAxisAlignment.end,
+                                          children: [
 
-                                        Padding(
-                                          padding: const EdgeInsets.only(right: 20.0),
-                                          child: Align(
-                                            alignment: Alignment.centerRight,
-                                            child: Column(
-                                              crossAxisAlignment:CrossAxisAlignment.end,
-                                              children: [
 
-
-                                                InkWell(
-                                                  onTap: () {
-                                                    scaffoldKey.currentState?.openEndDrawer();
-                                                  },
-                                                  child: Image.asset(AssetRes.moreOption, scale: 3, color: ColorRes.appColor),
-                                                ),
-                                              ],
+                                            InkWell(
+                                              onTap: () {
+                                                scaffoldKey.currentState?.openEndDrawer();
+                                              },
+                                              child: Image.asset(AssetRes.moreOption, scale: 3, color: ColorRes.appColor),
                                             ),
-                                          ),
+                                          ],
                                         ),
-                                      ],
+                                      ),
                                     ),
                                     const SizedBox(height: 20,),
                                   ],
@@ -548,7 +546,7 @@ class BoardsScreen extends StatelessWidget {
                                                 builder: (controller) => Container(
 
                                                   width: Get.width,
-                                                  height: Get.height - (Get.height *0.08 + Get.height *0.28),
+                                                  height: Get.height - (Get.height *0.08 + Get.height *0.35),
                                                   child: (controller.getBoardModelData['data'] != null)
                                                       ? SingleChildScrollView(
                                                         child: TreeView(
@@ -581,6 +579,7 @@ class BoardsScreen extends StatelessWidget {
                                                               quoteFamily:node.font_family,
                                                               color:node.text_color,
                                                               family:node.font_family,
+                                                              mainCategory:(p.id.toString() =="0" && p.name =='') ?node.name:p.name,
                                                             );
                                                           },
                                                           onLastTap: (p,node) {
@@ -595,7 +594,7 @@ class BoardsScreen extends StatelessWidget {
                                                               quoteFamily:node.font_family,
                                                               color:node.text_color,
                                                               family:node.font_family,
-
+                                                              mainCategory:(p.id.toString() =="0" && p.name =='') ?node.name:p.name,
                                                             );
                                                           }),
                                                       )
