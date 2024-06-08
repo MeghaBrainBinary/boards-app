@@ -1338,12 +1338,14 @@ class _MyFolderScreenState extends State<MyFolderScreen> {
                         padding: const EdgeInsets.symmetric(horizontal: 20.0),
                         child: HtmlWidget(
                           (widget.quote ?? ''),
-                          customStylesBuilder: (element) {
-                            if (element.localName == 'div' && element.attributes['style']?.contains('text-align: center;') == true) {
-                              return {'text-align': 'center'};
-                            }
-                            return null;
-                          },
+                          // customStylesBuilder: (element) {
+                          //
+                          //   if (element.localName == 'div' && element.attributes['style']?.contains('text-align: center;') == true) {
+                          //     return {'text-align': 'center'};
+                          //   }
+                          //   return null;
+                          // },
+                          //
                           textStyle:
                           widget.quoteFamily !=
                               ''
