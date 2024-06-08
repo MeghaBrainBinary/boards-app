@@ -85,9 +85,9 @@ class _TreeNodeState extends State<TreeNode>
         view: widget.view,
         textStyle: TextStyle(
 fontSize: 14,
-            fontFamily: list[index].font_family !=''?list[index].font_family: widget.textStyle.fontFamily,
+            fontFamily: list[index].name_font_family !=''?list[index].name_font_family: widget.textStyle.fontFamily,
 
-            color:   list[index].text_color !=''?  Color(int.parse(list[index].text_color.substring(1, 7), radix: 16) + 0xFF000000):Colors.black,),
+            color:   list[index].name_text_color !=''?  Color(int.parse(list[index].name_text_color.substring(1, 7), radix: 16) + 0xFF000000):Colors.black,),
         data: list[index],
         parent: widget.data,
         remove: widget.remove,

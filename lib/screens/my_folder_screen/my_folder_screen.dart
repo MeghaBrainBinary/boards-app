@@ -27,10 +27,11 @@ class MyFolderScreen extends StatefulWidget {
   String? parentId;
   String? quote;
   String? quoteColor;
+  String? nameColor;
   String? quoteFamily;
+  String? nameFamily;
   String? mainCategory;
-  String? color;
-  String? family;
+
   bool? isFirst;
   bool? isFirstNode;
   List<TreeNodeData>? node;
@@ -41,11 +42,11 @@ class MyFolderScreen extends StatefulWidget {
       this.icon,
       this.parentId,
       this.quote,
-      this.quoteColor,
-      this.quoteFamily,
+      this.nameColor,
+      this.nameFamily,
       this.mainCategory,
-      this.color,
-      this.family,
+this.quoteColor,
+        this.quoteFamily,
       this.isFirst,
       this.isFirstNode,
       this.node});
@@ -99,602 +100,385 @@ class _MyFolderScreenState extends State<MyFolderScreen> {
               alignment: Alignment.center,
               children: [
                 Stack(
+                  alignment: Alignment.center,
                   children: [
-                    SingleChildScrollView(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          appBar(
-                              boardName: widget.mainCategory, icon: widget.icon),
-                          SizedBox(height: Get.height * 0.01),
-                          /*    Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 30.0),
-                            child: Text(
-                              ((widget.boardName ?? '').toLowerCase().contains(
-                                      StringRes.holidays.tr.toLowerCase()))
-                                  ? StringRes.holidayQuotes.tr
-                                  : ((widget.boardName ?? '')
-                                          .toLowerCase()
-                                          .contains(StringRes.challenge.tr
-                                              .toLowerCase()))
-                                      ? StringRes.challengesQuotes.tr
-                                      : ((widget.boardName ?? '')
-                                              .toLowerCase()
-                                              .contains(StringRes.weekend.tr
-                                                  .toLowerCase()))
-                                          ? StringRes.weekendQuotes.tr
-                                          : ((widget.boardName ?? '')
-                                                  .toLowerCase()
-                                                  .contains(StringRes
-                                                      .motivation.tr
-                                                      .toLowerCase()))
-                                              ? StringRes.motivationQuotes.tr
-                                              : StringRes.motivationQuotes.tr,
-                              textAlign: TextAlign.center,
-                              style: appTextStyleItalic(
-                                  color: ColorRes.appColor,
-                                  fontSize: 15,
-                                  weight: FontWeight.w500),
-                            ),
-                          ),
-                          SizedBox(height: Get.height * 0.05),*/
-                          (controller.getBoardInfoModel == null)
-                              ? const SizedBox()
-                              : Padding(
-                                  padding: EdgeInsets.only(
-                                      left: Get.width * 0.05,
-                                      right: Get.width * 0.06),
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.end,
-                                    children: [
-                                      const SizedBox(height: 10),
-                                      if ((controller.getBoardInfoModel.data ??
-                                              [])
-                                          .isEmpty)
-                                        const SizedBox()
-                                      else if (controller.isPageView == false &&
-                                          controller.isSelectedPageView ==
-                                              false)
-                                        (widget.isFirstNode ?? false)
-                                            ? const SizedBox()
-                                            : GestureDetector(
-                                                onTap: () {
-                                                  myFolderController
-                                                          .addSelectedImage =
-                                                      List.generate(
-                                                          controller
-                                                                  .getBoardInfoModel
-                                                                  ?.data
-                                                                  ?.length ??
-                                                              0,
-                                                          (index) => false);
-                                                  controller
-                                                          .isSelectedPageView =
-                                                      true;
-                                                  controller.isPageView = false;
-                                                  controller.update(['fldr']);
-                                                },
-                                                child: Text(
-                                                  StringRes.select.tr,
-                                                  style:
-                                                      widget.quoteFamily != ''
-                                                          ? TextStyle(
-                                                              fontFamily: widget
-                                                                  .quoteFamily,
-                                                              color: (widget
-                                                                          .quoteColor !=
-                                                                      '')
-                                                                  ? Color(int.parse(
-                                                                          widget.quoteColor!.substring(
-                                                                              1,
-                                                                              7),
-                                                                          radix:
-                                                                              16) +
-                                                                      0xFF000000)
-                                                                  : ColorRes
-                                                                      .appColor,
-                                                              fontSize: 15,
-                                                            )
-                                                          : appTextStyle(
-                                                              color: (widget
-                                                                          .quoteColor !=
-                                                                      '')
-                                                                  ? Color(int.parse(
-                                                                          widget.quoteColor!.substring(
-                                                                              1,
-                                                                              7),
-                                                                          radix:
-                                                                              16) +
-                                                                      0xFF000000)
-                                                                  : ColorRes
-                                                                      .appColor,
-                                                              fontSize: 15,
-                                                            ),
-                                                ),
-                                              )
-                                      else
-                                        const SizedBox(),
-                                      controller.isSelectedPageView
-                                          ? (widget.isFirstNode ?? false)
-                                              ? const SizedBox()
-                                              : Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceBetween,
-                                                  children: [
-                                                    Text(
-                                                      '${myFolderController.addSelectedImage.where((e) => e == true).length} ${StringRes.imageSelected.tr}',
-                                                      style:
-                                                          widget.quoteFamily !=
-                                                                  ''
-                                                              ? TextStyle(
-                                                                  fontFamily: widget
-                                                                      .quoteFamily,
-                                                                  color: (widget
-                                                                              .quoteColor !=
-                                                                          '')
-                                                                      ? Color(int.parse(
-                                                                              widget.quoteColor!.substring(1,
-                                                                                  7),
-                                                                              radix:
-                                                                                  16) +
-                                                                          0xFF000000)
-                                                                      : ColorRes
-                                                                          .appColor,
-                                                                  fontSize: 13,
-                                                                )
-                                                              : appTextStyle(
-                                                                  color: (widget
-                                                                              .quoteColor !=
-                                                                          '')
-                                                                      ? Color(int.parse(
-                                                                              widget.quoteColor!.substring(1,
-                                                                                  7),
-                                                                              radix:
-                                                                                  16) +
-                                                                          0xFF000000)
-                                                                      : ColorRes
-                                                                          .appColor,
-                                                                  //fontFamily: widget.quoteFamily,
-                                                                  fontSize: 13,
-                                                                ),
-                                                    ),
-                                                    GestureDetector(
+                    Stack(
+                      children: [
+                        Container(
+                          alignment: Alignment.topCenter,
+                          child: SingleChildScrollView(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                appBar(
+                                    boardName: widget.mainCategory,
+                                    icon: widget.icon),
+                                SizedBox(height: Get.height * 0.01),
+                                /*    Padding(
+                                  padding: const EdgeInsets.symmetric(horizontal: 30.0),
+                                  child: Text(
+                                    ((widget.boardName ?? '').toLowerCase().contains(
+                                            StringRes.holidays.tr.toLowerCase()))
+                                        ? StringRes.holidayQuotes.tr
+                                        : ((widget.boardName ?? '')
+                                                .toLowerCase()
+                                                .contains(StringRes.challenge.tr
+                                                    .toLowerCase()))
+                                            ? StringRes.challengesQuotes.tr
+                                            : ((widget.boardName ?? '')
+                                                    .toLowerCase()
+                                                    .contains(StringRes.weekend.tr
+                                                        .toLowerCase()))
+                                                ? StringRes.weekendQuotes.tr
+                                                : ((widget.boardName ?? '')
+                                                        .toLowerCase()
+                                                        .contains(StringRes
+                                                            .motivation.tr
+                                                            .toLowerCase()))
+                                                    ? StringRes.motivationQuotes.tr
+                                                    : StringRes.motivationQuotes.tr,
+                                    textAlign: TextAlign.center,
+                                    style: appTextStyleItalic(
+                                        color: ColorRes.appColor,
+                                        fontSize: 15,
+                                        weight: FontWeight.w500),
+                                  ),
+                                ),
+                                SizedBox(height: Get.height * 0.05),*/
+                                (controller.getBoardInfoModel == null)
+                                    ? const SizedBox()
+                                    : Padding(
+                                        padding: EdgeInsets.only(
+                                            left: Get.width * 0.05,
+                                            right: Get.width * 0.06),
+                                        child: Column(
+                                          crossAxisAlignment: CrossAxisAlignment.end,
+                                          children: [
+                                            const SizedBox(height: 10),
+                                            if ((controller.getBoardInfoModel.data ??
+                                                    [])
+                                                .isEmpty)
+                                              const SizedBox()
+                                            else if (controller.isPageView == false &&
+                                                controller.isSelectedPageView ==
+                                                    false)
+                                              (widget.isFirstNode ?? false)
+                                                  ? const SizedBox()
+                                                  : GestureDetector(
                                                       onTap: () {
                                                         myFolderController
                                                                 .addSelectedImage =
                                                             List.generate(
                                                                 controller
                                                                         .getBoardInfoModel
-                                                                        .data
+                                                                        ?.data
                                                                         ?.length ??
                                                                     0,
-                                                                (index) =>
-                                                                    false);
+                                                                (index) => false);
                                                         controller
                                                                 .isSelectedPageView =
-                                                            false;
-                                                        controller
-                                                            .update(['fldr']);
+                                                            true;
+                                                        controller.isPageView = false;
+                                                        controller.update(['fldr']);
                                                       },
                                                       child: Text(
-                                                        StringRes.cancel.tr,
+                                                        StringRes.select.tr,
                                                         style:
-                                                            widget.quoteFamily !=
-                                                                    ''
+                                                            widget.nameFamily != ''
                                                                 ? TextStyle(
-                                                                    fontFamily:
-                                                                        widget
-                                                                            .quoteFamily,
-                                                                    color: (widget.quoteColor !=
+                                                                    fontFamily: widget
+                                                                        .nameFamily,
+                                                                    color: (widget
+                                                                                .nameColor !=
                                                                             '')
-                                                                        ? Color(int.parse(widget.quoteColor!.substring(1, 7), radix: 16) +
+                                                                        ? Color(int.parse(
+                                                                                widget.nameColor!.substring(
+                                                                                    1,
+                                                                                    7),
+                                                                                radix:
+                                                                                    16) +
                                                                             0xFF000000)
                                                                         : ColorRes
                                                                             .appColor,
-                                                                    fontSize:
-                                                                        15,
+                                                                    fontSize: 15,
                                                                   )
                                                                 : appTextStyle(
-                                                                    color: (widget.quoteColor !=
+                                                                    color: (widget
+                                                                                .nameColor !=
                                                                             '')
-                                                                        ? Color(int.parse(widget.quoteColor!.substring(1, 7), radix: 16) +
+                                                                        ? Color(int.parse(
+                                                                                widget.nameColor!.substring(
+                                                                                    1,
+                                                                                    7),
+                                                                                radix:
+                                                                                    16) +
                                                                             0xFF000000)
                                                                         : ColorRes
                                                                             .appColor,
-                                                                    //fontFamily: widget.quoteFamily,
-                                                                    fontSize:
-                                                                        15,
+                                                                    fontSize: 15,
                                                                   ),
                                                       ),
-                                                    ),
-                                                  ],
-                                                )
-                                          : const SizedBox(),
-                                      const SizedBox(height: 20),
-                                      (controller.isPageView &&
-                                              !controller.isSelectedPageView)
-                                          ? Container(
-                                              height: Get.height * 0.7,
-                                              width: Get.width,
-                                              alignment: Alignment.topCenter,
-                                              child: Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceBetween,
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.center,
-                                                children: [
-                                                  InkWell(
-                                                    onTap: () {
-                                                      controller
-                                                          .tapForwardButton();
-                                                    },
-                                                    child: Icon(
-                                                        Icons
-                                                            .arrow_back_ios_new_rounded,
-                                                        color: (widget
-                                                                    .quoteColor !=
-                                                                '')
-                                                            ? Color(int.parse(
-                                                                    widget
-                                                                        .quoteColor!
-                                                                        .substring(
-                                                                            1,
-                                                                            7),
-                                                                    radix: 16) +
-                                                                0xFF000000)
-                                                            : ColorRes.appColor,
-                                                        size: 25),
-                                                  ),
-                                                  Container(
-                                                    alignment:
-                                                        Alignment.topCenter,
-                                                    width: Get.width * 0.75,
-                                                    child: PageView.builder(
-                                                        controller: controller
-                                                            .pageController,
-                                                        itemCount: controller
-                                                                .getBoardInfoModel
-                                                                .data
-                                                                ?.length ??
-                                                            0,
-                                                        onPageChanged: (val) {
-                                                          controller
-                                                              .onImageChanged(
-                                                                  val);
-                                                        },
-                                                        itemBuilder:
-                                                            (context, index) {
-                                                          controller
-                                                              .selectedIndex;
-                                                          return Stack(
-                                                            alignment: Alignment
-                                                                .bottomRight,
-                                                            children: [
-                                                              InkWell(
-                                                                onTap: () {
-                                                                  controller
-                                                                      .onTapImage(
-                                                                          index);
-                                                                },
-                                                                child:
-                                                                    ClipRRect(
-                                                                  borderRadius:
-                                                                      BorderRadius
-                                                                          .circular(
-                                                                              5),
-                                                                  child:
-                                                                      Container(
-                                                                    height:
-                                                                        Get.height *
-                                                                            0.7,
-                                                                    width:
-                                                                        Get.width *
-                                                                            0.75,
-                                                                    padding: (controller.checkImg[index] ==
-                                                                            false)
-                                                                        ? const EdgeInsets.all(
-                                                                            0)
-                                                                        : const EdgeInsets
-                                                                            .all(2),
-                                                                    decoration:
-                                                                        BoxDecoration(
-                                                                      color: Colors
-                                                                          .transparent,
-                                                                      borderRadius:
-                                                                          BorderRadius.circular(
-                                                                              5),
-                                                                    ),
-                                                                    child:
-                                                                        CachedNetworkImage(
-                                                                      fit: BoxFit
-                                                                          .fitWidth,
-                                                                      imageUrl: controller
-                                                                          .getBoardInfoModel
-                                                                          .data![
-                                                                              index]
-                                                                          .image!
-                                                                          .toString(),
-                                                                      progressIndicatorBuilder: (context,
-                                                                          strings,
-                                                                          download) {
-                                                                        return Shimmer
-                                                                            .fromColors(
-                                                                          baseColor: Colors
-                                                                              .grey
-                                                                              .shade300,
-                                                                          highlightColor:
-                                                                              Colors.white,
-                                                                          enabled:
-                                                                              true,
-                                                                          child: Container(
-                                                                              height: Get.width,
-                                                                              width: Get.width,
-                                                                              color: Colors.white),
-                                                                        );
-                                                                      },
-                                                                      errorWidget: (context,
-                                                                              url,
-                                                                              error) =>
-                                                                          Container(),
-                                                                    ),
-                                                                  ),
-                                                                ),
-                                                              ),
-                                                              (controller.isSelect ==
-                                                                      false)
-                                                                  ? const SizedBox()
-                                                                  : InkWell(
-                                                                      onTap:
-                                                                          () {
-                                                                        controller.onTapCheck(
-                                                                            controller.getBoardInfoModel.data![index].image,
-                                                                            index);
-                                                                      },
-                                                                      child:
-                                                                          Container(
-                                                                        margin: const EdgeInsets.only(
-                                                                            right:
-                                                                                10,
-                                                                            bottom:
-                                                                                10),
-                                                                        height:
-                                                                            25,
-                                                                        width:
-                                                                            25,
-                                                                        decoration:
-                                                                            BoxDecoration(
-                                                                          color:
-                                                                              ColorRes.white,
-                                                                          shape:
-                                                                              BoxShape.circle,
-                                                                        ),
-                                                                        child: (controller.checkImg[index] ==
-                                                                                false)
-                                                                            ? const SizedBox()
-                                                                            : SizedBox(
-                                                                                height: 8,
-                                                                                width: 11,
-                                                                                child: Transform.scale(
-                                                                                  scale: 0.6,
-                                                                                  child: Icon(
-                                                                                    Icons.check_rounded,
-                                                                                    color: (widget.quoteColor != '') ? Color(int.parse(widget.quoteColor!.substring(1, 7), radix: 16) + 0xFF000000) : ColorRes.appColor,
-                                                                                  ),
-                                                                                ),
-                                                                              ),
+                                                    )
+                                            else
+                                              const SizedBox(),
+                                            controller.isSelectedPageView
+                                                ? (widget.isFirstNode ?? false)
+                                                    ? const SizedBox()
+                                                    : Row(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .spaceBetween,
+                                                        children: [
+                                                          Text(
+                                                            '${myFolderController.addSelectedImage.where((e) => e == true).length} ${StringRes.imageSelected.tr}',
+                                                            style:
+                                                                widget.nameFamily !=
+                                                                        ''
+                                                                    ? TextStyle(
+                                                                        fontFamily: widget
+                                                                            .nameFamily,
+                                                                        color: (widget
+                                                                                    .nameColor !=
+                                                                                '')
+                                                                            ? Color(int.parse(
+                                                                                    widget.nameColor!.substring(1,
+                                                                                        7),
+                                                                                    radix:
+                                                                                        16) +
+                                                                                0xFF000000)
+                                                                            : ColorRes
+                                                                                .appColor,
+                                                                        fontSize: 13,
+                                                                      )
+                                                                    : appTextStyle(
+                                                                        color: (widget
+                                                                                    .nameColor !=
+                                                                                '')
+                                                                            ? Color(int.parse(
+                                                                                    widget.nameColor!.substring(1,
+                                                                                        7),
+                                                                                    radix:
+                                                                                        16) +
+                                                                                0xFF000000)
+                                                                            : ColorRes
+                                                                                .appColor,
+                                                                        //fontFamily: widget.nameFamily,
+                                                                        fontSize: 13,
                                                                       ),
-                                                                    ),
-                                                            ],
-                                                          );
-                                                        }),
-                                                  ),
-                                                  InkWell(
-                                                    onTap: () {
-                                                      controller
-                                                          .tapBackwardButton();
-                                                    },
-                                                    child: Icon(
-                                                        Icons
-                                                            .arrow_forward_ios_rounded,
-                                                        color: (widget
-                                                                    .quoteColor !=
-                                                                '')
-                                                            ? Color(int.parse(
-                                                                    widget
-                                                                        .quoteColor!
-                                                                        .substring(
-                                                                            1,
-                                                                            7),
-                                                                    radix: 16) +
-                                                                0xFF000000)
-                                                            : ColorRes.appColor,
-                                                        size: 25),
-                                                  ),
-                                                ],
-                                              ),
-                                            )
-                                          : (!controller.isPageView &&
-                                                  controller.isSelectedPageView)
-                                              ? widget.isFirstNode ?? false
-                                                  ? Container(
-                                                      height: Get.height * 0.67,
-                                                      width: Get.width,
-                                                      alignment:
-                                                          Alignment.center,
-                                                      child: HtmlWidget(
-
-                                                        (widget.quote ??
-                                                            ''),
-
-                                                        textStyle: widget
-                                                            .quoteFamily !=
-                                                            ''
-                                                            ? TextStyle(
-
-                                                          fontFamily:
-                                                          widget
-                                                              .quoteFamily,
-                                                          color: (widget.quoteColor !=
-                                                              '')
-                                                              ? Color(int.parse(widget.quoteColor!.substring(1, 7), radix: 16) +
-                                                              0xFF000000)
-                                                              : ColorRes
-                                                              .appColor,
-                                                          fontSize:
-                                                          20,
-                                                        )
-                                                            : appTextStyle(
-                                                          color: (widget.quoteColor !=
-                                                              '')
-                                                              ? Color(int.parse(widget.quoteColor!.substring(1, 7), radix: 16) +
-                                                              0xFF000000)
-                                                              : ColorRes
-                                                              .appColor,
-                                                          //fontFamily: widget.quoteFamily,
-                                                          fontSize:
-                                                          20,
+                                                          ),
+                                                          GestureDetector(
+                                                            onTap: () {
+                                                              myFolderController
+                                                                      .addSelectedImage =
+                                                                  List.generate(
+                                                                      controller
+                                                                              .getBoardInfoModel
+                                                                              .data
+                                                                              ?.length ??
+                                                                          0,
+                                                                      (index) =>
+                                                                          false);
+                                                              controller
+                                                                      .isSelectedPageView =
+                                                                  false;
+                                                              controller
+                                                                  .update(['fldr']);
+                                                            },
+                                                            child: Text(
+                                                              StringRes.cancel.tr,
+                                                              style:
+                                                                  widget.nameFamily !=
+                                                                          ''
+                                                                      ? TextStyle(
+                                                                          fontFamily:
+                                                                              widget
+                                                                                  .nameFamily,
+                                                                          color: (widget.nameColor !=
+                                                                                  '')
+                                                                              ? Color(int.parse(widget.nameColor!.substring(1, 7), radix: 16) +
+                                                                                  0xFF000000)
+                                                                              : ColorRes
+                                                                                  .appColor,
+                                                                          fontSize:
+                                                                              15,
+                                                                        )
+                                                                      : appTextStyle(
+                                                                          color: (widget.nameColor !=
+                                                                                  '')
+                                                                              ? Color(int.parse(widget.nameColor!.substring(1, 7), radix: 16) +
+                                                                                  0xFF000000)
+                                                                              : ColorRes
+                                                                                  .appColor,
+                                                                          //fontFamily: widget.nameFamily,
+                                                                          fontSize:
+                                                                              15,
+                                                                        ),
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      )
+                                                : const SizedBox(),
+                                            const SizedBox(height: 20),
+                                            (controller.isPageView &&
+                                                    !controller.isSelectedPageView)
+                                                ? Container(
+                                                    height: Get.height * 0.7,
+                                                    width: Get.width,
+                                                    alignment: Alignment.topCenter,
+                                                    child: Row(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .spaceBetween,
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment.center,
+                                                      children: [
+                                                        InkWell(
+                                                          onTap: () {
+                                                            controller
+                                                                .tapForwardButton();
+                                                          },
+                                                          child: Icon(
+                                                              Icons
+                                                                  .arrow_back_ios_new_rounded,
+                                                              color: (widget
+                                                                          .nameColor !=
+                                                                      '')
+                                                                  ? Color(int.parse(
+                                                                          widget
+                                                                              .nameColor!
+                                                                              .substring(
+                                                                                  1,
+                                                                                  7),
+                                                                          radix: 16) +
+                                                                      0xFF000000)
+                                                                  : ColorRes.appColor,
+                                                              size: 25),
                                                         ),
-                                                      ),)
-                                                  : SizedBox(
-                                                      height: Get.height * 0.67,
-                                                      width: Get.width,
-                                                      child: (controller
-                                                                  .getBoardInfoModel
-                                                                  ?.data !=
-                                                              null)
-                                                          ? GridView.builder(
-                                                              padding:
-                                                                  const EdgeInsets
-                                                                      .all(0),
+                                                        Container(
+                                                          alignment:
+                                                              Alignment.topCenter,
+                                                          width: Get.width * 0.75,
+                                                          child: PageView.builder(
+                                                              controller: controller
+                                                                  .pageController,
                                                               itemCount: controller
                                                                       .getBoardInfoModel
-                                                                      ?.data
+                                                                      .data
                                                                       ?.length ??
                                                                   0,
-                                                              gridDelegate:
-                                                                  const SliverGridDelegateWithFixedCrossAxisCount(
-                                                                crossAxisCount:
-                                                                    2,
-                                                                mainAxisSpacing:
-                                                                    6,
-                                                                crossAxisSpacing:
-                                                                    19,
-                                                              ),
+                                                              onPageChanged: (val) {
+                                                                controller
+                                                                    .onImageChanged(
+                                                                        val);
+                                                              },
                                                               itemBuilder:
-                                                                  (context,
-                                                                      index) {
+                                                                  (context, index) {
+                                                                controller
+                                                                    .selectedIndex;
                                                                 return Stack(
-                                                                  alignment:
-                                                                      Alignment
-                                                                          .bottomRight,
+                                                                  alignment: Alignment
+                                                                      .bottomRight,
                                                                   children: [
                                                                     InkWell(
-                                                                      onTap:
-                                                                          () {
-                                                                        if (myFolderController.addSelectedImage[index] ==
-                                                                            false) {
-                                                                          myFolderController.addSelectedImage[index] =
-                                                                              true;
-                                                                        } else {
-                                                                          myFolderController.addSelectedImage[index] =
-                                                                              false;
-                                                                        }
-                                                                        myFolderController
-                                                                            .update([
-                                                                          'fldr'
-                                                                        ]);
+                                                                      onTap: () {
+                                                                        controller
+                                                                            .onTapImage(
+                                                                                index);
                                                                       },
                                                                       child:
                                                                           ClipRRect(
                                                                         borderRadius:
-                                                                            BorderRadius.circular(5),
+                                                                            BorderRadius
+                                                                                .circular(
+                                                                                    5),
                                                                         child:
                                                                             Container(
                                                                           height:
-                                                                              Get.height * 0.199,
+                                                                              Get.height *
+                                                                                  0.7,
                                                                           width:
-                                                                              Get.width * 0.45,
-                                                                          padding: (myFolderController.addSelectedImage[index] == true)
-                                                                              ? const EdgeInsets.all(2)
-                                                                              : const EdgeInsets.all(2),
+                                                                              Get.width *
+                                                                                  0.75,
+                                                                          padding: (controller.checkImg[index] ==
+                                                                                  false)
+                                                                              ? const EdgeInsets.all(
+                                                                                  0)
+                                                                              : const EdgeInsets
+                                                                                  .all(2),
                                                                           decoration:
                                                                               BoxDecoration(
-                                                                            color: myFolderController.checkImg[index] == true
-                                                                                ? (widget.quoteColor != '')
-                                                                                    ? Color(int.parse(widget.quoteColor!.substring(1, 7), radix: 16) + 0xFF000000)
-                                                                                    : ColorRes.appColor
-                                                                                : Colors.transparent,
-                                                                            border:
-                                                                                Border.all(
-                                                                              color: myFolderController.addSelectedImage[index] == true
-                                                                                  ? (widget.quoteColor != '')
-                                                                                      ? Color(int.parse(widget.quoteColor!.substring(1, 7), radix: 16) + 0xFF000000)
-                                                                                      : ColorRes.appColor
-                                                                                  : Colors.white,
-                                                                            ),
+                                                                            color: Colors
+                                                                                .transparent,
                                                                             borderRadius:
-                                                                                BorderRadius.circular(5),
+                                                                                BorderRadius.circular(
+                                                                                    5),
                                                                           ),
                                                                           child:
-                                                                              Stack(
-                                                                            alignment:
-                                                                                Alignment.bottomRight,
-                                                                            children: [
                                                                               CachedNetworkImage(
-                                                                                width: Get.width,
-                                                                                height: Get.height * 0.199,
-                                                                                fit: BoxFit.cover,
-                                                                                imageUrl: controller.getBoardInfoModel?.data?[index].image ?? "",
-                                                                                progressIndicatorBuilder: (context, strings, download) {
-                                                                                  return Shimmer.fromColors(
-                                                                                    baseColor: Colors.grey.shade300,
-                                                                                    highlightColor: Colors.white,
-                                                                                    enabled: true,
-                                                                                    child: Container(height: Get.width, width: Get.width, color: Colors.white),
-                                                                                  );
-                                                                                },
-                                                                                errorWidget: (context, url, error) => Container(),
-                                                                              ),
-                                                                              myFolderController.addSelectedImage[index] == true
-                                                                                  ? Padding(
-                                                                                      padding: const EdgeInsets.only(bottom: 10, right: 10),
-                                                                                      child: Container(
-                                                                                          height: 20,
-                                                                                          width: 20,
-                                                                                          decoration: const BoxDecoration(color: Colors.white, shape: BoxShape.circle),
-                                                                                          alignment: Alignment.center,
-                                                                                          child: Image.asset(
-                                                                                            AssetRes.selectedImage,
-                                                                                            scale: 4,
-                                                                                            color: (widget.quoteColor != '') ? Color(int.parse(widget.quoteColor!.substring(1, 7), radix: 16) + 0xFF000000) : ColorRes.appColor,
-                                                                                          )),
-                                                                                    )
-                                                                                  : const SizedBox(),
-                                                                            ],
+                                                                            fit: BoxFit
+                                                                                .fitWidth,
+                                                                            imageUrl: controller
+                                                                                .getBoardInfoModel
+                                                                                .data![
+                                                                                    index]
+                                                                                .image!
+                                                                                .toString(),
+                                                                            progressIndicatorBuilder: (context,
+                                                                                strings,
+                                                                                download) {
+                                                                              return Shimmer
+                                                                                  .fromColors(
+                                                                                baseColor: Colors
+                                                                                    .grey
+                                                                                    .shade300,
+                                                                                highlightColor:
+                                                                                    Colors.white,
+                                                                                enabled:
+                                                                                    true,
+                                                                                child: Container(
+                                                                                    height: Get.width,
+                                                                                    width: Get.width,
+                                                                                    color: Colors.white),
+                                                                              );
+                                                                            },
+                                                                            errorWidget: (context,
+                                                                                    url,
+                                                                                    error) =>
+                                                                                Container(),
                                                                           ),
                                                                         ),
                                                                       ),
                                                                     ),
-                                                                    (myFolderController.isSelect ==
+                                                                    (controller.isSelect ==
                                                                             false)
                                                                         ? const SizedBox()
                                                                         : InkWell(
                                                                             onTap:
                                                                                 () {
-                                                                              myFolderController.onTapCheck(myFolderController.getBoardInfoModel.data![index].image, index);
+                                                                              controller.onTapCheck(
+                                                                                  controller.getBoardInfoModel.data![index].image,
+                                                                                  index);
                                                                             },
                                                                             child:
                                                                                 Container(
-                                                                              margin: const EdgeInsets.only(right: 10, bottom: 10),
-                                                                              height: 25,
-                                                                              width: 25,
-                                                                              decoration: BoxDecoration(
-                                                                                color: ColorRes.white,
-                                                                                shape: BoxShape.circle,
+                                                                              margin: const EdgeInsets.only(
+                                                                                  right:
+                                                                                      10,
+                                                                                  bottom:
+                                                                                      10),
+                                                                              height:
+                                                                                  25,
+                                                                              width:
+                                                                                  25,
+                                                                              decoration:
+                                                                                  BoxDecoration(
+                                                                                color:
+                                                                                    ColorRes.white,
+                                                                                shape:
+                                                                                    BoxShape.circle,
                                                                               ),
-                                                                              child: (myFolderController.checkImg[index] == false)
+                                                                              child: (controller.checkImg[index] ==
+                                                                                      false)
                                                                                   ? const SizedBox()
                                                                                   : SizedBox(
                                                                                       height: 8,
@@ -703,7 +487,7 @@ class _MyFolderScreenState extends State<MyFolderScreen> {
                                                                                         scale: 0.6,
                                                                                         child: Icon(
                                                                                           Icons.check_rounded,
-                                                                                          color: (widget.quoteColor != '') ? Color(int.parse(widget.quoteColor!.substring(1, 7), radix: 16) + 0xFF000000) : ColorRes.appColor,
+                                                                                          color: (widget.nameColor != '') ? Color(int.parse(widget.nameColor!.substring(1, 7), radix: 16) + 0xFF000000) : ColorRes.appColor,
                                                                                         ),
                                                                                       ),
                                                                                     ),
@@ -711,292 +495,51 @@ class _MyFolderScreenState extends State<MyFolderScreen> {
                                                                           ),
                                                                   ],
                                                                 );
-                                                              },
-                                                            )
-                                                          : Center(
-                                                              child: Text(
-                                                                StringRes
-                                                                    .noDataFound
-                                                                    .tr,
-                                                                style: widget
-                                                                            .quoteFamily !=
-                                                                        ''
-                                                                    ? TextStyle(
-                                                                        fontFamily:
-                                                                            widget.quoteFamily,
-                                                                        color: (widget.quoteColor !=
-                                                                                '')
-                                                                            ? Color(int.parse(widget.quoteColor!.substring(1, 7), radix: 16) +
-                                                                                0xFF000000)
-                                                                            : ColorRes.appColor,
-                                                                        fontSize:
-                                                                            15,
-                                                                      )
-                                                                    : appTextStyle(
-                                                                        color: (widget.quoteColor !=
-                                                                                '')
-                                                                            ? Color(int.parse(widget.quoteColor!.substring(1, 7), radix: 16) +
-                                                                                0xFF000000)
-                                                                            : ColorRes.appColor,
-                                                                        //fontFamily: widget.quoteFamily,
-                                                                        fontSize:
-                                                                            15,
-                                                                      ),
-                                                              ),
-                                                            ),
-                                                    )
-                                              : Column(
-                                                  children: [
-                                                    // widget.node!.isEmpty
-                                                    //     ? const SizedBox()
-                                                    //     : TreeViewHorizontal(
-                                                    //         selectedId: controller.selectedId,
-                                                    //         view: true,
-                                                    //         leftIcon: Image.asset(AssetRes.success, scale: 1.5),
-                                                    //         icon: Icon(Icons.keyboard_arrow_down_rounded, color: ColorRes.black),
-                                                    //     textStyle: GoogleFonts.inter(
-                                                    //       color: Colors.black,
-                                                    //       fontSize: 17,
-                                                    //       fontWeight: FontWeight.w500,
-                                                    //     ),
-                                                    //     onExpand: (d){
-                                                    //           d.expanded =false;
-                                                    //     },
-                                                    //     data: widget.node!,
-                                                    //     onTap: (node) {
-                                                    //       boardsController.onTapFolder(
-                                                    //         node: node,
-                                                    //         node.id.toString(),
-                                                    //         node.name,
-                                                    //         node.icon,
-                                                    //       );
-                                                    //     },
-                                                    //     onLastTap: (node) {
-                                                    //       boardsController.onTapFolder(
-                                                    //           node: node,
-                                                    //           node.id.toString(),
-                                                    //           node.name,
-                                                    //           node.icon
-                                                    //       );
-                                                    //     }),
-
-                                                    (widget.node ?? []).isEmpty
-                                                        ? const SizedBox()
-                                                        : Container(
-                                                            margin:
-                                                                const EdgeInsets
-                                                                        .only(
-                                                                    bottom: 10),
-                                                            height: 40,
-                                                            child: ListView
-                                                                .separated(
-                                                              separatorBuilder: (context,
-                                                                      index) =>
-                                                                  const SizedBox(
-                                                                      width:
-                                                                          10),
-                                                              scrollDirection:
-                                                                  Axis.horizontal,
-                                                              itemCount: widget
-                                                                  .node!.length,
-                                                              itemBuilder:
-                                                                  (context,
-                                                                          index) =>
-                                                                      InkWell(
-                                                                onTap:
-                                                                    () async {
-                                                                  if (widget
-                                                                          .isFirst ??
-                                                                      false) {
-                                                                    if (controller
-                                                                            .isSelectedNode[
-                                                                        index]) {
-                                                                      myFolderController.isSelectedNode = List.generate(
-                                                                          widget.node?.length ??
-                                                                              0,
-                                                                          (index) =>
-                                                                              false);
-                                                                      controller
-                                                                              .isSelectedNode[index] =
-                                                                          false;
-                                                                      widget.isFirstNode =
-                                                                          true;
-
-                                                                      controller
-                                                                              .selectedId =
+                                                              }),
+                                                        ),
+                                                        InkWell(
+                                                          onTap: () {
+                                                            controller
+                                                                .tapBackwardButton();
+                                                          },
+                                                          child: Icon(
+                                                              Icons
+                                                                  .arrow_forward_ios_rounded,
+                                                              color: (widget
+                                                                          .nameColor !=
+                                                                      '')
+                                                                  ? Color(int.parse(
                                                                           widget
-                                                                              .parentId
-                                                                              .toString();
-                                                                      // controller.myInt(
-                                                                      //     widget.parentId.toString() ??
-                                                                      //         "");
-                                                                    } else {
-                                                                      myFolderController.isSelectedNode = List.generate(
-                                                                          widget.node?.length ??
-                                                                              0,
-                                                                          (index) =>
-                                                                              false);
-                                                                      controller
-                                                                              .isSelectedNode[index] =
-                                                                          true;
-
-                                                                      controller
-                                                                          .selectedId = widget
-                                                                              .node?[index]
-                                                                              .id
-                                                                              .toString() ??
-                                                                          "";
-                                                                      await controller.myInt(widget
-                                                                              .node?[index]
-                                                                              .id
-                                                                              .toString() ??
-                                                                          "");
-                                                                      widget.isFirstNode =
-                                                                          false;
-                                                                    }
-                                                                  } else {
-                                                                    controller
-                                                                        .selectedId = widget
-                                                                            .node?[index]
-                                                                            .id
-                                                                            .toString() ??
-                                                                        "";
-                                                                    controller.myInt(widget
-                                                                            .node?[index]
-                                                                            .id
-                                                                            .toString() ??
-                                                                        "");
-                                                                    widget.isFirstNode =
-                                                                        false;
-                                                                  }
-
-                                                                  setState(
-                                                                      () {});
-                                                                },
-                                                                child:
-                                                                    Container(
-                                                                  alignment:
-                                                                      Alignment
-                                                                          .center,
-                                                                  height: 40,
-                                                                  decoration:
-                                                                      BoxDecoration(
-                                                                    color: (controller.selectedId ==
-                                                                            (widget.node?[index].id.toString() ??
-                                                                                ""))
-                                                                        ? widget.color !=
-                                                                                ''
-                                                                            ? Color(int.parse(widget.color!.substring(1, 7), radix: 16) +
-                                                                                0xFF000000)
-                                                                            : ColorRes
-                                                                                .appColor
-                                                                        : ColorRes
-                                                                            .white,
-                                                                    borderRadius:
-                                                                        BorderRadius.circular(
-                                                                            15),
-                                                                    border: Border.all(
-                                                                        color: widget.color !=
-                                                                                ''
-                                                                            ? Color(int.parse(widget.color!.substring(1, 7), radix: 16) +
-                                                                                0xFF000000)
-                                                                            : ColorRes.appColor),
-                                                                  ),
-                                                                  child:
-                                                                      Padding(
-                                                                    padding: const EdgeInsets
-                                                                            .symmetric(
-                                                                        horizontal:
-                                                                            8),
-                                                                    child:
-
-                                                                    HtmlWidget(
-
-                                                                      widget.node?[index]
-                                                                          .title ??
-                                                                          "",
-
-                                                                      textStyle: widget.quoteFamily !=
-                                                                          ''
-                                                                          ? TextStyle(
-                                                                        fontFamily: widget.quoteFamily,
-                                                                        color: (controller.selectedId == (widget.node?[index].id.toString() ?? "")) ? ColorRes.white : ColorRes.appColor,
-                                                                        fontSize: 15,
-                                                                      )
-                                                                          : appTextStyle(
-                                                                        color: (controller.selectedId == (widget.node?[index].id.toString() ?? "")) ? ColorRes.white : ColorRes.appColor,
-
-                                                                        fontSize: 15,
-                                                                        //  fontFamily: widget.family
-                                                                      ),
-                                                                    ),
-
-                                                                  ),
-                                                                ),
-                                                              ),
-                                                            ),
-                                                          ),
-
-                                                    widget.isFirstNode ?? false
-                                                        ? Container(
-                                                            height: Get.height *
-                                                                0.67,
+                                                                              .nameColor!
+                                                                              .substring(
+                                                                                  1,
+                                                                                  7),
+                                                                          radix: 16) +
+                                                                      0xFF000000)
+                                                                  : ColorRes.appColor,
+                                                              size: 25),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  )
+                                                : (!controller.isPageView &&
+                                                        controller.isSelectedPageView)
+                                                    ? SizedBox(
+                                                            height: Get.height * 0.67,
                                                             width: Get.width,
-                                                            alignment: Alignment
-                                                                .center,
-                                                            child: HtmlWidget(
-
-                                                              (widget.quote ??
-                                                                  ''),
-
-                                                              textStyle: widget
-                                                                          .quoteFamily !=
-                                                                      ''
-                                                                  ? TextStyle(
-
-                                                                      fontFamily:
-                                                                          widget
-                                                                              .quoteFamily,
-                                                                      color: (widget.quoteColor !=
-                                                                              '')
-                                                                          ? Color(int.parse(widget.quoteColor!.substring(1, 7), radix: 16) +
-                                                                              0xFF000000)
-                                                                          : ColorRes
-                                                                              .appColor,
-                                                                      fontSize:
-                                                                          20,
-                                                                    )
-                                                                  : appTextStyle(
-                                                                      color: (widget.quoteColor !=
-                                                                              '')
-                                                                          ? Color(int.parse(widget.quoteColor!.substring(1, 7), radix: 16) +
-                                                                              0xFF000000)
-                                                                          : ColorRes
-                                                                              .appColor,
-                                                                      //fontFamily: widget.quoteFamily,
-                                                                      fontSize:
-                                                                          20,
-                                                                    ),
-                                                            ),
-                                                          )
-                                                        : SizedBox(
-                                                            height: Get.height *
-                                                                0.69,
-                                                            width: Get.width,
-                                                            child: ((controller
-                                                                            .getBoardInfoModel
-                                                                            .data ??
-                                                                        [])
-                                                                    .isNotEmpty)
-                                                                ? GridView
-                                                                    .builder(
+                                                            child: (controller
+                                                                        .getBoardInfoModel
+                                                                        ?.data !=
+                                                                    null)
+                                                                ? GridView.builder(
                                                                     padding:
                                                                         const EdgeInsets
                                                                             .all(0),
                                                                     itemCount: controller
-                                                                        .getBoardInfoModel
-                                                                        .data!
-                                                                        .length,
+                                                                            .getBoardInfoModel
+                                                                            ?.data
+                                                                            ?.length ??
+                                                                        0,
                                                                     gridDelegate:
                                                                         const SliverGridDelegateWithFixedCrossAxisCount(
                                                                       crossAxisCount:
@@ -1011,85 +554,114 @@ class _MyFolderScreenState extends State<MyFolderScreen> {
                                                                             index) {
                                                                       return Stack(
                                                                         alignment:
-                                                                            Alignment.bottomRight,
+                                                                            Alignment
+                                                                                .bottomRight,
                                                                         children: [
                                                                           InkWell(
                                                                             onTap:
                                                                                 () {
-                                                                              controller.selectedIndex = index;
-                                                                              controller.onTapImage(index);
+                                                                              if (myFolderController.addSelectedImage[index] ==
+                                                                                  false) {
+                                                                                myFolderController.addSelectedImage[index] =
+                                                                                    true;
+                                                                              } else {
+                                                                                myFolderController.addSelectedImage[index] =
+                                                                                    false;
+                                                                              }
+                                                                              myFolderController
+                                                                                  .update([
+                                                                                'fldr'
+                                                                              ]);
                                                                             },
                                                                             child:
                                                                                 ClipRRect(
-                                                                              borderRadius: BorderRadius.circular(5),
-                                                                              child: Container(
-                                                                                height: Get.height * 0.199,
-                                                                                width: Get.width * 0.45,
-                                                                                padding: (controller.checkImg[index] == false) ? const EdgeInsets.all(0) : const EdgeInsets.all(2),
-                                                                                decoration: BoxDecoration(
-                                                                                  color: Colors.white,
-                                                                                  borderRadius: BorderRadius.circular(5),
+                                                                              borderRadius:
+                                                                                  BorderRadius.circular(5),
+                                                                              child:
+                                                                                  Container(
+                                                                                height:
+                                                                                    Get.height * 0.199,
+                                                                                width:
+                                                                                    Get.width * 0.45,
+                                                                                padding: (myFolderController.addSelectedImage[index] == true)
+                                                                                    ? const EdgeInsets.all(2)
+                                                                                    : const EdgeInsets.all(2),
+                                                                                decoration:
+                                                                                    BoxDecoration(
+                                                                                  color: myFolderController.checkImg[index] == true
+                                                                                      ? (widget.nameColor != '')
+                                                                                          ? Color(int.parse(widget.nameColor!.substring(1, 7), radix: 16) + 0xFF000000)
+                                                                                          : ColorRes.appColor
+                                                                                      : Colors.transparent,
+                                                                                  border:
+                                                                                      Border.all(
+                                                                                    color: myFolderController.addSelectedImage[index] == true
+                                                                                        ? (widget.nameColor != '')
+                                                                                            ? Color(int.parse(widget.nameColor!.substring(1, 7), radix: 16) + 0xFF000000)
+                                                                                            : ColorRes.appColor
+                                                                                        : Colors.white,
+                                                                                  ),
+                                                                                  borderRadius:
+                                                                                      BorderRadius.circular(5),
                                                                                 ),
-                                                                                child: Stack(
-                                                                                  alignment: Alignment.topRight,
+                                                                                child:
+                                                                                    Stack(
+                                                                                  alignment:
+                                                                                      Alignment.bottomRight,
                                                                                   children: [
                                                                                     CachedNetworkImage(
                                                                                       width: Get.width,
-                                                                                      fit: BoxFit.fitWidth,
-                                                                                      imageUrl: controller.getBoardInfoModel.data![index].image!.toString(),
-                                                                                      errorWidget: (context, url, error) => Container(),
+                                                                                      height: Get.height * 0.199,
+                                                                                      fit: BoxFit.cover,
+                                                                                      imageUrl: controller.getBoardInfoModel?.data?[index].image ?? "",
                                                                                       progressIndicatorBuilder: (context, strings, download) {
                                                                                         return Shimmer.fromColors(
                                                                                           baseColor: Colors.grey.shade300,
                                                                                           highlightColor: Colors.white,
                                                                                           enabled: true,
-                                                                                          child: Container(
-                                                                                            height: Get.width,
-                                                                                            width: Get.width,
-                                                                                            color: Colors.white,
-                                                                                          ),
+                                                                                          child: Container(height: Get.width, width: Get.width, color: Colors.white),
                                                                                         );
                                                                                       },
+                                                                                      errorWidget: (context, url, error) => Container(),
                                                                                     ),
-                                                                                    GestureDetector(
-                                                                                      onTap: () async {
-                                                                                        await controller.likeUnlike(index);
-                                                                                        controller.update(['fldr']);
-                                                                                      },
-                                                                                      child: Container(
-                                                                                        height: 20,
-                                                                                        width: 20,
-                                                                                        margin: const EdgeInsets.only(top: 12, right: 12),
-                                                                                        decoration: const BoxDecoration(
-                                                                                          borderRadius: BorderRadius.all(Radius.circular(5)),
-                                                                                          color: Colors.white,
-                                                                                        ),
-                                                                                        child: controller.isLike[index] == true
-                                                                                            ? Icon(Icons.favorite_outlined, size: 18, color: (widget.quoteColor != '') ? Color(int.parse(widget.quoteColor!.substring(1, 7), radix: 16) + 0xFF000000) : ColorRes.colorE16F55)
-                                                                                            : Icon(
-                                                                                                Icons.favorite_outline_sharp,
-                                                                                                size: 18,
-                                                                                                color: (widget.quoteColor != '') ? Color(int.parse(widget.quoteColor!.substring(1, 7), radix: 16) + 0xFF000000) : ColorRes.appColor,
-                                                                                              ),
-                                                                                      ),
-                                                                                    ),
+                                                                                    myFolderController.addSelectedImage[index] == true
+                                                                                        ? Padding(
+                                                                                            padding: const EdgeInsets.only(bottom: 10, right: 10),
+                                                                                            child: Container(
+                                                                                                height: 20,
+                                                                                                width: 20,
+                                                                                                decoration: const BoxDecoration(color: Colors.white, shape: BoxShape.circle),
+                                                                                                alignment: Alignment.center,
+                                                                                                child: Image.asset(
+                                                                                                  AssetRes.selectedImage,
+                                                                                                  scale: 4,
+                                                                                                  color: (widget.nameColor != '') ? Color(int.parse(widget.nameColor!.substring(1, 7), radix: 16) + 0xFF000000) : ColorRes.appColor,
+                                                                                                )),
+                                                                                          )
+                                                                                        : const SizedBox(),
                                                                                   ],
                                                                                 ),
                                                                               ),
                                                                             ),
                                                                           ),
-                                                                          (controller.isSelect == false)
+                                                                          (myFolderController.isSelect ==
+                                                                                  false)
                                                                               ? const SizedBox()
                                                                               : InkWell(
-                                                                                  onTap: () {
-                                                                                    controller.onTapCheck(controller.getBoardInfoModel.data![index].image, index);
+                                                                                  onTap:
+                                                                                      () {
+                                                                                    myFolderController.onTapCheck(myFolderController.getBoardInfoModel.data![index].image, index);
                                                                                   },
-                                                                                  child: Container(
+                                                                                  child:
+                                                                                      Container(
                                                                                     margin: const EdgeInsets.only(right: 10, bottom: 10),
                                                                                     height: 25,
                                                                                     width: 25,
-                                                                                    decoration: BoxDecoration(color: ColorRes.white, shape: BoxShape.circle),
-                                                                                    child: (controller.checkImg[index] == false)
+                                                                                    decoration: BoxDecoration(
+                                                                                      color: ColorRes.white,
+                                                                                      shape: BoxShape.circle,
+                                                                                    ),
+                                                                                    child: (myFolderController.checkImg[index] == false)
                                                                                         ? const SizedBox()
                                                                                         : SizedBox(
                                                                                             height: 8,
@@ -1098,7 +670,7 @@ class _MyFolderScreenState extends State<MyFolderScreen> {
                                                                                               scale: 0.6,
                                                                                               child: Icon(
                                                                                                 Icons.check_rounded,
-                                                                                                color: (widget.quoteColor != '') ? Color(int.parse(widget.quoteColor!.substring(1, 7), radix: 16) + 0xFF000000) : ColorRes.appColor,
+                                                                                                color: (widget.nameColor != '') ? Color(int.parse(widget.nameColor!.substring(1, 7), radix: 16) + 0xFF000000) : ColorRes.appColor,
                                                                                               ),
                                                                                             ),
                                                                                           ),
@@ -1113,295 +685,696 @@ class _MyFolderScreenState extends State<MyFolderScreen> {
                                                                       StringRes
                                                                           .noDataFound
                                                                           .tr,
-                                                                      style: widget.quoteFamily !=
+                                                                      style: widget
+                                                                                  .nameFamily !=
                                                                               ''
                                                                           ? TextStyle(
-                                                                              fontFamily: widget.quoteFamily,
-                                                                              color: (widget.quoteColor != '') ? Color(int.parse(widget.quoteColor!.substring(1, 7), radix: 16) + 0xFF000000) : ColorRes.appColor,
-                                                                              fontSize: 15,
+                                                                              fontFamily:
+                                                                                  widget.nameFamily,
+                                                                              color: (widget.nameColor !=
+                                                                                      '')
+                                                                                  ? Color(int.parse(widget.nameColor!.substring(1, 7), radix: 16) +
+                                                                                      0xFF000000)
+                                                                                  : ColorRes.appColor,
+                                                                              fontSize:
+                                                                                  15,
                                                                             )
                                                                           : appTextStyle(
-                                                                              color: (widget.quoteColor != '') ? Color(int.parse(widget.quoteColor!.substring(1, 7), radix: 16) + 0xFF000000) : ColorRes.appColor,
-                                                                              //fontFamily: widget.quoteFamily,
-                                                                              fontSize: 15,
+                                                                              color: (widget.nameColor !=
+                                                                                      '')
+                                                                                  ? Color(int.parse(widget.nameColor!.substring(1, 7), radix: 16) +
+                                                                                      0xFF000000)
+                                                                                  : ColorRes.appColor,
+                                                                              //fontFamily: widget.nameFamily,
+                                                                              fontSize:
+                                                                                  15,
                                                                             ),
                                                                     ),
                                                                   ),
-                                                          ),
-                                                  ],
-                                                ),
-                                    ],
-                                  ),
-                                ),
-                          (controller.isPageView == true ||
-                                  (controller.isSelectedPageView == true &&
-                                      controller.addSelectedImage
-                                              .where((e) => e == true)
-                                              .length >
-                                          0))
-                              ? Column(
-                                  children: [
-                                    const SizedBox(height: 30),
-                                    Container(
-                                      height: 50,
+                                                          )
+                                                    : Column(
+                                                        children: [
+                                                          // widget.node!.isEmpty
+                                                          //     ? const SizedBox()
+                                                          //     : TreeViewHorizontal(
+                                                          //         selectedId: controller.selectedId,
+                                                          //         view: true,
+                                                          //         leftIcon: Image.asset(AssetRes.success, scale: 1.5),
+                                                          //         icon: Icon(Icons.keyboard_arrow_down_rounded, color: ColorRes.black),
+                                                          //     textStyle: GoogleFonts.inter(
+                                                          //       color: Colors.black,
+                                                          //       fontSize: 17,
+                                                          //       fontWeight: FontWeight.w500,
+                                                          //     ),
+                                                          //     onExpand: (d){
+                                                          //           d.expanded =false;
+                                                          //     },
+                                                          //     data: widget.node!,
+                                                          //     onTap: (node) {
+                                                          //       boardsController.onTapFolder(
+                                                          //         node: node,
+                                                          //         node.id.toString(),
+                                                          //         node.name,
+                                                          //         node.icon,
+                                                          //       );
+                                                          //     },
+                                                          //     onLastTap: (node) {
+                                                          //       boardsController.onTapFolder(
+                                                          //           node: node,
+                                                          //           node.id.toString(),
+                                                          //           node.name,
+                                                          //           node.icon
+                                                          //       );
+                                                          //     }),
+
+                                                          (widget.node ?? []).isEmpty
+                                                              ? const SizedBox()
+                                                              : Container(
+                                                                  margin:
+                                                                      const EdgeInsets
+                                                                              .only(
+                                                                          bottom: 10),
+                                                                  height: 40,
+                                                                  child: ListView
+                                                                      .separated(
+                                                                    separatorBuilder: (context,
+                                                                            index) =>
+                                                                        const SizedBox(
+                                                                            width:
+                                                                                10),
+                                                                    scrollDirection:
+                                                                        Axis.horizontal,
+                                                                    itemCount: widget
+                                                                        .node!.length,
+                                                                    itemBuilder:
+                                                                        (context,
+                                                                                index) =>
+                                                                            InkWell(
+                                                                      onTap:
+                                                                          () async {
+                                                                        if (widget
+                                                                                .isFirst ??
+                                                                            false) {
+                                                                          if (controller
+                                                                                  .isSelectedNode[
+                                                                              index]) {
+                                                                            myFolderController.isSelectedNode = List.generate(
+                                                                                widget.node?.length ??
+                                                                                    0,
+                                                                                (index) =>
+                                                                                    false);
+                                                                            controller
+                                                                                    .isSelectedNode[index] =
+                                                                                false;
+                                                                            widget.isFirstNode =
+                                                                                true;
+
+                                                                            controller
+                                                                                    .selectedId =
+                                                                                widget
+                                                                                    .parentId
+                                                                                    .toString();
+                                                                            // controller.myInt(
+                                                                            //     widget.parentId.toString() ??
+                                                                            //         "");
+                                                                          } else {
+                                                                            myFolderController.isSelectedNode = List.generate(
+                                                                                widget.node?.length ??
+                                                                                    0,
+                                                                                (index) =>
+                                                                                    false);
+                                                                            controller
+                                                                                    .isSelectedNode[index] =
+                                                                                true;
+
+                                                                            controller
+                                                                                .selectedId = widget
+                                                                                    .node?[index]
+                                                                                    .id
+                                                                                    .toString() ??
+                                                                                "";
+                                                                            await controller.myInt(widget
+                                                                                    .node?[index]
+                                                                                    .id
+                                                                                    .toString() ??
+                                                                                "");
+                                                                            widget.isFirstNode =
+                                                                                false;
+                                                                          }
+                                                                        } else {
+                                                                          controller
+                                                                              .selectedId = widget
+                                                                                  .node?[index]
+                                                                                  .id
+                                                                                  .toString() ??
+                                                                              "";
+                                                                          controller.myInt(widget
+                                                                                  .node?[index]
+                                                                                  .id
+                                                                                  .toString() ??
+                                                                              "");
+                                                                          widget.isFirstNode =
+                                                                              false;
+                                                                        }
+
+                                                                        setState(
+                                                                            () {});
+                                                                      },
+                                                                      child:
+                                                                          Container(
+                                                                        alignment:
+                                                                            Alignment
+                                                                                .center,
+                                                                        height: 40,
+                                                                        decoration:
+                                                                            BoxDecoration(
+                                                                          color: (controller.selectedId ==
+                                                                                  (widget.node?[index].id.toString() ??
+                                                                                      ""))
+                                                                              ? widget.nameColor !=
+                                                                                      ''
+                                                                                  ? Color(int.parse(widget.nameColor!.substring(1, 7), radix: 16) +
+                                                                                      0xFF000000)
+                                                                                  : ColorRes
+                                                                                      .appColor
+                                                                              : ColorRes
+                                                                                  .white,
+                                                                          borderRadius:
+                                                                              BorderRadius.circular(
+                                                                                  15),
+                                                                          border: Border.all(
+                                                                              color: widget.nameColor !=
+                                                                                      ''
+                                                                                  ? Color(int.parse(widget.nameColor!.substring(1, 7), radix: 16) +
+                                                                                      0xFF000000)
+                                                                                  : ColorRes.appColor),
+                                                                        ),
+                                                                        child:
+                                                                            Padding(
+                                                                          padding: const EdgeInsets
+                                                                                  .symmetric(
+                                                                              horizontal:
+                                                                                  8),
+                                                                          child:
+                                                                              HtmlWidget(
+                                                                            widget.node?[index]
+                                                                                    .title ??
+                                                                                "",
+                                                                            textStyle: widget.nameFamily !=
+                                                                                    ''
+                                                                                ? TextStyle(
+                                                                                    fontFamily: widget.nameFamily,
+                                                                                    color: (controller.selectedId == (widget.node?[index].id.toString() ?? "")) ? ColorRes.white : ColorRes.appColor,
+                                                                                    fontSize: 15,
+                                                                                  )
+                                                                                : appTextStyle(
+                                                                                    color: (controller.selectedId == (widget.node?[index].id.toString() ?? "")) ? ColorRes.white : ColorRes.appColor,
+
+                                                                                    fontSize: 15,
+                                                                                    //  fontFamily: widget.family
+                                                                                  ),
+                                                                          ),
+                                                                        ),
+                                                                      ),
+                                                                    ),
+                                                                  ),
+                                                                ),
+
+                                                          widget.isFirstNode ?? false
+                                                              ? SizedBox()
+                                                              : SizedBox(
+                                                                  height: Get.height *
+                                                                      0.69,
+                                                                  width: Get.width,
+                                                                  child: ((controller
+                                                                                  .getBoardInfoModel
+                                                                                  .data ??
+                                                                              [])
+                                                                          .isNotEmpty)
+                                                                      ? GridView
+                                                                          .builder(
+                                                                          padding:
+                                                                              const EdgeInsets
+                                                                                  .all(0),
+                                                                          itemCount: controller
+                                                                              .getBoardInfoModel
+                                                                              .data!
+                                                                              .length,
+                                                                          gridDelegate:
+                                                                              const SliverGridDelegateWithFixedCrossAxisCount(
+                                                                            crossAxisCount:
+                                                                                2,
+                                                                            mainAxisSpacing:
+                                                                                6,
+                                                                            crossAxisSpacing:
+                                                                                19,
+                                                                          ),
+                                                                          itemBuilder:
+                                                                              (context,
+                                                                                  index) {
+                                                                            return Stack(
+                                                                              alignment:
+                                                                                  Alignment.bottomRight,
+                                                                              children: [
+                                                                                InkWell(
+                                                                                  onTap:
+                                                                                      () {
+                                                                                    controller.selectedIndex = index;
+                                                                                    controller.onTapImage(index);
+                                                                                  },
+                                                                                  child:
+                                                                                      ClipRRect(
+                                                                                    borderRadius: BorderRadius.circular(5),
+                                                                                    child: Container(
+                                                                                      height: Get.height * 0.199,
+                                                                                      width: Get.width * 0.45,
+                                                                                      padding: (controller.checkImg[index] == false) ? const EdgeInsets.all(0) : const EdgeInsets.all(2),
+                                                                                      decoration: BoxDecoration(
+                                                                                        color: Colors.white,
+                                                                                        borderRadius: BorderRadius.circular(5),
+                                                                                      ),
+                                                                                      child: Stack(
+                                                                                        alignment: Alignment.topRight,
+                                                                                        children: [
+                                                                                          CachedNetworkImage(
+                                                                                            width: Get.width,
+                                                                                            fit: BoxFit.fitWidth,
+                                                                                            imageUrl: controller.getBoardInfoModel.data![index].image!.toString(),
+                                                                                            errorWidget: (context, url, error) => Container(),
+                                                                                            progressIndicatorBuilder: (context, strings, download) {
+                                                                                              return Shimmer.fromColors(
+                                                                                                baseColor: Colors.grey.shade300,
+                                                                                                highlightColor: Colors.white,
+                                                                                                enabled: true,
+                                                                                                child: Container(
+                                                                                                  height: Get.width,
+                                                                                                  width: Get.width,
+                                                                                                  color: Colors.white,
+                                                                                                ),
+                                                                                              );
+                                                                                            },
+                                                                                          ),
+                                                                                          GestureDetector(
+                                                                                            onTap: () async {
+                                                                                              await controller.likeUnlike(index);
+                                                                                              controller.update(['fldr']);
+                                                                                            },
+                                                                                            child: Container(
+                                                                                              height: 20,
+                                                                                              width: 20,
+                                                                                              margin: const EdgeInsets.only(top: 12, right: 12),
+                                                                                              decoration: const BoxDecoration(
+                                                                                                borderRadius: BorderRadius.all(Radius.circular(5)),
+                                                                                                color: Colors.white,
+                                                                                              ),
+                                                                                              child: controller.isLike[index] == true
+                                                                                                  ? Icon(Icons.favorite_outlined, size: 18, color: (widget.nameColor != '') ? Color(int.parse(widget.nameColor!.substring(1, 7), radix: 16) + 0xFF000000) : ColorRes.colorE16F55)
+                                                                                                  : Icon(
+                                                                                                      Icons.favorite_outline_sharp,
+                                                                                                      size: 18,
+                                                                                                      color: (widget.nameColor != '') ? Color(int.parse(widget.nameColor!.substring(1, 7), radix: 16) + 0xFF000000) : ColorRes.appColor,
+                                                                                                    ),
+                                                                                            ),
+                                                                                          ),
+                                                                                        ],
+                                                                                      ),
+                                                                                    ),
+                                                                                  ),
+                                                                                ),
+                                                                                (controller.isSelect == false)
+                                                                                    ? const SizedBox()
+                                                                                    : InkWell(
+                                                                                        onTap: () {
+                                                                                          controller.onTapCheck(controller.getBoardInfoModel.data![index].image, index);
+                                                                                        },
+                                                                                        child: Container(
+                                                                                          margin: const EdgeInsets.only(right: 10, bottom: 10),
+                                                                                          height: 25,
+                                                                                          width: 25,
+                                                                                          decoration: BoxDecoration(color: ColorRes.white, shape: BoxShape.circle),
+                                                                                          child: (controller.checkImg[index] == false)
+                                                                                              ? const SizedBox()
+                                                                                              : SizedBox(
+                                                                                                  height: 8,
+                                                                                                  width: 11,
+                                                                                                  child: Transform.scale(
+                                                                                                    scale: 0.6,
+                                                                                                    child: Icon(
+                                                                                                      Icons.check_rounded,
+                                                                                                      color: (widget.nameColor != '') ? Color(int.parse(widget.nameColor!.substring(1, 7), radix: 16) + 0xFF000000) : ColorRes.appColor,
+                                                                                                    ),
+                                                                                                  ),
+                                                                                                ),
+                                                                                        ),
+                                                                                      ),
+                                                                              ],
+                                                                            );
+                                                                          },
+                                                                        )
+                                                                      : Center(
+                                                                          child: Text(
+                                                                            StringRes
+                                                                                .noDataFound
+                                                                                .tr,
+                                                                            style: widget.nameFamily !=
+                                                                                    ''
+                                                                                ? TextStyle(
+                                                                                    fontFamily: widget.nameFamily,
+                                                                                    color: (widget.nameColor != '') ? Color(int.parse(widget.nameColor!.substring(1, 7), radix: 16) + 0xFF000000) : ColorRes.appColor,
+                                                                                    fontSize: 15,
+                                                                                  )
+                                                                                : appTextStyle(
+                                                                                    color: (widget.nameColor != '') ? Color(int.parse(widget.nameColor!.substring(1, 7), radix: 16) + 0xFF000000) : ColorRes.appColor,
+                                                                                    //fontFamily: widget.nameFamily,
+                                                                                    fontSize: 15,
+                                                                                  ),
+                                                                          ),
+                                                                        ),
+                                                                ),
+                                                        ],
+                                                      ),
+                                          ],
+                                        ),
+                                      ),
+                                (controller.isPageView == true ||
+                                        (controller.isSelectedPageView == true &&
+                                            controller.addSelectedImage
+                                                    .where((e) => e == true)
+                                                    .length >
+                                                0))
+                                    ? Column(
+                                        children: [
+                                          const SizedBox(height: 30),
+                                          Container(
+                                            height: 50,
+                                            width: Get.width,
+                                            color: Colors.transparent,
+                                            child: Padding(
+                                              padding: const EdgeInsets.symmetric(
+                                                  horizontal: 20),
+                                              child: Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.spaceBetween,
+                                                children: [
+                                                  InkWell(
+                                                    onTap: () async {
+                                                      if (controller
+                                                              .isSelectedPageView ==
+                                                          false) {
+                                                        await controller.likeUnlike(
+                                                            controller.selectedIndex);
+                                                      } else {
+                                                        await controller
+                                                            .likeUnlikeList();
+                                                      }
+                                                      myFolderController
+                                                              .addSelectedImage =
+                                                          List.generate(
+                                                              controller
+                                                                      .getBoardInfoModel
+                                                                      .data
+                                                                      ?.length ??
+                                                                  0,
+                                                              (index) => false);
+                                                      controller.isSelectedPageView =
+                                                          false;
+                                                      controller.update(['fldr']);
+                                                    },
+                                                    child: Container(
+                                                      width: 100,
+                                                      height: 50,
+                                                      decoration: BoxDecoration(
+                                                        color: (widget.nameColor !=
+                                                                '')
+                                                            ? Color(int.parse(
+                                                                    widget.nameColor!
+                                                                        .substring(
+                                                                            1, 7),
+                                                                    radix: 16) +
+                                                                0xFF000000)
+                                                            : ColorRes.appColor,
+                                                        borderRadius:
+                                                            BorderRadius.circular(25),
+                                                      ),
+                                                      child: SizedBox(
+                                                        height: 23,
+                                                        width: 23,
+                                                        child: (controller.isPageView)
+                                                            ? controller.isLike[controller
+                                                                        .selectedIndex] ==
+                                                                    true
+                                                                ? const Icon(
+                                                                    Icons
+                                                                        .favorite_outlined,
+                                                                    color:
+                                                                        Colors.white,
+                                                                    size: 25)
+                                                                : const Icon(
+                                                                    Icons
+                                                                        .favorite_outline_sharp,
+                                                                    color:
+                                                                        Colors.white,
+                                                                    size: 25)
+                                                            : const Icon(
+                                                                Icons
+                                                                    .favorite_outline_sharp,
+                                                                color: Colors.white,
+                                                                size: 25),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  InkWell(
+                                                    onTap: () async {
+                                                      if (controller
+                                                              .isSelectedPageView ==
+                                                          false) {
+                                                        await controller
+                                                            .saveImage(context);
+                                                      } else {
+                                                        await controller
+                                                            .saveSelectedImages(
+                                                                context);
+                                                      }
+                                                      myFolderController
+                                                              .addSelectedImage =
+                                                          List.generate(
+                                                              controller
+                                                                      .getBoardInfoModel
+                                                                      .data
+                                                                      ?.length ??
+                                                                  0,
+                                                              (index) => false);
+                                                      controller.isSelectedPageView =
+                                                          false;
+                                                      controller.update(['fldr']);
+                                                    },
+                                                    child: Container(
+                                                      width: 100,
+                                                      height: 50,
+                                                      decoration: BoxDecoration(
+                                                        color: (widget.nameColor !=
+                                                                '')
+                                                            ? Color(int.parse(
+                                                                    widget.nameColor!
+                                                                        .substring(
+                                                                            1, 7),
+                                                                    radix: 16) +
+                                                                0xFF000000)
+                                                            : ColorRes.appColor,
+                                                        borderRadius:
+                                                            BorderRadius.circular(25),
+                                                      ),
+                                                      child: const SizedBox(
+                                                        height: 23,
+                                                        width: 23,
+                                                        child: Icon(
+                                                            Icons
+                                                                .file_download_outlined,
+                                                            color: Colors.white,
+                                                            size: 25),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  InkWell(
+                                                    onTap: () async {
+                                                      if (controller
+                                                              .isSelectedPageView ==
+                                                          false) {
+                                                        await controller.onTapShare();
+                                                      } else {
+                                                        await controller
+                                                            .onSelectedTapShare();
+                                                      }
+                                                      myFolderController
+                                                              .addSelectedImage =
+                                                          List.generate(
+                                                              controller
+                                                                      .getBoardInfoModel
+                                                                      .data
+                                                                      ?.length ??
+                                                                  0,
+                                                              (index) => false);
+                                                      controller.isSelectedPageView =
+                                                          false;
+                                                      controller.update(['fldr']);
+                                                    },
+                                                    child: Container(
+                                                      width: 100,
+                                                      height: 50,
+                                                      decoration: BoxDecoration(
+                                                        color: (widget.nameColor !=
+                                                                '')
+                                                            ? Color(int.parse(
+                                                                    widget.nameColor!
+                                                                        .substring(
+                                                                            1, 7),
+                                                                    radix: 16) +
+                                                                0xFF000000)
+                                                            : ColorRes.appColor,
+                                                        borderRadius:
+                                                            BorderRadius.circular(25),
+                                                      ),
+                                                      child: SizedBox(
+                                                        height: 23,
+                                                        width: 23,
+                                                        child: Image.asset(
+                                                            AssetRes.shareIcon,
+                                                            color: ColorRes.white,
+                                                            scale: 3),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          ),
+                                          const SizedBox(height: 10),
+                                        ],
+                                      )
+                                    : const SizedBox(),
+                              ],
+                            ),
+                          ),
+                        ),
+                        (controller.isMore == true)
+                            ? Stack(
+                                children: [
+                                  InkWell(
+                                    onTap: () {
+                                      myFolderController.onTapMore();
+                                    },
+                                    child: Container(
+                                      height: Get.height,
                                       width: Get.width,
-                                      color: Colors.transparent,
-                                      child: Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            horizontal: 20),
+                                      color: ColorRes.black.withOpacity(0.5),
+                                    ),
+                                  ),
+                                  Positioned(
+                                    left: Get.width * 0.55,
+                                    top: Get.height * 0.12,
+                                    child: InkWell(
+                                      onTap: () {
+                                        controller.isMore = false;
+                                        controller.selectedImg = false;
+                                        controller.isSelect = false;
+                                        controller.isPageView = false;
+                                        controller.update(['fldr']);
+                                        Get.offAndToNamed(
+                                            AppRoutes.languageConfirmPage);
+                                      },
+                                      child: Container(
+                                        height: 45,
+                                        width: 153,
+                                        color: ColorRes.white,
                                         child: Row(
                                           mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
+                                              MainAxisAlignment.center,
                                           children: [
-                                            InkWell(
-                                              onTap: () async {
-                                                if (controller
-                                                        .isSelectedPageView ==
-                                                    false) {
-                                                  await controller.likeUnlike(
-                                                      controller.selectedIndex);
-                                                } else {
-                                                  await controller
-                                                      .likeUnlikeList();
-                                                }
-                                                myFolderController
-                                                        .addSelectedImage =
-                                                    List.generate(
-                                                        controller
-                                                                .getBoardInfoModel
-                                                                .data
-                                                                ?.length ??
-                                                            0,
-                                                        (index) => false);
-                                                controller.isSelectedPageView =
-                                                    false;
-                                                controller.update(['fldr']);
-                                              },
-                                              child: Container(
-                                                width: 100,
-                                                height: 50,
-                                                decoration: BoxDecoration(
-                                                  color: (widget.quoteColor !=
-                                                          '')
-                                                      ? Color(int.parse(
-                                                              widget.quoteColor!
-                                                                  .substring(
-                                                                      1, 7),
-                                                              radix: 16) +
-                                                          0xFF000000)
-                                                      : ColorRes.appColor,
-                                                  borderRadius:
-                                                      BorderRadius.circular(25),
-                                                ),
-                                                child: SizedBox(
-                                                  height: 23,
-                                                  width: 23,
-                                                  child: (controller.isPageView)
-                                                      ? controller.isLike[controller
-                                                                  .selectedIndex] ==
-                                                              true
-                                                          ? const Icon(
-                                                              Icons
-                                                                  .favorite_outlined,
-                                                              color:
-                                                                  Colors.white,
-                                                              size: 25)
-                                                          : const Icon(
-                                                              Icons
-                                                                  .favorite_outline_sharp,
-                                                              color:
-                                                                  Colors.white,
-                                                              size: 25)
-                                                      : const Icon(
-                                                          Icons
-                                                              .favorite_outline_sharp,
-                                                          color: Colors.white,
-                                                          size: 25),
-                                                ),
-                                              ),
+                                            SizedBox(
+                                              height: 14,
+                                              width: 14,
+                                              child: Image.asset(AssetRes.langIcon),
                                             ),
-                                            InkWell(
-                                              onTap: () async {
-                                                if (controller
-                                                        .isSelectedPageView ==
-                                                    false) {
-                                                  await controller
-                                                      .saveImage(context);
-                                                } else {
-                                                  await controller
-                                                      .saveSelectedImages(
-                                                          context);
-                                                }
-                                                myFolderController
-                                                        .addSelectedImage =
-                                                    List.generate(
-                                                        controller
-                                                                .getBoardInfoModel
-                                                                .data
-                                                                ?.length ??
-                                                            0,
-                                                        (index) => false);
-                                                controller.isSelectedPageView =
-                                                    false;
-                                                controller.update(['fldr']);
-                                              },
-                                              child: Container(
-                                                width: 100,
-                                                height: 50,
-                                                decoration: BoxDecoration(
-                                                  color: (widget.quoteColor !=
-                                                          '')
-                                                      ? Color(int.parse(
-                                                              widget.quoteColor!
-                                                                  .substring(
-                                                                      1, 7),
-                                                              radix: 16) +
-                                                          0xFF000000)
-                                                      : ColorRes.appColor,
-                                                  borderRadius:
-                                                      BorderRadius.circular(25),
-                                                ),
-                                                child: const SizedBox(
-                                                  height: 23,
-                                                  width: 23,
-                                                  child: Icon(
-                                                      Icons
-                                                          .file_download_outlined,
-                                                      color: Colors.white,
-                                                      size: 25),
-                                                ),
-                                              ),
-                                            ),
-                                            InkWell(
-                                              onTap: () async {
-                                                if (controller
-                                                        .isSelectedPageView ==
-                                                    false) {
-                                                  await controller.onTapShare();
-                                                } else {
-                                                  await controller
-                                                      .onSelectedTapShare();
-                                                }
-                                                myFolderController
-                                                        .addSelectedImage =
-                                                    List.generate(
-                                                        controller
-                                                                .getBoardInfoModel
-                                                                .data
-                                                                ?.length ??
-                                                            0,
-                                                        (index) => false);
-                                                controller.isSelectedPageView =
-                                                    false;
-                                                controller.update(['fldr']);
-                                              },
-                                              child: Container(
-                                                width: 100,
-                                                height: 50,
-                                                decoration: BoxDecoration(
-                                                  color: (widget.quoteColor !=
-                                                          '')
-                                                      ? Color(int.parse(
-                                                              widget.quoteColor!
-                                                                  .substring(
-                                                                      1, 7),
-                                                              radix: 16) +
-                                                          0xFF000000)
-                                                      : ColorRes.appColor,
-                                                  borderRadius:
-                                                      BorderRadius.circular(25),
-                                                ),
-                                                child: SizedBox(
-                                                  height: 23,
-                                                  width: 23,
-                                                  child: Image.asset(
-                                                      AssetRes.shareIcon,
-                                                      color: ColorRes.white,
-                                                      scale: 3),
-                                                ),
-                                              ),
-                                            ),
+                                            SizedBox(width: Get.width * 0.03),
+                                            Text(
+                                              StringRes.language.tr,
+                                              style: widget.nameFamily != ''
+                                                  ? TextStyle(
+                                                      fontFamily:
+                                                          widget.nameFamily,
+                                                      color: (widget.nameColor !=
+                                                              '')
+                                                          ? Color(int.parse(
+                                                                  widget.nameColor!
+                                                                      .substring(
+                                                                          1, 7),
+                                                                  radix: 16) +
+                                                              0xFF000000)
+                                                          : ColorRes.appColor,
+                                                      fontSize: 15,
+                                                    )
+                                                  : appTextStyle(
+                                                      fontSize: 15,
+                                                      weight: FontWeight.w500,
+                                                      color: ColorRes.black),
+                                            )
                                           ],
                                         ),
                                       ),
                                     ),
-                                    const SizedBox(height: 10),
-                                  ],
-                                )
-                              : const SizedBox(),
-                        ],
-                      ),
-                    ),
-                    (controller.isMore == true)
-                        ? Stack(
-                            children: [
-                              InkWell(
-                                onTap: () {
-                                  myFolderController.onTapMore();
-                                },
-                                child: Container(
-                                  height: Get.height,
-                                  width: Get.width,
-                                  color: ColorRes.black.withOpacity(0.5),
-                                ),
-                              ),
-                              Positioned(
-                                left: Get.width * 0.55,
-                                top: Get.height * 0.12,
-                                child: InkWell(
-                                  onTap: () {
-                                    controller.isMore = false;
-                                    controller.selectedImg = false;
-                                    controller.isSelect = false;
-                                    controller.isPageView = false;
-                                    controller.update(['fldr']);
-                                    Get.offAndToNamed(
-                                        AppRoutes.languageConfirmPage);
-                                  },
-                                  child: Container(
-                                    height: 45,
-                                    width: 153,
-                                    color: ColorRes.white,
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        SizedBox(
-                                          height: 14,
-                                          width: 14,
-                                          child: Image.asset(AssetRes.langIcon),
-                                        ),
-                                        SizedBox(width: Get.width * 0.03),
-                                        Text(
-                                          StringRes.language.tr,
-                                          style: widget.quoteFamily != ''
-                                              ? TextStyle(
-                                                  fontFamily:
-                                                      widget.quoteFamily,
-                                                  color: (widget.quoteColor !=
-                                                          '')
-                                                      ? Color(int.parse(
-                                                              widget.quoteColor!
-                                                                  .substring(
-                                                                      1, 7),
-                                                              radix: 16) +
-                                                          0xFF000000)
-                                                      : ColorRes.appColor,
-                                                  fontSize: 15,
-                                                )
-                                              : appTextStyle(
-                                                  fontSize: 15,
-                                                  weight: FontWeight.w500,
-                                                  color: ColorRes.black),
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                ),
+                                  )
+                                ],
                               )
-                            ],
+                            : const SizedBox()
+                      ],
+                    ),
+                    widget.isFirstNode ?? false
+                        ? Container(
+                      height: Get.height * 0.67,
+                      width: Get.width,
+                      alignment:
+                      Alignment.center,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                        child: HtmlWidget(
+                          (widget.quote ?? ''),
+                          customStylesBuilder: (element) {
+                            if (element.localName == 'div' && element.attributes['style']?.contains('text-align: center;') == true) {
+                              return {'text-align': 'center'};
+                            }
+                            return null;
+                          },
+                          textStyle:
+                          widget.quoteFamily !=
+                              ''
+                              ? TextStyle(
+                            fontFamily:
+                            widget
+                                .quoteFamily,
+                            color: (widget.quoteColor !=
+                                '')
+                                ? Color(int.parse(widget.quoteColor!.substring(1, 7), radix: 16) +
+                                0xFF000000)
+                                : ColorRes
+                                .appColor,
+                            fontSize:
+                            20,
                           )
-                        : const SizedBox()
+                              : appTextStyle(
+                            color: (widget.quoteColor !=
+                                '')
+                                ? Color(int.parse(widget.quoteColor!.substring(1, 7), radix: 16) +
+                                0xFF000000)
+                                : ColorRes
+                                .appColor,
+                            //fontFamily: widget.nameFamily,
+                            fontSize:
+                            20,
+                          ),
+                        ),
+                      ),
+                    )
+                        :const SizedBox()
                   ],
                 ),
                 Obx(() => (controller.loader.value)
@@ -1537,32 +1510,29 @@ class _MyFolderScreenState extends State<MyFolderScreen> {
                 ),
                 const SizedBox(width: 15),
                 HtmlWidget(
-
                   boardName ?? "My folder",
-
-                  textStyle:widget.quoteFamily != ''
+                  textStyle: widget.nameFamily != ''
                       ? TextStyle(
-                    fontFamily: widget.quoteFamily,
-                    color: (widget.quoteColor != '')
-                        ? Color(int.parse(
-                        widget.quoteColor!.substring(1, 7),
-                        radix: 16) +
-                        0xFF000000)
-                        : ColorRes.appColor,
-                    fontSize: 24,
-                  )
+                          fontFamily: widget.nameFamily,
+                          color: (widget.nameColor != '')
+                              ? Color(int.parse(
+                                      widget.nameColor!.substring(1, 7),
+                                      radix: 16) +
+                                  0xFF000000)
+                              : ColorRes.appColor,
+                          fontSize: 24,
+                        )
                       : appTextStyle(
-                    color: (widget.quoteColor != '')
-                        ? Color(int.parse(
-                        widget.quoteColor!.substring(1, 7),
-                        radix: 16) +
-                        0xFF000000)
-                        : ColorRes.black,
-                    fontSize: 24,
-                    // fontFamily: widget.quoteFamily
-                  ),
+                          color: (widget.nameColor != '')
+                              ? Color(int.parse(
+                                      widget.nameColor!.substring(1, 7),
+                                      radix: 16) +
+                                  0xFF000000)
+                              : ColorRes.black,
+                          fontSize: 24,
+                          // fontFamily: widget.nameFamily
+                        ),
                 ),
-
               ],
             ),
           ),
