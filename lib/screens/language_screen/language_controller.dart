@@ -37,11 +37,15 @@ class LanguageController extends GetxController {
     {
       "image":AssetRes.english,
       "name":StringRes.english.tr,
+    },
+    {
+      "image":AssetRes.russia,
+      "name":StringRes.russian.tr,
     }
 
   ];
   List filterLst = [];
-  List clrs = List.generate(4, (index) => false);
+  List clrs = List.generate(5, (index) => false);
 
   onSearch(dynamic val) {
     filterLst = [];
@@ -89,7 +93,10 @@ class LanguageController extends GetxController {
     if (selectedLanguage == "Lithuanian") {
       languageCode = "lt";
     }
-
+    if(selectedLanguage == "Russian")
+    {
+      languageCode ="ru";
+    }
     loader.value = true;
 
     PrefService.setValue(PrefKeys.language, selectedLanguage);

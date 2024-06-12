@@ -3,17 +3,17 @@
 <plist version="1.0">
 <dict>
 	<key>API_KEY</key>
-	<string>AIzaSyA-ZbvGySDy-AC6QttQxKXHjnXKJWhJVx4</string>
+	<string>AIzaSyBcR-pjKdjMqfd-CC2DyMcVQKEbXWJSVrY</string>
 	<key>GCM_SENDER_ID</key>
-	<string>509240136427</string>
+	<string>660250529556</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
 	<string>com.app.boardapp</string>
 	<key>PROJECT_ID</key>
-	<string>board-app-63030</string>
+	<string>inspiration-by-filuet</string>
 	<key>STORAGE_BUCKET</key>
-	<string>board-app-63030.appspot.com</string>
+	<string>inspiration-by-filuet.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -25,6 +25,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:509240136427:ios:98427952336574cec5e4ae</string>
+	<string>1:660250529556:ios:822441d2663a89469d7c01</string>
 </dict>
 </plist>

@@ -1,6 +1,7 @@
 import 'package:boards_app/localization/Estonian/Estonian.dart';
 import 'package:boards_app/localization/Latvian/Latvian.dart';
 import 'package:boards_app/localization/Lithuanian/Lithuanian.dart';
+import 'package:boards_app/localization/Russian/Russian.dart';
 import 'package:boards_app/screens/boards_screen/boards_controller.dart';
 import 'package:boards_app/screens/language_screen/language_controller.dart';
 import 'package:boards_app/screens/language_screen2/language2_controller.dart';
@@ -20,13 +21,14 @@ class LocalizationService extends Translations {
 
   static const fallbackLocale = Locale('tr', 'TR');
 
-  static final language = ["Latvian", "English", "Estonian", "Lithuanian"];
+  static final language = ["Latvian", "English", "Estonian", "Lithuanian","Russian"];
 
   static final locales = [
     const Locale('lv', 'LV'),
     const Locale('en', "EN"),
     const Locale('et', "ET"),
-    const Locale('lt', 'LT')
+    const Locale('lt', 'LT'),
+    const Locale('ru', 'RU')
   ];
 
   @override
@@ -35,6 +37,7 @@ class LocalizationService extends Translations {
     'en_EN': English,
     'et_ET': Estonian,
     'lt_LT': Lithuanian,
+    'ru_RU': Russian,
   };
 
   void changeLocale(String lang) {

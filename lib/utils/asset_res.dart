@@ -153,6 +153,7 @@ class AssetRes {
   static const pubg = "${image}pubg.jpg";
   static const downLoad = "${image}download.jpg";
   static const english = "${image}english.png";
+  static const russia = "${image}Russia.png";
   static const estonian = "${image}estonian.png";
   static const latvin = "${image}latvin.png";
   static const lithunian = "${image}lithunian.png";

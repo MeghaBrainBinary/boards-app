@@ -372,25 +372,37 @@ pageController =PageController(initialPage: index);
 
     if(getBoardInfoModel.data!=null && getBoardInfoModel.data!.length !=0) {
 
-      try {
-        http.Response response = await http.get(Uri.parse(
-            selectedImage ?? getBoardInfoModel.data![0].image.toString()));
-        final bytes = response.bodyBytes;
+      // try {
+      //   http.Response response = await http.get(Uri.parse(
+      //       selectedImage ?? getBoardInfoModel.data![0].image.toString()));
+      //   final bytes = response.bodyBytes;
+      //
+      //   await WcFlutterShare.share(
+      //       sharePopupTitle: 'share',
+      //       fileName: "share.${selectedImage?.split(".").last ?? getBoardInfoModel.data![0].image.toString().split(".").last}",
+      //       mimeType: 'image/${selectedImage?.split(".").last ??
+      //           getBoardInfoModel.data![0].image
+      //               .toString()
+      //               .split(".")
+      //               .last}',
+      //       bytesOfFile: bytes);
+      // }catch(e){
+      //
+      //   loader.value = false;
+      // }
+      http.Response response = await http.get(Uri.parse(
+              selectedImage ?? getBoardInfoModel.data![0].image.toString()));
+      final bytes = response.bodyBytes;
+      final temp = await getTemporaryDirectory();
+      final path = "${temp.path}/${DateTime.now().millisecond}.${selectedImage?.split(".").last ?? getBoardInfoModel.data![0].image.toString().split(".").last}";
+      File(path).writeAsBytesSync(bytes);
+      Share.shareFiles([
+path
+      ],
+        text: '',
+        subject: '',
+      );
 
-        await WcFlutterShare.share(
-            sharePopupTitle: 'share',
-            fileName: "share.${selectedImage?.split(".").last ?? getBoardInfoModel.data![0].image.toString().split(".").last}",
-            mimeType: 'image/${selectedImage?.split(".").last ??
-                getBoardInfoModel.data![0].image
-                    .toString()
-                    .split(".")
-                    .last}',
-            bytesOfFile: bytes);
-      }catch(e){
-
-        loader.value = false;
-      }
-     // Share.share(selectedImage ?? getBoardInfoModel.data![0].image.toString(),);
       selectedImage = null;
 loader.value= false;
 
@@ -440,8 +452,8 @@ loader.value= false;
       // Share the images using share_plus
       await Share.shareFiles(
         filePaths,
-        text: 'Share Multiple Images',
-        subject: 'Share Multiple Images Subject',
+        text: '',
+        subject: '',
       );
     } catch (e) {
 

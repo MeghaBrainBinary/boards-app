@@ -244,17 +244,30 @@ class FavouriteController extends GetxController {
 
     if (storedFavorites != null && storedFavorites!.length != 0) {
       try {
+        // http.Response response = await http.get(Uri.parse(
+        //     selectedImage ?? storedFavorites![0]['image'].toString()));
+        // final bytes = response.bodyBytes;
+        //
+        // await WcFlutterShare.share(
+        //     sharePopupTitle: 'share',
+        //     fileName:
+        //         "share.${selectedImage?.split(".").last ?? storedFavorites![0]['image'].toString().split(".").last}",
+        //     mimeType:
+        //         'image/${selectedImage?.split(".").last ?? storedFavorites![0]['image'].toString().split(".").last}',
+        //     bytesOfFile: bytes);
+
         http.Response response = await http.get(Uri.parse(
             selectedImage ?? storedFavorites![0]['image'].toString()));
         final bytes = response.bodyBytes;
-
-        await WcFlutterShare.share(
-            sharePopupTitle: 'share',
-            fileName:
-                "share.${selectedImage?.split(".").last ?? storedFavorites![0]['image'].toString().split(".").last}",
-            mimeType:
-                'image/${selectedImage?.split(".").last ?? storedFavorites![0]['image'].toString().split(".").last}',
-            bytesOfFile: bytes);
+        final temp = await getTemporaryDirectory();
+        final path = "${temp.path}/${DateTime.now().millisecond}.${selectedImage?.split(".").last ?? storedFavorites![0]['image'].toString().split(".").last}";
+        File(path).writeAsBytesSync(bytes);
+        Share.shareFiles([
+          path
+        ],
+          text: '',
+          subject: '',
+        );
       } catch (e) {
         loader.value = false;
       }
@@ -306,8 +319,8 @@ class FavouriteController extends GetxController {
       // Share the images using share_plus
       await Share.shareFiles(
         filePaths,
-        text: 'Share Multiple Images',
-        subject: 'Share Multiple Images Subject',
+        text: '',
+        subject: '',
       );
     } catch (e) {
       debugPrint(e.toString());

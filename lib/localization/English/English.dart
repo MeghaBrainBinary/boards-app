@@ -92,4 +92,5 @@ const Map<String, String> English = {
   "Future depends on what you do today!":"Future depends on what you do today!",
   "Can we start the weekend again? I was not ready!":"Can we start the weekend again? I was not ready!",
   "Don’t limit your challenges. Challenge your limits.":"Don’t limit your challenges. Challenge your limits.",
+  "Russian":"Russian",
 };

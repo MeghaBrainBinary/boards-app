@@ -33,6 +33,10 @@ List filterList =[];
     {
       "image":AssetRes.english,
       "name":StringRes.english.tr,
+    },
+    {
+      "image":AssetRes.russia,
+      "name":StringRes.russian.tr,
     }
   ];
   List<bool> isCheck =[];
@@ -83,6 +87,7 @@ List filterList =[];
     "Estonian",
     "Lithuanian",
     "English",
+    "Russian",
   ];
 
   onTapLanguage(String language1,int index){
@@ -119,6 +124,10 @@ List filterList =[];
     if(selectedLanguage == "Lithuanian")
     {
       languageCode ="lt";
+    }
+    if(selectedLanguage == "Russian")
+    {
+      languageCode ="ru";
     }
 loader.value = true;
 

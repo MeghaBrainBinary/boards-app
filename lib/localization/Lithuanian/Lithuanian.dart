@@ -93,4 +93,5 @@ const Map<String, String> Lithuanian = {
   "Future depends on what you do today!":"Ateitis priklauso nuo to, ką veiksi šiandien!",
   "Can we start the weekend again? I was not ready!":"Ar galime vėl pradėti savaitgalį? Aš nebuvau pasiruošęs!",
   "Don’t limit your challenges. Challenge your limits.":"Neribokite savo iššūkių. Mesk iššūkį savo riboms.",
+  "Russian":"rusų",
 };

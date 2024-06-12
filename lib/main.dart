@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:boards_app/localization/localization.dart';
 import 'package:boards_app/screens/auth/create_new_password_screen/create_new_password_screen.dart';
 import 'package:boards_app/screens/auth/forgot_password_screen/forgot_password_screen.dart';
@@ -28,7 +30,21 @@ import 'screens/language_screen/language_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
+  if(Platform.isIOS)
+    {
+      await Firebase.initializeApp(
+          options: const FirebaseOptions(apiKey: "AIzaSyBcR-pjKdjMqfd-CC2DyMcVQKEbXWJSVrY",
+              appId: "1:660250529556:ios:822441d2663a89469d7c01", messagingSenderId: "660250529556", projectId: "inspiration-by-filuet")
+      );
+    }
+  else
+    {
+
+  await Firebase.initializeApp(
+    options: const FirebaseOptions(apiKey: "AIzaSyCNuLX-rBFRVqZVL29-ZCpENu59HydCUzQ",
+        appId: "1:660250529556:android:0f540b475d0605b99d7c01", messagingSenderId: "660250529556", projectId: "inspiration-by-filuet")
+  );
+    }
   await NotificationService.init();
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   await PrefService.init();

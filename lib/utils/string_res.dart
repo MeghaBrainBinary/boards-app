@@ -97,6 +97,7 @@ class StringRes {
   static String imageSelected = "Image Selected";
 
   static String english = "English";
+  static String russian = "Russian";
   static String bengali = "Bengali";
   static String latvian = "Latvian";
   static String chinese = "Chinese";
