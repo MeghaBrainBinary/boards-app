@@ -1,13 +1,18 @@
 
 import 'dart:io';
 
+import 'package:boards_app/screens/contact_us_screen/api/contact_us_api.dart';
+import 'package:boards_app/screens/contact_us_screen/api/contct_us_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 
 class ContactUsController extends GetxController {
-  TextEditingController nameController = TextEditingController();
+  TextEditingController englishNumber = TextEditingController();
+  TextEditingController estonianNumber = TextEditingController();
+  TextEditingController latvianNumber = TextEditingController();
+  TextEditingController lithuanianNumber = TextEditingController();
+  TextEditingController telegramController = TextEditingController();
   TextEditingController emailIdController = TextEditingController();
-  TextEditingController descriptionController = TextEditingController();
 
   String selectedLanguage="English";
   String languageCode ="en";
@@ -17,7 +22,26 @@ class ContactUsController extends GetxController {
 
   @override
   void onInit() {
-emailIdController.text ="filuet.rus@gmail.com";
+//emailIdController.text ="filuet.rus@gmail.com";
+
+  init();
     super.onInit();
   }
+  ContactUsModel contactUsModel = ContactUsModel();
+  init()async{
+    loader.value =true;
+  contactUsModel =   await ContactUsApi.contactUsApi();
+
+    englishNumber.text  = contactUsModel.data?.englishNumber ?? "";
+    estonianNumber.text  = contactUsModel.data?.estonianNumber ?? "";
+    latvianNumber.text  = contactUsModel.data?.latvianNumber ?? "";
+    lithuanianNumber.text  = contactUsModel.data?.lithuanianNumber ?? "";
+    telegramController.text  = contactUsModel.data?.telegram ?? "";
+    emailIdController.text  = contactUsModel.data?.email ?? "";
+
+    loader.value = false;
+    update(['contactUs']);
+  }
+
+
 }

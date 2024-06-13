@@ -94,4 +94,6 @@ const Map<String, String> Lithuanian = {
   "Can we start the weekend again? I was not ready!":"Ar galime vėl pradėti savaitgalį? Aš nebuvau pasiruošęs!",
   "Don’t limit your challenges. Challenge your limits.":"Neribokite savo iššūkių. Mesk iššūkį savo riboms.",
   "Russian":"rusų",
+  "Phone NO":"Telefono NR",
+  "Telegram":"Telegrama",
 };

@@ -97,4 +97,6 @@ const Map<String, String> Latvian = {
   "Click here to open sub category's images" : "Noklikšķiniet šeit, lai atvērtu apakškategorijas attēlus",
   "No data found" : "Dati nav atrasti",
   "Russian":"krievu valoda",
+  "Phone NO":"Tālruņa NR",
+  "Telegram":"Telegramma",
 };

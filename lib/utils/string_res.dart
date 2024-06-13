@@ -179,4 +179,6 @@ class StringRes {
   static const motivationQuotes = "Future depends on what you do today!";
   static const weekendQuotes = "Can we start the weekend again? I was not ready!";
   static const challengesQuotes = "Don’t limit your challenges. Challenge your limits.";
+  static const phoneNo = "Phone NO";
+  static const telegram = "Telegram";
 }

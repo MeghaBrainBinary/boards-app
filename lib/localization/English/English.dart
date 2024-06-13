@@ -93,4 +93,6 @@ const Map<String, String> English = {
   "Can we start the weekend again? I was not ready!":"Can we start the weekend again? I was not ready!",
   "Don’t limit your challenges. Challenge your limits.":"Don’t limit your challenges. Challenge your limits.",
   "Russian":"Russian",
+  "Phone NO":"Phone NO",
+  "Telegram":"Telegram",
 };

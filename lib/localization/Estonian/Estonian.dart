@@ -93,4 +93,6 @@ const Map<String, String> Estonian = {
   "Can we start the weekend again? I was not ready!":"Kas saame nädalavahetust uuesti alustada? Ma ei olnud valmis!",
   "Don’t limit your challenges. Challenge your limits.":"Ärge piirake oma väljakutseid. Sea oma piirid proovile.",
   "Russian":"vene keel",
+  "Phone NO":"Telefoni nr",
+  "Telegram":"Telegramm",
 };

@@ -1,6 +1,7 @@
 // ignore_for_file: must_be_immutable
 
 import 'package:boards_app/common/common_button.dart';
+import 'package:boards_app/common/common_loader.dart';
 import 'package:boards_app/screens/contact_us_screen/contact_us_controller.dart';
 import 'package:boards_app/services/pref_services.dart';
 import 'package:boards_app/utils/app_text_field.dart';
@@ -33,6 +34,7 @@ class ContactUsScreen extends StatelessWidget {
             )
         ),
         child: Stack(
+          alignment: Alignment.center,
           children: [
             GetBuilder<ContactUsController>(
               id: "contactUs",
@@ -69,22 +71,328 @@ class ContactUsScreen extends StatelessWidget {
                       // SizedBox(
                       //   height: Get.height * 0.03,
                       // ),
-                      Container(
-                        height: Get.height * 0.075,
-                        width: Get.width,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(5),
-                            border: Border.all(color: ColorRes.colorD9D9D9)),
-                        child: appTextField(
-                          enabled: false,
-                          controller: controller.emailIdController,
-                          hintText: StringRes.emailID.tr,
-                          hintStyle: appTextStyle(
-                            color: ColorRes.black.withOpacity(0.3),
+
+                      /// ------- email -----------
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text("${StringRes.emailID.tr} :",style: appTextStyle(
+                            color: ColorRes.black,
                             fontSize: 13,
                             weight: FontWeight.w400,
+                          ),),
+                          const SizedBox(height: 8,),
+                          InkWell(
+                            onTap: (){
+                              launch("mailto:${contactUsController.emailIdController.text}");
+                            },
+                            splashFactory: NoSplash.splashFactory,
+                            hoverColor: Colors.transparent,
+                            splashColor: Colors.transparent,
+                            highlightColor: Colors.transparent,
+                             focusColor: Colors.transparent,
+
+                            child: Container(
+                              height: Get.height * 0.075,
+                              width: Get.width,
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(5),
+                                  border: Border.all(color: ColorRes.colorD9D9D9)),
+                              child: appTextField(
+                                enabled: false,
+                                controller: controller.emailIdController,
+                                hintText: '',
+                                hintStyle: appTextStyle(
+                                  color: ColorRes.black.withOpacity(0.3),
+                                  fontSize: 13,
+                                  weight: FontWeight.w400,
+                                ),
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            height: Get.height * 0.03,
+                          ),
+                        ],
+                      ),
+
+                      /// ------- english ----------
+                   PrefService.getString(PrefKeys.code) =="en"||PrefService.getString(PrefKeys.code) =="ru"?  Column(
+                       crossAxisAlignment: CrossAxisAlignment.start,
+                       children: [
+                         Text("${StringRes.phoneNo.tr} :",style: appTextStyle(
+                           color: ColorRes.black,
+                           fontSize: 13,
+                           weight: FontWeight.w400,
+                         ),),
+                         const SizedBox(height: 8,),
+                         InkWell(
+                           onTap: (){
+                             launch("tel:${contactUsController.englishNumber.text}");
+                           },
+                           splashFactory: NoSplash.splashFactory,
+                           hoverColor: Colors.transparent,
+                           splashColor: Colors.transparent,
+                           highlightColor: Colors.transparent,
+                           focusColor: Colors.transparent,
+
+                           child: Container(
+                             height: Get.height * 0.075,
+                             width: Get.width,
+                             decoration: BoxDecoration(
+                                 borderRadius: BorderRadius.circular(5),
+                                 border: Border.all(color: ColorRes.colorD9D9D9)),
+                             child: appTextField(
+                               enabled: false,
+                               prefixIcon: Padding(
+                                 padding: const EdgeInsets.all(8.0),
+                                 child: Container(
+                                   height: 10,
+                                   width: 10,
+                                   decoration: const BoxDecoration(
+                                     shape: BoxShape.circle,
+                                     image: DecorationImage(
+                                       image: AssetImage(AssetRes.english),
+                                       fit: BoxFit.cover
+                                     )
+                                   ),
+                                 ),
+                               ),
+                               controller: controller.englishNumber,
+                               hintText: '',
+                               hintStyle: appTextStyle(
+                                 color: ColorRes.black.withOpacity(0.3),
+                                 fontSize: 13,
+                                 weight: FontWeight.w400,
+                               ),
+                             ),
+                           ),
+                         ),
+                         SizedBox(
+                           height: Get.height * 0.03,
+                         ),
+                       ],
+                     ):const SizedBox(),
+
+                      /// ------- estonian ----------
+                      PrefService.getString(PrefKeys.code) =="et" ||PrefService.getString(PrefKeys.code) =="ru"?   Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text("${StringRes.phoneNo.tr} :",style: appTextStyle(
+                          color: ColorRes.black,
+                          fontSize: 13,
+                          weight: FontWeight.w400,
+                        ),),
+                        const SizedBox(height: 8,),
+                        InkWell(
+                          onTap: (){
+                            launch("tel:${contactUsController.estonianNumber.text}");
+                          },
+                          splashFactory: NoSplash.splashFactory,
+                          hoverColor: Colors.transparent,
+                          splashColor: Colors.transparent,
+                          highlightColor: Colors.transparent,
+                          focusColor: Colors.transparent,
+
+                          child: Container(
+                            height: Get.height * 0.075,
+                            width: Get.width,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(5),
+                                border: Border.all(color: ColorRes.colorD9D9D9)),
+                            child: appTextField(
+                              enabled: false,
+                              prefixIcon: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Container(
+                                  height: 10,
+                                  width: 10,
+                                  decoration: const BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      image: DecorationImage(
+                                          image: AssetImage(AssetRes.estonian),
+                                          fit: BoxFit.cover
+                                      )
+                                  ),
+                                ),
+                              ),
+                              controller: controller.estonianNumber,
+                              hintText: "",
+                              hintStyle: appTextStyle(
+                                color: ColorRes.black.withOpacity(0.3),
+                                fontSize: 13,
+                                weight: FontWeight.w400,
+                              ),
+                            ),
                           ),
                         ),
+                        SizedBox(
+                          height: Get.height * 0.03,
+                        ),
+                      ],
+                    ):const SizedBox(),
+
+                      /// ------- latvin ----------
+                      PrefService.getString(PrefKeys.code) =="lv" ||PrefService.getString(PrefKeys.code) =="ru"?  Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+
+                        children: [
+                          Text("${StringRes.phoneNo.tr} :",style: appTextStyle(
+                            color: ColorRes.black,
+                            fontSize: 13,
+                            weight: FontWeight.w400,
+                          ),),
+                          const SizedBox(height: 8,),
+                          InkWell(
+                            onTap: (){
+                              launch("tel:${contactUsController.latvianNumber.text}");
+                            },
+                            splashFactory: NoSplash.splashFactory,
+                            hoverColor: Colors.transparent,
+                            splashColor: Colors.transparent,
+                            highlightColor: Colors.transparent,
+                            focusColor: Colors.transparent,
+
+                            child: Container(
+                              height: Get.height * 0.075,
+                              width: Get.width,
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(5),
+                                  border: Border.all(color: ColorRes.colorD9D9D9)),
+                              child: appTextField(
+                                enabled: false,
+                                prefixIcon: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Container(
+                                    height: 10,
+                                    width: 10,
+                                    decoration: const BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        image: DecorationImage(
+                                            image: AssetImage(AssetRes.latvin),
+                                            fit: BoxFit.cover
+                                        )
+                                    ),
+                                  ),
+                                ),
+                                controller: controller.latvianNumber,
+                                hintText: "",
+                                hintStyle: appTextStyle(
+                                  color: ColorRes.black.withOpacity(0.3),
+                                  fontSize: 13,
+                                  weight: FontWeight.w400,
+                                ),
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            height: Get.height * 0.03,
+                          ),
+
+                        ],
+                      ):const SizedBox(),
+
+                      /// ------- lithunian ----------
+                      PrefService.getString(PrefKeys.code) =="lt"||  PrefService.getString(PrefKeys.code) =="ru"? Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+
+                        children: [
+                          Text("${StringRes.phoneNo.tr} :",style: appTextStyle(
+                            color: ColorRes.black,
+                            fontSize: 13,
+                            weight: FontWeight.w400,
+                          ),),
+                          const SizedBox(height: 8,),
+                          InkWell(
+                            onTap: (){
+                              launch("tel:${contactUsController.lithuanianNumber.text}");
+                            },
+                            splashFactory: NoSplash.splashFactory,
+                            hoverColor: Colors.transparent,
+                            splashColor: Colors.transparent,
+                            highlightColor: Colors.transparent,
+                            focusColor: Colors.transparent,
+
+                            child: Container(
+                              height: Get.height * 0.075,
+                              width: Get.width,
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(5),
+                                  border: Border.all(color: ColorRes.colorD9D9D9)),
+                              child: appTextField(
+                                enabled: false,
+                                prefixIcon: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Container(
+                                    height: 10,
+                                    width: 10,
+                                    decoration: const BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        image: DecorationImage(
+                                            image: AssetImage(AssetRes.lithunian),
+                                            fit: BoxFit.cover
+                                        )
+                                    ),
+                                  ),
+                                ),
+                                controller: controller.lithuanianNumber,
+                                hintText: "",
+                                hintStyle: appTextStyle(
+                                  color: ColorRes.black.withOpacity(0.3),
+                                  fontSize: 13,
+                                  weight: FontWeight.w400,
+                                ),
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            height: Get.height * 0.03,
+                          ),
+
+                        ],
+                      ):const SizedBox(),
+
+
+                      /// ------- telegram ----------
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+
+                        children: [
+                          Text("${StringRes.telegram.tr} :",style: appTextStyle(
+                            color: ColorRes.black,
+                            fontSize: 13,
+                            weight: FontWeight.w400,
+                          ),),
+                          const SizedBox(height: 8,),
+                          InkWell(
+                            onTap: (){
+                              launch("https://t.me/${contactUsController.telegramController.text}");
+                            },
+                            splashFactory: NoSplash.splashFactory,
+                            hoverColor: Colors.transparent,
+                            splashColor: Colors.transparent,
+                            highlightColor: Colors.transparent,
+                            focusColor: Colors.transparent,
+
+                            child: Container(
+                              height: Get.height * 0.075,
+                              width: Get.width,
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(5),
+                                  border: Border.all(color: ColorRes.colorD9D9D9)),
+                              child: appTextField(
+                                enabled: false,
+                                controller: controller.telegramController,
+                                hintText:"",
+                                hintStyle: appTextStyle(
+                                  color: ColorRes.black.withOpacity(0.3),
+                                  fontSize: 13,
+                                  weight: FontWeight.w400,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                       // SizedBox(
                       //   height: Get.height * 0.03,
@@ -110,16 +418,17 @@ class ContactUsScreen extends StatelessWidget {
                       SizedBox(
                         height: Get.height * 0.08,
                       ),
-                      CommonButton(
+                     /* CommonButton(
                           onTap: () {
                             launch("mailto:${contactUsController.emailIdController.text}");
                           },
-                          text: StringRes.send.tr),
+                          text: StringRes.send.tr),*/
                     ]),
                   ),
                 ),
               ),
             ),
+            Obx(() => contactUsController.loader.value ?CommonLoader():const SizedBox()),
 
           ],
         ),
