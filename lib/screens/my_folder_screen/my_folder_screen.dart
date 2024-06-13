@@ -184,36 +184,8 @@ class _MyFolderScreenState extends State<MyFolderScreen> {
                                                       child: Text(
                                                         StringRes.select.tr,
                                                         style:
-                                                            widget.nameFamily != ''
-                                                                ? TextStyle(
-                                                                    fontFamily: widget
-                                                                        .nameFamily,
-                                                                    color: (widget
-                                                                                .nameColor !=
-                                                                            '')
-                                                                        ? Color(int.parse(
-                                                                                widget.nameColor!.substring(
-                                                                                    1,
-                                                                                    7),
-                                                                                radix:
-                                                                                    16) +
-                                                                            0xFF000000)
-                                                                        : ColorRes
-                                                                            .appColor,
-                                                                    fontSize: 15,
-                                                                  )
-                                                                : appTextStyle(
-                                                                    color: (widget
-                                                                                .nameColor !=
-                                                                            '')
-                                                                        ? Color(int.parse(
-                                                                                widget.nameColor!.substring(
-                                                                                    1,
-                                                                                    7),
-                                                                                radix:
-                                                                                    16) +
-                                                                            0xFF000000)
-                                                                        : ColorRes
+                                                           appTextStyle(
+                                                                    color:  ColorRes
                                                                             .appColor,
                                                                     fontSize: 15,
                                                                   ),
@@ -232,39 +204,7 @@ class _MyFolderScreenState extends State<MyFolderScreen> {
                                                           Text(
                                                             '${myFolderController.addSelectedImage.where((e) => e == true).length} ${StringRes.imageSelected.tr}',
                                                             style:
-                                                                widget.nameFamily !=
-                                                                        ''
-                                                                    ? TextStyle(
-                                                                        fontFamily: widget
-                                                                            .nameFamily,
-                                                                        color: (widget
-                                                                                    .nameColor !=
-                                                                                '')
-                                                                            ? Color(int.parse(
-                                                                                    widget.nameColor!.substring(1,
-                                                                                        7),
-                                                                                    radix:
-                                                                                        16) +
-                                                                                0xFF000000)
-                                                                            : ColorRes
-                                                                                .appColor,
-                                                                        fontSize: 13,
-                                                                      )
-                                                                    : appTextStyle(
-                                                                        color: (widget
-                                                                                    .nameColor !=
-                                                                                '')
-                                                                            ? Color(int.parse(
-                                                                                    widget.nameColor!.substring(1,
-                                                                                        7),
-                                                                                    radix:
-                                                                                        16) +
-                                                                                0xFF000000)
-                                                                            : ColorRes
-                                                                                .appColor,
-                                                                        //fontFamily: widget.nameFamily,
-                                                                        fontSize: 13,
-                                                                      ),
+                                                            appTextStyle(color: ColorRes.black, fontSize: 13, weight: FontWeight.w600),
                                                           ),
                                                           GestureDetector(
                                                             onTap: () {
@@ -287,27 +227,8 @@ class _MyFolderScreenState extends State<MyFolderScreen> {
                                                             child: Text(
                                                               StringRes.cancel.tr,
                                                               style:
-                                                                  widget.nameFamily !=
-                                                                          ''
-                                                                      ? TextStyle(
-                                                                          fontFamily:
-                                                                              widget
-                                                                                  .nameFamily,
-                                                                          color: (widget.nameColor !=
-                                                                                  '')
-                                                                              ? Color(int.parse(widget.nameColor!.substring(1, 7), radix: 16) +
-                                                                                  0xFF000000)
-                                                                              : ColorRes
-                                                                                  .appColor,
-                                                                          fontSize:
-                                                                              15,
-                                                                        )
-                                                                      : appTextStyle(
-                                                                          color: (widget.nameColor !=
-                                                                                  '')
-                                                                              ? Color(int.parse(widget.nameColor!.substring(1, 7), radix: 16) +
-                                                                                  0xFF000000)
-                                                                              : ColorRes
+                                                                 appTextStyle(
+                                                                          color: ColorRes
                                                                                   .appColor,
                                                                           //fontFamily: widget.nameFamily,
                                                                           fontSize:
@@ -340,18 +261,7 @@ class _MyFolderScreenState extends State<MyFolderScreen> {
                                                           child: Icon(
                                                               Icons
                                                                   .arrow_back_ios_new_rounded,
-                                                              color: (widget
-                                                                          .nameColor !=
-                                                                      '')
-                                                                  ? Color(int.parse(
-                                                                          widget
-                                                                              .nameColor!
-                                                                              .substring(
-                                                                                  1,
-                                                                                  7),
-                                                                          radix: 16) +
-                                                                      0xFF000000)
-                                                                  : ColorRes.appColor,
+                                                              color: ColorRes.appColor,
                                                               size: 25),
                                                         ),
                                                         Container(
@@ -487,7 +397,7 @@ class _MyFolderScreenState extends State<MyFolderScreen> {
                                                                                         scale: 0.6,
                                                                                         child: Icon(
                                                                                           Icons.check_rounded,
-                                                                                          color: (widget.nameColor != '') ? Color(int.parse(widget.nameColor!.substring(1, 7), radix: 16) + 0xFF000000) : ColorRes.appColor,
+                                                                                          color: ColorRes.appColor,
                                                                                         ),
                                                                                       ),
                                                                                     ),
@@ -505,18 +415,7 @@ class _MyFolderScreenState extends State<MyFolderScreen> {
                                                           child: Icon(
                                                               Icons
                                                                   .arrow_forward_ios_rounded,
-                                                              color: (widget
-                                                                          .nameColor !=
-                                                                      '')
-                                                                  ? Color(int.parse(
-                                                                          widget
-                                                                              .nameColor!
-                                                                              .substring(
-                                                                                  1,
-                                                                                  7),
-                                                                          radix: 16) +
-                                                                      0xFF000000)
-                                                                  : ColorRes.appColor,
+                                                              color:  ColorRes.appColor,
                                                               size: 25),
                                                         ),
                                                       ],
@@ -589,16 +488,12 @@ class _MyFolderScreenState extends State<MyFolderScreen> {
                                                                                 decoration:
                                                                                     BoxDecoration(
                                                                                   color: myFolderController.checkImg[index] == true
-                                                                                      ? (widget.nameColor != '')
-                                                                                          ? Color(int.parse(widget.nameColor!.substring(1, 7), radix: 16) + 0xFF000000)
-                                                                                          : ColorRes.appColor
+                                                                                      ?  ColorRes.appColor
                                                                                       : Colors.transparent,
                                                                                   border:
                                                                                       Border.all(
                                                                                     color: myFolderController.addSelectedImage[index] == true
-                                                                                        ? (widget.nameColor != '')
-                                                                                            ? Color(int.parse(widget.nameColor!.substring(1, 7), radix: 16) + 0xFF000000)
-                                                                                            : ColorRes.appColor
+                                                                                        ? ColorRes.appColor
                                                                                         : Colors.white,
                                                                                   ),
                                                                                   borderRadius:
@@ -635,7 +530,7 @@ class _MyFolderScreenState extends State<MyFolderScreen> {
                                                                                                 child: Image.asset(
                                                                                                   AssetRes.selectedImage,
                                                                                                   scale: 4,
-                                                                                                  color: (widget.nameColor != '') ? Color(int.parse(widget.nameColor!.substring(1, 7), radix: 16) + 0xFF000000) : ColorRes.appColor,
+                                                                                                  color:  ColorRes.appColor,
                                                                                                 )),
                                                                                           )
                                                                                         : const SizedBox(),
@@ -670,7 +565,7 @@ class _MyFolderScreenState extends State<MyFolderScreen> {
                                                                                               scale: 0.6,
                                                                                               child: Icon(
                                                                                                 Icons.check_rounded,
-                                                                                                color: (widget.nameColor != '') ? Color(int.parse(widget.nameColor!.substring(1, 7), radix: 16) + 0xFF000000) : ColorRes.appColor,
+                                                                                                color: ColorRes.appColor,
                                                                                               ),
                                                                                             ),
                                                                                           ),
@@ -685,26 +580,8 @@ class _MyFolderScreenState extends State<MyFolderScreen> {
                                                                       StringRes
                                                                           .noDataFound
                                                                           .tr,
-                                                                      style: widget
-                                                                                  .nameFamily !=
-                                                                              ''
-                                                                          ? TextStyle(
-                                                                              fontFamily:
-                                                                                  widget.nameFamily,
-                                                                              color: (widget.nameColor !=
-                                                                                      '')
-                                                                                  ? Color(int.parse(widget.nameColor!.substring(1, 7), radix: 16) +
-                                                                                      0xFF000000)
-                                                                                  : ColorRes.appColor,
-                                                                              fontSize:
-                                                                                  15,
-                                                                            )
-                                                                          : appTextStyle(
-                                                                              color: (widget.nameColor !=
-                                                                                      '')
-                                                                                  ? Color(int.parse(widget.nameColor!.substring(1, 7), radix: 16) +
-                                                                                      0xFF000000)
-                                                                                  : ColorRes.appColor,
+                                                                      style:  appTextStyle(
+                                                                              color:  ColorRes.appColor,
                                                                               //fontFamily: widget.nameFamily,
                                                                               fontSize:
                                                                                   15,
@@ -851,11 +728,7 @@ class _MyFolderScreenState extends State<MyFolderScreen> {
                                                                           color: (controller.selectedId ==
                                                                                   (widget.node?[index].id.toString() ??
                                                                                       ""))
-                                                                              ? widget.nameColor !=
-                                                                                      ''
-                                                                                  ? Color(int.parse(widget.nameColor!.substring(1, 7), radix: 16) +
-                                                                                      0xFF000000)
-                                                                                  : ColorRes
+                                                                              ?  ColorRes
                                                                                       .appColor
                                                                               : ColorRes
                                                                                   .white,
@@ -863,11 +736,7 @@ class _MyFolderScreenState extends State<MyFolderScreen> {
                                                                               BorderRadius.circular(
                                                                                   15),
                                                                           border: Border.all(
-                                                                              color: widget.nameColor !=
-                                                                                      ''
-                                                                                  ? Color(int.parse(widget.nameColor!.substring(1, 7), radix: 16) +
-                                                                                      0xFF000000)
-                                                                                  : ColorRes.appColor),
+                                                                              color: ColorRes.appColor),
                                                                         ),
                                                                         child:
                                                                             Padding(
@@ -880,14 +749,16 @@ class _MyFolderScreenState extends State<MyFolderScreen> {
                                                                             widget.node?[index]
                                                                                     .title ??
                                                                                 "",
-                                                                            textStyle: widget.nameFamily !=
-                                                                                    ''
-                                                                                ? TextStyle(
-                                                                                    fontFamily: widget.nameFamily,
-                                                                                    color: (controller.selectedId == (widget.node?[index].id.toString() ?? "")) ? ColorRes.white : ColorRes.appColor,
-                                                                                    fontSize: 15,
-                                                                                  )
-                                                                                : appTextStyle(
+                                                                            textStyle:
+                                                                            // widget.nameFamily !=
+                                                                            //         ''
+                                                                            //     ? TextStyle(
+                                                                            //         fontFamily: widget.nameFamily,
+                                                                            //         color: (controller.selectedId == (widget.node?[index].id.toString() ?? "")) ? ColorRes.white : ColorRes.appColor,
+                                                                            //         fontSize: 15,
+                                                                            //       )
+                                                                            //     :
+                                                                            appTextStyle(
                                                                                     color: (controller.selectedId == (widget.node?[index].id.toString() ?? "")) ? ColorRes.white : ColorRes.appColor,
 
                                                                                     fontSize: 15,
@@ -988,11 +859,11 @@ class _MyFolderScreenState extends State<MyFolderScreen> {
                                                                                                 color: Colors.white,
                                                                                               ),
                                                                                               child: controller.isLike[index] == true
-                                                                                                  ? Icon(Icons.favorite_outlined, size: 18, color: (widget.nameColor != '') ? Color(int.parse(widget.nameColor!.substring(1, 7), radix: 16) + 0xFF000000) : ColorRes.colorE16F55)
+                                                                                                  ? Icon(Icons.favorite_outlined, size: 18, color:  ColorRes.colorE16F55)
                                                                                                   : Icon(
                                                                                                       Icons.favorite_outline_sharp,
                                                                                                       size: 18,
-                                                                                                      color: (widget.nameColor != '') ? Color(int.parse(widget.nameColor!.substring(1, 7), radix: 16) + 0xFF000000) : ColorRes.appColor,
+                                                                                                      color:  ColorRes.appColor,
                                                                                                     ),
                                                                                             ),
                                                                                           ),
@@ -1021,7 +892,7 @@ class _MyFolderScreenState extends State<MyFolderScreen> {
                                                                                                     scale: 0.6,
                                                                                                     child: Icon(
                                                                                                       Icons.check_rounded,
-                                                                                                      color: (widget.nameColor != '') ? Color(int.parse(widget.nameColor!.substring(1, 7), radix: 16) + 0xFF000000) : ColorRes.appColor,
+                                                                                                      color:  ColorRes.appColor,
                                                                                                     ),
                                                                                                   ),
                                                                                                 ),
@@ -1036,15 +907,8 @@ class _MyFolderScreenState extends State<MyFolderScreen> {
                                                                             StringRes
                                                                                 .noDataFound
                                                                                 .tr,
-                                                                            style: widget.nameFamily !=
-                                                                                    ''
-                                                                                ? TextStyle(
-                                                                                    fontFamily: widget.nameFamily,
-                                                                                    color: (widget.nameColor != '') ? Color(int.parse(widget.nameColor!.substring(1, 7), radix: 16) + 0xFF000000) : ColorRes.appColor,
-                                                                                    fontSize: 15,
-                                                                                  )
-                                                                                : appTextStyle(
-                                                                                    color: (widget.nameColor != '') ? Color(int.parse(widget.nameColor!.substring(1, 7), radix: 16) + 0xFF000000) : ColorRes.appColor,
+                                                                            style:appTextStyle(
+                                                                                    color:  ColorRes.appColor,
                                                                                     //fontFamily: widget.nameFamily,
                                                                                     fontSize: 15,
                                                                                   ),
@@ -1104,15 +968,7 @@ class _MyFolderScreenState extends State<MyFolderScreen> {
                                                       width: 100,
                                                       height: 50,
                                                       decoration: BoxDecoration(
-                                                        color: (widget.nameColor !=
-                                                                '')
-                                                            ? Color(int.parse(
-                                                                    widget.nameColor!
-                                                                        .substring(
-                                                                            1, 7),
-                                                                    radix: 16) +
-                                                                0xFF000000)
-                                                            : ColorRes.appColor,
+                                                        color:  ColorRes.appColor,
                                                         borderRadius:
                                                             BorderRadius.circular(25),
                                                       ),
@@ -1172,15 +1028,7 @@ class _MyFolderScreenState extends State<MyFolderScreen> {
                                                       width: 100,
                                                       height: 50,
                                                       decoration: BoxDecoration(
-                                                        color: (widget.nameColor !=
-                                                                '')
-                                                            ? Color(int.parse(
-                                                                    widget.nameColor!
-                                                                        .substring(
-                                                                            1, 7),
-                                                                    radix: 16) +
-                                                                0xFF000000)
-                                                            : ColorRes.appColor,
+                                                        color:  ColorRes.appColor,
                                                         borderRadius:
                                                             BorderRadius.circular(25),
                                                       ),
@@ -1222,15 +1070,7 @@ class _MyFolderScreenState extends State<MyFolderScreen> {
                                                       width: 100,
                                                       height: 50,
                                                       decoration: BoxDecoration(
-                                                        color: (widget.nameColor !=
-                                                                '')
-                                                            ? Color(int.parse(
-                                                                    widget.nameColor!
-                                                                        .substring(
-                                                                            1, 7),
-                                                                    radix: 16) +
-                                                                0xFF000000)
-                                                            : ColorRes.appColor,
+                                                        color:  ColorRes.appColor,
                                                         borderRadius:
                                                             BorderRadius.circular(25),
                                                       ),
@@ -1298,22 +1138,7 @@ class _MyFolderScreenState extends State<MyFolderScreen> {
                                             SizedBox(width: Get.width * 0.03),
                                             Text(
                                               StringRes.language.tr,
-                                              style: widget.nameFamily != ''
-                                                  ? TextStyle(
-                                                      fontFamily:
-                                                          widget.nameFamily,
-                                                      color: (widget.nameColor !=
-                                                              '')
-                                                          ? Color(int.parse(
-                                                                  widget.nameColor!
-                                                                      .substring(
-                                                                          1, 7),
-                                                                  radix: 16) +
-                                                              0xFF000000)
-                                                          : ColorRes.appColor,
-                                                      fontSize: 15,
-                                                    )
-                                                  : appTextStyle(
+                                              style:  appTextStyle(
                                                       fontSize: 15,
                                                       weight: FontWeight.w500,
                                                       color: ColorRes.black),
