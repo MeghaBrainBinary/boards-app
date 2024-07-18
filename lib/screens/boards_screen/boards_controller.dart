@@ -10,7 +10,6 @@ import 'package:boards_app/utils/string_res.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_tree/flutter_tree.dart';
 import 'package:get/get.dart';
-import 'package:html/parser.dart';
 import 'package:tutorial_coach_mark/tutorial_coach_mark.dart';
 
 class BoardsController extends GetxController {
@@ -378,7 +377,7 @@ class BoardsController extends GetxController {
         quote_font_family:data['quote_font_family'] ?? '',
         expanded: false,
         checked: true,
-        children: List.from(data['sub_board'].map((x) => mapServerDataToTreeData(x, isChild: true))),
+        children: data['sub_board'] != null ? List.from(data['sub_board'].map((x) => mapServerDataToTreeData(x, isChild: true))) : [],
       );
     } else {
       return TreeNodeData(
@@ -397,7 +396,7 @@ class BoardsController extends GetxController {
         isTop: false,
         expanded: false,
         checked: true,
-        children: List.from(data['sub_board'].map((x) => mapServerDataToTreeData(x, isChild: true))),
+        children: data['sub_board'] != null ? List.from(data['sub_board'].map((x) => mapServerDataToTreeData(x, isChild: true))) : [],
       );
     }
   }
