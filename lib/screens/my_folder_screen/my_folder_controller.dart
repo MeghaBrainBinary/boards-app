@@ -189,12 +189,12 @@ pageController =PageController(initialPage: index);
               data: ThemeData(dialogBackgroundColor: Colors.white),
               child: AlertDialog(
                 title:  Text(
-                  "Success",
+                  StringRes.success.tr,
                   style: appTextStyle(
                       weight: FontWeight.w500, fontSize: 20, color: ColorRes.appColor),
                 ),
                 content:  Text(
-                  "Images Downloaded Successfully",
+                  StringRes.download.tr,
                   style: appTextStyle(
                       color: ColorRes.black,
                       fontSize: 18,
@@ -220,7 +220,7 @@ pageController =PageController(initialPage: index);
                       return Get.back();
                     },
                     child:  Text(
-                      "Okay",
+                      StringRes.okay.tr,
                       style: appTextStyle(
                           color: ColorRes.appColor,
                           fontSize: 18,
@@ -310,12 +310,13 @@ pageController =PageController(initialPage: index);
               data: ThemeData(dialogBackgroundColor: Colors.white),
               child: AlertDialog(
                 title:  Text(
-                  "Success",
+                  StringRes.success.tr,
+
                   style: appTextStyle(
                       weight: FontWeight.w500, fontSize: 20, color: ColorRes.appColor),
                 ),
                 content:  Text(
-                  "Images Downloaded Successfully",
+                  StringRes.download.tr,
                   style: appTextStyle(
                       color: ColorRes.black,
                       fontSize: 18,
@@ -341,7 +342,8 @@ pageController =PageController(initialPage: index);
                       return Get.back();
                     },
                     child:  Text(
-                      "Okay",
+                      StringRes.okay.tr,
+
                       style: appTextStyle(
                           color: ColorRes.appColor,
                           fontSize: 18,

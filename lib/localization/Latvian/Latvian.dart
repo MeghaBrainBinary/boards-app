@@ -99,4 +99,6 @@ const Map<String, String> Latvian = {
   "Russian":"krievu valoda",
   "Phone NO":"Tālruņa NR",
   "Telegram":"Telegramma",
+  "Images Downloaded Successfully":"Attēli ir veiksmīgi lejupielādēti",
+  "Okay":"Labi"
 };

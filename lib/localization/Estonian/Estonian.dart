@@ -95,4 +95,6 @@ const Map<String, String> Estonian = {
   "Russian":"vene keel",
   "Phone NO":"Telefoni nr",
   "Telegram":"Telegramm",
+  "Images Downloaded Successfully":"Pildid edukalt alla laaditud",
+  "Okay":"Okei"
 };

@@ -96,4 +96,6 @@ const Map<String, String> Lithuanian = {
   "Russian":"rusų",
   "Phone NO":"Telefono NR",
   "Telegram":"Telegrama",
+  "Images Downloaded Successfully":"Vaizdai sėkmingai atsisiųsti",
+  "Okay":"Gerai"
 };

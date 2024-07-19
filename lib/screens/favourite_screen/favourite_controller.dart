@@ -103,14 +103,14 @@ class FavouriteController extends GetxController {
               data: ThemeData(dialogBackgroundColor: Colors.white),
               child: AlertDialog(
                 title: Text(
-                  "Success",
+                  StringRes.success.tr,
                   style: appTextStyle(
                       weight: FontWeight.w500,
                       fontSize: 20,
                       color: ColorRes.appColor),
                 ),
                 content: Text(
-                  "Images Downloaded Successfully",
+                  StringRes.download.tr,
                   style: appTextStyle(color: ColorRes.black, fontSize: 18, weight: FontWeight.w600),
                 ),
                 actions: <Widget>[
@@ -131,7 +131,8 @@ class FavouriteController extends GetxController {
                       return Get.back();
                     },
                     child: Text(
-                      "Okay",
+                      StringRes.okay.tr,
+
                       style: appTextStyle(color: ColorRes.appColor, fontSize: 18, weight: FontWeight.w600),
                     ),
                   ),
@@ -190,12 +191,13 @@ class FavouriteController extends GetxController {
               data: ThemeData(dialogBackgroundColor: Colors.white),
               child: AlertDialog(
                 title:  Text(
-                  "Success",
+                  StringRes.success.tr,
+
                   style: appTextStyle(
                       weight: FontWeight.w500, fontSize: 20, color: ColorRes.appColor),
                 ),
                 content:  Text(
-                  "Images Downloaded Successfully",
+                  StringRes.download.tr,
                   style: appTextStyle(
                       color: ColorRes.black,
                       fontSize: 18,
@@ -221,7 +223,8 @@ class FavouriteController extends GetxController {
                       return Get.back();
                     },
                     child:  Text(
-                      "Okay",
+                      StringRes.okay.tr,
+
                       style: appTextStyle(
                           color: ColorRes.appColor,
                           fontSize: 18,

@@ -95,4 +95,6 @@ const Map<String, String> English = {
   "Russian":"Russian",
   "Phone NO":"Phone NO",
   "Telegram":"Telegram",
+  "Images Downloaded Successfully":"Images Downloaded Successfully",
+  "Okay":"Okay"
 };
