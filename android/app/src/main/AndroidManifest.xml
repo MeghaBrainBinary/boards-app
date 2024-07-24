@@ -4,7 +4,7 @@
     <uses-permission android:name="android.permission.INTERNET"/>
     
    <application
-        android:label="Inspiration by Filuet"
+        android:label="Herbalife BLT Online Library"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
