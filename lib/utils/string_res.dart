@@ -2,7 +2,7 @@ import 'package:get/get.dart';
 
 class StringRes {
   ///______________________________ lnguage screen ______________________________///
-  static String chooseTheLanguage = "Choose The Language";
+  static String chooseTheLanguage = "Choose the language";
   static String searchLanguage = "search language";
   static String continu = "Continue";
   static String alreadyHaveAccount = "Already have account?";
@@ -61,10 +61,10 @@ class StringRes {
   static String areYouSureLogOut = "Are you sure want to Log Out?";
   static String areYouSureExit = "Are you sure want to Exit?";
 
-  ///______________________________ Contact Us screen ______________________________///
-  static String contactUs = "Contact Us";
+  ///______________________________ Contact us screen ______________________________///
+  static String contactUs = "Contact us";
   static String name = "Name";
-  static String emailID = "Email ID";
+  static String emailID = "e-mail";
   static String description = "Description";
   static String send = "Send";
   static String yes = "Yes";
@@ -112,13 +112,13 @@ class StringRes {
   static String lithuanian = "Lithuanian";
   static String error = "Error";
   static String success = "Success";
-  static String download = "Images Downloaded Successfully";
+  static String download = "Images are downloaded successfully";
   static String okay = "Okay";
   static String select = "Select";
   static String inspire = "Designed by";
   static String filuet = "filuet";
   static String home = "Home";
-  static String favourite = "Favourite";
+  static String favourite = "Favourites";
   static String settings = "Settings";
   static String faq = "FAQ";
   static String loginLogout = "Login / Logout";
@@ -181,6 +181,6 @@ class StringRes {
   static const motivationQuotes = "Future depends on what you do today!";
   static const weekendQuotes = "Can we start the weekend again? I was not ready!";
   static const challengesQuotes = "Don’t limit your challenges. Challenge your limits.";
-  static const phoneNo = "Phone NO";
-  static const telegram = "Telegram";
+  static const phoneNo = "Telephone";
+  static const telegram = "Tel";
 }

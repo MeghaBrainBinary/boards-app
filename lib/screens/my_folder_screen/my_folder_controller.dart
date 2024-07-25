@@ -250,7 +250,7 @@ pageController =PageController(initialPage: index);
 
       // Get.snackbar(
       //   "Success",
-      //   "Images Downloaded Successfully",
+      //   "Images are downloaded successfully",
       //   backgroundColor: Colors.green,
       //   colorText: ColorRes.white,
       // );
@@ -358,7 +358,7 @@ pageController =PageController(initialPage: index);
       );
       // Get.snackbar(
       //   "Success",
-      //   "Images Downloaded Successfully",
+      //   "Images are downloaded successfully",
       //   backgroundColor: Colors.green,
       //   colorText: ColorRes.white,
       // );
