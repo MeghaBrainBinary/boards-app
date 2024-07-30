@@ -93,7 +93,8 @@ const Map<String, String> Russian = {
   "Don’t limit your challenges. Challenge your limits.":"Не ограничивайте свои задачи. Бросьте вызов своим ограничениям.",
   "Russian":"Русский",
   "Telephone":"Телефон",
-  "Tel":"Тел",
+  //"Tel":"Тел",
+  "Tel":"Telegram",
   "Images are downloaded successfully":"Изображения успешно загружены",
   "Okay":"Хорошо"
 };

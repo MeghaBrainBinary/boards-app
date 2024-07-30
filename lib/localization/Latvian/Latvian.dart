@@ -98,7 +98,8 @@ const Map<String, String> Latvian = {
   "No data found" : "Dati nav atrasti",
   "Russian":"Krievu",
   "Telephone":"Tārunis",
-  "Tel":"Tālr",
+  //"Tel":"Tālr",
+  "Tel":"Telegram",
   "Images are downloaded successfully":"Attēli veiksmīgi lejupielādēti",
   "Okay":"Labi"
 };

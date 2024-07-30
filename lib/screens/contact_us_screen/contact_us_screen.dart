@@ -116,8 +116,10 @@ class ContactUsScreen extends StatelessWidget {
                         ],
                       ),
 
-                      /// ------- english ----------
-                   PrefService.getString(PrefKeys.code) =="en"||PrefService.getString(PrefKeys.code) =="ru"?  Column(
+                   /*   /// ------- english ----------
+                  PrefService.getString(PrefKeys.code) =="en"||PrefService.getString(PrefKeys.code) =="ru"?
+
+                   Column(
                        crossAxisAlignment: CrossAxisAlignment.start,
                        children: [
                          Text("${StringRes.phoneNo.tr} :",style: appTextStyle(
@@ -172,10 +174,11 @@ class ContactUsScreen extends StatelessWidget {
                            height: Get.height * 0.03,
                          ),
                        ],
-                     ):const SizedBox(),
+                     ):const SizedBox(),*/
 
                       /// ------- estonian ----------
-                      PrefService.getString(PrefKeys.code) =="et" ||PrefService.getString(PrefKeys.code) =="ru"?   Column(
+                      PrefService.getString(PrefKeys.code) =="et" ||PrefService.getString(PrefKeys.code) =="ru" || PrefService.getString(PrefKeys.code) =="en"?
+                      Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text("${StringRes.phoneNo.tr} :",style: appTextStyle(
@@ -233,7 +236,8 @@ class ContactUsScreen extends StatelessWidget {
                     ):const SizedBox(),
 
                       /// ------- latvin ----------
-                      PrefService.getString(PrefKeys.code) =="lv" ||PrefService.getString(PrefKeys.code) =="ru"?  Column(
+                      PrefService.getString(PrefKeys.code) =="lv" ||PrefService.getString(PrefKeys.code) =="ru" || PrefService.getString(PrefKeys.code) =="en"?
+                      Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
 
                         children: [
@@ -293,7 +297,8 @@ class ContactUsScreen extends StatelessWidget {
                       ):const SizedBox(),
 
                       /// ------- lithunian ----------
-                      PrefService.getString(PrefKeys.code) =="lt"||  PrefService.getString(PrefKeys.code) =="ru"? Column(
+                      PrefService.getString(PrefKeys.code) =="lt"||  PrefService.getString(PrefKeys.code) =="ru" || PrefService.getString(PrefKeys.code) =="en"?
+                      Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
 
                         children: [

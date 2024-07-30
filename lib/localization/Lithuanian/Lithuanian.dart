@@ -95,7 +95,8 @@ const Map<String, String> Lithuanian = {
   "Don’t limit your challenges. Challenge your limits.":"Neribokite savo iššūkių. Mesk iššūkį savo riboms.",
   "Russian":"Rusų",
   "Telephone":"Telefonas",
-  "Tel":"Tel",
+  //"Tel":"Tel",
+  "Tel":"Telegram",
   "Images are downloaded successfully":"Vaizdai atsisiųsti sėkmingai",
   "Okay":"Gerai"
 };

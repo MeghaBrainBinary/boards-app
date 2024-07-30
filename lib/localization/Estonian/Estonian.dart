@@ -94,7 +94,8 @@ const Map<String, String> Estonian = {
   "Don’t limit your challenges. Challenge your limits.":"Ärge piirake oma väljakutseid. Sea oma piirid proovile.",
   "Russian":"Vene",
   "Telephone":"Telefon",
-  "Tel":"Tel",
+  //"Tel":"Tel",
+  "Tel":"Telegram",
   "Images are downloaded successfully":"Pildid on edukalt alla laaditud",
   "Okay":"Okei"
 };
