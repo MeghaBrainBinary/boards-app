@@ -12,7 +12,6 @@ import 'package:boards_app/utils/color_res.dart';
 import 'package:boards_app/utils/prefkeys.dart';
 import 'package:boards_app/utils/string_res.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:chewie/chewie.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_tree/flutter_tree.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
@@ -60,8 +59,7 @@ class _MyFolderScreenState extends State<MyFolderScreen> {
   BoardsController boardsController = Get.put(BoardsController());
   MySelectFolderController mySelectFolderController =
       Get.put(MySelectFolderController());
-  late VideoPlayerController videoPlayerController;
-  ChewieController? chewieController;
+
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
@@ -325,7 +323,41 @@ class _MyFolderScreenState extends State<MyFolderScreen> {
                                                                           ),
                                                                           child:
                                                                     controller. getBoardInfoModel.data?[index].fileType =="video" ?
-                                                                    controller.chewies[index] != null? Chewie(controller: controller.chewies[index]!):const SizedBox()
+                                                                    controller.videos[index] != null?
+
+                                                                    Stack(
+                                                                      alignment:Alignment.center,
+                                                                      children: [
+                                                                        VideoPlayer( controller.videos[index]!),
+                                                                        InkWell(
+                                                                          onTap:(){
+                                                                            if(controller.isPlay[index])
+                                                                              {
+                                                                                controller.isPlay[index] = false;
+                                                                                controller.videos[index]?.pause();
+
+                                                                              }
+                                                                            else
+                                                                              {
+                                                                                controller.isPlay[index] = true;
+
+                                                                                controller.videos[index]?.play();
+                                                                              }
+                                                                            controller.update(['fldr']);
+                                                                          },
+                                                                          child: Container(
+                                                                            height: 30,
+                                                                            width: 30,
+                                                                            decoration:const BoxDecoration(
+                                                                    shape:BoxShape.circle,
+                                                                    color:Colors.white,
+                                                                    ),
+                                                                            child: Icon(controller.isPlay[index]?Icons.pause:Icons.play_arrow,
+                                                                            size: 20,),
+                                                                          ),
+                                                                        ),
+                                                                      ],
+                                                                    ):const SizedBox()
                                                                         :   CachedNetworkImage(
                                                                             fit: BoxFit
                                                                                 .fitWidth,
@@ -506,9 +538,7 @@ class _MyFolderScreenState extends State<MyFolderScreen> {
                                                                                   alignment:
                                                                                       Alignment.bottomRight,
                                                                                   children: [
-                                                                                    controller. getBoardInfoModel.data?[index].fileType =="video" ?
-                                                                                    controller.chewies[index] != null? Chewie(controller: controller.chewies[index]!):const SizedBox()
-                                                                                        :  CachedNetworkImage(
+                                                                                     CachedNetworkImage(
                                                                                       width: Get.width,
                                                                                       height: Get.height * 0.199,
                                                                                       fit: BoxFit.cover,
@@ -776,7 +806,7 @@ class _MyFolderScreenState extends State<MyFolderScreen> {
                                                                 ),
 
                                                           widget.isFirstNode ?? false
-                                                              ? SizedBox()
+                                                              ? const SizedBox()
                                                               : SizedBox(
                                                                   height: Get.height *
                                                                       0.69,
@@ -832,7 +862,41 @@ class _MyFolderScreenState extends State<MyFolderScreen> {
                                                                                         alignment: Alignment.topRight,
                                                                                         children: [
                                                                                           controller. getBoardInfoModel.data?[index].fileType =="video" ?
-                                                                                          controller.chewies[index] != null? Chewie(controller: controller.chewies[index]!):const SizedBox()
+                                                                                          controller.videos[index] != null?
+                                                                                          Stack(
+                                                                                            alignment:Alignment.center,
+                                                                                            children: [
+                                                                                              VideoPlayer( controller.videos[index]!),
+                                                                                              InkWell(
+                                                                                                onTap:(){
+                                                                                                  if(controller.isPlay[index])
+                                                                                                  {
+                                                                                                    controller.isPlay[index] = false;
+                                                                                                    controller.videos[index]?.pause();
+
+                                                                                                  }
+                                                                                                  else
+                                                                                                  {
+                                                                                                    controller.isPlay[index] = true;
+
+                                                                                                    controller.videos[index]?.play();
+                                                                                                  }
+                                                                                                  controller.update(['fldr']);
+
+                                                                                                },
+                                                                                                child: Container(
+                                                                                                  height: 30,
+                                                                                                  width: 30,
+                                                                                                  decoration:const BoxDecoration(
+                                                                                                    shape:BoxShape.circle,
+                                                                                                    color:Colors.white,
+                                                                                                  ),
+                                                                                                  child: Icon(controller.isPlay[index]?
+                                                                                                  Icons.pause:Icons.play_arrow,size: 20,),
+                                                                                                ),
+                                                                                              ),
+                                                                                            ],
+                                                                                          ):const SizedBox()
                                                                                               :  CachedNetworkImage(
                                                                                             width: Get.width,
                                                                                             fit: BoxFit.fitWidth,

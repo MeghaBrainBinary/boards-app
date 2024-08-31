@@ -17,6 +17,7 @@ import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:http/http.dart' as http;
 import 'package:path_provider/path_provider.dart';
 import 'package:share_plus/share_plus.dart';
+import 'package:video_player/video_player.dart';
 import 'package:wc_flutter_share/wc_flutter_share.dart';
 
 class FavouriteController extends GetxController {
@@ -346,6 +347,8 @@ class FavouriteController extends GetxController {
 
 
   List<bool> checkImage = [];
+  List<bool> isPlay = [];
+  List<VideoPlayerController?> videos =[];
 
   init() async {
     storedFavorites = [];
@@ -354,9 +357,22 @@ class FavouriteController extends GetxController {
       storedFavorites?.add({
         "id": element.imageId,
         "image": element.imageUrl,
+        "type":element.fileType
       });
     });
+    videos = List.generate(storedFavorites?.length ??0, (index) => (storedFavorites?[index]['fileType'] =="video")?VideoPlayerController.networkUrl(
+        Uri.parse(storedFavorites?[index]['image'] ?? '')
+    ):null);
+
+    videos.forEach((element) async {
+      if(element != null)
+      {
+        await  element.initialize();
+
+      }
+    });
     checkImage = List.generate((storedFavorites ?? []).length, (index) => false);
+    isPlay = List.generate((storedFavorites ?? []).length, (index) => false);
     print("--------------------------------${checkImage.length}");
     update(['favourite']);
   }

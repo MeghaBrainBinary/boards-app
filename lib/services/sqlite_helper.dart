@@ -17,6 +17,7 @@ String tablename ="Favorites";
   String uniqueId = "uniqueId";
   String imageIDName = "imageId";
   String imageUrlName = "imageUrl";
+  String fileTypeName = "type";
 
 
   Future<Database?> initdb({String? tableName}) async {
@@ -30,7 +31,7 @@ String tablename ="Favorites";
         await db.execute(query1);*/
 
 
-        String query1 = " CREATE TABLE IF NOT EXISTS $tablename($uniqueId INTEGER PRIMARY KEY AUTOINCREMENT,$imageIDName TEXT,$imageUrlName TEXT);";
+        String query1 = " CREATE TABLE IF NOT EXISTS $tablename($uniqueId INTEGER PRIMARY KEY AUTOINCREMENT,$imageIDName TEXT,$imageUrlName TEXT,$fileTypeName TEXT);";
         await db.execute(query1);
       }
       );
@@ -44,14 +45,16 @@ String tablename ="Favorites";
   Future<int> insertDb({
     required String imageID,
     required String imageUrl,
+    required String type,
   }) async {
 
 
     String query =
-        'INSERT INTO $tablename($imageIDName,$imageUrlName)VALUES(?,?);';
+        'INSERT INTO $tablename($imageIDName,$imageUrlName,$fileTypeName)VALUES(?,?,?);';
     List args = [
     imageID,
-      imageUrl
+      imageUrl,
+      type
     ];
 
     return await db!.rawInsert(query, args);
@@ -109,6 +112,7 @@ class SqliteModel {
   int? uniqueId;
   String? imageId;
   String? imageUrl;
+  String? fileType;
 
   static List star = [];
 
@@ -116,6 +120,7 @@ class SqliteModel {
     required this.uniqueId,
     required this.imageId,
     required this.imageUrl,
+    required this.fileType,
   });
 
   factory SqliteModel.fromjson(Map<String, dynamic> data) {
@@ -123,6 +128,7 @@ class SqliteModel {
       uniqueId: data['uniqueId'],
       imageId: data['imageId'],
       imageUrl: data['imageUrl'],
+      fileType: data['fileType'],
     );
   }
 
@@ -130,6 +136,7 @@ class SqliteModel {
     "uniqueId": uniqueId,
     "imageId": imageId,
     "imageUrl": imageUrl,
+    "fileType": fileType,
   };
 
 }

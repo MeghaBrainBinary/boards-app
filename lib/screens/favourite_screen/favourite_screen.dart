@@ -12,6 +12,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shimmer/shimmer.dart';
+import 'package:video_player/video_player.dart';
 
 class FavouriteScreen extends StatelessWidget {
   FavouriteScreen({super.key});
@@ -147,7 +148,43 @@ class FavouriteScreen extends StatelessWidget {
                                                             color: Colors.transparent,
                                                             borderRadius: BorderRadius.circular(5),
                                                           ),
-                                                          child: CachedNetworkImage(
+                                                          child:  controller.storedFavorites![index]['fileType'] =="video" ?
+                                                          controller.videos[index] != null?
+                                                          Stack(
+                                                            alignment:Alignment.center,
+                                                            children: [
+                                                              VideoPlayer( controller.videos[index]!),
+                                                              InkWell(
+                                                                onTap:(){
+                                                                  if(controller.isPlay[index])
+                                                                  {
+                                                                    controller.isPlay[index] = false;
+                                                                    controller.videos[index]?.pause();
+
+                                                                  }
+                                                                  else
+                                                                  {
+                                                                    controller.isPlay[index] = true;
+
+                                                                    controller.videos[index]?.play();
+                                                                  }
+                                                                  controller.update(['fldr']);
+
+                                                                },
+                                                                child: Container(
+                                                                  height: 30,
+                                                                  width: 30,
+                                                                  decoration:const BoxDecoration(
+                                                                    shape:BoxShape.circle,
+                                                                    color:Colors.white,
+                                                                  ),
+                                                                  child: Icon(controller.isPlay[index]?Icons.pause:Icons.play_arrow,
+                                                                    size: 20,),
+                                                                ),
+                                                              ),
+                                                            ],
+                                                          ):const SizedBox()
+                                                              :CachedNetworkImage(
                                                             fit: BoxFit.fitWidth,
                                                             imageUrl: controller.storedFavorites![index]['image']!.toString(),
                                                             progressIndicatorBuilder: (context, strings, download) {
@@ -257,7 +294,42 @@ class FavouriteScreen extends StatelessWidget {
                                                               ),
                                                               borderRadius: BorderRadius.circular(5),
                                                             ),
-                                                            child: CachedNetworkImage(
+                                                            child:  controller.storedFavorites![index]['fileType'] =="video" ?
+                                                            controller.videos[index] != null?
+                                                            Stack(
+                                                              alignment:Alignment.center,
+                                                              children: [
+                                                                VideoPlayer( controller.videos[index]!),
+                                                                InkWell(
+                                                                  onTap:(){
+                                                                    if(controller.isPlay[index])
+                                                                    {
+                                                                      controller.isPlay[index] = false;
+                                                                      controller.videos[index]?.pause();
+
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                      controller.isPlay[index] = true;
+
+                                                                      controller.videos[index]?.play();
+                                                                    }
+                                                                    controller.update(['fldr']);
+
+                                                                  },
+                                                                  child: Container(
+                                                                    height: 30,
+                                                                    width: 30,
+                                                                    decoration:const BoxDecoration(
+                                                                      shape:BoxShape.circle,
+                                                                      color:Colors.white,
+                                                                    ),
+                                                                    child: Icon(controller.isPlay[index]?Icons.pause:Icons.play_arrow,
+                                                                      size: 20,),
+                                                                  ),
+                                                                ),
+                                                              ],
+                                                            ):const SizedBox():CachedNetworkImage(
                                                               height: 170,
                                                               width: Get.width,
                                                               fit: BoxFit.cover,

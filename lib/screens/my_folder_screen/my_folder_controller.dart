@@ -29,6 +29,7 @@ class MyFolderController extends GetxController {
   bool isPageView = false;
   bool isSelectedPageView = false;
   List<bool> isLike = [];
+  List<bool> isPlay = [];
   String? selectedImage;
   String selectedId = "";
 List<bool> isSelectedNode =[];
@@ -57,15 +58,19 @@ List<ChewieController?> chewies =[];
       getBoardInfoModel = await GetBoardInfoApi.getBoardInfoApi(id, subBoardId: subBoardId);
     }
 
+
+
+
     loader.value = false;
 videos = List.generate(getBoardInfoModel.data?.length ??0, (index) => (getBoardInfoModel.data?[index].fileType =="video")?VideoPlayerController.networkUrl(
-    Uri.parse(getBoardInfoModel.data?[index].image ?? '')
+   Uri.parse( getBoardInfoModel.data?[index].image ?? '')
 ):null);
 
  videos.forEach((element) async {
   if(element != null)
     {
      await  element.initialize();
+
     }
 });
 
@@ -74,6 +79,7 @@ chewies = List.generate(getBoardInfoModel.data?.length ??0, (index) => (getBoard
 ):null);
 
    checkImg = List.generate(getBoardInfoModel.data?.length ??0, (index) => false);
+   isPlay = List.generate(getBoardInfoModel.data?.length ??0, (index) => false);
     isLike = List.generate(getBoardInfoModel.data?.length ?? 0, (index) => false);
 await init();
   update(['fldr']);
@@ -519,6 +525,7 @@ update(['fldr']);
   likeUnlike(index){
     var image =  getBoardInfoModel.data![index].image.toString();
     var imageId =  getBoardInfoModel.data![index].id.toString();
+    var type =  getBoardInfoModel.data![index].fileType.toString();
     if(isLike[index])
       {
 
@@ -528,7 +535,7 @@ update(['fldr']);
       }
     else
       {
-        SqliteHelper.sqliteHelper.insertDb(imageID: imageId, imageUrl: image);
+        SqliteHelper.sqliteHelper.insertDb(imageID: imageId, imageUrl: image,type: type);
         isLike[index] = true;
       }
   }
@@ -571,7 +578,9 @@ List allIndexData =[];
 allIndexData.forEach((element) {
   SqliteHelper.sqliteHelper.insertDb(
       imageID: getBoardInfoModel.data?[element].id.toString()  ?? '',
-      imageUrl: getBoardInfoModel.data?[element].image ?? '');
+      imageUrl: getBoardInfoModel.data?[element].image ?? '',
+  type:   getBoardInfoModel.data?[element].fileType ?? '',
+  );
   isLike[element] = true;
 });
 
