@@ -7,6 +7,7 @@ import 'package:boards_app/services/sqlite_helper.dart';
 import 'package:boards_app/utils/asset_res.dart';
 import 'package:boards_app/utils/color_res.dart';
 import 'package:boards_app/utils/string_res.dart';
+import 'package:chewie/chewie.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -15,6 +16,7 @@ import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:http/http.dart' as http;
 import 'package:path_provider/path_provider.dart';
 import 'package:share_plus/share_plus.dart';
+import 'package:video_player/video_player.dart';
 import 'package:wc_flutter_share/wc_flutter_share.dart';
 import '../../utils/appstyle.dart';
 
@@ -33,7 +35,8 @@ List<bool> isSelectedNode =[];
   var args = Get.arguments;
 
 
-
+List<VideoPlayerController?> videos =[];
+List<ChewieController?> chewies =[];
 
   @override
   void onInit() {
@@ -55,7 +58,20 @@ List<bool> isSelectedNode =[];
     }
 
     loader.value = false;
+videos = List.generate(getBoardInfoModel.data?.length ??0, (index) => (getBoardInfoModel.data?[index].fileType =="video")?VideoPlayerController.networkUrl(
+    Uri.parse(getBoardInfoModel.data?[index].image ?? '')
+):null);
 
+ videos.forEach((element) async {
+  if(element != null)
+    {
+     await  element.initialize();
+    }
+});
+
+chewies = List.generate(getBoardInfoModel.data?.length ??0, (index) => (getBoardInfoModel.data?[index].fileType =="video")?ChewieController(
+  videoPlayerController: videos[index] ?? VideoPlayerController.networkUrl(Uri.parse("")),
+):null);
 
    checkImg = List.generate(getBoardInfoModel.data?.length ??0, (index) => false);
     isLike = List.generate(getBoardInfoModel.data?.length ?? 0, (index) => false);

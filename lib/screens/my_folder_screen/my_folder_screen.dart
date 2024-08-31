@@ -324,7 +324,9 @@ class _MyFolderScreenState extends State<MyFolderScreen> {
                                                                                     5),
                                                                           ),
                                                                           child:
-                                                                              CachedNetworkImage(
+                                                                    controller. getBoardInfoModel.data?[index].fileType =="video" ?
+                                                                    controller.chewies[index] != null? Chewie(controller: controller.chewies[index]!):const SizedBox()
+                                                                        :   CachedNetworkImage(
                                                                             fit: BoxFit
                                                                                 .fitWidth,
                                                                             imageUrl: controller
@@ -504,7 +506,9 @@ class _MyFolderScreenState extends State<MyFolderScreen> {
                                                                                   alignment:
                                                                                       Alignment.bottomRight,
                                                                                   children: [
-                                                                                    CachedNetworkImage(
+                                                                                    controller. getBoardInfoModel.data?[index].fileType =="video" ?
+                                                                                    controller.chewies[index] != null? Chewie(controller: controller.chewies[index]!):const SizedBox()
+                                                                                        :  CachedNetworkImage(
                                                                                       width: Get.width,
                                                                                       height: Get.height * 0.199,
                                                                                       fit: BoxFit.cover,
@@ -827,7 +831,9 @@ class _MyFolderScreenState extends State<MyFolderScreen> {
                                                                                       child: Stack(
                                                                                         alignment: Alignment.topRight,
                                                                                         children: [
-                                                                                          CachedNetworkImage(
+                                                                                          controller. getBoardInfoModel.data?[index].fileType =="video" ?
+                                                                                          controller.chewies[index] != null? Chewie(controller: controller.chewies[index]!):const SizedBox()
+                                                                                              :  CachedNetworkImage(
                                                                                             width: Get.width,
                                                                                             fit: BoxFit.fitWidth,
                                                                                             imageUrl: controller.getBoardInfoModel.data![index].image!.toString(),

@@ -79,6 +79,7 @@ dependencies:
   flutter_widget_from_html:
 
 
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
