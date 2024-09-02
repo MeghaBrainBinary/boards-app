@@ -25,9 +25,23 @@ class FavouriteScreen extends StatelessWidget {
       onWillPop: () async {
         if (favouriteController.isPageView) {
           favouriteController.isPageView = false;
+          for (var element in favouriteController.videos) {
+            if(element != null) {
+              element.pause();
+            }
+
+          }
           favouriteController.update(['favourite']);
         } else {
           Get.back();
+          for (var element in favouriteController.videos) {
+            if(element != null) {
+              element.pause();
+              element.dispose();
+            }
+
+          }
+          favouriteController.videos =[];
         }
         return false;
       },
@@ -164,11 +178,18 @@ class FavouriteScreen extends StatelessWidget {
                                                                   }
                                                                   else
                                                                   {
+                                                                    controller.isPlay = List.generate( controller.storedFavorites?.length ?? 0, (index) => false);
+                                                                    for (var e in controller.videos) {
+                                                                      if(e != null)
+                                                                      {
+                                                                        e.pause();
+                                                                      }
+                                                                    }
                                                                     controller.isPlay[index] = true;
 
                                                                     controller.videos[index]?.play();
                                                                   }
-                                                                  controller.update(['fldr']);
+                                                                  controller.update(['favourite']);
 
                                                                 },
                                                                 child: Container(
@@ -310,11 +331,19 @@ class FavouriteScreen extends StatelessWidget {
                                                                     }
                                                                     else
                                                                     {
+
+                                                                      controller.isPlay = List.generate( controller.storedFavorites?.length ?? 0, (index) => false);
+                                                                      for (var e in controller.videos) {
+                                                                        if(e != null)
+                                                                        {
+                                                                          e.pause();
+                                                                        }
+                                                                      }
                                                                       controller.isPlay[index] = true;
 
                                                                       controller.videos[index]?.play();
                                                                     }
-                                                                    controller.update(['fldr']);
+                                                                    controller.update(['favourite']);
 
                                                                   },
                                                                   child: Container(
@@ -519,6 +548,16 @@ class FavouriteScreen extends StatelessWidget {
                 favouriteController.update(['favourite']);
               } else {
                 Get.back();
+                for (var element in favouriteController.videos) {
+                  if(element != null) {
+                    element.pause();
+                    element.dispose();
+
+                  }
+
+                }
+                favouriteController.videos =[];
+
               }
             },
             child: const Icon(Icons.arrow_back_ios, size: 20),

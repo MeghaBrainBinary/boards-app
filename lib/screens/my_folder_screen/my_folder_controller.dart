@@ -29,6 +29,7 @@ class MyFolderController extends GetxController {
   bool isPageView = false;
   bool isSelectedPageView = false;
   List<bool> isLike = [];
+  List<bool> initilized = [];
   List<bool> isPlay = [];
   String? selectedImage;
   String selectedId = "";
@@ -62,14 +63,18 @@ List<ChewieController?> chewies =[];
 
 
     loader.value = false;
-videos = List.generate(getBoardInfoModel.data?.length ??0, (index) => (getBoardInfoModel.data?[index].fileType =="video")?VideoPlayerController.networkUrl(
+    initilized = List.generate(getBoardInfoModel.data?.length ??0, (index) => false);
+
+    videos = List.generate(getBoardInfoModel.data?.length ??0, (index) => (getBoardInfoModel.data?[index].fileType =="video")?VideoPlayerController.networkUrl(
    Uri.parse( getBoardInfoModel.data?[index].image ?? '')
 ):null);
 
  videos.forEach((element) async {
   if(element != null)
     {
+
      await  element.initialize();
+     await element.pause();
 
     }
 });
@@ -80,6 +85,7 @@ chewies = List.generate(getBoardInfoModel.data?.length ??0, (index) => (getBoard
 
    checkImg = List.generate(getBoardInfoModel.data?.length ??0, (index) => false);
    isPlay = List.generate(getBoardInfoModel.data?.length ??0, (index) => false);
+    initilized = List.generate(getBoardInfoModel.data?.length ??0, (index) => false);
     isLike = List.generate(getBoardInfoModel.data?.length ?? 0, (index) => false);
 await init();
   update(['fldr']);
@@ -121,7 +127,14 @@ onTapBack(){
   selectedImg = false;
   checkImg = List.generate(getBoardInfoModel.data?.length??0, (index) => false);
   addSelectedImage = List.generate(getBoardInfoModel.data?.length??0, (index) => false);
+videos.forEach((element) {
+  if(element != null) {
+    element!.pause();
+    element.dispose();
+  }
 
+});
+videos =[];
   update(['fldr']);
 
 }
@@ -535,7 +548,7 @@ update(['fldr']);
       }
     else
       {
-        SqliteHelper.sqliteHelper.insertDb(imageID: imageId, imageUrl: image,type: type);
+        SqliteHelper.sqliteHelper.insertDb(imageID: imageId, imageUrl: image,fileType: type);
         isLike[index] = true;
       }
   }
@@ -579,7 +592,7 @@ allIndexData.forEach((element) {
   SqliteHelper.sqliteHelper.insertDb(
       imageID: getBoardInfoModel.data?[element].id.toString()  ?? '',
       imageUrl: getBoardInfoModel.data?[element].image ?? '',
-  type:   getBoardInfoModel.data?[element].fileType ?? '',
+    fileType:   getBoardInfoModel.data?[element].fileType ?? '',
   );
   isLike[element] = true;
 });
@@ -645,6 +658,13 @@ isPageView= false;
 isSelect = false;
 selectedImg = false;
 
+videos.forEach((element) {
+  if(element != null)
+    {
+      element.dispose();
+    }
+});
+videos =[];
 
     // TODO: implement dispose
     super.dispose();
@@ -707,5 +727,6 @@ selectedImg = false;
   //     // autoInitialize: true,
   //   );
   // }
+
 
 }

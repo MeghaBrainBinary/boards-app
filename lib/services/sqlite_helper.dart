@@ -17,7 +17,7 @@ String tablename ="Favorites";
   String uniqueId = "uniqueId";
   String imageIDName = "imageId";
   String imageUrlName = "imageUrl";
-  String fileTypeName = "type";
+  String fileTypeName = "fileType";
 
 
   Future<Database?> initdb({String? tableName}) async {
@@ -31,7 +31,7 @@ String tablename ="Favorites";
         await db.execute(query1);*/
 
 
-        String query1 = " CREATE TABLE IF NOT EXISTS $tablename($uniqueId INTEGER PRIMARY KEY AUTOINCREMENT,$imageIDName TEXT,$imageUrlName TEXT,$fileTypeName TEXT);";
+        String query1 = " CREATE TABLE IF NOT EXISTS $tablename($uniqueId INTEGER PRIMARY KEY AUTOINCREMENT,$imageIDName TEXT,$imageUrlName TEXT,$fileTypeName);";
         await db.execute(query1);
       }
       );
@@ -45,7 +45,7 @@ String tablename ="Favorites";
   Future<int> insertDb({
     required String imageID,
     required String imageUrl,
-    required String type,
+    required String fileType,
   }) async {
 
 
@@ -54,7 +54,7 @@ String tablename ="Favorites";
     List args = [
     imageID,
       imageUrl,
-      type
+      fileType
     ];
 
     return await db!.rawInsert(query, args);

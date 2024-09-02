@@ -78,6 +78,7 @@ class _MyFolderScreenState extends State<MyFolderScreen> {
         } else {
           Get.back();
           myFolderController.onTapBack();
+
           return true;
         }
       },
@@ -339,6 +340,13 @@ class _MyFolderScreenState extends State<MyFolderScreen> {
                                                                               }
                                                                             else
                                                                               {
+                                                                                controller.isPlay = List.generate( controller.getBoardInfoModel.data?.length ??0, (index) => false);
+                                                                                controller.videos.forEach((e){
+                                                                                  if(e != null)
+                                                                                  {
+                                                                                    e.pause();
+                                                                                  }
+                                                                                });
                                                                                 controller.isPlay[index] = true;
 
                                                                                 controller.videos[index]?.play();
@@ -858,7 +866,8 @@ class _MyFolderScreenState extends State<MyFolderScreen> {
                                                                                         color: Colors.white,
                                                                                         borderRadius: BorderRadius.circular(5),
                                                                                       ),
-                                                                                      child: Stack(
+                                                                                      child: controller.videos.length !=0?
+                                                                                Stack(
                                                                                         alignment: Alignment.topRight,
                                                                                         children: [
                                                                                           controller. getBoardInfoModel.data?[index].fileType =="video" ?
@@ -877,6 +886,13 @@ class _MyFolderScreenState extends State<MyFolderScreen> {
                                                                                                   }
                                                                                                   else
                                                                                                   {
+                                                                                                    controller.isPlay = List.generate( controller.getBoardInfoModel.data?.length ??0, (index) => false);
+                                                                                                    controller.videos.forEach((e){
+                                                                                                      if(e != null)
+                                                                                                        {
+                                                                                                          e.pause();
+                                                                                                        }
+                                                                                                    });
                                                                                                     controller.isPlay[index] = true;
 
                                                                                                     controller.videos[index]?.play();
@@ -938,7 +954,7 @@ class _MyFolderScreenState extends State<MyFolderScreen> {
                                                                                             ),
                                                                                           ),
                                                                                         ],
-                                                                                      ),
+                                                                                      ):const SizedBox(),
                                                                                     ),
                                                                                   ),
                                                                                 ),

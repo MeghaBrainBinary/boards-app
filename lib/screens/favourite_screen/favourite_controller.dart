@@ -357,7 +357,7 @@ class FavouriteController extends GetxController {
       storedFavorites?.add({
         "id": element.imageId,
         "image": element.imageUrl,
-        "type":element.fileType
+        "fileType":element.fileType
       });
     });
     videos = List.generate(storedFavorites?.length ??0, (index) => (storedFavorites?[index]['fileType'] =="video")?VideoPlayerController.networkUrl(
@@ -403,6 +403,16 @@ class FavouriteController extends GetxController {
     }
   }
 
-
+@override
+  void dispose() {
+  for (var element in videos) {
+    if(element != null)
+    {
+      element.dispose();
+    }
+  }
+  videos =[];
+    super.dispose();
+  }
 
 }
