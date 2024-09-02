@@ -9,6 +9,7 @@ import 'package:boards_app/utils/color_res.dart';
 import 'package:boards_app/utils/prefkeys.dart';
 import 'package:boards_app/utils/string_res.dart';
 import 'package:dio/dio.dart';
+import 'package:fijkplayer/fijkplayer.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -348,7 +349,8 @@ class FavouriteController extends GetxController {
 
   List<bool> checkImage = [];
   List<bool> isPlay = [];
-  List<VideoPlayerController?> videos =[];
+  // List<VideoPlayerController?> videos =[];
+  List<FijkPlayer?> videos =[];
 
   init() async {
     storedFavorites = [];
@@ -360,17 +362,36 @@ class FavouriteController extends GetxController {
         "fileType":element.fileType
       });
     });
-    videos = List.generate(storedFavorites?.length ??0, (index) => (storedFavorites?[index]['fileType'] =="video")?VideoPlayerController.networkUrl(
-        Uri.parse(storedFavorites?[index]['image'] ?? '')
-    ):null);
+    // videos = List.generate(storedFavorites?.length ??0, (index) => (storedFavorites?[index]['fileType'] =="video")?VideoPlayerController.networkUrl(
+    //     Uri.parse(storedFavorites?[index]['image'] ?? '')
+    // ):null);
+    //
+    // videos.forEach((element) async {
+    //   if(element != null)
+    //   {
+    //     await  element.initialize();
+    //
+    //   }
+    // });
 
-    videos.forEach((element) async {
+    videos = List.generate(storedFavorites?.length??0, (index) => (storedFavorites?[index]['fileType'] =="video")?
+    FijkPlayer():null);
+
+    videos.forEach((element) {
       if(element != null)
       {
-        await  element.initialize();
+        element.setDataSource(storedFavorites?[videos.indexOf(element)]['image'] ?? '', );
 
+        element.addListener(() {
+          if(element.state == FijkState.end)
+          {
+            element.stop();
+          }
+        });
       }
     });
+
+
     checkImage = List.generate((storedFavorites ?? []).length, (index) => false);
     isPlay = List.generate((storedFavorites ?? []).length, (index) => false);
     print("--------------------------------${checkImage.length}");

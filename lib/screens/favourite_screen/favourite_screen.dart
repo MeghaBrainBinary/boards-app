@@ -9,6 +9,7 @@ import 'package:boards_app/utils/asset_res.dart';
 import 'package:boards_app/utils/color_res.dart';
 import 'package:boards_app/utils/string_res.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:fijkplayer/fijkplayer.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shimmer/shimmer.dart';
@@ -167,7 +168,16 @@ class FavouriteScreen extends StatelessWidget {
                                                           Stack(
                                                             alignment:Alignment.center,
                                                             children: [
-                                                              VideoPlayer( controller.videos[index]!),
+                                                              FijkView(
+                                                                player: controller.videos[index]!,
+                                                                fit: FijkFit.fill,
+                                                                fsFit: FijkFit.fill,
+                                                                height: Get.height * 0.7,
+                                                                width: Get.width * 0.75,
+                                                                panelBuilder: (a,b,c,d,e){
+                                                                  return Container();
+                                                                },
+                                                              ),
                                                               InkWell(
                                                                 onTap:(){
                                                                   if(controller.isPlay[index])
@@ -187,7 +197,7 @@ class FavouriteScreen extends StatelessWidget {
                                                                     }
                                                                     controller.isPlay[index] = true;
 
-                                                                    controller.videos[index]?.play();
+                                                                    controller.videos[index]?.start();
                                                                   }
                                                                   controller.update(['favourite']);
 
@@ -320,7 +330,16 @@ class FavouriteScreen extends StatelessWidget {
                                                             Stack(
                                                               alignment:Alignment.center,
                                                               children: [
-                                                                VideoPlayer( controller.videos[index]!),
+                                                                FijkView(
+                                                                  player: controller.videos[index]!,
+                                                                  fit: FijkFit.fill,
+                                                                  fsFit: FijkFit.fill,
+                                                                  height: Get.height * 0.219,
+                                                                  width: Get.width * 0.45,
+                                                                  panelBuilder: (a,b,c,d,e){
+                                                                    return Container();
+                                                                  },
+                                                                ),
                                                                 InkWell(
                                                                   onTap:(){
                                                                     if(controller.isPlay[index])
@@ -341,7 +360,7 @@ class FavouriteScreen extends StatelessWidget {
                                                                       }
                                                                       controller.isPlay[index] = true;
 
-                                                                      controller.videos[index]?.play();
+                                                                      controller.videos[index]?.start();
                                                                     }
                                                                     controller.update(['favourite']);
 

@@ -12,6 +12,7 @@ import 'package:boards_app/utils/color_res.dart';
 import 'package:boards_app/utils/prefkeys.dart';
 import 'package:boards_app/utils/string_res.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:fijkplayer/fijkplayer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_tree/flutter_tree.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
@@ -329,7 +330,21 @@ class _MyFolderScreenState extends State<MyFolderScreen> {
                                                                     Stack(
                                                                       alignment:Alignment.center,
                                                                       children: [
-                                                                        VideoPlayer( controller.videos[index]!),
+                                                                        FijkView(
+                                                                          player: controller.videos[index]!,
+                                                                          fit: FijkFit.fill,
+                                                                          fsFit: FijkFit.fill,
+                                                                          height:
+                                                                          Get.height *
+                                                                              0.7,
+                                                                          width:
+                                                                          Get.width *
+                                                                              0.75,
+                                                                          panelBuilder: (a,b,c,d,e){
+                                                                            return Container();
+                                                                          },
+                                                                        ),
+
                                                                         InkWell(
                                                                           onTap:(){
                                                                             if(controller.isPlay[index])
@@ -349,7 +364,7 @@ class _MyFolderScreenState extends State<MyFolderScreen> {
                                                                                 });
                                                                                 controller.isPlay[index] = true;
 
-                                                                                controller.videos[index]?.play();
+                                                                                controller.videos[index]?.start();
                                                                               }
                                                                             controller.update(['fldr']);
                                                                           },
@@ -875,7 +890,16 @@ class _MyFolderScreenState extends State<MyFolderScreen> {
                                                                                           Stack(
                                                                                             alignment:Alignment.center,
                                                                                             children: [
-                                                                                              VideoPlayer( controller.videos[index]!),
+                                                                                              FijkView(
+                                                                                                player: controller.videos[index]!,
+                                                                                                fit: FijkFit.fill,
+                                                                                                fsFit: FijkFit.fill,
+                                                                                                height: Get.height * 0.199,
+                                                                                                width: Get.width * 0.45,
+                                                                                                panelBuilder: (a,b,c,d,e){
+                                                                                                  return Container();
+                                                                                                },
+                                                                                              ),
                                                                                               InkWell(
                                                                                                 onTap:(){
                                                                                                   if(controller.isPlay[index])
@@ -895,7 +919,7 @@ class _MyFolderScreenState extends State<MyFolderScreen> {
                                                                                                     });
                                                                                                     controller.isPlay[index] = true;
 
-                                                                                                    controller.videos[index]?.play();
+                                                                                                    controller.videos[index]?.start();
                                                                                                   }
                                                                                                   controller.update(['fldr']);
 

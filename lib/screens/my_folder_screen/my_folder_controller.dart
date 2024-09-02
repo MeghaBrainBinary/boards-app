@@ -9,6 +9,7 @@ import 'package:boards_app/utils/color_res.dart';
 import 'package:boards_app/utils/string_res.dart';
 import 'package:chewie/chewie.dart';
 import 'package:dio/dio.dart';
+import 'package:fijkplayer/fijkplayer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -36,9 +37,10 @@ class MyFolderController extends GetxController {
 List<bool> isSelectedNode =[];
   var args = Get.arguments;
 
-
-List<VideoPlayerController?> videos =[];
-List<ChewieController?> chewies =[];
+//
+// List<VideoPlayerController?> videos =[];
+// List<ChewieController?> chewies =[];
+ List<FijkPlayer?> videos =[];
 
   @override
   void onInit() {
@@ -63,27 +65,25 @@ List<ChewieController?> chewies =[];
 
 
     loader.value = false;
-    initilized = List.generate(getBoardInfoModel.data?.length ??0, (index) => false);
+    videos = List.generate(getBoardInfoModel.data?.length ??0, (index) => (getBoardInfoModel.data?[index].fileType =="video")?
+    FijkPlayer():null);
 
-    videos = List.generate(getBoardInfoModel.data?.length ??0, (index) => (getBoardInfoModel.data?[index].fileType =="video")?VideoPlayerController.networkUrl(
-   Uri.parse( getBoardInfoModel.data?[index].image ?? '')
-):null);
+    videos.forEach((element) {
+      if(element != null)
+      {
+        element.setDataSource(getBoardInfoModel.data?[videos.indexOf(element)].image ?? '', );
+        element.addListener(() {
+          if(element.state == FijkState.end)
+          {
+            element.stop();
+          }
+        });
+      }
+    });
 
- videos.forEach((element) async {
-  if(element != null)
-    {
 
-     await  element.initialize();
-     await element.pause();
 
-    }
-});
-
-chewies = List.generate(getBoardInfoModel.data?.length ??0, (index) => (getBoardInfoModel.data?[index].fileType =="video")?ChewieController(
-  videoPlayerController: videos[index] ?? VideoPlayerController.networkUrl(Uri.parse("")),
-):null);
-
-   checkImg = List.generate(getBoardInfoModel.data?.length ??0, (index) => false);
+    checkImg = List.generate(getBoardInfoModel.data?.length ??0, (index) => false);
    isPlay = List.generate(getBoardInfoModel.data?.length ??0, (index) => false);
     initilized = List.generate(getBoardInfoModel.data?.length ??0, (index) => false);
     isLike = List.generate(getBoardInfoModel.data?.length ?? 0, (index) => false);
