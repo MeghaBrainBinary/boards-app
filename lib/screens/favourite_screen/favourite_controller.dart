@@ -88,15 +88,28 @@ class FavouriteController extends GetxController {
   saveImage(context) async {
     if (storedFavorites != null && storedFavorites!.length != 0) {
       loader.value = true;
-
-      var response = await Dio().get(
-          selectedImage ?? storedFavorites![0]['image'].toString(),
-          options: Options(responseType: ResponseType.bytes));
-      await ImageGallerySaver.saveImage(
-        Uint8List.fromList(response.data),
-        quality: 60,
-        name: "ra",
-      );
+      if((selectedImage ?? storedFavorites![0]['image'].toString()) !.split(".").last == "mp4")
+      {
+        var appDocDir = await getApplicationDocumentsDirectory();
+        String savePath = appDocDir.path + "/${DateTime.now().millisecond}.mp4";
+        String fileUrl =
+            selectedImage ?? storedFavorites![0]['image'].toString();
+        await Dio().download(fileUrl, savePath, onReceiveProgress: (count, total) {
+          print((count / total * 100).toStringAsFixed(0) + "%");
+        });
+        final result = await ImageGallerySaver.saveFile(savePath);
+        print(result);
+      }
+      else {
+        var response = await Dio().get(
+            selectedImage ?? storedFavorites![0]['image'].toString(),
+            options: Options(responseType: ResponseType.bytes));
+        await ImageGallerySaver.saveImage(
+          Uint8List.fromList(response.data),
+          quality: 60,
+          name: "ra",
+        );
+      }
       loader.value = false;
       showDialog(
           context: context,
@@ -162,16 +175,29 @@ class FavouriteController extends GetxController {
       try {
         // Save the selected images
         for (String selectedImage in selectedImages) {
-          var response = await Dio().get(
-            selectedImage,
-            options: Options(responseType: ResponseType.bytes),
-          );
+          if (selectedImage.split(".").last =="mp4") {
+            var appDocDir = await getApplicationDocumentsDirectory();
+            String savePath = appDocDir.path + "/${DateTime.now().millisecond}.mp4";
+            String fileUrl =
+                selectedImage;
+            await Dio().download(fileUrl, savePath, onReceiveProgress: (count, total) {
+              print((count / total * 100).toStringAsFixed(0) + "%");
+            });
+            final result = await ImageGallerySaver.saveFile(savePath);
+            print(result);
+          }
+          else {
+            var response = await Dio().get(
+              selectedImage,
+              options: Options(responseType: ResponseType.bytes),
+            );
 
-          await ImageGallerySaver.saveImage(
-            Uint8List.fromList(response.data),
-            quality: 60,
-            name: "ra",
-          );
+            await ImageGallerySaver.saveImage(
+              Uint8List.fromList(response.data),
+              quality: 60,
+              name: "ra",
+            );
+          }
         }
 
 
@@ -316,7 +342,7 @@ class FavouriteController extends GetxController {
 
     // Save images temporarily and get file paths
     for (int i = 0; i < selectedImages.length; i++) {
-      String filePath = await saveImageLocally(selectedImages[i], "image$i.jpg");
+      String filePath = await saveImageLocally(selectedImages[i], "image$i.${selectedImages[i].split(".").last}");
       filePaths.add(filePath);
     }
 
@@ -383,10 +409,17 @@ class FavouriteController extends GetxController {
         element.setDataSource(storedFavorites?[videos.indexOf(element)]['image'] ?? '', );
 
         element.addListener(() {
+
           if(element.state == FijkState.end)
           {
             element.stop();
           }
+          if(element.state == FijkState.prepared)
+            {
+              update(['favourite']);
+            }
+
+
         });
       }
     });

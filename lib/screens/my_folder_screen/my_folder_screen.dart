@@ -561,7 +561,64 @@ class _MyFolderScreenState extends State<MyFolderScreen> {
                                                                                   alignment:
                                                                                       Alignment.bottomRight,
                                                                                   children: [
-                                                                                     CachedNetworkImage(
+                                                                                    controller. getBoardInfoModel.data?[index].fileType =="video" ?
+                                                                                    controller.videos[index] != null?
+
+                                                                                    Stack(
+                                                                                      alignment:Alignment.center,
+                                                                                      children: [
+                                                                                        FijkView(
+                                                                                          player: controller.videos[index]!,
+                                                                                          fit: FijkFit.fill,
+                                                                                          fsFit: FijkFit.fill,
+                                                                                          height:
+                                                                                          Get.height *
+                                                                                              0.7,
+                                                                                          width:
+                                                                                          Get.width *
+                                                                                              0.75,
+                                                                                          panelBuilder: (a,b,c,d,e){
+                                                                                            return Container();
+                                                                                          },
+                                                                                        ),
+
+                                                                                        InkWell(
+                                                                                          onTap:(){
+                                                                                            if(controller.isPlay[index])
+                                                                                            {
+                                                                                              controller.isPlay[index] = false;
+                                                                                              controller.videos[index]?.pause();
+
+                                                                                            }
+                                                                                            else
+                                                                                            {
+                                                                                              controller.isPlay = List.generate( controller.getBoardInfoModel.data?.length ??0, (index) => false);
+                                                                                              controller.videos.forEach((e){
+                                                                                                if(e != null)
+                                                                                                {
+                                                                                                  e.pause();
+                                                                                                }
+                                                                                              });
+                                                                                              controller.isPlay[index] = true;
+
+                                                                                              controller.videos[index]?.start();
+                                                                                            }
+                                                                                            controller.update(['fldr']);
+                                                                                          },
+                                                                                          child: Container(
+                                                                                            height: 30,
+                                                                                            width: 30,
+                                                                                            decoration:const BoxDecoration(
+                                                                                              shape:BoxShape.circle,
+                                                                                              color:Colors.white,
+                                                                                            ),
+                                                                                            child: Icon(controller.isPlay[index]?Icons.pause:Icons.play_arrow,
+                                                                                              size: 20,),
+                                                                                          ),
+                                                                                        ),
+                                                                                      ],
+                                                                                    ):const SizedBox()
+                                                                                        :   CachedNetworkImage(
                                                                                       width: Get.width,
                                                                                       height: Get.height * 0.199,
                                                                                       fit: BoxFit.cover,
