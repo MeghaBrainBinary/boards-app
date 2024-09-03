@@ -32,6 +32,8 @@ class FavouriteScreen extends StatelessWidget {
             }
 
           }
+
+          favouriteController. isPlay = List.generate(favouriteController.storedFavorites?.length ??0, (index) => false);
           favouriteController.update(['favourite']);
         } else {
           Get.back();
@@ -42,6 +44,9 @@ class FavouriteScreen extends StatelessWidget {
             }
 
           }
+          favouriteController. isPlay = List.generate(favouriteController.storedFavorites?.length ??0, (index) => false);
+
+
           favouriteController.videos =[];
         }
         return false;
@@ -86,6 +91,14 @@ class FavouriteScreen extends StatelessWidget {
                                   controller.checkImage = List.generate(controller.storedFavorites?.length ?? 0, (index) => false);
                                   controller.isSelectOn = true;
                                   controller.isPageView = false;
+                                  for (var element in favouriteController.videos) {
+                                    if(element != null) {
+                                      element.pause();
+                                    }
+
+                                  }
+                                  favouriteController. isPlay = List.generate(favouriteController.storedFavorites?.length ??0, (index) => false);
+
                                   controller.update(['favourite']);
                                 },
                                 child: Text(
@@ -169,17 +182,13 @@ class FavouriteScreen extends StatelessWidget {
                                                             alignment:Alignment.center,
                                                             children: [
                                                               FijkView(
+                                                                color: Colors.white,
                                                                 player: controller.videos[index]!,
-                                                                fit: FijkFit.fill,
-                                                                fsFit: FijkFit.fill,
-                                                                height: Get.height * 0.7,
-                                                                width: Get.width * 0.75,
-                                                                panelBuilder: (a,b,c,d,e){
-                                                                  return Container();
-                                                                },
+
                                                               ),
-                                                              InkWell(
-                                                                onTap:(){
+                                                            /*  InkWell(
+                                                                onTap:() async {
+
                                                                   if(controller.isPlay[index])
                                                                   {
                                                                     controller.isPlay[index] = false;
@@ -198,6 +207,7 @@ class FavouriteScreen extends StatelessWidget {
                                                                     controller.isPlay[index] = true;
 
                                                                     controller.videos[index]?.start();
+
                                                                   }
                                                                   controller.update(['favourite']);
 
@@ -212,7 +222,7 @@ class FavouriteScreen extends StatelessWidget {
                                                                   child: Icon(controller.isPlay[index]?Icons.pause:Icons.play_arrow,
                                                                     size: 20,),
                                                                 ),
-                                                              ),
+                                                              ),*/
                                                             ],
                                                           ):const SizedBox()
                                                               :CachedNetworkImage(
@@ -331,37 +341,38 @@ class FavouriteScreen extends StatelessWidget {
                                                               alignment:Alignment.center,
                                                               children: [
                                                                 FijkView(
+                                                                  color: Colors.white,
+
                                                                   player: controller.videos[index]!,
-                                                                  fit: FijkFit.fill,
-                                                                  fsFit: FijkFit.fill,
-                                                                  height: Get.height * 0.219,
-                                                                  width: Get.width * 0.45,
+
                                                                   panelBuilder: (a,b,c,d,e){
                                                                     return Container();
                                                                   },
                                                                 ),
                                                                 InkWell(
-                                                                  onTap:(){
-                                                                    if(controller.isPlay[index])
-                                                                    {
-                                                                      controller.isPlay[index] = false;
-                                                                      controller.videos[index]?.pause();
-
-                                                                    }
-                                                                    else
-                                                                    {
-
-                                                                      controller.isPlay = List.generate( controller.storedFavorites?.length ?? 0, (index) => false);
-                                                                      for (var e in controller.videos) {
-                                                                        if(e != null)
-                                                                        {
-                                                                          e.pause();
-                                                                        }
-                                                                      }
-                                                                      controller.isPlay[index] = true;
-
-                                                                      controller.videos[index]?.start();
-                                                                    }
+                                                                  onTap:() async {
+                                                                    controller.onTapImage(index);
+                                                                    // if(controller.isPlay[index])
+                                                                    // {
+                                                                    //   controller.isPlay[index] = false;
+                                                                    //   controller.videos[index]?.pause();
+                                                                    //
+                                                                    // }
+                                                                    // else
+                                                                    // {
+                                                                    //
+                                                                    //   controller.isPlay = List.generate( controller.storedFavorites?.length ?? 0, (index) => false);
+                                                                    //   for (var e in controller.videos) {
+                                                                    //     if(e != null)
+                                                                    //     {
+                                                                    //       e.pause();
+                                                                    //     }
+                                                                    //   }
+                                                                    //   controller.isPlay[index] = true;
+                                                                    //
+                                                                    //   controller.videos[index]?.start();
+                                                                    //
+                                                                    // }
                                                                     controller.update(['favourite']);
 
                                                                   },
@@ -564,6 +575,14 @@ class FavouriteScreen extends StatelessWidget {
             onTap: () {
               if (favouriteController.isPageView) {
                 favouriteController.isPageView = false;
+                for (var element in favouriteController.videos) {
+                  if(element != null) {
+                    element.pause();
+                  }
+
+                }
+                favouriteController. isPlay = List.generate(favouriteController.storedFavorites?.length ??0, (index) => false);
+
                 favouriteController.update(['favourite']);
               } else {
                 Get.back();
@@ -575,6 +594,9 @@ class FavouriteScreen extends StatelessWidget {
                   }
 
                 }
+
+                favouriteController. isPlay = List.generate(favouriteController.storedFavorites?.length ??0, (index) => false);
+
                 favouriteController.videos =[];
 
               }

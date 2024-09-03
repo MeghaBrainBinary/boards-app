@@ -67,32 +67,33 @@ List<bool> isSelectedNode =[];
     loader.value = false;
     videos = List.generate(getBoardInfoModel.data?.length ??0, (index) => (getBoardInfoModel.data?[index].fileType =="video")?
     FijkPlayer( ):null);
-bool  isInit = false;
+
     videos.forEach((element) async {
-      if(element != null)
-      {
-        element.setDataSource(getBoardInfoModel.data?[videos.indexOf(element)].image ?? '',showCover: true);
+      if(element != null) {
+        if (getBoardInfoModel.data?[videos.indexOf(element)].image != null) {
+          element.setDataSource(
+              getBoardInfoModel.data?[videos.indexOf(element)].image!
+                  .replaceAll(" ", "%20") ?? '', showCover: true,);
 
 
-        element.addListener(() async {
-print(element.state);
-          if(element.state == FijkState.end)
-          {
+          element.addListener(() async {
+            print(element.state);
+            if (element.state == FijkState.end) {
+              element.stop();
+            }
 
-            element.stop();
-          }
-
-if(element.state == FijkState.prepared)
-{
-  // onTapImage(0);
-  // await Future.delayed(const Duration(seconds: 2),(){});
-  // isPageView =false;
-  update(['fldr']);
+            if (element.state == FijkState.prepared) {
+              // onTapImage(0);
+               await Future.delayed(const Duration(seconds: 2),(){});
+              // isPageView =false;
 
 
-}
 
-        });
+
+              update(['fldr']);
+            }
+          });
+        }
       }
     });
     update(['fldr']);

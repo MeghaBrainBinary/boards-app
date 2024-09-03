@@ -406,7 +406,7 @@ class FavouriteController extends GetxController {
     videos.forEach((element) {
       if(element != null)
       {
-        element.setDataSource(storedFavorites?[videos.indexOf(element)]['image'] ?? '', );
+        element.setDataSource(storedFavorites?[videos.indexOf(element)]['image'].replaceAll(" ", "%20") ?? '' ?? '', );
 
         element.addListener(() {
 
@@ -416,6 +416,7 @@ class FavouriteController extends GetxController {
           }
           if(element.state == FijkState.prepared)
             {
+
               update(['favourite']);
             }
 
@@ -427,6 +428,7 @@ class FavouriteController extends GetxController {
 
     checkImage = List.generate((storedFavorites ?? []).length, (index) => false);
     isPlay = List.generate((storedFavorites ?? []).length, (index) => false);
+
     print("--------------------------------${checkImage.length}");
     update(['favourite']);
   }
