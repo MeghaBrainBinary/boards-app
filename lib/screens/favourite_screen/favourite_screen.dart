@@ -1,5 +1,7 @@
 // ignore_for_file: must_be_immutable
 
+import 'dart:io';
+
 import 'package:boards_app/common/common_button.dart';
 import 'package:boards_app/common/common_loader.dart';
 import 'package:boards_app/screens/favourite_screen/favourite_controller.dart';
@@ -340,7 +342,7 @@ class FavouriteScreen extends StatelessWidget {
                                                             Stack(
                                                               alignment:Alignment.center,
                                                               children: [
-                                                                FijkView(
+                                                                (Platform.isIOS)?     FijkView(
                                                                   color: Colors.white,
 
                                                                   player: controller.videos[index]!,
@@ -348,10 +350,20 @@ class FavouriteScreen extends StatelessWidget {
                                                                   panelBuilder: (a,b,c,d,e){
                                                                     return Container();
                                                                   },
-                                                                ),
+                                                                ): Container(
+                                                                  height: Get.height * 0.199,
+                                                                  width: Get.width * 0.45,
+                                                                  alignment: Alignment.center,
+                                                                  child:   controller.files[index] != null &&  controller.files[index]!.path !=""?
+                                                                  Image.file(controller.files[index] ?? File("")):
+                                                                  const CircularProgressIndicator(),),
+
                                                                 InkWell(
                                                                   onTap:() async {
                                                                     controller.onTapImage(index);
+                                                                    controller.isPlay[index] = true;
+
+                                                                      controller.videos[index]?.start();
                                                                     // if(controller.isPlay[index])
                                                                     // {
                                                                     //   controller.isPlay[index] = false;

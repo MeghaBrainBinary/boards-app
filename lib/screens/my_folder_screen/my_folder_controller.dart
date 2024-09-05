@@ -18,6 +18,7 @@ import 'package:http/http.dart' as http;
 import 'package:path_provider/path_provider.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:video_player/video_player.dart';
+import 'package:video_thumbnail/video_thumbnail.dart';
 import 'package:wc_flutter_share/wc_flutter_share.dart';
 import '../../utils/appstyle.dart';
 
@@ -32,6 +33,7 @@ class MyFolderController extends GetxController {
   List<bool> isLike = [];
   List<bool> initilized = [];
   List<bool> isPlay = [];
+  List<File?> files = [];
   String? selectedImage;
   String selectedId = "";
 List<bool> isSelectedNode =[];
@@ -67,13 +69,25 @@ List<bool> isSelectedNode =[];
     loader.value = false;
     videos = List.generate(getBoardInfoModel.data?.length ??0, (index) => (getBoardInfoModel.data?[index].fileType =="video")?
     FijkPlayer( ):null);
+    files = List.generate(getBoardInfoModel.data?.length ??0, (index) => null);
+
+    getBoardInfoModel.data!.forEach((element) async {
+      if(element.fileType =="video")
+        {
+          if(Platform.isAndroid) {
+            files[getBoardInfoModel.data!.indexOf(element)] =
+                File(await getVideoThumbnail(element.image ?? ''));
+          }
+          update(['fldr']);
+        }
+    });
 
     videos.forEach((element) async {
       if(element != null) {
         if (getBoardInfoModel.data?[videos.indexOf(element)].image != null) {
           element.setDataSource(
               getBoardInfoModel.data?[videos.indexOf(element)].image!
-                  .replaceAll(" ", "%20") ?? '', showCover: true,);
+                  .replaceAll(" ", "%20") ?? '',);
 
 
           element.addListener(() async {
@@ -101,6 +115,8 @@ List<bool> isSelectedNode =[];
    isPlay = List.generate(getBoardInfoModel.data?.length ??0, (index) => false);
     initilized = List.generate(getBoardInfoModel.data?.length ??0, (index) => false);
     isLike = List.generate(getBoardInfoModel.data?.length ?? 0, (index) => false);
+
+
 await init();
   update(['fldr']);
   }
@@ -705,6 +721,7 @@ videos.forEach((element) {
   if(element != null)
     {
       element.dispose();
+      element.release();
     }
 });
 videos =[];
@@ -771,5 +788,15 @@ videos =[];
   //   );
   // }
 
+  Future<String> getVideoThumbnail(String videoUrl) async {
+    final String? thumbnailPath = await VideoThumbnail.thumbnailFile(
+      video: videoUrl,
+      thumbnailPath: (await getApplicationDocumentsDirectory()).path,  // Path to store the thumbnail
+      imageFormat: ImageFormat.PNG,  // You can choose JPG, PNG
+      maxHeight: 200,  // Resize thumbnail if necessary
+      quality: 75, // Adjust image quality
+    );
 
+    return thumbnailPath!;
+  }
 }

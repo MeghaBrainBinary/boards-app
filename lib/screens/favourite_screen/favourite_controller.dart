@@ -19,6 +19,7 @@ import 'package:http/http.dart' as http;
 import 'package:path_provider/path_provider.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:video_player/video_player.dart';
+import 'package:video_thumbnail/video_thumbnail.dart';
 import 'package:wc_flutter_share/wc_flutter_share.dart';
 
 class FavouriteController extends GetxController {
@@ -375,6 +376,7 @@ class FavouriteController extends GetxController {
 
   List<bool> checkImage = [];
   List<bool> isPlay = [];
+  List<File?> files = [];
   // List<VideoPlayerController?> videos =[];
   List<FijkPlayer?> videos =[];
 
@@ -402,7 +404,16 @@ class FavouriteController extends GetxController {
 
     videos = List.generate(storedFavorites?.length??0, (index) => (storedFavorites?[index]['fileType'] =="video")?
     FijkPlayer():null);
+    files = List.generate(storedFavorites?.length??0, (index) => null);
 
+    storedFavorites!.forEach((element) async {
+      if(element['fileType'] =="video")
+      {
+        files[storedFavorites!.indexOf(element)] = File(await getVideoThumbnail(element['image'] ?? ''));
+
+        update(['favourite']);
+      }
+    });
     videos.forEach((element) {
       if(element != null)
       {
@@ -431,6 +442,18 @@ class FavouriteController extends GetxController {
 
     print("--------------------------------${checkImage.length}");
     update(['favourite']);
+  }
+
+  Future<String> getVideoThumbnail(String videoUrl) async {
+    final String? thumbnailPath = await VideoThumbnail.thumbnailFile(
+      video: videoUrl,
+      thumbnailPath: (await getApplicationDocumentsDirectory()).path,  // Path to store the thumbnail
+      imageFormat: ImageFormat.PNG,  // You can choose JPG, PNG
+      maxHeight: 200,  // Resize thumbnail if necessary
+      quality: 75, // Adjust image quality
+    );
+
+    return thumbnailPath!;
   }
 
   removeFavorite(id) async {
