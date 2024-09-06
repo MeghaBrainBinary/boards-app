@@ -2,12 +2,10 @@ import 'dart:io';
 import 'package:boards_app/common/common_button.dart';
 import 'package:boards_app/common/common_loader.dart';
 import 'package:boards_app/screens/boards_screen/boards_controller.dart';
-import 'package:boards_app/services/pref_services.dart';
 import 'package:boards_app/utils/approutes.dart';
 import 'package:boards_app/utils/appstyle.dart';
 import 'package:boards_app/utils/asset_res.dart';
 import 'package:boards_app/utils/color_res.dart';
-import 'package:boards_app/utils/prefkeys.dart';
 import 'package:boards_app/utils/string_res.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_tree/flutter_tree.dart';
@@ -543,7 +541,7 @@ class BoardsScreen extends StatelessWidget {
                                                   //   boardsController.update(['board']);
                                                   // }
                                                 },
-                                                builder: (controller) => Container(
+                                                builder: (controller) => SizedBox(
 
                                                   width: Get.width,
                                                   height: Get.height - (Get.height *0.08 + Get.height *0.35),
@@ -747,7 +745,7 @@ class BoardsScreen extends StatelessWidget {
 
 
 
-                              Container(
+                              SizedBox(
                                 height: Get.height *0.08,
                                 child: Column(
                                   children: [

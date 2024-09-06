@@ -7,6 +7,7 @@ import 'package:boards_app/services/pref_services.dart';
 import 'package:boards_app/utils/asset_res.dart';
 import 'package:boards_app/utils/prefkeys.dart';
 import 'package:boards_app/utils/string_res.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_tree/flutter_tree.dart';
 import 'package:get/get.dart';
@@ -273,7 +274,9 @@ class BoardsController extends GetxController {
 
     myFolderController.selectedId = id;
 
-    print("-------------------------------------------------${myFolderController.selectedId}");
+    if (kDebugMode) {
+      print("-------------------------------------------------${myFolderController.selectedId}");
+    }
 
     if (subBoardId == null) {
       await myFolderController.myInt(id);
@@ -283,15 +286,19 @@ class BoardsController extends GetxController {
 
     myFolderController.isMore = false;
 
+    if (kDebugMode) {
     print("--------------------------${myFolderController.getBoardInfoModel.data}");
-    print("--------------------------${myFolderController.getBoardInfoModel.data?.length}");
+      print("--------------------------${myFolderController.getBoardInfoModel.data?.length}");
+    }
 
     if (myFolderController.getBoardInfoModel.data != null
         // && myFolderController.getBoardInfoModel.data!.length != 0
     ) {
 
 
-      print("-------------------------$node");
+      if (kDebugMode) {
+        print("-------------------------$node");
+      }
 
       TreeNode<dynamic> convertTreeNodeDataToDynamic(TreeNodeData nodeData) {
         // Convert the current node
@@ -305,7 +312,9 @@ class BoardsController extends GetxController {
           for (TreeNodeData childData in nodeData.children) {
             TreeNode<dynamic> childNode = convertTreeNodeDataToDynamic(childData);
             treeNode.children[childData.id.toString()] = childNode; // Add child to the parent TreeNode's children map
-            print("--------------------$childNode");
+            if (kDebugMode) {
+              print("--------------------$childNode");
+            }
           }
         }
 
@@ -314,7 +323,9 @@ class BoardsController extends GetxController {
 
 
 
-      print("---------------------------->${myFolderController.getBoardInfoModel.data?.length}");
+      if (kDebugMode) {
+        print("---------------------------->${myFolderController.getBoardInfoModel.data?.length}");
+      }
       myFolderController.isLike = List.generate(myFolderController.getBoardInfoModel.data?.length ?? 0, (index) => false);
 
 

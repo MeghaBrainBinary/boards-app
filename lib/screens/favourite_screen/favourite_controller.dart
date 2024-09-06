@@ -9,7 +9,6 @@ import 'package:boards_app/utils/color_res.dart';
 import 'package:boards_app/utils/prefkeys.dart';
 import 'package:boards_app/utils/string_res.dart';
 import 'package:dio/dio.dart';
-import 'package:fijkplayer/fijkplayer.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';

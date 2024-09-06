@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:boards_app/common/common_button.dart';
 import 'package:boards_app/common/common_loader.dart';
-import 'package:boards_app/common/custom_panel.dart';
 import 'package:boards_app/screens/boards_screen/boards_controller.dart';
 import 'package:boards_app/screens/boards_screen/model/get_board_model.dart';
 import 'package:boards_app/screens/my_folder_screen/my_folder_controller.dart';
@@ -15,15 +14,11 @@ import 'package:boards_app/utils/color_res.dart';
 import 'package:boards_app/utils/prefkeys.dart';
 import 'package:boards_app/utils/string_res.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:chewie/chewie.dart';
-import 'package:fijkplayer/fijkplayer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_tree/flutter_tree.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:native_video_view/native_video_view.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:video_player/video_player.dart';
 

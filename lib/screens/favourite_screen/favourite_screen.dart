@@ -2,16 +2,13 @@
 
 import 'dart:io';
 
-import 'package:boards_app/common/common_button.dart';
 import 'package:boards_app/common/common_loader.dart';
 import 'package:boards_app/screens/favourite_screen/favourite_controller.dart';
-import 'package:boards_app/screens/settings_screen/settings_controller.dart';
 import 'package:boards_app/utils/appstyle.dart';
 import 'package:boards_app/utils/asset_res.dart';
 import 'package:boards_app/utils/color_res.dart';
 import 'package:boards_app/utils/string_res.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:fijkplayer/fijkplayer.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shimmer/shimmer.dart';

@@ -77,10 +77,6 @@ dependencies:
   tutorial_coach_mark: ^1.2.11
   animated_tree_view:
   flutter_widget_from_html:
-  fijkplayer:
-  pod_player:
-  native_video_player:
-  native_video_view:
 
 
 
