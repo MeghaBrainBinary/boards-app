@@ -183,12 +183,65 @@ class FavouriteScreen extends StatelessWidget {
                                                           Stack(
                                                             alignment:Alignment.center,
                                                             children: [
-                                                              FijkView(
-                                                                color: Colors.white,
-                                                                player: controller.videos[index]!,
+                                                              VideoPlayer(controller.videos[index]! ),
+                                                              Column(
+                                                                crossAxisAlignment:CrossAxisAlignment.start,
+                                                                children: [
+                                                                  const Spacer(),
+                                                                  controller.isLoad[index]?const SizedBox():    Padding(
+                                                                    padding: const EdgeInsets.only(left: 4.0),
+                                                                    child:   InkWell(
+                                                                      onTap:() async {
 
+                                                                        if(controller.isPlay[index])
+                                                                        {
+                                                                          controller.isPlay[index] = false;
+                                                                          controller.videos[index]?.pause();
+
+                                                                        }
+                                                                        else
+                                                                        {
+
+                                                                          controller.isPlay = List.generate( controller.storedFavorites?.length ?? 0, (index) => false);
+                                                                          for (var e in controller.videos) {
+                                                                            if(e != null)
+                                                                            {
+                                                                              e.pause();
+                                                                            }
+                                                                          }
+                                                                          controller.isPlay[index] = true;
+
+                                                                          controller.videos[index]?.play();
+
+                                                                        }
+                                                                        controller.update(['favourite']);
+
+                                                                      },
+                                                                      child: Container(
+                                                                        height: 30,
+                                                                        width: 30,
+                                                                        decoration:const BoxDecoration(
+                                                                          shape:BoxShape.circle,
+                                                                          color:Colors.white,
+                                                                        ),
+                                                                        child: Icon(controller.isPlay[index]?Icons.pause:Icons.play_arrow,
+                                                                          size: 20,),
+                                                                      ),
+                                                                    ),
+                                                                  ),
+                                                                  const SizedBox(height: 5,),
+                                                                  StatefulBuilder(
+                                                                      builder: (context,s) {
+                                                                        s.call((){});
+                                                                        return VideoProgressIndicator(controller.videos[index]!, allowScrubbing: true);
+                                                                      }
+                                                                  ),
+
+                                                                ],
                                                               ),
-                                                            /*  InkWell(
+                                                              controller.isLoad[index]?CircularProgressIndicator():const SizedBox(),
+
+                                                              /*  InkWell(
                                                                 onTap:() async {
 
                                                                   if(controller.isPlay[index])
@@ -342,63 +395,65 @@ class FavouriteScreen extends StatelessWidget {
                                                             Stack(
                                                               alignment:Alignment.center,
                                                               children: [
-                                                                (Platform.isIOS)?     FijkView(
-                                                                  color: Colors.white,
+                                                                VideoPlayer(controller.videos[index]! ),
+                                                                Column(
+                                                                  crossAxisAlignment:CrossAxisAlignment.start,
+                                                                  children: [
+                                                                    const Spacer(),
+                                                                    controller.isLoad[index]?const SizedBox():    Padding(
+                                                                      padding: const EdgeInsets.only(left: 4.0),
+                                                                      child:   InkWell(
+                                                                        onTap:() async {
 
-                                                                  player: controller.videos[index]!,
+                                                                          if(controller.isPlay[index])
+                                                                          {
+                                                                            controller.isPlay[index] = false;
+                                                                            controller.videos[index]?.pause();
 
-                                                                  panelBuilder: (a,b,c,d,e){
-                                                                    return Container();
-                                                                  },
-                                                                ): Container(
-                                                                  height: Get.height * 0.199,
-                                                                  width: Get.width * 0.45,
-                                                                  alignment: Alignment.center,
-                                                                  child:   controller.files[index] != null &&  controller.files[index]!.path !=""?
-                                                                  Image.file(controller.files[index] ?? File("")):
-                                                                  const CircularProgressIndicator(),),
+                                                                          }
+                                                                          else
+                                                                          {
 
-                                                                InkWell(
-                                                                  onTap:() async {
-                                                                    controller.onTapImage(index);
-                                                                    controller.isPlay[index] = true;
+                                                                            controller.isPlay = List.generate( controller.storedFavorites?.length ?? 0, (index) => false);
+                                                                            for (var e in controller.videos) {
+                                                                              if(e != null)
+                                                                              {
+                                                                                e.pause();
+                                                                              }
+                                                                            }
+                                                                            controller.isPlay[index] = true;
 
-                                                                      controller.videos[index]?.start();
-                                                                    // if(controller.isPlay[index])
-                                                                    // {
-                                                                    //   controller.isPlay[index] = false;
-                                                                    //   controller.videos[index]?.pause();
-                                                                    //
-                                                                    // }
-                                                                    // else
-                                                                    // {
-                                                                    //
-                                                                    //   controller.isPlay = List.generate( controller.storedFavorites?.length ?? 0, (index) => false);
-                                                                    //   for (var e in controller.videos) {
-                                                                    //     if(e != null)
-                                                                    //     {
-                                                                    //       e.pause();
-                                                                    //     }
-                                                                    //   }
-                                                                    //   controller.isPlay[index] = true;
-                                                                    //
-                                                                    //   controller.videos[index]?.start();
-                                                                    //
-                                                                    // }
-                                                                    controller.update(['favourite']);
+                                                                            controller.videos[index]?.play();
 
-                                                                  },
-                                                                  child: Container(
-                                                                    height: 30,
-                                                                    width: 30,
-                                                                    decoration:const BoxDecoration(
-                                                                      shape:BoxShape.circle,
-                                                                      color:Colors.white,
+                                                                          }
+                                                                          controller.update(['favourite']);
+
+                                                                        },
+                                                                        child: Container(
+                                                                          height: 30,
+                                                                          width: 30,
+                                                                          decoration:const BoxDecoration(
+                                                                            shape:BoxShape.circle,
+                                                                            color:Colors.white,
+                                                                          ),
+                                                                          child: Icon(controller.isPlay[index]?Icons.pause:Icons.play_arrow,
+                                                                            size: 20,),
+                                                                        ),
+                                                                      ),
                                                                     ),
-                                                                    child: Icon(controller.isPlay[index]?Icons.pause:Icons.play_arrow,
-                                                                      size: 20,),
-                                                                  ),
+                                                                    const SizedBox(height: 5,),
+                                                                    StatefulBuilder(
+                                                                        builder: (context,s) {
+                                                                          s.call((){});
+                                                                          return VideoProgressIndicator(controller.videos[index]!, allowScrubbing: true);
+                                                                        }
+                                                                    ),
+
+                                                                  ],
                                                                 ),
+                                                                controller.isLoad[index]?CircularProgressIndicator():const SizedBox(),
+
+
                                                               ],
                                                             ):const SizedBox():CachedNetworkImage(
                                                               height: 170,
@@ -432,6 +487,16 @@ class FavouriteScreen extends StatelessWidget {
                                                       controller.isSelectOn == false
                                                           ? GestureDetector(
                                                               onTap: () {
+                                                                for (var element in favouriteController.videos) {
+                                                                  if(element != null) {
+                                                                    element.pause();
+
+                                                                  }
+
+                                                                }
+                                                                favouriteController. isPlay = List.generate(favouriteController.storedFavorites?.length ??0, (index) => false);
+
+                                                                favouriteController.update(['favourite']);
                                                                 controller.removeFavorite(controller.storedFavorites?[index]['id'] ?? '');
                                                               },
                                                               child: Container(
@@ -475,6 +540,16 @@ class FavouriteScreen extends StatelessWidget {
                                         children: [
                                           InkWell(
                                             onTap: () async {
+                                              for (var element in favouriteController.videos) {
+                                                if(element != null) {
+                                                  element.pause();
+
+                                                }
+
+                                              }
+                                              favouriteController. isPlay = List.generate(favouriteController.storedFavorites?.length ??0, (index) => false);
+
+                                              favouriteController.update(['favourite']);
                                               if(controller.isSelectOn == false) {
                                                 await controller.removeFavorite(controller.storedFavorites?[controller.selectedIndex]['id'] ?? '');
                                               } else {
@@ -504,6 +579,18 @@ class FavouriteScreen extends StatelessWidget {
 
                                           InkWell(
                                             onTap: () async {
+                                              for (var element in favouriteController.videos) {
+                                                if(element != null) {
+                                                  element.pause();
+
+                                                }
+
+                                              }
+                                              favouriteController. isPlay = List.generate(favouriteController.storedFavorites?.length ??0, (index) => false);
+
+                                              favouriteController.update(['favourite']);
+                                              favouriteController. isPlay = List.generate(favouriteController.storedFavorites?.length ??0, (index) => false);
+
                                               if(controller.isSelectOn == false) {
                                                 await controller.saveImage(context);
                                               } else {
@@ -529,6 +616,16 @@ class FavouriteScreen extends StatelessWidget {
 
                                           InkWell(
                                             onTap: () async {
+                                              for (var element in favouriteController.videos) {
+                                                if(element != null) {
+                                                  element.pause();
+
+                                                }
+
+                                              }
+                                              favouriteController. isPlay = List.generate(favouriteController.storedFavorites?.length ??0, (index) => false);
+
+favouriteController.update(['favourite']);
                                               if(controller.isSelectOn == false) {
                                                 await controller.onTapShare();
                                               } else {

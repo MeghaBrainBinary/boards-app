@@ -9,7 +9,6 @@ import 'package:boards_app/utils/color_res.dart';
 import 'package:boards_app/utils/string_res.dart';
 import 'package:chewie/chewie.dart';
 import 'package:dio/dio.dart';
-import 'package:fijkplayer/fijkplayer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -18,8 +17,6 @@ import 'package:http/http.dart' as http;
 import 'package:path_provider/path_provider.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:video_player/video_player.dart';
-import 'package:video_thumbnail/video_thumbnail.dart';
-import 'package:wc_flutter_share/wc_flutter_share.dart';
 import '../../utils/appstyle.dart';
 
 class MyFolderController extends GetxController {
@@ -33,16 +30,18 @@ class MyFolderController extends GetxController {
   List<bool> isLike = [];
   List<bool> initilized = [];
   List<bool> isPlay = [];
-  List<File?> files = [];
+  List<bool> isLoad = [];
+
   String? selectedImage;
   String selectedId = "";
 List<bool> isSelectedNode =[];
   var args = Get.arguments;
 
 //
-// List<VideoPlayerController?> videos =[];
-// List<ChewieController?> chewies =[];
- List<FijkPlayer?> videos =[];
+List<VideoPlayerController?> videos =[];
+
+ List<String?> videosPath =[];
+ List<String?> videosType =[];
 
   @override
   void onInit() {
@@ -55,6 +54,8 @@ List<bool> isSelectedNode =[];
 
   }
 
+
+
   myInt(String id, {String? subBoardId})async{
     loader.value = true;
     if(subBoardId == null){
@@ -62,54 +63,44 @@ List<bool> isSelectedNode =[];
     }else{
       getBoardInfoModel = await GetBoardInfoApi.getBoardInfoApi(id, subBoardId: subBoardId);
     }
+    isLoad= List.generate(getBoardInfoModel.data?.length ??0, (index) => false);
 
 
 
 
     loader.value = false;
     videos = List.generate(getBoardInfoModel.data?.length ??0, (index) => (getBoardInfoModel.data?[index].fileType =="video")?
-    FijkPlayer( ):null);
-    files = List.generate(getBoardInfoModel.data?.length ??0, (index) => null);
+    VideoPlayerController.networkUrl(Uri.parse(getBoardInfoModel.data?[index].image?.replaceAll(" ", "%20") ?? "")):null);
 
-    getBoardInfoModel.data!.forEach((element) async {
-      if(element.fileType =="video")
+
+    for (var element in videos)  {
+      if(element != null)
         {
-          if(Platform.isAndroid) {
-            files[getBoardInfoModel.data!.indexOf(element)] =
-                File(await getVideoThumbnail(element.image ?? ''));
-          }
+
+          element.initialize();
+          element.notifyListeners();
+          element.setLooping(true);
+          element.addListener(() {
+            if(element.value.isBuffering)
+              {
+                isLoad[videos.indexOf(element)] = true;
+
+                    update(['fldr']);
+              }
+            else {
+              isLoad[videos.indexOf(element)] = false;
+
+                  update(['fldr']);
+
+            }
+
+          });
+
           update(['fldr']);
         }
-    });
-
-    videos.forEach((element) async {
-      if(element != null) {
-        if (getBoardInfoModel.data?[videos.indexOf(element)].image != null) {
-          element.setDataSource(
-              getBoardInfoModel.data?[videos.indexOf(element)].image!
-                  .replaceAll(" ", "%20") ?? '',);
+    }
 
 
-          element.addListener(() async {
-            print(element.state);
-            if (element.state == FijkState.end) {
-              element.stop();
-            }
-
-            if (element.state == FijkState.prepared) {
-              // onTapImage(0);
-               await Future.delayed(const Duration(seconds: 2),(){});
-              // isPageView =false;
-
-
-
-
-              update(['fldr']);
-            }
-          });
-        }
-      }
-    });
     update(['fldr']);
     checkImg = List.generate(getBoardInfoModel.data?.length ??0, (index) => false);
    isPlay = List.generate(getBoardInfoModel.data?.length ??0, (index) => false);
@@ -721,7 +712,7 @@ videos.forEach((element) {
   if(element != null)
     {
       element.dispose();
-      element.release();
+
     }
 });
 videos =[];
@@ -788,15 +779,5 @@ videos =[];
   //   );
   // }
 
-  Future<String> getVideoThumbnail(String videoUrl) async {
-    final String? thumbnailPath = await VideoThumbnail.thumbnailFile(
-      video: videoUrl,
-      thumbnailPath: (await getApplicationDocumentsDirectory()).path,  // Path to store the thumbnail
-      imageFormat: ImageFormat.PNG,  // You can choose JPG, PNG
-      maxHeight: 200,  // Resize thumbnail if necessary
-      quality: 75, // Adjust image quality
-    );
 
-    return thumbnailPath!;
-  }
 }

@@ -19,7 +19,6 @@ import 'package:http/http.dart' as http;
 import 'package:path_provider/path_provider.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:video_player/video_player.dart';
-import 'package:video_thumbnail/video_thumbnail.dart';
 import 'package:wc_flutter_share/wc_flutter_share.dart';
 
 class FavouriteController extends GetxController {
@@ -376,9 +375,10 @@ class FavouriteController extends GetxController {
 
   List<bool> checkImage = [];
   List<bool> isPlay = [];
+  List<bool> isLoad = [];
   List<File?> files = [];
   // List<VideoPlayerController?> videos =[];
-  List<FijkPlayer?> videos =[];
+  List<VideoPlayerController?> videos =[];
 
   init() async {
     storedFavorites = [];
@@ -390,6 +390,7 @@ class FavouriteController extends GetxController {
         "fileType":element.fileType
       });
     });
+    isLoad= List.generate(storedFavorites?.length ??0, (index) => false);
     // videos = List.generate(storedFavorites?.length ??0, (index) => (storedFavorites?[index]['fileType'] =="video")?VideoPlayerController.networkUrl(
     //     Uri.parse(storedFavorites?[index]['image'] ?? '')
     // ):null);
@@ -402,40 +403,36 @@ class FavouriteController extends GetxController {
     //   }
     // });
 
-    videos = List.generate(storedFavorites?.length??0, (index) => (storedFavorites?[index]['fileType'] =="video")?
-    FijkPlayer():null);
-    files = List.generate(storedFavorites?.length??0, (index) => null);
+    videos = List.generate(storedFavorites?.length ??0, (index) => (storedFavorites?[index]['fileType'] =="video")?
+    VideoPlayerController.networkUrl(Uri.parse(storedFavorites?[index]['image']?.replaceAll(" ", "%20") ?? "")):null);
 
-    storedFavorites!.forEach((element) async {
-      if(element['fileType'] =="video")
+
+    for (var element in videos)  {
+      if(element != null)
       {
-        files[storedFavorites!.indexOf(element)] = File(await getVideoThumbnail(element['image'] ?? ''));
+
+        element.initialize();
+        element.notifyListeners();
+        element.setLooping(true);
+        element.addListener(() {
+          if(element.value.isBuffering)
+          {
+            isLoad[videos.indexOf(element)] = true;
+
+            update(['favourite']);
+          }
+          else {
+            isLoad[videos.indexOf(element)] = false;
+
+            update(['favourite']);
+
+          }
+
+        });
 
         update(['favourite']);
       }
-    });
-    videos.forEach((element) {
-      if(element != null)
-      {
-        element.setDataSource(storedFavorites?[videos.indexOf(element)]['image'].replaceAll(" ", "%20") ?? '' ?? '', );
-
-        element.addListener(() {
-
-          if(element.state == FijkState.end)
-          {
-            element.stop();
-          }
-          if(element.state == FijkState.prepared)
-            {
-
-              update(['favourite']);
-            }
-
-
-        });
-      }
-    });
-
+    }
 
     checkImage = List.generate((storedFavorites ?? []).length, (index) => false);
     isPlay = List.generate((storedFavorites ?? []).length, (index) => false);
@@ -444,17 +441,7 @@ class FavouriteController extends GetxController {
     update(['favourite']);
   }
 
-  Future<String> getVideoThumbnail(String videoUrl) async {
-    final String? thumbnailPath = await VideoThumbnail.thumbnailFile(
-      video: videoUrl,
-      thumbnailPath: (await getApplicationDocumentsDirectory()).path,  // Path to store the thumbnail
-      imageFormat: ImageFormat.PNG,  // You can choose JPG, PNG
-      maxHeight: 200,  // Resize thumbnail if necessary
-      quality: 75, // Adjust image quality
-    );
 
-    return thumbnailPath!;
-  }
 
   removeFavorite(id) async {
     await SqliteHelper.sqliteHelper.delete(
