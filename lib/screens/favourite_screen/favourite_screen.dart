@@ -180,7 +180,9 @@ class FavouriteScreen extends StatelessWidget {
                                                           Stack(
                                                             alignment:Alignment.center,
                                                             children: [
-                                                              VideoPlayer(controller.videos[index]! ),
+                                                              AspectRatio(
+                                                                  aspectRatio: controller.videos[index]!.value.aspectRatio,
+                                                                  child: VideoPlayer(controller.videos[index]! )),
                                                               Column(
                                                                 crossAxisAlignment:CrossAxisAlignment.start,
                                                                 children: [
@@ -392,7 +394,10 @@ class FavouriteScreen extends StatelessWidget {
                                                             Stack(
                                                               alignment:Alignment.center,
                                                               children: [
-                                                                VideoPlayer(controller.videos[index]! ),
+                                                                AspectRatio(
+
+                                                                    aspectRatio: controller.videos[index]!.value.aspectRatio,
+                                                                    child: VideoPlayer(controller.videos[index]! )),
                                                                 Column(
                                                                   crossAxisAlignment:CrossAxisAlignment.start,
                                                                   children: [
