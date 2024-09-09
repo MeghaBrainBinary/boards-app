@@ -185,7 +185,24 @@ class FavouriteScreen extends StatelessWidget {
                                                                   aspectRatio: controller.videos[index]!.value.aspectRatio,
                                                                   child:
                                                                   VideoPlayer(controller.videos[index]! ))
-                                                                :Image.network( controller.storedFavorites![index]['thumbnail'] ?? '')  ,
+                                                                :
+                                                          CachedNetworkImage(
+                                                            fit: BoxFit.contain,
+                                                            imageUrl:  controller.storedFavorites![index]['thumbnail'] ?? '',
+                                                            progressIndicatorBuilder: (context, strings, download) {
+                                                              return Shimmer.fromColors(
+                                                                baseColor: Colors.grey.shade300,
+                                                                highlightColor: Colors.white,
+                                                                enabled: true,
+                                                                child: Container(
+                                                                  height: Get.width,
+                                                                  width: Get.width,
+                                                                  color: Colors.white,
+                                                                ),
+                                                              );
+                                                            },
+                                                            errorWidget: (context, url, error) => Container(),
+                                                          ),
                                                               SizedBox(
                                                                 width: Get.width * 0.75,
                                                                 child: Column(
@@ -408,7 +425,23 @@ class FavouriteScreen extends StatelessWidget {
 
                                                                     VideoPlayer(controller.videos[index]! ))
                                                                     :Image.network( controller.storedFavorites![index]['thumbnail'] ?? '')  :*/
-                                                                Image.network( controller.storedFavorites![index]['thumbnail'] ?? ''),
+                                                                CachedNetworkImage(
+                                                                  fit: BoxFit.contain,
+                                                                  imageUrl:  controller.storedFavorites![index]['thumbnail'] ?? '',
+                                                                  progressIndicatorBuilder: (context, strings, download) {
+                                                                    return Shimmer.fromColors(
+                                                                      baseColor: Colors.grey.shade300,
+                                                                      highlightColor: Colors.white,
+                                                                      enabled: true,
+                                                                      child: Container(
+                                                                        height: Get.width,
+                                                                        width: Get.width,
+                                                                        color: Colors.white,
+                                                                      ),
+                                                                    );
+                                                                  },
+                                                                  errorWidget: (context, url, error) => Container(),
+                                                                ),
                                                                 SizedBox(
                                                                   width: Get.width * 0.45,
                                                                   child: Column(
