@@ -637,8 +637,26 @@ class _MyFolderScreenState extends State<MyFolderScreen> {
                                                                                                   VideoPlayer(controller.videos[index]! )
                                                                                               ):Image.network(  controller.getBoardInfoModel.data?[index].thumbnail ?? '' ,
                                                                                                 fit: BoxFit.contain,):*/
-                                                                                              Image.network(  controller.getBoardInfoModel.data?[index].thumbnail ?? '' ,
-                                                                                                fit: BoxFit.contain,),
+
+                                                                                              CachedNetworkImage(
+                                                                                                width: Get.width,
+                                                                                                fit: BoxFit.contain,
+                                                                                                imageUrl: controller.getBoardInfoModel.data?[index].
+                                                                                                thumbnail ?? '',
+                                                                                                errorWidget: (context, url, error) => Container(),
+                                                                                                progressIndicatorBuilder: (context, strings, download) {
+                                                                                                  return Shimmer.fromColors(
+                                                                                                    baseColor: Colors.grey.shade300,
+                                                                                                    highlightColor: Colors.white,
+                                                                                                    enabled: true,
+                                                                                                    child: Container(
+                                                                                                      height: Get.width,
+                                                                                                      width: Get.width,
+                                                                                                      color: Colors.white,
+                                                                                                    ),
+                                                                                                  );
+                                                                                                },
+                                                                                              ),
                                                                                               SizedBox(
                                                                                                 width:
                                                                                                 Get.width * 0.45,
@@ -1007,8 +1025,27 @@ controller
                                                                                                                   VideoPlayer(controller.videos[index]! )
                                                                                                               ):Image.network(  controller.getBoardInfoModel.data?[index].
                                                                                                               thumbnail ?? '' ,fit: BoxFit.contain,):*/
-                                                                                                              Image.network(  controller.getBoardInfoModel.data?[index].
-                                                                                                              thumbnail ?? '' ,fit: BoxFit.contain,),
+
+                                                                                                              CachedNetworkImage(
+                                                                                                                width: Get.width,
+                                                                                                                fit: BoxFit.contain,
+                                                                                                                imageUrl: controller.getBoardInfoModel.data?[index].
+                                                                                                                thumbnail ?? '',
+                                                                                                                errorWidget: (context, url, error) => Container(),
+                                                                                                                progressIndicatorBuilder: (context, strings, download) {
+                                                                                                                  return Shimmer.fromColors(
+                                                                                                                    baseColor: Colors.grey.shade300,
+                                                                                                                    highlightColor: Colors.white,
+                                                                                                                    enabled: true,
+                                                                                                                    child: Container(
+                                                                                                                      height: Get.width,
+                                                                                                                      width: Get.width,
+                                                                                                                      color: Colors.white,
+                                                                                                                    ),
+                                                                                                                  );
+                                                                                                                },
+                                                                                                              ),
+
                                                                                                               SizedBox(
                                                                                                                 width: Get.width * 0.45,
                                                                                                                 child: Column(

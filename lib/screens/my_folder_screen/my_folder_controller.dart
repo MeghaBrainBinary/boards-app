@@ -62,6 +62,17 @@ List<VideoPlayerController?> videos =[];
     }else{
       getBoardInfoModel = await GetBoardInfoApi.getBoardInfoApi(id, subBoardId: subBoardId);
     }
+
+    getBoardInfoModel.data?.forEach((element) {
+      if(element.fileType =="video") {
+        ImageProvider _imageProvider = NetworkImage(
+            element.thumbnail ?? '');
+
+
+        precacheImage(_imageProvider, Get.context!);
+      }
+    });
+
     isLoad= List.generate(getBoardInfoModel.data?.length ??0, (index) => false);
 
     initilized = List.generate(getBoardInfoModel.data?.length ??0, (index) => false);

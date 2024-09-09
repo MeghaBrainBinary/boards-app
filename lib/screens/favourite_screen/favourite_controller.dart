@@ -390,6 +390,16 @@ class FavouriteController extends GetxController {
         "thumbnail":element.thumbnail
       });
     });
+    storedFavorites?.forEach((element) {
+      if(element['fileType'] =="video") {
+        ImageProvider _imageProvider = NetworkImage(
+            element['thumbnail'] ?? '');
+
+
+        precacheImage(_imageProvider, Get.context!);
+      }
+    });
+
     isLoad= List.generate(storedFavorites?.length ??0, (index) => false);
     // videos = List.generate(storedFavorites?.length ??0, (index) => (storedFavorites?[index]['fileType'] =="video")?VideoPlayerController.networkUrl(
     //     Uri.parse(storedFavorites?[index]['image'] ?? '')
