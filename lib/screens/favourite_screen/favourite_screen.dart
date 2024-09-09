@@ -180,9 +180,12 @@ class FavouriteScreen extends StatelessWidget {
                                                           Stack(
                                                             alignment:Alignment.center,
                                                             children: [
-                                                              AspectRatio(
+                                                            controller.videos[index]!.value.isInitialized?   AspectRatio(
                                                                   aspectRatio: controller.videos[index]!.value.aspectRatio,
-                                                                  child: VideoPlayer(controller.videos[index]! )),
+                                                                  child:
+
+
+                                                                  VideoPlayer(controller.videos[index]! )):Image.network( controller.storedFavorites![index]['thumbnail'] ?? ''),
                                                               Column(
                                                                 crossAxisAlignment:CrossAxisAlignment.start,
                                                                 children: [
@@ -394,10 +397,12 @@ class FavouriteScreen extends StatelessWidget {
                                                             Stack(
                                                               alignment:Alignment.center,
                                                               children: [
-                                                                AspectRatio(
-
+                                                                controller.videos[index]!.value.isInitialized?   AspectRatio(
                                                                     aspectRatio: controller.videos[index]!.value.aspectRatio,
-                                                                    child: VideoPlayer(controller.videos[index]! )),
+                                                                    child:
+
+
+                                                                    VideoPlayer(controller.videos[index]! )):Image.network( controller.storedFavorites![index]['thumbnail'] ?? ''),
                                                                 Column(
                                                                   crossAxisAlignment:CrossAxisAlignment.start,
                                                                   children: [

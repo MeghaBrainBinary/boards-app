@@ -37,21 +37,25 @@ class Datum {
     this.id,
     this.image,
     this.fileType,
+    this.thumbnail,
   });
 
   int? id;
   String? image;
   String? fileType;
+  String? thumbnail;
 
   factory Datum.fromJson(Map<String, dynamic> json) => Datum(
     id: json["id"],
     image: json["image"],
     fileType: json["fileType"],
+    thumbnail: json["thumbnail"],
   );
 
   Map<String, dynamic> toJson() => {
     "id": id,
     "image": image,
     "fileType": fileType,
+    "thumbnail": thumbnail,
   };
 }

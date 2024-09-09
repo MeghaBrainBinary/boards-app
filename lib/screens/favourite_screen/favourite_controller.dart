@@ -386,7 +386,8 @@ class FavouriteController extends GetxController {
       storedFavorites?.add({
         "id": element.imageId,
         "image": element.imageUrl,
-        "fileType":element.fileType
+        "fileType":element.fileType,
+        "thumbnail":element.thumbnail
       });
     });
     isLoad= List.generate(storedFavorites?.length ??0, (index) => false);
@@ -405,23 +406,27 @@ class FavouriteController extends GetxController {
     videos = List.generate(storedFavorites?.length ??0, (index) => (storedFavorites?[index]['fileType'] =="video")?
     VideoPlayerController.networkUrl(Uri.parse(storedFavorites?[index]['image']?.replaceAll(" ", "%20") ?? "")):null);
 
-
-    for (var element in videos)  {
-      if(element != null)
+    for(int i=0; i<videos.length;i++)
+    {
+      if(videos[i] != null)
       {
 
-        element.initialize();
-        element.notifyListeners();
-        element.setLooping(true);
-        element.addListener(() {
-          if(element.value.isBuffering)
+        videos[i]?.initialize().then((value) {}).catchError((error) {
+          print('Error: $error');
+          // Retry initialization or handle error
+          videos[i]?.initialize();
+        });;
+        videos[i]?.notifyListeners();
+        videos[i]?.setLooping(true);
+        videos[i]?.addListener(() {
+          if(videos[i]!.value.isBuffering)
           {
-            isLoad[videos.indexOf(element)] = true;
+            isLoad[i] = true;
 
             update(['favourite']);
           }
           else {
-            isLoad[videos.indexOf(element)] = false;
+            isLoad[i] = false;
 
             update(['favourite']);
 
@@ -432,6 +437,9 @@ class FavouriteController extends GetxController {
         update(['favourite']);
       }
     }
+
+
+
 
     checkImage = List.generate((storedFavorites ?? []).length, (index) => false);
     isPlay = List.generate((storedFavorites ?? []).length, (index) => false);

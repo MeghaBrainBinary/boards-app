@@ -31,7 +31,6 @@ class MyFolderController extends GetxController {
   List<bool> initilized = [];
   List<bool> isPlay = [];
   List<bool> isLoad = [];
-
   String? selectedImage;
   String selectedId = "";
 List<bool> isSelectedNode =[];
@@ -65,51 +64,79 @@ List<VideoPlayerController?> videos =[];
     }
     isLoad= List.generate(getBoardInfoModel.data?.length ??0, (index) => false);
 
+    initilized = List.generate(getBoardInfoModel.data?.length ??0, (index) => false);
 
-
+    videos = List.generate(getBoardInfoModel.data?.length ??0, (index) => (getBoardInfoModel.data?[index].fileType =="video")?
+    VideoPlayerController.contentUri(Uri.parse(getBoardInfoModel.data?[index].image ??'')):null);
 
     loader.value = false;
-    videos = List.generate(getBoardInfoModel.data?.length ??0, (index) => (getBoardInfoModel.data?[index].fileType =="video")?
-    VideoPlayerController.networkUrl(Uri.parse(getBoardInfoModel.data?[index].image?.replaceAll(" ", "%20") ?? "")):null);
 
 
-    for (var element in videos)  {
-      if(element != null)
-        {
 
-          element.initialize();
-          element.notifyListeners();
-          element.setLooping(true);
-          element.addListener(() {
-            if(element.value.isBuffering)
-              {
-                isLoad[videos.indexOf(element)] = true;
+   for(int i=0; i<videos.length;i++)
+     {
+       if(videos[i] != null)
+       {
 
-                    update(['fldr']);
-              }
-            else {
-              isLoad[videos.indexOf(element)] = false;
+         videos[i]?.initialize().then((value) {}).catchError((error) {
+           print('Error: $error');
 
-                  update(['fldr']);
+         });
+         videos[i]?.notifyListeners();
+         videos[i]?.setLooping(true);
+         videos[i]?.addListener(() {
+           if(videos[i]!.value.isBuffering)
+           {
+             isLoad[i] = true;
 
-            }
+             update(['fldr']);
+           }
+           else {
+             isLoad[i] = false;
 
-          });
+             update(['fldr']);
 
-          update(['fldr']);
-        }
-    }
+           }
+           if(videos[i]!.value.isInitialized)
+           {
+             initilized[i] = true;
+
+             update(['fldr']);
+           }
+
+         });
+
+         update(['fldr']);
+       }
+     }
 
 
     update(['fldr']);
     checkImg = List.generate(getBoardInfoModel.data?.length ??0, (index) => false);
    isPlay = List.generate(getBoardInfoModel.data?.length ??0, (index) => false);
-    initilized = List.generate(getBoardInfoModel.data?.length ??0, (index) => false);
     isLike = List.generate(getBoardInfoModel.data?.length ?? 0, (index) => false);
 
 
 await init();
   update(['fldr']);
+  }
+
+
+  Future<File> downloadVideo(String url, String type) async {
+    final response = await http.get(Uri.parse(url));
+
+    if (response.statusCode == 200) {
+      // Get temporary directory
+      final directory = await getTemporaryDirectory();
+
+      // Create a file to store the video
+      final file = File('${directory.path}/${DateTime.now().millisecondsSinceEpoch}.${type}');
+
+      // Write the video file to the file system
+      return file.writeAsBytes(response.bodyBytes);
+    } else {
+      throw Exception("Failed to download video");
+    }
   }
   List<String> simg = [];
 
@@ -150,7 +177,7 @@ onTapBack(){
   addSelectedImage = List.generate(getBoardInfoModel.data?.length??0, (index) => false);
 videos.forEach((element) {
   if(element != null) {
-    element!.pause();
+    element.pause();
     element.dispose();
   }
 
@@ -589,6 +616,7 @@ update(['fldr']);
     var image =  getBoardInfoModel.data![index].image.toString();
     var imageId =  getBoardInfoModel.data![index].id.toString();
     var type =  getBoardInfoModel.data![index].fileType.toString();
+    var thumbnail =  getBoardInfoModel.data![index].thumbnail.toString();
     if(isLike[index])
       {
 
@@ -598,7 +626,7 @@ update(['fldr']);
       }
     else
       {
-        SqliteHelper.sqliteHelper.insertDb(imageID: imageId, imageUrl: image,fileType: type);
+        SqliteHelper.sqliteHelper.insertDb(imageID: imageId, imageUrl: image,fileType: type,thumbnail: thumbnail);
         isLike[index] = true;
       }
   }
@@ -643,6 +671,7 @@ allIndexData.forEach((element) {
       imageID: getBoardInfoModel.data?[element].id.toString()  ?? '',
       imageUrl: getBoardInfoModel.data?[element].image ?? '',
     fileType:   getBoardInfoModel.data?[element].fileType ?? '',
+    thumbnail:   getBoardInfoModel.data?[element].thumbnail ?? '',
   );
   isLike[element] = true;
 });

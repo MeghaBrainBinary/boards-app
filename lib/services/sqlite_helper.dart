@@ -18,6 +18,7 @@ String tablename ="Favorites";
   String imageIDName = "imageId";
   String imageUrlName = "imageUrl";
   String fileTypeName = "fileType";
+  String thumbnailName = "thumbnail";
 
 
   Future<Database?> initdb({String? tableName}) async {
@@ -31,7 +32,7 @@ String tablename ="Favorites";
         await db.execute(query1);*/
 
 
-        String query1 = " CREATE TABLE IF NOT EXISTS $tablename($uniqueId INTEGER PRIMARY KEY AUTOINCREMENT,$imageIDName TEXT,$imageUrlName TEXT,$fileTypeName);";
+        String query1 = " CREATE TABLE IF NOT EXISTS $tablename($uniqueId INTEGER PRIMARY KEY AUTOINCREMENT,$imageIDName TEXT,$imageUrlName TEXT,$fileTypeName,$thumbnailName TEXT);";
         await db.execute(query1);
       }
       );
@@ -46,15 +47,17 @@ String tablename ="Favorites";
     required String imageID,
     required String imageUrl,
     required String fileType,
+    required String thumbnail,
   }) async {
 
 
     String query =
-        'INSERT INTO $tablename($imageIDName,$imageUrlName,$fileTypeName)VALUES(?,?,?);';
+        'INSERT INTO $tablename($imageIDName,$imageUrlName,$fileTypeName,$thumbnailName)VALUES(?,?,?,?);';
     List args = [
     imageID,
       imageUrl,
-      fileType
+      fileType,
+      thumbnail
     ];
 
     return await db!.rawInsert(query, args);
@@ -113,6 +116,7 @@ class SqliteModel {
   String? imageId;
   String? imageUrl;
   String? fileType;
+  String? thumbnail;
 
   static List star = [];
 
@@ -121,6 +125,7 @@ class SqliteModel {
     required this.imageId,
     required this.imageUrl,
     required this.fileType,
+    required this.thumbnail,
   });
 
   factory SqliteModel.fromjson(Map<String, dynamic> data) {
@@ -129,6 +134,7 @@ class SqliteModel {
       imageId: data['imageId'],
       imageUrl: data['imageUrl'],
       fileType: data['fileType'],
+      thumbnail: data['thumbnail'],
     );
   }
 
@@ -137,6 +143,7 @@ class SqliteModel {
     "imageId": imageId,
     "imageUrl": imageUrl,
     "fileType": fileType,
+    "thumbnail": thumbnail,
   };
 
 }

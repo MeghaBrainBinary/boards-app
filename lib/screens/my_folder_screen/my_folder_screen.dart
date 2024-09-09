@@ -372,12 +372,11 @@ class _MyFolderScreenState extends State<MyFolderScreen> {
                                                                                       ? Stack(
                                                                                           alignment: Alignment.center,
                                                                                           children: [
-                                                                                        AspectRatio(
+                                                                        controller.videos[index]!.value.isInitialized? AspectRatio(
                                                                                           aspectRatio: controller.videos[index]!.value.aspectRatio,
-                                                                                          child: VideoPlayer(controller.videos[index]! ,
-
-                                                                                          ),
-                                                                                        ),
+                                                                                          child:
+                                                                VideoPlayer(controller.videos[index]! )
+                                                                                        ):Image.network(  controller.getBoardInfoModel.data?[index].thumbnail ?? '' ,fit: BoxFit.contain,),
                                                                                             Column(
                                                                                               crossAxisAlignment:CrossAxisAlignment.start,
                                                                                               children: [
@@ -624,10 +623,11 @@ class _MyFolderScreenState extends State<MyFolderScreen> {
                                                                                         ? Stack(
                                                                                             alignment: Alignment.center,
                                                                                             children: [
-                                                                                              AspectRatio(
+                                                                                              controller.videos[index]!.value.isInitialized? AspectRatio(
                                                                                                   aspectRatio: controller.videos[index]!.value.aspectRatio,
-                                                                                                  child: VideoPlayer(controller.videos[index]! )),
-                                                                                          Column(
+                                                                                                  child:
+                                                                                                  VideoPlayer(controller.videos[index]! )
+                                                                                              ):Image.network(  controller.getBoardInfoModel.data?[index].thumbnail ?? '' ,fit: BoxFit.contain,), Column(
                                                                                                 crossAxisAlignment:CrossAxisAlignment.start,
                                                                                                 children: [
                                                                                                   const Spacer(),
@@ -980,10 +980,11 @@ class _MyFolderScreenState extends State<MyFolderScreen> {
                                                                                                         ? Stack(
                                                                                                             alignment: Alignment.center,
                                                                                                             children: [
-                                                                                                              AspectRatio(
+                                                                                                              controller.videos[index]!.value.isInitialized? AspectRatio(
                                                                                                                   aspectRatio: controller.videos[index]!.value.aspectRatio,
-                                                                                                                  child: VideoPlayer(controller.videos[index]! )),
-                                                                                                              Column(
+                                                                                                                  child:
+                                                                                                                  VideoPlayer(controller.videos[index]! )
+                                                                                                              ):Image.network(  controller.getBoardInfoModel.data?[index].thumbnail ?? '' ,fit: BoxFit.contain,), Column(
                                                                                                                 crossAxisAlignment:CrossAxisAlignment.start,
                                                                                                                 children: [
                                                                                                                   const Spacer(),
