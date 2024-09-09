@@ -67,7 +67,7 @@ List<VideoPlayerController?> videos =[];
     initilized = List.generate(getBoardInfoModel.data?.length ??0, (index) => false);
 
     videos = List.generate(getBoardInfoModel.data?.length ??0, (index) => (getBoardInfoModel.data?[index].fileType =="video")?
-    VideoPlayerController.contentUri(Uri.parse(getBoardInfoModel.data?[index].image ??'')):null);
+    VideoPlayerController.networkUrl(Uri.parse(getBoardInfoModel.data?[index].image ??'')):null);
 
     loader.value = false;
 
