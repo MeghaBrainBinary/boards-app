@@ -107,7 +107,7 @@ class FavouriteScreen extends StatelessWidget {
                               )
                             else const SizedBox()  else const SizedBox(),
 
-                                controller.isSelectOn
+                                controller.isSelectOn && controller.isPageView == false
                                     ? Row(
                                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                         children: [
@@ -180,69 +180,71 @@ class FavouriteScreen extends StatelessWidget {
                                                           Stack(
                                                             alignment:Alignment.center,
                                                             children: [
-                                                            controller.videos[index]!.value.isInitialized?   AspectRatio(
+                                                            controller.videos[index]!.value.isInitialized?
+                                                            AspectRatio(
                                                                   aspectRatio: controller.videos[index]!.value.aspectRatio,
                                                                   child:
+                                                                  VideoPlayer(controller.videos[index]! ))
+                                                                :Image.network( controller.storedFavorites![index]['thumbnail'] ?? '')  ,
+                                                              SizedBox(
+                                                                width: Get.width * 0.75,
+                                                                child: Column(
+                                                                  crossAxisAlignment:CrossAxisAlignment.start,
+                                                                  children: [
+                                                                    const Spacer(),
+                                                                  Padding(
+                                                                      padding: const EdgeInsets.only(left: 4.0),
+                                                                      child:   InkWell(
+                                                                        onTap:() async {
 
+                                                                          if(controller.isPlay[index])
+                                                                          {
+                                                                            controller.isPlay[index] = false;
+                                                                            controller.videos[index]?.pause();
 
-                                                                  VideoPlayer(controller.videos[index]! )):Image.network( controller.storedFavorites![index]['thumbnail'] ?? ''),
-                                                              Column(
-                                                                crossAxisAlignment:CrossAxisAlignment.start,
-                                                                children: [
-                                                                  const Spacer(),
-                                                                  controller.isLoad[index]?const SizedBox():    Padding(
-                                                                    padding: const EdgeInsets.only(left: 4.0),
-                                                                    child:   InkWell(
-                                                                      onTap:() async {
-
-                                                                        if(controller.isPlay[index])
-                                                                        {
-                                                                          controller.isPlay[index] = false;
-                                                                          controller.videos[index]?.pause();
-
-                                                                        }
-                                                                        else
-                                                                        {
-
-                                                                          controller.isPlay = List.generate( controller.storedFavorites?.length ?? 0, (index) => false);
-                                                                          for (var e in controller.videos) {
-                                                                            if(e != null)
-                                                                            {
-                                                                              e.pause();
-                                                                            }
                                                                           }
-                                                                          controller.isPlay[index] = true;
+                                                                          else
+                                                                          {
 
-                                                                          controller.videos[index]?.play();
+                                                                            controller.isPlay = List.generate( controller.storedFavorites?.length ?? 0, (index) => false);
+                                                                            for (var e in controller.videos) {
+                                                                              if(e != null)
+                                                                              {
+                                                                                e.pause();
+                                                                              }
+                                                                            }
+                                                                            controller.isPlay[index] = true;
 
-                                                                        }
-                                                                        controller.update(['favourite']);
+                                                                            controller.videos[index]?.play();
 
-                                                                      },
-                                                                      child: Container(
-                                                                        height: 30,
-                                                                        width: 30,
-                                                                        decoration:const BoxDecoration(
-                                                                          shape:BoxShape.circle,
-                                                                          color:Colors.white,
+                                                                          }
+                                                                          controller.update(['favourite']);
+
+                                                                        },
+                                                                        child: Container(
+                                                                          height: 30,
+                                                                          width: 30,
+                                                                          decoration:const BoxDecoration(
+                                                                            shape:BoxShape.circle,
+                                                                            color:Colors.white,
+                                                                          ),
+                                                                          child: Icon(controller.isPlay[index]?Icons.pause:Icons.play_arrow,
+                                                                            size: 20,),
                                                                         ),
-                                                                        child: Icon(controller.isPlay[index]?Icons.pause:Icons.play_arrow,
-                                                                          size: 20,),
                                                                       ),
                                                                     ),
-                                                                  ),
-                                                                  const SizedBox(height: 5,),
-                                                                  StatefulBuilder(
-                                                                      builder: (context,s) {
-                                                                        s.call((){});
-                                                                        return VideoProgressIndicator(controller.videos[index]!, allowScrubbing: true);
-                                                                      }
-                                                                  ),
+                                                                    const SizedBox(height: 5,),
+                                                                    StatefulBuilder(
+                                                                        builder: (context,s) {
+                                                                          s.call((){});
+                                                                          return VideoProgressIndicator(controller.videos[index]!, allowScrubbing: true);
+                                                                        }
+                                                                    ),
 
-                                                                ],
+                                                                  ],
+                                                                ),
                                                               ),
-                                                              controller.isLoad[index]?CircularProgressIndicator():const SizedBox(),
-
+                                                              controller.isLoad[index] ?const CircularProgressIndicator():const SizedBox(),
                                                               /*  InkWell(
                                                                 onTap:() async {
 
@@ -383,7 +385,7 @@ class FavouriteScreen extends StatelessWidget {
                                                                 : const EdgeInsets.all(1),
                                                             decoration: BoxDecoration(
                                                               color: controller.checkImage[index] == true
-                                                                  ? ColorRes.appColor
+                                                                  ? ColorRes.white
                                                                   : Colors.transparent,
                                                               border: Border.all(
                                                                 color: controller.checkImage[index] == true
@@ -397,69 +399,75 @@ class FavouriteScreen extends StatelessWidget {
                                                             Stack(
                                                               alignment:Alignment.center,
                                                               children: [
-                                                                controller.videos[index]!.value.isInitialized?   AspectRatio(
+                                                                /*controller.videos[index]!.value.isInitialized?
+                                                                controller.isLoad[index] == false?
+                                                                AspectRatio(
                                                                     aspectRatio: controller.videos[index]!.value.aspectRatio,
                                                                     child:
 
 
-                                                                    VideoPlayer(controller.videos[index]! )):Image.network( controller.storedFavorites![index]['thumbnail'] ?? ''),
-                                                                Column(
-                                                                  crossAxisAlignment:CrossAxisAlignment.start,
-                                                                  children: [
-                                                                    const Spacer(),
-                                                                    controller.isLoad[index]?const SizedBox():    Padding(
-                                                                      padding: const EdgeInsets.only(left: 4.0),
-                                                                      child:   InkWell(
-                                                                        onTap:() async {
-
-                                                                          if(controller.isPlay[index])
-                                                                          {
-                                                                            controller.isPlay[index] = false;
+                                                                    VideoPlayer(controller.videos[index]! ))
+                                                                    :Image.network( controller.storedFavorites![index]['thumbnail'] ?? '')  :*/
+                                                                Image.network( controller.storedFavorites![index]['thumbnail'] ?? ''),
+                                                                SizedBox(
+                                                                  width: Get.width * 0.45,
+                                                                  child: Column(
+                                                                    crossAxisAlignment:CrossAxisAlignment.start,
+                                                                    children: [
+                                                                      const Spacer(),
+                                                                  Padding(
+                                                                        padding: const EdgeInsets.only(left: 4.0),
+                                                                        child:   InkWell(
+                                                                          onTap:() async {
+                                                                            controller.onTapImage(index);
                                                                             controller.videos[index]?.pause();
+                                                                            // if(controller.isPlay[index])
+                                                                            // {
+                                                                            //   controller.isPlay[index] = false;
+                                                                            //   controller.videos[index]?.pause();
+                                                                            //
+                                                                            // }
+                                                                            // else
+                                                                            // {
+                                                                            //
+                                                                            //   controller.isPlay = List.generate( controller.storedFavorites?.length ?? 0, (index) => false);
+                                                                            //   for (var e in controller.videos) {
+                                                                            //     if(e != null)
+                                                                            //     {
+                                                                            //       e.pause();
+                                                                            //     }
+                                                                            //   }
+                                                                            //   controller.isPlay[index] = true;
+                                                                            //
+                                                                            //   controller.videos[index]?.play();
+                                                                            //
+                                                                            // }
+                                                                            controller.update(['favourite']);
 
-                                                                          }
-                                                                          else
-                                                                          {
-
-                                                                            controller.isPlay = List.generate( controller.storedFavorites?.length ?? 0, (index) => false);
-                                                                            for (var e in controller.videos) {
-                                                                              if(e != null)
-                                                                              {
-                                                                                e.pause();
-                                                                              }
-                                                                            }
-                                                                            controller.isPlay[index] = true;
-
-                                                                            controller.videos[index]?.play();
-
-                                                                          }
-                                                                          controller.update(['favourite']);
-
-                                                                        },
-                                                                        child: Container(
-                                                                          height: 30,
-                                                                          width: 30,
-                                                                          decoration:const BoxDecoration(
-                                                                            shape:BoxShape.circle,
-                                                                            color:Colors.white,
+                                                                          },
+                                                                          child: Container(
+                                                                            height: 30,
+                                                                            width: 30,
+                                                                            decoration:const BoxDecoration(
+                                                                              shape:BoxShape.circle,
+                                                                              color:Colors.white,
+                                                                            ),
+                                                                            child: Icon(controller.isPlay[index]?Icons.pause:Icons.play_arrow,
+                                                                              size: 20,),
                                                                           ),
-                                                                          child: Icon(controller.isPlay[index]?Icons.pause:Icons.play_arrow,
-                                                                            size: 20,),
                                                                         ),
                                                                       ),
-                                                                    ),
-                                                                    const SizedBox(height: 5,),
-                                                                    StatefulBuilder(
-                                                                        builder: (context,s) {
-                                                                          s.call((){});
-                                                                          return VideoProgressIndicator(controller.videos[index]!, allowScrubbing: true);
-                                                                        }
-                                                                    ),
+                                                                   /*   const SizedBox(height: 5,),
+                                                                      StatefulBuilder(
+                                                                          builder: (context,s) {
+                                                                            s.call((){});
+                                                                            return VideoProgressIndicator(controller.videos[index]!, allowScrubbing: true);
+                                                                          }
+                                                                      ),*/
 
-                                                                  ],
+                                                                    ],
+                                                                  ),
                                                                 ),
-                                                                controller.isLoad[index]?CircularProgressIndicator():const SizedBox(),
-
 
                                                               ],
                                                             ):const SizedBox():CachedNetworkImage(

@@ -372,68 +372,74 @@ class _MyFolderScreenState extends State<MyFolderScreen> {
                                                                                       ? Stack(
                                                                                           alignment: Alignment.center,
                                                                                           children: [
-                                                                        controller.videos[index]!.value.isInitialized? AspectRatio(
+                                                                        controller.videos[index]!.value.isInitialized?
+
+                                                                        AspectRatio(
                                                                                           aspectRatio: controller.videos[index]!.value.aspectRatio,
                                                                                           child:
                                                                 VideoPlayer(controller.videos[index]! )
-                                                                                        ):Image.network(  controller.getBoardInfoModel.data?[index].thumbnail ?? '' ,fit: BoxFit.contain,),
-                                                                                            Column(
-                                                                                              crossAxisAlignment:CrossAxisAlignment.start,
-                                                                                              children: [
-                                                                                                const Spacer(),
-                                                                                                controller.isLoad[index]?const SizedBox():   Padding(
-                                                                                                  padding: const EdgeInsets.only(left: 4.0),
-                                                                                                  child: InkWell(
-                                                                                                    onTap:() async {
+                                                                                        ):
+                                                                        Image.network(  controller.getBoardInfoModel.data?[index].thumbnail ?? '' ,fit: BoxFit.contain,)
+                                                                                            ,
+                                                                                            SizedBox(
+                                                                                              width: Get.width * 0.75,
+                                                                                              child: Column(
+                                                                                                crossAxisAlignment:CrossAxisAlignment.start,
+                                                                                                children: [
+                                                                                                  const Spacer(),
+                                                                                                Padding(
+                                                                                                    padding: const EdgeInsets.only(left: 4.0),
+                                                                                                    child: InkWell(
+                                                                                                      onTap:() async {
 
 
+                                                                                                        if(controller.isPlay[index])
+                                                                                                        {
+                                                                                                          controller.isPlay[index] = false;
+                                                                                                          controller.videos[index]?.pause();
 
-                                                                                                      if(controller.isPlay[index])
-                                                                                                      {
-                                                                                                        controller.isPlay[index] = false;
-                                                                                                        controller.videos[index]?.pause();
+                                                                                                        }
+                                                                                                        else
+                                                                                                        {
+                                                                                                          controller.isPlay = List.generate( controller.getBoardInfoModel.data?.length ??0, (index) => false);
+                                                                                                          controller.videos.forEach((e){
+                                                                                                            if(e != null)
+                                                                                                            {
+                                                                                                              e.pause();
+                                                                                                            }
+                                                                                                          });
+                                                                                                          controller.isPlay[index] = true;
 
-                                                                                                      }
-                                                                                                      else
-                                                                                                      {
-                                                                                                        controller.isPlay = List.generate( controller.getBoardInfoModel.data?.length ??0, (index) => false);
-                                                                                                        controller.videos.forEach((e){
-                                                                                                          if(e != null)
-                                                                                                          {
-                                                                                                            e.pause();
-                                                                                                          }
-                                                                                                        });
-                                                                                                        controller.isPlay[index] = true;
+                                                                                                          controller.videos[index]?.play();
 
-                                                                                                        controller.videos[index]?.play();
+                                                                                                        }
+                                                                                                        controller.update(['fldr']);
 
-                                                                                                      }
-                                                                                                      controller.update(['fldr']);
-
-                                                                                                    },
-                                                                                                    child: Container(
-                                                                                                      height: 30,
-                                                                                                      width: 30,
-                                                                                                      decoration:const BoxDecoration(
-                                                                                                        shape:BoxShape.circle,
-                                                                                                        color:Colors.white,
+                                                                                                      },
+                                                                                                      child: Container(
+                                                                                                        height: 30,
+                                                                                                        width: 30,
+                                                                                                        decoration:const BoxDecoration(
+                                                                                                          shape:BoxShape.circle,
+                                                                                                          color:Colors.white,
+                                                                                                        ),
+                                                                                                        child: Icon(controller.isPlay[index]?
+                                                                                                        Icons.pause:Icons.play_arrow,size: 20,),
                                                                                                       ),
-                                                                                                      child: Icon(controller.isPlay[index]?
-                                                                                                      Icons.pause:Icons.play_arrow,size: 20,),
                                                                                                     ),
                                                                                                   ),
-                                                                                                ),
-                                                                                                const SizedBox(height: 5,),
-                                                                                                StatefulBuilder(
-                                                                                                    builder: (context,s) {
-                                                                                                      s.call((){});
-                                                                                                      return VideoProgressIndicator(controller.videos[index]!, allowScrubbing: true);
-                                                                                                    }
-                                                                                                ),
+                                                                                                  const SizedBox(height: 5,),
+                                                                                                  StatefulBuilder(
+                                                                                                      builder: (context,s) {
+                                                                                                        s.call((){});
+                                                                                                        return VideoProgressIndicator(controller.videos[index]!, allowScrubbing: true);
+                                                                                                      }
+                                                                                                  ),
 
-                                                                                              ],
+                                                                                                ],
+                                                                                              ),
                                                                                             ),
-                                                                                            controller.isLoad[index]?CircularProgressIndicator():const SizedBox(),
+                                                                                            controller.isLoad[index] ?const CircularProgressIndicator():const SizedBox(),
                                                                                             /*      InkWell(
                                                                               onTap:() async {
 
@@ -623,67 +629,79 @@ class _MyFolderScreenState extends State<MyFolderScreen> {
                                                                                         ? Stack(
                                                                                             alignment: Alignment.center,
                                                                                             children: [
-                                                                                              controller.videos[index]!.value.isInitialized? AspectRatio(
+                                                                                            /*  controller.videos[index]!.value.isInitialized?
+                                                                                              controller.isLoad[index] == false?
+                                                                                              AspectRatio(
                                                                                                   aspectRatio: controller.videos[index]!.value.aspectRatio,
                                                                                                   child:
                                                                                                   VideoPlayer(controller.videos[index]! )
-                                                                                              ):Image.network(  controller.getBoardInfoModel.data?[index].thumbnail ?? '' ,fit: BoxFit.contain,), Column(
-                                                                                                crossAxisAlignment:CrossAxisAlignment.start,
-                                                                                                children: [
-                                                                                                  const Spacer(),
-                                                                                                  controller.isLoad[index]?const SizedBox():      Padding(
-                                                                                                    padding: const EdgeInsets.only(left: 4.0),
-                                                                                                    child: InkWell(
-                                                                                                      onTap:() async {
-
-
-
-                                                                                                        if(controller.isPlay[index])
-                                                                                                        {
-                                                                                                          controller.isPlay[index] = false;
+                                                                                              ):Image.network(  controller.getBoardInfoModel.data?[index].thumbnail ?? '' ,
+                                                                                                fit: BoxFit.contain,):*/
+                                                                                              Image.network(  controller.getBoardInfoModel.data?[index].thumbnail ?? '' ,
+                                                                                                fit: BoxFit.contain,),
+                                                                                              SizedBox(
+                                                                                                width:
+                                                                                                Get.width * 0.45,
+                                                                                                  child: Column(
+                                                                                                  crossAxisAlignment:CrossAxisAlignment.start,
+                                                                                                  children: [
+                                                                                                    const Spacer(),
+                                                                                                    Padding(
+                                                                                                      padding: const EdgeInsets.only(left: 4.0),
+                                                                                                      child: InkWell(
+                                                                                                        onTap:() async {
+controller
+    .isSelectedPageView = false;
+                                                                                                          controller.onTapImage(index);
                                                                                                           controller.videos[index]?.pause();
 
-                                                                                                        }
-                                                                                                        else
-                                                                                                        {
-                                                                                                          controller.isPlay = List.generate( controller.getBoardInfoModel.data?.length ??0, (index) => false);
-                                                                                                          controller.videos.forEach((e){
-                                                                                                            if(e != null)
-                                                                                                            {
-                                                                                                              e.pause();
-                                                                                                            }
-                                                                                                          });
-                                                                                                          controller.isPlay[index] = true;
+                                                                                                          // if(controller.isPlay[index])
+                                                                                                          // {
+                                                                                                          //   controller.isPlay[index] = false;
+                                                                                                          //   controller.videos[index]?.pause();
+                                                                                                          //
+                                                                                                          // }
+                                                                                                          // else
+                                                                                                          // {
+                                                                                                          //   controller.isPlay = List.generate( controller.getBoardInfoModel.data?.length ??0, (index) => false);
+                                                                                                          //   controller.videos.forEach((e){
+                                                                                                          //     if(e != null)
+                                                                                                          //     {
+                                                                                                          //       e.pause();
+                                                                                                          //     }
+                                                                                                          //   });
+                                                                                                          //   controller.isPlay[index] = true;
+                                                                                                          //
+                                                                                                          //   controller.videos[index]?.play();
+                                                                                                          //
+                                                                                                          // }
+                                                                                                          controller.update(['fldr']);
 
-                                                                                                          controller.videos[index]?.play();
-
-                                                                                                        }
-                                                                                                        controller.update(['fldr']);
-
-                                                                                                      },
-                                                                                                      child: Container(
-                                                                                                        height: 30,
-                                                                                                        width: 30,
-                                                                                                        decoration:const BoxDecoration(
-                                                                                                          shape:BoxShape.circle,
-                                                                                                          color:Colors.white,
+                                                                                                        },
+                                                                                                        child: Container(
+                                                                                                          height: 30,
+                                                                                                          width: 30,
+                                                                                                          decoration:const BoxDecoration(
+                                                                                                            shape:BoxShape.circle,
+                                                                                                            color:Colors.white,
+                                                                                                          ),
+                                                                                                          child: Icon(controller.isPlay[index]?
+                                                                                                          Icons.pause:Icons.play_arrow,size: 20,),
                                                                                                         ),
-                                                                                                        child: Icon(controller.isPlay[index]?
-                                                                                                        Icons.pause:Icons.play_arrow,size: 20,),
                                                                                                       ),
                                                                                                     ),
-                                                                                                  ),
-                                                                                                  const SizedBox(height: 5,),
-                                                                                                  StatefulBuilder(
-                                                                                                    builder: (context,s) {
-                                                                                                      s.call((){});
-                                                                                                      return VideoProgressIndicator(controller.videos[index]!, allowScrubbing: true);
-                                                                                                    }
-                                                                                                  ),
+                                                                                                    /*const SizedBox(height: 5,),
+                                                                                                    StatefulBuilder(
+                                                                                                      builder: (context,s) {
+                                                                                                        s.call((){});
+                                                                                                        return VideoProgressIndicator(controller.videos[index]!, allowScrubbing: true);
+                                                                                                      }
+                                                                                                    ),*/
 
-                                                                                                ],
+                                                                                                  ],
                                                                                               ),
-                                                                                              controller.isLoad[index]?CircularProgressIndicator():const SizedBox(),
+                                                                                                ),
+
                                                                                             ],
                                                                                           )
                                                                                         : const SizedBox()
@@ -980,41 +998,51 @@ class _MyFolderScreenState extends State<MyFolderScreen> {
                                                                                                         ? Stack(
                                                                                                             alignment: Alignment.center,
                                                                                                             children: [
-                                                                                                              controller.videos[index]!.value.isInitialized? AspectRatio(
+                                                                                                              /*controller.videos[index]!.value.isInitialized?
+
+                                                                                                              controller.isLoad[index] == false?
+                                                                                                              AspectRatio(
                                                                                                                   aspectRatio: controller.videos[index]!.value.aspectRatio,
                                                                                                                   child:
                                                                                                                   VideoPlayer(controller.videos[index]! )
-                                                                                                              ):Image.network(  controller.getBoardInfoModel.data?[index].thumbnail ?? '' ,fit: BoxFit.contain,), Column(
-                                                                                                                crossAxisAlignment:CrossAxisAlignment.start,
-                                                                                                                children: [
-                                                                                                                  const Spacer(),
-                                                                                                                  controller.isLoad[index]?const SizedBox():  Padding(
-                                                                                                                     padding: const EdgeInsets.only(left: 4.0),
-                                                                                                                     child: InkWell(
+                                                                                                              ):Image.network(  controller.getBoardInfoModel.data?[index].
+                                                                                                              thumbnail ?? '' ,fit: BoxFit.contain,):*/
+                                                                                                              Image.network(  controller.getBoardInfoModel.data?[index].
+                                                                                                              thumbnail ?? '' ,fit: BoxFit.contain,),
+                                                                                                              SizedBox(
+                                                                                                                width: Get.width * 0.45,
+                                                                                                                child: Column(
+                                                                                                                  crossAxisAlignment:CrossAxisAlignment.start,
+                                                                                                                  children: [
+                                                                                                                    const Spacer(),
+                                                                                                                 Padding(
+                                                                                                                       padding: const EdgeInsets.only(left: 4.0),
+                                                                                                                       child: InkWell(
                                                                                                     onTap:() async {
 
 
-
-                                                                                                      if(controller.isPlay[index])
-                                                                                                      {
-                                                                                                        controller.isPlay[index] = false;
-                                                                                                        controller.videos[index]?.pause();
-
-                                                                                                      }
-                                                                                                      else
-                                                                                                      {
-                                                                                                        controller.isPlay = List.generate( controller.getBoardInfoModel.data?.length ??0, (index) => false);
-                                                                                                        controller.videos.forEach((e){
-                                                                                                          if(e != null)
-                                                                                                            {
-                                                                                                              e.pause();
-                                                                                                            }
-                                                                                                        });
-                                                                                                        controller.isPlay[index] = true;
-
-                                                                                                        controller.videos[index]?.play();
-
-                                                                                                      }
+                                                                                                      controller.onTapImage(index);
+                                                                                                      controller.videos[index]?.pause();
+                                                                                                      // if(controller.isPlay[index])
+                                                                                                      // {
+                                                                                                      //   controller.isPlay[index] = false;
+                                                                                                      //   controller.videos[index]?.pause();
+                                                                                                      //
+                                                                                                      // }
+                                                                                                      // else
+                                                                                                      // {
+                                                                                                      //   controller.isPlay = List.generate( controller.getBoardInfoModel.data?.length ??0, (index) => false);
+                                                                                                      //   controller.videos.forEach((e){
+                                                                                                      //     if(e != null)
+                                                                                                      //       {
+                                                                                                      //         e.pause();
+                                                                                                      //       }
+                                                                                                      //   });
+                                                                                                      //   controller.isPlay[index] = true;
+                                                                                                      //
+                                                                                                      //   controller.videos[index]?.play();
+                                                                                                      //
+                                                                                                      // }
                                                                                                       controller.update(['fldr']);
 
                                                                                                     },
@@ -1029,17 +1057,17 @@ class _MyFolderScreenState extends State<MyFolderScreen> {
                                                                                                       Icons.pause:Icons.play_arrow,size: 20,),
                                                                                                     ),
                                                                                                   ),
-                                                                                                                   ),
-                                                                                                                  const SizedBox(height: 5,),
-                                                                                                                  StatefulBuilder(
-                                                                                                                      builder: (context,s) {
-                                                                                                                        s.call((){});
-                                                                                                                        return VideoProgressIndicator(controller.videos[index]!, allowScrubbing: true);
-                                                                                                                      }
-                                                                                                                  ),
-                                                                                                                ],
+                                                                                                                     ),
+                                                                                                                   /* const SizedBox(height: 5,),
+                                                                                                                    StatefulBuilder(
+                                                                                                                        builder: (context,s) {
+                                                                                                                          s.call((){});
+                                                                                                                          return VideoProgressIndicator(controller.videos[index]!, allowScrubbing: true);
+                                                                                                                        }
+                                                                                                                    ),*/
+                                                                                                                  ],
+                                                                                                                ),
                                                                                                               ),
-                                                                                                              controller.isLoad[index]?CircularProgressIndicator():const SizedBox(),
 
                                                                                                             ],
                                                                                                           )
@@ -1062,26 +1090,30 @@ class _MyFolderScreenState extends State<MyFolderScreen> {
                                                                                                           );
                                                                                                         },
                                                                                                       ),
-                                                                                                GestureDetector(
-                                                                                                  onTap: () async {
-                                                                                                    await controller.likeUnlike(index);
-                                                                                                    controller.update(['fldr']);
-                                                                                                  },
-                                                                                                  child: Container(
-                                                                                                    height: 20,
-                                                                                                    width: 20,
-                                                                                                    margin: const EdgeInsets.only(top: 12, right: 12),
-                                                                                                    decoration: const BoxDecoration(
-                                                                                                      borderRadius: BorderRadius.all(Radius.circular(5)),
-                                                                                                      color: Colors.white,
+                                                                                                Container(
+                                                                                                  width: Get.width * 0.45,
+                                                                                                  alignment: Alignment.topRight,
+                                                                                                  child: GestureDetector(
+                                                                                                    onTap: () async {
+                                                                                                      await controller.likeUnlike(index);
+                                                                                                      controller.update(['fldr']);
+                                                                                                    },
+                                                                                                    child: Container(
+                                                                                                      height: 20,
+                                                                                                      width: 20,
+                                                                                                      margin: const EdgeInsets.only(top: 12, right: 12),
+                                                                                                      decoration: const BoxDecoration(
+                                                                                                        borderRadius: BorderRadius.all(Radius.circular(5)),
+                                                                                                        color: Colors.white,
+                                                                                                      ),
+                                                                                                      child: controller.isLike[index] == true
+                                                                                                          ? Icon(Icons.favorite_outlined, size: 18, color: ColorRes.colorE16F55)
+                                                                                                          : Icon(
+                                                                                                              Icons.favorite_outline_sharp,
+                                                                                                              size: 18,
+                                                                                                              color: ColorRes.appColor,
+                                                                                                            ),
                                                                                                     ),
-                                                                                                    child: controller.isLike[index] == true
-                                                                                                        ? Icon(Icons.favorite_outlined, size: 18, color: ColorRes.colorE16F55)
-                                                                                                        : Icon(
-                                                                                                            Icons.favorite_outline_sharp,
-                                                                                                            size: 18,
-                                                                                                            color: ColorRes.appColor,
-                                                                                                          ),
                                                                                                   ),
                                                                                                 ),
                                                                                               ],
