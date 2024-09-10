@@ -181,27 +181,34 @@ class FavouriteScreen extends StatelessWidget {
                                                             alignment:Alignment.center,
                                                             children: [
                                                             controller.videos[index]!.value.isInitialized?
-                                                            AspectRatio(
-                                                                  aspectRatio: controller.videos[index]!.value.aspectRatio,
-                                                                  child:
-                                                                  VideoPlayer(controller.videos[index]! ))
+                                                            Container(
+                                                              height: Get.height * 0.7,
+                                                              width: Get.width * 0.75,
+                                                              child: AspectRatio(
+                                                                    aspectRatio: 9/16,
+                                                                    child:
+                                                                    VideoPlayer(controller.videos[index]! )),
+                                                            )
                                                                 :
-                                                          CachedNetworkImage(
-                                                            fit: BoxFit.contain,
-                                                            imageUrl:  controller.storedFavorites![index]['thumbnail'] ?? '',
-                                                            progressIndicatorBuilder: (context, strings, download) {
-                                                              return Shimmer.fromColors(
-                                                                baseColor: Colors.grey.shade300,
-                                                                highlightColor: Colors.white,
-                                                                enabled: true,
-                                                                child: Container(
-                                                                  height: Get.width,
-                                                                  width: Get.width,
-                                                                  color: Colors.white,
-                                                                ),
-                                                              );
-                                                            },
-                                                            errorWidget: (context, url, error) => Container(),
+                                                          AspectRatio(
+                                                            aspectRatio:9/16,
+                                                            child: CachedNetworkImage(
+                                                              fit: BoxFit.fill,
+                                                              imageUrl:  controller.storedFavorites![index]['thumbnail'] ?? '',
+                                                              progressIndicatorBuilder: (context, strings, download) {
+                                                                return Shimmer.fromColors(
+                                                                  baseColor: Colors.grey.shade300,
+                                                                  highlightColor: Colors.white,
+                                                                  enabled: true,
+                                                                  child: Container(
+                                                                    height: Get.width,
+                                                                    width: Get.width,
+                                                                    color: Colors.white,
+                                                                  ),
+                                                                );
+                                                              },
+                                                              errorWidget: (context, url, error) => Container(),
+                                                            ),
                                                           ),
                                                               SizedBox(
                                                                 width: Get.width * 0.75,
@@ -351,82 +358,84 @@ class FavouriteScreen extends StatelessWidget {
                                         itemCount: controller.storedFavorites?.length ?? 0,
                                         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                                           crossAxisCount: 2,
-                                          mainAxisSpacing: 6,
+                                          mainAxisSpacing: 19,
                                           crossAxisSpacing: 19,
+                                          childAspectRatio: 9/16
                                         ),
                                         itemBuilder: (context, index) {
-                                          return Stack(
-                                            alignment: Alignment.bottomRight,
-                                            children: [
-                                              ClipRRect(
-                                                borderRadius: BorderRadius.circular(5),
-                                                child: Container(
-                                                  height: Get.height * 0.219,
-                                                  width: Get.width * 0.45,
-                                                  // padding: (myFolderController.checkImg[index] == false)
-                                                  //     ? const EdgeInsets.all(0)
-                                                  //     : const EdgeInsets.all(2),
-                                                  decoration: BoxDecoration(
-                                                    // color:myFolderController.checkImg[index]==true?
-                                                    // ColorRes.appColor:Colors.transparent,
-                                                    // border: Border.all(color:myFolderController.checkImg[index]==true?
-                                                    // ColorRes.appColor:Colors.white ),
-                                                    borderRadius: BorderRadius.circular(5),
-                                                  ),
-                                                  child: Stack(
-                                                    alignment: controller.isSelectOn == false ? Alignment.topRight : Alignment.bottomRight,
-                                                    children: [
-                                                      GestureDetector(
-                                                        onTap: ()  {
+                                          return ClipRRect(
+                                            borderRadius: BorderRadius.circular(5),
+                                            child: AspectRatio(
+                                              aspectRatio: 9/16,
+                                              child: Container(
+                                                // height: Get.height * 0.219,
+                                                // width: Get.width * 0.45,
+                                                // padding: (myFolderController.checkImg[index] == false)
+                                                //     ? const EdgeInsets.all(0)
+                                                //     : const EdgeInsets.all(2),
+                                                decoration: BoxDecoration(
+                                                  // color:myFolderController.checkImg[index]==true?
+                                                  // ColorRes.appColor:Colors.transparent,
+                                                  // border: Border.all(color:myFolderController.checkImg[index]==true?
+                                                  // ColorRes.appColor:Colors.white ),
+                                                  borderRadius: BorderRadius.circular(5),
+                                                ),
+                                                child: Stack(
+                                                  alignment: controller.isSelectOn == false ? Alignment.topRight : Alignment.bottomRight,
+                                                  children: [
+                                                    GestureDetector(
+                                                      onTap: ()  {
 
-                                                          print(index);
+                                                        print(index);
 
-                                                          if(controller.isSelectOn == false) {
-                                                            controller.onTapImage(index);
-                                                            controller.update(['favourite']);
-                                                          } else {
-                                                            if (controller.checkImage[index] == false) {
-                                                              controller.checkImage[index] = true;
-                                                            } else {
-                                                              controller.checkImage[index] = false;
-                                                            }
-                                                          }
-
+                                                        if(controller.isSelectOn == false) {
+                                                          controller.onTapImage(index);
                                                           controller.update(['favourite']);
-                                                        },
-                                                        child: ClipRRect(
-                                                          borderRadius: BorderRadius.circular(5),
-                                                          child: Container(
-                                                            padding: (controller.checkImage[index] == true)
-                                                                ? const EdgeInsets.all(1)
-                                                                : const EdgeInsets.all(1),
-                                                            decoration: BoxDecoration(
+                                                        } else {
+                                                          if (controller.checkImage[index] == false) {
+                                                            controller.checkImage[index] = true;
+                                                          } else {
+                                                            controller.checkImage[index] = false;
+                                                          }
+                                                        }
+
+                                                        controller.update(['favourite']);
+                                                      },
+                                                      child: ClipRRect(
+                                                        borderRadius: BorderRadius.circular(5),
+                                                        child: Container(
+                                                          padding: (controller.checkImage[index] == true)
+                                                              ? const EdgeInsets.all(1)
+                                                              : const EdgeInsets.all(1),
+                                                          decoration: BoxDecoration(
+                                                            color: controller.checkImage[index] == true
+                                                                ? ColorRes.white
+                                                                : Colors.transparent,
+                                                            border: Border.all(
                                                               color: controller.checkImage[index] == true
-                                                                  ? ColorRes.white
-                                                                  : Colors.transparent,
-                                                              border: Border.all(
-                                                                color: controller.checkImage[index] == true
-                                                                    ? ColorRes.appColor
-                                                                    : Colors.white,
-                                                              ),
-                                                              borderRadius: BorderRadius.circular(5),
+                                                                  ? ColorRes.appColor
+                                                                  : Colors.white,
                                                             ),
-                                                            child:  controller.storedFavorites![index]['fileType'] =="video" ?
-                                                            controller.videos[index] != null?
-                                                            Stack(
-                                                              alignment:Alignment.center,
-                                                              children: [
-                                                                /*controller.videos[index]!.value.isInitialized?
-                                                                controller.isLoad[index] == false?
-                                                                AspectRatio(
-                                                                    aspectRatio: controller.videos[index]!.value.aspectRatio,
-                                                                    child:
+                                                            borderRadius: BorderRadius.circular(5),
+                                                          ),
+                                                          child:  controller.storedFavorites![index]['fileType'] =="video" ?
+                                                          controller.videos[index] != null?
+                                                          Stack(
+                                                            alignment:Alignment.center,
+                                                            children: [
+                                                              /*controller.videos[index]!.value.isInitialized?
+                                                              controller.isLoad[index] == false?
+                                                              AspectRatio(
+                                                                  aspectRatio: controller.videos[index]!.value.aspectRatio,
+                                                                  child:
 
 
-                                                                    VideoPlayer(controller.videos[index]! ))
-                                                                    :Image.network( controller.storedFavorites![index]['thumbnail'] ?? '')  :*/
-                                                                CachedNetworkImage(
-                                                                  fit: BoxFit.contain,
+                                                                  VideoPlayer(controller.videos[index]! ))
+                                                                  :Image.network( controller.storedFavorites![index]['thumbnail'] ?? '')  :*/
+                                                              AspectRatio(
+                                                                aspectRatio:9/16,
+                                                                child: CachedNetworkImage(
+                                                                  fit: BoxFit.fill,
                                                                   imageUrl:  controller.storedFavorites![index]['thumbnail'] ?? '',
                                                                   progressIndicatorBuilder: (context, strings, download) {
                                                                     return Shimmer.fromColors(
@@ -442,129 +451,129 @@ class FavouriteScreen extends StatelessWidget {
                                                                   },
                                                                   errorWidget: (context, url, error) => Container(),
                                                                 ),
-                                                                SizedBox(
-                                                                  width: Get.width * 0.45,
-                                                                  child: Column(
-                                                                    crossAxisAlignment:CrossAxisAlignment.start,
-                                                                    children: [
-                                                                      const Spacer(),
-                                                                  Padding(
-                                                                        padding: const EdgeInsets.only(left: 4.0),
-                                                                        child:   InkWell(
-                                                                          onTap:() async {
-                                                                            controller.onTapImage(index);
-                                                                            controller.videos[index]?.pause();
-                                                                            // if(controller.isPlay[index])
-                                                                            // {
-                                                                            //   controller.isPlay[index] = false;
-                                                                            //   controller.videos[index]?.pause();
-                                                                            //
-                                                                            // }
-                                                                            // else
-                                                                            // {
-                                                                            //
-                                                                            //   controller.isPlay = List.generate( controller.storedFavorites?.length ?? 0, (index) => false);
-                                                                            //   for (var e in controller.videos) {
-                                                                            //     if(e != null)
-                                                                            //     {
-                                                                            //       e.pause();
-                                                                            //     }
-                                                                            //   }
-                                                                            //   controller.isPlay[index] = true;
-                                                                            //
-                                                                            //   controller.videos[index]?.play();
-                                                                            //
-                                                                            // }
-                                                                            controller.update(['favourite']);
+                                                              ),
+                                                              SizedBox(
+                                                                width: Get.width * 0.45,
+                                                                child: Column(
+                                                                  crossAxisAlignment:CrossAxisAlignment.start,
+                                                                  children: [
+                                                                    const Spacer(),
+                                                                Padding(
+                                                                      padding: const EdgeInsets.only(left: 4.0,bottom: 4),
+                                                                      child:   InkWell(
+                                                                        onTap:() async {
+                                                                          controller.onTapImage(index);
+                                                                          controller.videos[index]?.pause();
+                                                                          // if(controller.isPlay[index])
+                                                                          // {
+                                                                          //   controller.isPlay[index] = false;
+                                                                          //   controller.videos[index]?.pause();
+                                                                          //
+                                                                          // }
+                                                                          // else
+                                                                          // {
+                                                                          //
+                                                                          //   controller.isPlay = List.generate( controller.storedFavorites?.length ?? 0, (index) => false);
+                                                                          //   for (var e in controller.videos) {
+                                                                          //     if(e != null)
+                                                                          //     {
+                                                                          //       e.pause();
+                                                                          //     }
+                                                                          //   }
+                                                                          //   controller.isPlay[index] = true;
+                                                                          //
+                                                                          //   controller.videos[index]?.play();
+                                                                          //
+                                                                          // }
+                                                                          controller.update(['favourite']);
 
-                                                                          },
-                                                                          child: Container(
-                                                                            height: 30,
-                                                                            width: 30,
-                                                                            decoration:const BoxDecoration(
-                                                                              shape:BoxShape.circle,
-                                                                              color:Colors.white,
-                                                                            ),
-                                                                            child: Icon(controller.isPlay[index]?Icons.pause:Icons.play_arrow,
-                                                                              size: 20,),
+                                                                        },
+                                                                        child: Container(
+                                                                          height: 30,
+                                                                          width: 30,
+                                                                          decoration:const BoxDecoration(
+                                                                            shape:BoxShape.circle,
+                                                                            color:Colors.white,
                                                                           ),
+                                                                          child: Icon(controller.isPlay[index]?Icons.pause:Icons.play_arrow,
+                                                                            size: 20,),
                                                                         ),
                                                                       ),
-                                                                   /*   const SizedBox(height: 5,),
-                                                                      StatefulBuilder(
-                                                                          builder: (context,s) {
-                                                                            s.call((){});
-                                                                            return VideoProgressIndicator(controller.videos[index]!, allowScrubbing: true);
-                                                                          }
-                                                                      ),*/
+                                                                    ),
+                                                                 /*   const SizedBox(height: 5,),
+                                                                    StatefulBuilder(
+                                                                        builder: (context,s) {
+                                                                          s.call((){});
+                                                                          return VideoProgressIndicator(controller.videos[index]!, allowScrubbing: true);
+                                                                        }
+                                                                    ),*/
 
-                                                                    ],
-                                                                  ),
+                                                                  ],
                                                                 ),
+                                                              ),
 
-                                                              ],
-                                                            ):const SizedBox():CachedNetworkImage(
-                                                              height: 170,
-                                                              width: Get.width,
-                                                              fit: BoxFit.cover,
-                                                              imageUrl: controller.storedFavorites?[index]['image'] ?? "",
-                                                              progressIndicatorBuilder: (context, strings, download) {
-                                                                return Shimmer.fromColors(
-                                                                  baseColor: Colors.grey.shade300,
-                                                                  highlightColor: Colors.white,
-                                                                  enabled: true,
-                                                                  child: Container(
-                                                                    height: Get.width,
-                                                                    width: Get.width,
-                                                                    color: Colors.white,
-                                                                  ),
-                                                                );
-                                                              },
-                                                              errorWidget: (context, url, error) => Container(),
-                                                            ),
+                                                            ],
+                                                          ):const SizedBox():CachedNetworkImage(
+                                                            // height: 170,
+                                                            // width: Get.width,
+                                                            fit: BoxFit.fill,
+                                                            imageUrl: controller.storedFavorites?[index]['image'] ?? "",
+                                                            progressIndicatorBuilder: (context, strings, download) {
+                                                              return Shimmer.fromColors(
+                                                                baseColor: Colors.grey.shade300,
+                                                                highlightColor: Colors.white,
+                                                                enabled: true,
+                                                                child: Container(
+                                                                  height: Get.width,
+                                                                  width: Get.width,
+                                                                  color: Colors.white,
+                                                                ),
+                                                              );
+                                                            },
+                                                            errorWidget: (context, url, error) => Container(),
                                                           ),
                                                         ),
                                                       ),
+                                                    ),
 
-                                                      controller.checkImage[index] == true
-                                                          ? Padding(
-                                                              padding: const EdgeInsets.only(bottom: 10, right: 10),
-                                                              child: Image.asset(AssetRes.selectedImage, scale: 4),
-                                                            )
-                                                          : const SizedBox(),
-                                                      controller.isSelectOn == false
-                                                          ? GestureDetector(
-                                                              onTap: () {
-                                                                for (var element in favouriteController.videos) {
-                                                                  if(element != null) {
-                                                                    element.pause();
-
-                                                                  }
+                                                    controller.checkImage[index] == true
+                                                        ? Padding(
+                                                            padding: const EdgeInsets.only(bottom: 10, right: 10),
+                                                            child: Image.asset(AssetRes.selectedImage, scale: 4),
+                                                          )
+                                                        : const SizedBox(),
+                                                    controller.isSelectOn == false
+                                                        ? GestureDetector(
+                                                            onTap: () {
+                                                              for (var element in favouriteController.videos) {
+                                                                if(element != null) {
+                                                                  element.pause();
 
                                                                 }
-                                                                favouriteController. isPlay = List.generate(favouriteController.storedFavorites?.length ??0, (index) => false);
 
-                                                                favouriteController.update(['favourite']);
-                                                                controller.removeFavorite(controller.storedFavorites?[index]['id'] ?? '');
-                                                              },
-                                                              child: Container(
-                                                                height: 20,
-                                                                width: 20,
-                                                                margin: const EdgeInsets.only(top: 12, right: 12),
-                                                                decoration: const BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(5)), color: Colors.white),
-                                                                child: Icon(Icons.favorite_outlined, size: 18, color: ColorRes.colorE16F55),
-                                                              ),
-                                                            )
-                                                          : const SizedBox(),
-                                                      // controller.addSelectedImage[index]==true? Padding(
-                                                      //   padding: const EdgeInsets.only(bottom: 10,right: 10),
-                                                      //   child: Image.asset(AssetRes.selectedImage,scale: 4,),
-                                                      // ):SizedBox()
-                                                    ],
-                                                  ),
+                                                              }
+                                                              favouriteController. isPlay = List.generate(favouriteController.storedFavorites?.length ??0, (index) => false);
+
+                                                              favouriteController.update(['favourite']);
+                                                              controller.removeFavorite(controller.storedFavorites?[index]['id'] ?? '');
+                                                            },
+                                                            child: Container(
+                                                              height: 20,
+                                                              width: 20,
+                                                              margin: const EdgeInsets.only(top: 12, right: 12),
+                                                              decoration: const BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(5)), color: Colors.white),
+                                                              child: Icon(Icons.favorite_outlined, size: 18, color: ColorRes.colorE16F55),
+                                                            ),
+                                                          )
+                                                        : const SizedBox(),
+                                                    // controller.addSelectedImage[index]==true? Padding(
+                                                    //   padding: const EdgeInsets.only(bottom: 10,right: 10),
+                                                    //   child: Image.asset(AssetRes.selectedImage,scale: 4,),
+                                                    // ):SizedBox()
+                                                  ],
                                                 ),
                                               ),
-                                            ],
+                                            ),
                                           );
                                         }),
                                   ),
