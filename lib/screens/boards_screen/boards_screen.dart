@@ -746,7 +746,7 @@ class BoardsScreen extends StatelessWidget {
 
 
                               SizedBox(
-                                height: Get.height *0.08,
+                                height: Get.height *0.05,
                                 child: Column(
                                   children: [
                                  /*   Padding(
@@ -792,12 +792,12 @@ class BoardsScreen extends StatelessWidget {
                                           StringRes.inspire,
                                           style: GoogleFonts.inder(
                                             color: ColorRes.black,
-                                            fontSize: 14,
+                                            fontSize: 12,
                                             fontWeight: FontWeight.w500,
                                           ),
                                         ),
                                         const SizedBox(
-                                          width: 5,
+                                          width: 3,
                                         ),
                                         // Text(
                                         //   StringRes.filuet.tr,
@@ -807,11 +807,11 @@ class BoardsScreen extends StatelessWidget {
                                         //     fontWeight: FontWeight.bold,
                                         //   ),
                                         // ),
-                                        Image.asset(AssetRes.filuetLogo,height: 20,),
+                                        Image.asset(AssetRes.filuetLogo,height: 15,),
                                       ],
                                     ),
                                     const SizedBox(
-                                      height: 20,
+                                      height: 10,
                                     ),
                                   ],
                                 ),
