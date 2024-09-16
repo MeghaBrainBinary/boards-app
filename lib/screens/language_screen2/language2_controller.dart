@@ -106,50 +106,48 @@ List filterList =[];
     update();
 
   }
+  bool isTaped = false;
 
   onTapConfirm()async{
+   if(isTaped == false) {
+     isTaped = true;
 
-    if(selectedLanguage == "English")
-    {
-      languageCode ="en";
-    }
-    if(selectedLanguage == "Latvian")
-    {
-      languageCode ="lv";
-    }
-    if(selectedLanguage == "Estonian")
-    {
-      languageCode ="et";
-    }
-    if(selectedLanguage == "Lithuanian")
-    {
-      languageCode ="lt";
-    }
-    if(selectedLanguage == "Russian")
-    {
-      languageCode ="ru";
-    }
-loader.value = true;
+     if (selectedLanguage == "English") {
+       languageCode = "en";
+     }
+     if (selectedLanguage == "Latvian") {
+       languageCode = "lv";
+     }
+     if (selectedLanguage == "Estonian") {
+       languageCode = "et";
+     }
+     if (selectedLanguage == "Lithuanian") {
+       languageCode = "lt";
+     }
+     if (selectedLanguage == "Russian") {
+       languageCode = "ru";
+     }
+     loader.value = true;
 
-    PrefService.setValue(PrefKeys.language, selectedLanguage);
-    PrefService.setValue(PrefKeys.code, languageCode);
+     PrefService.setValue(PrefKeys.language, selectedLanguage);
+     PrefService.setValue(PrefKeys.code, languageCode);
 
-    PrefService.setValue(PrefKeys.languageCode, languageCode);
+     PrefService.setValue(PrefKeys.languageCode, languageCode);
 
-    LocalizationService().changeLocale(selectedLanguage);
+     LocalizationService().changeLocale(selectedLanguage);
 
-    //getBoardModel =await GetBoardApi.getBoardApi(languageCode);
+     //getBoardModel =await GetBoardApi.getBoardApi(languageCode);
 
-   // print(getBoardModel.data![0].name);
+     // print(getBoardModel.data![0].name);
 
-    loader.value = false;
 
-BoardsController boardsController  = Get.put(BoardsController());
-    Get.deleteAll(force: true);
- await boardsController.init(languageCode);
 
-    Get.offAndToNamed(AppRoutes.boardsPage,arguments: languageCode);
-
+     BoardsController boardsController = Get.put(BoardsController());
+     Get.deleteAll(force: true);
+     await boardsController.init(languageCode);
+     loader.value = false;
+     Get.offAndToNamed(AppRoutes.boardsPage, arguments: languageCode);
+   }
   }
 
 

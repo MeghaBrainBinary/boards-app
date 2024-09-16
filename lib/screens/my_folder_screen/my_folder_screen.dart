@@ -187,9 +187,10 @@ class _MyFolderScreenState extends State<MyFolderScreen> {
                                                     false &&
                                                 controller.isSelectedPageView ==
                                                     false)
-                                              (widget.isFirstNode ?? false)
+                                             /* (widget.isFirstNode ?? false)
                                                   ? const SizedBox()
-                                                  : GestureDetector(
+                                                  : */
+                                              GestureDetector(
                                                       onTap: () {
                                                         myFolderController
                                                                 .addSelectedImage =
@@ -238,9 +239,11 @@ class _MyFolderScreenState extends State<MyFolderScreen> {
                                             else
                                               const SizedBox(),
                                             controller.isSelectedPageView
-                                                ? (widget.isFirstNode ?? false)
+                                                ?
+                                          /*  (widget.isFirstNode ?? false)
                                                     ? const SizedBox()
-                                                    : Row(
+                                                    : */
+                                            Row(
                                                         mainAxisAlignment:
                                                             MainAxisAlignment
                                                                 .spaceBetween,
@@ -913,9 +916,9 @@ controller
 
                                                                             controller.selectedId =
                                                                                 widget.parentId.toString();
-                                                                            // controller.myInt(
-                                                                            //     widget.parentId.toString() ??
-                                                                            //         "");
+                                                                            controller.myInt(
+                                                                                widget.parentId.toString() ??
+                                                                                    "");
                                                                           } else {
                                                                             myFolderController.isSelectedNode =
                                                                                 List.generate(widget.node?.length ?? 0, (index) => false);
@@ -987,10 +990,11 @@ controller
                                                                   ),
                                                                 ),
 
-                                                          widget.isFirstNode ??
+                                                         /* widget.isFirstNode ??
                                                                   false
                                                               ? const SizedBox()
-                                                              : SizedBox(
+                                                              :*/
+                                                          SizedBox(
                                                                   height:
                                                                       Get.height *
                                                                           0.69,
@@ -1528,7 +1532,7 @@ controller
                             : const SizedBox()
                       ],
                     ),
-                    widget.isFirstNode ?? false
+                 /*   widget.isFirstNode ?? false
                         ? Container(
                             height: Get.height * 0.67,
                             width: Get.width,
@@ -1572,7 +1576,7 @@ controller
                               ),
                             ),
                           )
-                        : const SizedBox()
+                        : const SizedBox()*/
                   ],
                 ),
                 Obx(() => (controller.loader.value)

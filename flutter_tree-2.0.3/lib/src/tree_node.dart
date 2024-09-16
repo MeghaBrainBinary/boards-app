@@ -235,7 +235,7 @@ fontSize: 14,
                       //   ),
                       // ),
 
-                      const SizedBox(width: 10),
+                      const SizedBox(width: 9),
 
                       if (widget.showCheckBox)
                         Checkbox(
@@ -299,10 +299,15 @@ fontSize: 14,
                                         const SizedBox(width: 4),
                                         Padding(
                                           padding: const EdgeInsets.symmetric(horizontal: 8),
-                                          child:     HtmlWidget(
-                                            widget.data.title,
-                                            renderMode: RenderMode.column,
-                                            textStyle:widget.textStyle,
+                                          child:     SizedBox(
+                                            width: MediaQuery.of(context).size.width *0.7,
+                                            child: HtmlWidget(
+                                              widget.data.title,
+
+                                              renderMode: RenderMode.column,
+                                              textStyle:widget.textStyle,
+
+                                            ),
 
                                           ), ),
                                       ],
@@ -340,10 +345,14 @@ fontSize: 14,
                                       ),
                                       const SizedBox(width: 4),
                                       // Text(widget.data.title, style: widget.textStyle),
-                                      HtmlWidget(
-    widget.data.title,
-                                        textStyle:widget.textStyle,
+                                      SizedBox(
+                                        width:        MediaQuery.of(context).size.width *0.7,
+                                        child:  HtmlWidget(
+                                          widget.data.title,
+                                          textStyle:widget.textStyle,
+                                        ),
                                       ),
+
                                     ],
                                   ),
                           ),
