@@ -3,10 +3,6 @@
 import 'package:boards_app/common/common_button.dart';
 import 'package:boards_app/common/common_textfild.dart';
 import 'package:boards_app/screens/auth/create_new_password_screen/create_new_password_controller.dart';
-import 'package:boards_app/screens/auth/forgot_password_screen/forgot_password_controller.dart';
-import 'package:boards_app/screens/auth/login_screen/login_controller.dart';
-import 'package:boards_app/screens/contact_us_screen/contact_us_controller.dart';
-import 'package:boards_app/utils/app_text_field.dart';
 import 'package:boards_app/utils/appstyle.dart';
 import 'package:boards_app/utils/asset_res.dart';
 import 'package:boards_app/utils/color_res.dart';
@@ -113,8 +109,8 @@ class CreateNewPasswordScreen extends StatelessWidget {
                         Row(
                           children: [
                             Checkbox(
-                              side: BorderSide(width: 1),
-                              shape: ContinuousRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(5))),
+                              side: const BorderSide(width: 1),
+                              shape: const ContinuousRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(5))),
                               value: controller.rememberMe,
                               hoverColor: ColorRes.black,  activeColor: ColorRes.black,
                               onChanged: (bool? value) {

@@ -41,7 +41,7 @@ class GetBoardApi {
 
 
           //  } else {}
-        } else if (response!.statusCode == 500) {
+        } else if (response.statusCode == 500) {
           // Get.snackbar(
           //   StringRes.error.tr,
           //   jsonDecode(response.body)["message"],

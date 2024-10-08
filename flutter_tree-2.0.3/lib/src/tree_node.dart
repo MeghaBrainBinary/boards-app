@@ -1,4 +1,5 @@
-// ignore_for_file: depend_on_referenced_packages
+// ignore_for_file: depend_on_referenced_packages, unnecessary_null_comparison, must_be_immutable, unused_field
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import '../flutter_tree.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -167,8 +168,10 @@ fontSize: 14,
                       _showLoading = true;
                     });
                     // _isExpaned = false;
+                    if (kDebugMode) {
                     print("-------------- id ---------------${widget.selectedId}");
-                    print("-------------- id ---------------${widget.data.id}");
+                      print("-------------- id ---------------${widget.data.id}");
+                    }
                     widget.onLastTap(widget.parent,widget.data);
                     // widget.load(widget.data).then((value) {
                     //   if (value) {
@@ -262,7 +265,7 @@ fontSize: 14,
                                     alignment: Alignment.center,
                                     height: 40,
                                     decoration: BoxDecoration(
-                                        color: (widget.selectedId == (widget.data.id ?? "").toString()) ? ColorRes.appColor : ColorRes.white,
+                                        color: (widget.selectedId == (widget.data.id).toString()) ? ColorRes.appColor : ColorRes.white,
                                         borderRadius: BorderRadius.circular(15),
                                         border: Border.all(color: ColorRes.appColor)
                                     ),
@@ -279,7 +282,7 @@ fontSize: 14,
                                             child: CachedNetworkImage(
                                               height: 24,
                                               width: 24,
-                                              imageUrl: widget.data.icon ?? "",
+                                              imageUrl: widget.data.icon,
                                               progressIndicatorBuilder: (context, strings, download) {
                                                 return Shimmer.fromColors(
                                                   baseColor: Colors.grey.shade300,
@@ -326,7 +329,7 @@ fontSize: 14,
                                           child: CachedNetworkImage(
                                             height: 40,
                                             width: 46,
-                                            imageUrl: widget.data.icon ?? "",
+                                            imageUrl: widget.data.icon,
                                             progressIndicatorBuilder: (context, strings, download) {
                                               return Shimmer.fromColors(
                                                 baseColor: Colors.grey.shade300,

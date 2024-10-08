@@ -90,7 +90,7 @@ class CategoriesScreen extends StatelessWidget {
                                             decoration: BoxDecoration(
                                                 borderRadius:
                                                     BorderRadius.circular(3),
-                                                image: DecorationImage(
+                                                image: const DecorationImage(
                                                     fit: BoxFit.fill,
                                                     image: AssetImage(
                                                         AssetRes.Categories3))),
@@ -217,7 +217,7 @@ class CategoriesScreen extends StatelessWidget {
                       } else {
                         return Column(
                           mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
+                          children: const [
                             Center(child: CircularProgressIndicator()),
                           ],
                         );

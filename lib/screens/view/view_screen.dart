@@ -1,5 +1,6 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:boards_app/screens/view/view_controller.dart';
-import 'package:boards_app/screens/view/view_full_image.dart';
 import 'package:boards_app/utils/approutes.dart';
 import 'package:boards_app/utils/asset_res.dart';
 import 'package:cached_network_image/cached_network_image.dart';

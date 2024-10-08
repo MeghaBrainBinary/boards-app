@@ -57,7 +57,9 @@ void main() async {
       }
     });
   } catch (e) {
-    print(e);
+    if (kDebugMode) {
+      print(e);
+    }
   }
 
   runApp(const MyApp());
@@ -70,7 +72,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
         locale: (PrefService.getString(PrefKeys.code) == " ")
-            ? const Locale("en,EN")
+            ? const Locale("ru,RU")
             : LocalizationService.locale,
         fallbackLocale: LocalizationService.fallbackLocale,
         translations: LocalizationService(),
@@ -84,8 +86,8 @@ class MyApp extends StatelessWidget {
           GetPage(name: AppRoutes.myFolderPage, page: () => MyFolderScreen()),
           GetPage(name: AppRoutes.introPage, page: () => const IntroScreen()),
           GetPage(name: AppRoutes.favourite, page: () => FavouriteScreen()),
-          GetPage(name: AppRoutes.viewImagesScreen, page: () => ViewImagesScreen(), arguments: []),
-          GetPage(name: AppRoutes.viewFullImagesScreen, page: () => ViewFullImageScreen(), arguments: ""),
+          GetPage(name: AppRoutes.viewImagesScreen, page: () => ViewImagesScreen(), arguments: const []),
+          GetPage(name: AppRoutes.viewFullImagesScreen, page: () => const ViewFullImageScreen(), arguments: ""),
           GetPage(name: AppRoutes.contactUs, page: () => ContactUsScreen()),
           GetPage(name: AppRoutes.setting, page: () => SettingsScreen()),
           GetPage(name: AppRoutes.login, page: () => LoginScreen()),

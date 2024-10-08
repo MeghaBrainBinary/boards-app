@@ -7,7 +7,7 @@ import 'package:shimmer/shimmer.dart';
 
 class ViewFullImageScreen extends StatelessWidget {
 
-   ViewFullImageScreen({Key? key}) : super(key: key);
+   const ViewFullImageScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

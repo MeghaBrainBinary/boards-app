@@ -1,17 +1,14 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:boards_app/screens/language_screen2/language2_controller.dart';
-import 'package:boards_app/services/pref_services.dart';
-import 'package:boards_app/utils/app_text_field.dart';
-import 'package:boards_app/utils/approutes.dart';
 import 'package:boards_app/utils/appstyle.dart';
 import 'package:boards_app/utils/asset_res.dart';
 import 'package:boards_app/utils/color_res.dart';
 import 'package:boards_app/utils/string_res.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_connect/http/src/utils/utils.dart';
 
 import '../../common/common_loader.dart';
-import '../../utils/prefkeys.dart';
 
 class LanguageScreen22 extends StatelessWidget {
   LanguageScreen22({super.key});
@@ -278,7 +275,7 @@ class LanguageScreen22 extends StatelessWidget {
                   ),
                 ),
               ),
-              Obx(() => (languageController.loader.value)?CommonLoader():SizedBox()),
+              Obx(() => (languageController.loader.value)?const CommonLoader():const SizedBox()),
             ],
           ),
         ),

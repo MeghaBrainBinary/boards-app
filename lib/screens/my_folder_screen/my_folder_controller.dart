@@ -1,3 +1,5 @@
+// ignore_for_file: unnecessary_overrides, no_leading_underscores_for_local_identifiers, depend_on_referenced_packages, invalid_use_of_visible_for_testing_member, invalid_use_of_protected_member, prefer_is_empty, deprecated_member_use, empty_catches, unnecessary_null_comparison
+
 import 'dart:core';
 import 'dart:io';
 import 'package:boards_app/common/toast_msg.dart';
@@ -7,8 +9,8 @@ import 'package:boards_app/services/sqlite_helper.dart';
 import 'package:boards_app/utils/asset_res.dart';
 import 'package:boards_app/utils/color_res.dart';
 import 'package:boards_app/utils/string_res.dart';
-import 'package:chewie/chewie.dart';
 import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -90,7 +92,9 @@ List<VideoPlayerController?> videos =[];
        {
 
          videos[i]?.initialize().then((value) {}).catchError((error) {
-           print('Error: $error');
+           if (kDebugMode) {
+             print('Error: $error');
+           }
 
          });
          videos[i]?.notifyListeners();
@@ -141,6 +145,7 @@ await init();
       final directory = await getTemporaryDirectory();
 
       // Create a file to store the video
+      // ignore: unnecessary_brace_in_string_interps
       final file = File('${directory.path}/${DateTime.now().millisecondsSinceEpoch}.${type}');
 
       // Write the video file to the file system
@@ -186,13 +191,13 @@ onTapBack(){
   selectedImg = false;
   checkImg = List.generate(getBoardInfoModel.data?.length??0, (index) => false);
   addSelectedImage = List.generate(getBoardInfoModel.data?.length??0, (index) => false);
-videos.forEach((element) {
+for (var element in videos) {
   if(element != null) {
     element.pause();
     element.dispose();
   }
 
-});
+}
 videos =[];
   update(['fldr']);
 
@@ -218,7 +223,7 @@ videos =[];
   }
   onTapImage(index)async{
       isPageView = true;
-      await Future.delayed(Duration(seconds: 1),(){});
+      await Future.delayed(const Duration(seconds: 1),(){});
 pageController =PageController(initialPage: index);
       selectedImage = getBoardInfoModel.data![index].image.toString();
     update(['fldr']);
@@ -269,14 +274,18 @@ pageController =PageController(initialPage: index);
 if((selectedImage ?? getBoardInfoModel.data![0].image) !.split(".").last == "mp4")
   {
     var appDocDir = await getApplicationDocumentsDirectory();
-    String savePath = appDocDir.path + "/${DateTime.now().millisecond}.mp4";
+    String savePath = "${appDocDir.path}/${DateTime.now().millisecond}.mp4";
     String fileUrl =
         selectedImage ?? getBoardInfoModel.data![0].image.toString();
     await Dio().download(fileUrl, savePath, onReceiveProgress: (count, total) {
-      print((count / total * 100).toStringAsFixed(0) + "%");
+      if (kDebugMode) {
+        print("${(count / total * 100).toStringAsFixed(0)}%");
+      }
     });
     final result = await ImageGallerySaver.saveFile(savePath);
-    print(result);
+    if (kDebugMode) {
+      print(result);
+    }
   }
 else {
   var response = await Dio()
@@ -391,14 +400,18 @@ else {
         for (String selectedImage in selectedImages) {
           if (selectedImage.split(".").last =="mp4") {
             var appDocDir = await getApplicationDocumentsDirectory();
-            String savePath = appDocDir.path + "/${DateTime.now().millisecond}.mp4";
+            String savePath = "${appDocDir.path}/${DateTime.now().millisecond}.mp4";
             String fileUrl =
                 selectedImage;
             await Dio().download(fileUrl, savePath, onReceiveProgress: (count, total) {
-              print((count / total * 100).toStringAsFixed(0) + "%");
+              if (kDebugMode) {
+                print("${(count / total * 100).toStringAsFixed(0)}%");
+              }
             });
             final result = await ImageGallerySaver.saveFile(savePath);
-            print(result);
+            if (kDebugMode) {
+              print(result);
+            }
           }
           else {
             var response = await Dio().get(
@@ -606,18 +619,18 @@ init() async {
 
    if(getBoardInfoModel.data != null)
      {
-       getBoardInfoModel.data!.forEach((e) {
+       for (var e in getBoardInfoModel.data!) {
          if(listLike != null && listLike.length !=0)
          {
-           listLike.forEach((element) {
+           for (var element in listLike) {
 
              if(element.imageId ==e.id.toString())
                {
                  isLike[getBoardInfoModel.data!.indexOf(e)] = true;
                }
-           });
+           }
          }
-       });
+       }
      }
 update(['fldr']);
 }
@@ -662,22 +675,22 @@ List allIndexData =[];
     var data  = await SqliteHelper.sqliteHelper.fetch();
 
 
-    allIndexData.forEach((element) {
+    for (var element in allIndexData) {
 
-      data.forEach((e) {
+      for (var e in data) {
         if(e.imageId == (getBoardInfoModel.data?[element].id.toString()  ?? ''))
           {
 
             allIndex.add(element);
           }
-      });
+      }
 
-    });
+    }
 
-    allIndex.forEach((element) {
+    for (var element in allIndex) {
       allIndexData.remove(element);
-    });
-allIndexData.forEach((element) {
+    }
+for (var element in allIndexData) {
   SqliteHelper.sqliteHelper.insertDb(
       imageID: getBoardInfoModel.data?[element].id.toString()  ?? '',
       imageUrl: getBoardInfoModel.data?[element].image ?? '',
@@ -685,7 +698,7 @@ allIndexData.forEach((element) {
     thumbnail:   getBoardInfoModel.data?[element].thumbnail ?? '',
   );
   isLike[element] = true;
-});
+}
 
 
 
@@ -748,13 +761,13 @@ isPageView= false;
 isSelect = false;
 selectedImg = false;
 
-videos.forEach((element) {
+for (var element in videos) {
   if(element != null)
     {
       element.dispose();
 
     }
-});
+}
 videos =[];
 
     // TODO: implement dispose

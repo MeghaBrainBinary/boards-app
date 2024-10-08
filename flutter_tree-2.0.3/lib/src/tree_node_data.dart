@@ -1,3 +1,5 @@
+// ignore_for_file: non_constant_identifier_names
+
 import 'package:flutter/material.dart';
 
 class TreeNodeData {
@@ -60,11 +62,11 @@ class TreeNodeData {
         expanded: other.expanded,
         language: other.language,
         parent_id: other.parent_id,
-        quote: other.quote ?? '',
-        name_text_color: other.name_text_color ?? '',
-        name_font_family: other.name_font_family ?? '',
-        quote_text_color: other.quote_text_color ?? '',
-        quote_font_family: other.quote_font_family ?? '',
+        quote: other.quote,
+        name_text_color: other.name_text_color,
+        name_font_family: other.name_font_family,
+        quote_text_color: other.quote_text_color,
+        quote_font_family: other.quote_font_family,
         sub_parent_id: other.sub_parent_id,
         children: other.children.map((e) => TreeNodeData.from(e)).toList(),
         title: other.title,

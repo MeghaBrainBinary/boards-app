@@ -1,6 +1,5 @@
-// ignore_for_file: must_be_immutable
+// ignore_for_file: must_be_immutable, prefer_is_empty
 
-import 'dart:io';
 
 import 'package:boards_app/common/common_loader.dart';
 import 'package:boards_app/screens/favourite_screen/favourite_controller.dart';
@@ -9,6 +8,7 @@ import 'package:boards_app/utils/asset_res.dart';
 import 'package:boards_app/utils/color_res.dart';
 import 'package:boards_app/utils/string_res.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shimmer/shimmer.dart';
@@ -117,7 +117,7 @@ class FavouriteScreen extends StatelessWidget {
                                           ),
                                           GestureDetector(
                                             onTap: () {
-                                              controller.checkImage = List.generate(controller.checkImage.length ?? 0, (index) => false);
+                                              controller.checkImage = List.generate(controller.checkImage.length, (index) => false);
                                               controller.isSelectOn = false;
                                               controller.update(['favourite']);
                                               },
@@ -181,7 +181,7 @@ class FavouriteScreen extends StatelessWidget {
                                                             alignment:Alignment.center,
                                                             children: [
                                                             controller.videos[index]!.value.isInitialized?
-                                                            Container(
+                                                            SizedBox(
                                                               height: Get.height * 0.7,
                                                               width: Get.width * 0.75,
                                                               child: AspectRatio(
@@ -386,7 +386,9 @@ class FavouriteScreen extends StatelessWidget {
                                                     GestureDetector(
                                                       onTap: ()  {
 
-                                                        print(index);
+                                                        if (kDebugMode) {
+                                                          print(index);
+                                                        }
 
                                                         if(controller.isSelectOn == false) {
                                                           controller.onTapImage(index);

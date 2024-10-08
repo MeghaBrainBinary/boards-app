@@ -1,4 +1,4 @@
-// ignore_for_file: must_be_immutable
+// ignore_for_file: must_be_immutable, file_names
 
 import 'package:boards_app/screens/wallpaper_flow/wallpaper_dashboard/wallpaper_dashboard_controller.dart';
 import 'package:boards_app/screens/wallpaper_flow/wallpaper_dashboard/widgets/bottomnavigationbar.dart';

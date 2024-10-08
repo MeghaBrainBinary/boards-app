@@ -7,8 +7,8 @@ class ChangePasswordController extends GetxController {
   TextEditingController newPasswordController = TextEditingController();
   TextEditingController confirmNewPasswordController = TextEditingController();
 
-  String selectedLanguage="English";
-  String languageCode ="en";
+  String selectedLanguage="Russian";
+  String languageCode ="ru";
 
   RxBool loader = false.obs;
   bool isObscureText = false;

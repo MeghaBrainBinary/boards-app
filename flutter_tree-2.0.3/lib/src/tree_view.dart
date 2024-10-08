@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_tree/flutter_tree.dart';
 
@@ -113,7 +114,9 @@ class _TreeViewState extends State<TreeView> {
       setState(() {});
       return true;
     } catch (e) {
-      print(e);
+      if (kDebugMode) {
+        print(e);
+      }
       return false;
     }
   }
@@ -313,7 +316,9 @@ class _TreeViewHorizontalState extends State<TreeViewHorizontal> {
       setState(() {});
       return true;
     } catch (e) {
-      print(e);
+      if (kDebugMode) {
+        print(e);
+      }
       return false;
     }
   }

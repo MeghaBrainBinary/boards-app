@@ -6,6 +6,7 @@ import 'package:boards_app/utils/prefkeys.dart';
 import 'package:boards_app/utils/string_res.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 
 class SettingsController extends GetxController {
@@ -13,8 +14,8 @@ class SettingsController extends GetxController {
   TextEditingController emailIdController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();
 
-  String selectedLanguage="English";
-  String languageCode ="en";
+  String selectedLanguage="Russian";
+  String languageCode ="ru";
 
   RxBool loader = false.obs;
 
@@ -109,7 +110,9 @@ class SettingsController extends GetxController {
         Get.offAllNamed(AppRoutes.login);
       } catch (e) {
         // Handle any errors that occurred during account deletion
-        print('Error deleting account: $e');
+        if (kDebugMode) {
+          print('Error deleting account: $e');
+        }
         // You might want to show an error message to the user here
       }
     } else {

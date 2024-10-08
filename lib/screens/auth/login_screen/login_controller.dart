@@ -41,7 +41,6 @@ class LoginController extends GetxController {
 
       return true;
     } catch (e) {
-      print(e.toString());
       loader.value = false;
 
       Get.snackbar(StringRes.error.tr, StringRes.invalidUserName.tr,
@@ -55,12 +54,12 @@ class LoginController extends GetxController {
 // email
   getUserDocId(String email) async {
     await user.get().then((value) {
-      value.docs.forEach((element) {
+      for (var element in value.docs) {
         if (element['email'] == email) {
           var id = element.id;
           PrefService.setValue('docId', id);
         } else {}
-      });
+      }
     });
   }
 

@@ -1,7 +1,7 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:boards_app/common/common_loader.dart';
-import 'package:boards_app/localization/localization.dart';
 import 'package:boards_app/screens/language_screen/language_controller.dart';
-import 'package:boards_app/utils/app_text_field.dart';
 import 'package:boards_app/utils/appstyle.dart';
 import 'package:boards_app/utils/asset_res.dart';
 import 'package:boards_app/utils/color_res.dart';
@@ -315,7 +315,7 @@ class LanguageScreen extends StatelessWidget {
                 ),
               ),
             ),
-            Obx(() => (languageController.loader.value)?CommonLoader():SizedBox()),
+            Obx(() => (languageController.loader.value)?const CommonLoader():const SizedBox()),
           ],
         ),
       ),

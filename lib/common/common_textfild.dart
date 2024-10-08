@@ -1,9 +1,9 @@
-import 'package:boards_app/utils/app_text_field.dart';
+// ignore_for_file: non_constant_identifier_names, must_be_immutable
+
 import 'package:boards_app/utils/appstyle.dart';
 import 'package:boards_app/utils/color_res.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 
 class CommonTextFeild extends StatelessWidget {
 
@@ -18,7 +18,7 @@ class CommonTextFeild extends StatelessWidget {
    bool? obscureText;
    double? contentPaddingTop;
 
-  CommonTextFeild({
+  CommonTextFeild({super.key,
     this.onTap,
     this.isShowViciblity,
     this.onTapIcon,

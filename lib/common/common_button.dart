@@ -1,3 +1,5 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:boards_app/utils/appstyle.dart';
 import 'package:boards_app/utils/color_res.dart';
 import 'package:flutter/material.dart';
@@ -8,7 +10,7 @@ class CommonButton extends StatelessWidget {
   String? text;
   double? width;
   double? height;
-   CommonButton({
+   CommonButton({super.key,
     this.onTap,
      this.text,
      this.height,

@@ -3,10 +3,7 @@
 import 'package:boards_app/common/common_button.dart';
 import 'package:boards_app/common/common_loader.dart';
 import 'package:boards_app/common/common_textfild.dart';
-import 'package:boards_app/screens/auth/login_screen/login_controller.dart';
 import 'package:boards_app/screens/auth/sign_up_screen/sign_up_controller.dart';
-import 'package:boards_app/screens/contact_us_screen/contact_us_controller.dart';
-import 'package:boards_app/utils/app_text_field.dart';
 import 'package:boards_app/utils/approutes.dart';
 import 'package:boards_app/utils/appstyle.dart';
 import 'package:boards_app/utils/asset_res.dart';
@@ -203,7 +200,7 @@ class SignUpScreen extends StatelessWidget {
                                   weight: FontWeight.w500,
                                   color: ColorRes.black),
                             ),
-                            SizedBox(width: 2,),
+                            const SizedBox(width: 2,),
                             GestureDetector(
                               onTap: () {
                                 Get.toNamed( AppRoutes.login);

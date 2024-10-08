@@ -1,9 +1,9 @@
-import 'dart:io';
+
+// ignore_for_file: must_be_immutable, unnecessary_null_comparison, prefer_is_empty
 
 import 'package:boards_app/common/common_button.dart';
 import 'package:boards_app/common/common_loader.dart';
 import 'package:boards_app/screens/boards_screen/boards_controller.dart';
-import 'package:boards_app/screens/boards_screen/model/get_board_model.dart';
 import 'package:boards_app/screens/my_folder_screen/my_folder_controller.dart';
 import 'package:boards_app/screens/my_select_folder_screen/my_select_folder_controller.dart';
 import 'package:boards_app/services/pref_services.dart';
@@ -14,8 +14,8 @@ import 'package:boards_app/utils/color_res.dart';
 import 'package:boards_app/utils/prefkeys.dart';
 import 'package:boards_app/utils/string_res.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_tree/flutter_tree.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:get/get.dart';
@@ -70,7 +70,9 @@ class _MyFolderScreenState extends State<MyFolderScreen> {
   @override
   Widget build(BuildContext context) {
 
-    print("------------------------${widget.node}");
+    if (kDebugMode) {
+      print("------------------------${widget.node}");
+    }
 
     myFolderController.init();
     return WillPopScope(
@@ -78,11 +80,11 @@ class _MyFolderScreenState extends State<MyFolderScreen> {
         if (myFolderController.isPageView ||
             myFolderController.isSelectedPageView) {
           myFolderController.isPageView = false;
-          myFolderController.videos.forEach((element) {
+          for (var element in myFolderController.videos) {
             if (element != null) {
               element.pause();
             }
-          });
+          }
           myFolderController.isPlay = List.generate(
               myFolderController.getBoardInfoModel.data?.length ?? 0,
               (index) => false);
@@ -91,11 +93,11 @@ class _MyFolderScreenState extends State<MyFolderScreen> {
           return false;
         } else {
           Get.back();
-          myFolderController.videos.forEach((element) {
+          for (var element in myFolderController.videos) {
             if (element != null) {
               element.pause();
             }
-          });
+          }
           myFolderController.isPlay = List.generate(
               myFolderController.getBoardInfoModel.data?.length ?? 0,
               (index) => false);
@@ -197,7 +199,7 @@ class _MyFolderScreenState extends State<MyFolderScreen> {
                                                             List.generate(
                                                                 controller
                                                                         .getBoardInfoModel
-                                                                        ?.data
+                                                                        .data
                                                                         ?.length ??
                                                                     0,
                                                                 (index) =>
@@ -207,13 +209,12 @@ class _MyFolderScreenState extends State<MyFolderScreen> {
                                                             true;
                                                         controller.isPageView =
                                                             false;
-                                                        myFolderController
-                                                            .videos
-                                                            .forEach((element) {
+                                                        for (var element in myFolderController
+                                                            .videos) {
                                                           if (element != null) {
                                                             element.pause();
                                                           }
-                                                        });
+                                                        }
                                                         myFolderController.isPlay =
                                                             List.generate(
                                                                 myFolderController
@@ -377,7 +378,7 @@ class _MyFolderScreenState extends State<MyFolderScreen> {
                                                                                           children: [
                                                                         controller.videos[index]!.value.isInitialized?
 
-                                                                        Container(
+                                                                        SizedBox(
                                                                           height: Get.height * 0.7,
                                                                           width: Get.width * 0.75,
                                                                           child: AspectRatio(
@@ -429,12 +430,12 @@ class _MyFolderScreenState extends State<MyFolderScreen> {
                                                                                                         else
                                                                                                         {
                                                                                                           controller.isPlay = List.generate( controller.getBoardInfoModel.data?.length ??0, (index) => false);
-                                                                                                          controller.videos.forEach((e){
+                                                                                                          for (var e in controller.videos) {
                                                                                                             if(e != null)
                                                                                                             {
                                                                                                               e.pause();
                                                                                                             }
-                                                                                                          });
+                                                                                                          }
                                                                                                           controller.isPlay[index] = true;
 
                                                                                                           controller.videos[index]?.play();
@@ -580,7 +581,7 @@ class _MyFolderScreenState extends State<MyFolderScreen> {
                                                         width: Get.width,
                                                         child: (controller
                                                                     .getBoardInfoModel
-                                                                    ?.data !=
+                                                                    .data !=
                                                                 null)
                                                             ? GridView.builder(
                                                                 padding:
@@ -588,7 +589,7 @@ class _MyFolderScreenState extends State<MyFolderScreen> {
                                                                         .all(0),
                                                                 itemCount: controller
                                                                         .getBoardInfoModel
-                                                                        ?.data
+                                                                        .data
                                                                         ?.length ??
                                                                     0,
                                                                 gridDelegate:
@@ -759,7 +760,7 @@ controller
                                                                                           // width: Get.width,
                                                                                           // height: Get.height * 0.199,
                                                                                           fit: BoxFit.fill,
-                                                                                          imageUrl: controller.getBoardInfoModel?.data?[index].image ?? "",
+                                                                                          imageUrl: controller.getBoardInfoModel.data?[index].image ?? "",
                                                                                           progressIndicatorBuilder: (context, strings, download) {
                                                                                             return Shimmer.fromColors(
                                                                                               baseColor: Colors.grey.shade300,
@@ -917,8 +918,7 @@ controller
                                                                             controller.selectedId =
                                                                                 widget.parentId.toString();
                                                                             controller.myInt(
-                                                                                widget.parentId.toString() ??
-                                                                                    "");
+                                                                                widget.parentId.toString());
                                                                           } else {
                                                                             myFolderController.isSelectedNode =
                                                                                 List.generate(widget.node?.length ?? 0, (index) => false);
@@ -1272,11 +1272,11 @@ controller
                                                 children: [
                                                   InkWell(
                                                     onTap: () async {
-                                                      myFolderController.videos.forEach((element) {
+                                                      for (var element in myFolderController.videos) {
                                                         if (element != null) {
                                                           element.pause();
                                                         }
-                                                      });
+                                                      }
                                                       myFolderController.isPlay = List.generate(
                                                           myFolderController.getBoardInfoModel.data?.length ?? 0,
                                                               (index) => false);
@@ -1349,11 +1349,11 @@ controller
                                                   ),
                                                   InkWell(
                                                     onTap: () async {
-                                                      myFolderController.videos.forEach((element) {
+                                                      for (var element in myFolderController.videos) {
                                                         if (element != null) {
                                                           element.pause();
                                                         }
-                                                      });
+                                                      }
                                                       myFolderController.isPlay = List.generate(
                                                           myFolderController.getBoardInfoModel.data?.length ?? 0,
                                                               (index) => false);
@@ -1407,11 +1407,11 @@ controller
                                                   ),
                                                   InkWell(
                                                     onTap: () async {
-                                                      myFolderController.videos.forEach((element) {
+                                                      for (var element in myFolderController.videos) {
                                                         if (element != null) {
                                                           element.pause();
                                                         }
-                                                      });
+                                                      }
                                                       myFolderController.isPlay = List.generate(
                                                           myFolderController.getBoardInfoModel.data?.length ?? 0,
                                                               (index) => false);
@@ -1611,11 +1611,11 @@ controller
                     return ListTile(
                       onTap: () {
 
-                        myFolderController.videos.forEach((element) {
+                        for (var element in myFolderController.videos) {
                           if (element != null) {
                             element.pause();
                           }
-                        });
+                        }
                         myFolderController.isPlay = List.generate(
                             myFolderController.getBoardInfoModel.data?.length ?? 0,
                                 (index) => false);
@@ -1685,7 +1685,6 @@ controller
 
   appBar({String? boardName, String? icon}) {
     MyFolderController myFolderController = Get.put(MyFolderController());
-    GetBoardModel getBoardModel = GetBoardModel();
 
     return Container(
       alignment: Alignment.bottomCenter,
@@ -1702,11 +1701,11 @@ controller
                   myFolderController.isSelectedPageView) {
                 myFolderController.isPageView = false;
                 myFolderController.isSelectedPageView = false;
-                myFolderController.videos.forEach((element) {
+                for (var element in myFolderController.videos) {
                   if (element != null) {
                     element.pause();
                   }
-                });
+                }
                 myFolderController.isPlay = List.generate(
                     myFolderController.getBoardInfoModel.data?.length ?? 0,
                     (index) => false);
@@ -1714,11 +1713,11 @@ controller
                 myFolderController.update(['fldr']);
               } else {
                 Get.back();
-                myFolderController.videos.forEach((element) {
+                for (var element in myFolderController.videos) {
                   if (element != null) {
                     element.pause();
                   }
-                });
+                }
                 myFolderController.isPlay = List.generate(
                     myFolderController.getBoardInfoModel.data?.length ?? 0,
                     (index) => false);

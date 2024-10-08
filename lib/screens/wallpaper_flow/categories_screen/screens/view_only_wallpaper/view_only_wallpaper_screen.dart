@@ -1,4 +1,4 @@
-// ignore_for_file: must_be_immutable
+// ignore_for_file: must_be_immutable, deprecated_member_use, depend_on_referenced_packages
 
 import 'dart:io';
 
@@ -315,8 +315,8 @@ class ViewOnlyWallpaperScreen extends StatelessWidget {
                                             PrefKeys.downloadImageList,
                                             viewOnlyWallpaperController
                                                 .downloadImages);
-                                        var data = PrefService.getList(
-                                            PrefKeys.downloadImageList);
+                                        // var data = PrefService.getList(
+                                        //     PrefKeys.downloadImageList);
 
                                         viewOnlyWallpaperController
                                             .loader.value = false;

@@ -1,4 +1,6 @@
 
+// ignore_for_file: must_be_immutable, use_build_context_synchronously
+
 import 'package:boards_app/common/common_button.dart';
 import 'package:boards_app/screens/settings_screen/settings_controller.dart';
 import 'package:boards_app/services/pref_services.dart';
@@ -68,7 +70,7 @@ class SettingsScreen extends StatelessWidget {
                               }
                           },
                             leading: Image.asset(controller.settingImageList[index],scale: 4,),
-                            title: Text(controller.settingTitleList[index],style: TextStyle(color: Colors.black),),
+                            title: Text(controller.settingTitleList[index],style: const TextStyle(color: Colors.black),),
                             trailing: const Icon(Icons.navigate_next,color: Colors.black),
                           );
                         },
@@ -92,7 +94,7 @@ class SettingsScreen extends StatelessWidget {
     showDialog(
       context: context,
       builder: (BuildContext context) {
-        return SimpleDialog(contentPadding: EdgeInsets.symmetric(horizontal: 20),children: [
+        return SimpleDialog(contentPadding: const EdgeInsets.symmetric(horizontal: 20),children: [
           SizedBox(height: Get.height * 0.04,),
               Image.asset(AssetRes.deleteAcountIcon,height: Get.height * 0.1,),
               SizedBox(height: Get.height * 0.03,),

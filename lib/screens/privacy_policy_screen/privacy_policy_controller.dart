@@ -9,8 +9,8 @@ class PrivacyPolicyController extends GetxController {
   TextEditingController emailIdController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();
 
-  String selectedLanguage="English";
-  String languageCode ="en";
+  String selectedLanguage="Russian";
+  String languageCode ="ru";
 
   RxBool loader = false.obs;
 

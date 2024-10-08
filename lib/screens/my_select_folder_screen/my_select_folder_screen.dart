@@ -1,15 +1,12 @@
+// ignore_for_file: must_be_immutable, non_constant_identifier_names
+
 import 'package:boards_app/common/common_loader.dart';
 import 'package:boards_app/screens/my_folder_screen/my_folder_controller.dart';
 import 'package:boards_app/screens/my_select_folder_screen/my_select_folder_controller.dart';
-import 'package:boards_app/utils/approutes.dart';
 import 'package:boards_app/utils/appstyle.dart';
 import 'package:boards_app/utils/asset_res.dart';
 import 'package:boards_app/utils/color_res.dart';
-import 'package:boards_app/utils/string_res.dart';
-import 'package:cached_network_image/cached_network_image.dart';
-import 'package:chewie/chewie.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:video_player/video_player.dart';
 
@@ -297,13 +294,7 @@ appBar({String? boardName}) {
           onTap: () {
             myFolderController.onTapMore();
           },
-          child: Container(
-            // alignment: Alignment.centerRight,
-            // color: ColorRes.appColor,
-            // height: 25,
-            // width: 25,
-            child:Image.asset(AssetRes.moreOption,scale: 3,)
-          ),
+          child: Image.asset(AssetRes.moreOption,scale: 3,),
         ),
       ],
     ),

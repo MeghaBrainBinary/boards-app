@@ -1,6 +1,8 @@
+// ignore_for_file: depend_on_referenced_packages
+
 import 'package:boards_app/screens/contact_us_screen/api/contct_us_model.dart';
 import 'package:boards_app/utils/api_end_points.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 
 class ContactUsApi{
@@ -17,7 +19,9 @@ class ContactUsApi{
         return contactUsModelFromJson(d);
     }
     else {
-    print(response.reasonPhrase);
+    if (kDebugMode) {
+      print(response.reasonPhrase);
+    }
     return ContactUsModel();
     }
 

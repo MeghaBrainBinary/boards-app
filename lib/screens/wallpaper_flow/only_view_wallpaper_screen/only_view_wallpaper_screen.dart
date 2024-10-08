@@ -1,8 +1,7 @@
-// ignore_for_file: must_be_immutable
+// ignore_for_file: must_be_immutable, deprecated_member_use, depend_on_referenced_packages
 // ignore_for_file: avoid_function_literals_in_foreach_calls
 
 import 'dart:io';
-import 'dart:typed_data';
 
 import 'package:boards_app/common/common_button.dart';
 import 'package:boards_app/screens/wallpaper_flow/lock_screen/lock_screen.dart';
@@ -378,7 +377,7 @@ void showDialogOfAds(BuildContext context, imageLink) {
     context: context,
     builder: (BuildContext context) {
       return SimpleDialog(
-        contentPadding: EdgeInsets.symmetric(horizontal: 20),
+        contentPadding: const EdgeInsets.symmetric(horizontal: 20),
         children: [
           SizedBox(
             height: Get.height * 0.04,
@@ -389,7 +388,7 @@ void showDialogOfAds(BuildContext context, imageLink) {
             style: appTextStyle(
                 weight: FontWeight.w400, fontSize: 16, color: Colors.black),
           ),
-          SizedBox(
+          const SizedBox(
             height: 30,
           ),
           Row(
@@ -401,14 +400,14 @@ void showDialogOfAds(BuildContext context, imageLink) {
                     borderRadius: BorderRadius.circular(8),
                     border: Border.all(color: ColorRes.appColor),
                   ),
-                  child: Text(
+                  alignment: Alignment.center,
+                  child: const Text(
                     'Cancel',
                     style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
                   ),
-                  alignment: Alignment.center,
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 width: 10,
               ),
               Expanded(
@@ -428,8 +427,8 @@ void showDialogOfAds(BuildContext context, imageLink) {
                             .add(imageLink);
                         await PrefService.setValue(PrefKeys.downloadImageList,
                             onlyViewWallpaperController.downloadImages);
-                        var data =
-                            PrefService.getList(PrefKeys.downloadImageList);
+                        // var data =
+                        //     PrefService.getList(PrefKeys.downloadImageList);
 
                         onlyViewWallpaperController.loader.value = false;
 

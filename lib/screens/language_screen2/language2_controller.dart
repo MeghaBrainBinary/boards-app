@@ -1,7 +1,7 @@
+// ignore_for_file: unnecessary_null_comparison
+
 import 'package:boards_app/localization/localization.dart';
-import 'package:boards_app/screens/boards_screen/api/language_api.dart';
 import 'package:boards_app/screens/boards_screen/boards_controller.dart';
-import 'package:boards_app/screens/boards_screen/model/get_board_model.dart';
 import 'package:boards_app/screens/boards_screen/model/get_board_model.dart';
 import 'package:boards_app/services/pref_services.dart';
 import 'package:boards_app/utils/approutes.dart';
@@ -31,18 +31,14 @@ List filterList =[];
       "name":StringRes.lithuanian.tr,
     },
     {
-      "image":AssetRes.english,
-      "name":StringRes.english.tr,
-    },
-    {
       "image":AssetRes.russia,
       "name":StringRes.russian.tr,
     }
   ];
   List<bool> isCheck =[];
 
-  String selectedLanguage="English";
-  String languageCode ="en";
+  String selectedLanguage="Russian";
+  String languageCode ="ru";
 
 
   @override
@@ -57,14 +53,14 @@ List filterList =[];
   }
   onSearch(dynamic val) {
     filterList = [];
-    language.forEach((element) {
+    for (var element in language) {
       if(element['name'].toString().toLowerCase().contains(val.toString().toLowerCase()) )
       {
         filterList.add(element);
        isCheck = List.generate(language.length, (index) => false);
 
 
-      }});
+      }}
 
 
     update(['lng']);
@@ -86,7 +82,6 @@ List filterList =[];
     "Latvian",
     "Estonian",
     "Lithuanian",
-    "English",
     "Russian",
   ];
 
@@ -112,9 +107,7 @@ List filterList =[];
    if(isTaped == false) {
      isTaped = true;
 
-     if (selectedLanguage == "English") {
-       languageCode = "en";
-     }
+
      if (selectedLanguage == "Latvian") {
        languageCode = "lv";
      }

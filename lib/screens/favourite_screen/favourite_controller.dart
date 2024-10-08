@@ -1,15 +1,14 @@
+// ignore_for_file: depend_on_referenced_packages, prefer_is_empty, deprecated_member_use, no_leading_underscores_for_local_identifiers, invalid_use_of_visible_for_testing_member, invalid_use_of_protected_member, unnecessary_null_comparison
+
 import 'dart:io';
 
 import 'package:boards_app/common/toast_msg.dart';
-import 'package:boards_app/services/pref_services.dart';
 import 'package:boards_app/services/sqlite_helper.dart';
 import 'package:boards_app/utils/appstyle.dart';
-import 'package:boards_app/utils/asset_res.dart';
 import 'package:boards_app/utils/color_res.dart';
-import 'package:boards_app/utils/prefkeys.dart';
 import 'package:boards_app/utils/string_res.dart';
 import 'package:dio/dio.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -18,7 +17,6 @@ import 'package:http/http.dart' as http;
 import 'package:path_provider/path_provider.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:video_player/video_player.dart';
-import 'package:wc_flutter_share/wc_flutter_share.dart';
 
 class FavouriteController extends GetxController {
   TextEditingController nameController = TextEditingController();
@@ -27,8 +25,8 @@ class FavouriteController extends GetxController {
 
   bool isPageView = false;
   bool isSelectOn = false;
-  String selectedLanguage = "English";
-  String languageCode = "en";
+  String selectedLanguage = "Russian";
+  String languageCode = "ru";
 
   RxBool loader = false.obs;
 
@@ -87,17 +85,21 @@ class FavouriteController extends GetxController {
   saveImage(context) async {
     if (storedFavorites != null && storedFavorites!.length != 0) {
       loader.value = true;
-      if((selectedImage ?? storedFavorites![0]['image'].toString()) !.split(".").last == "mp4")
+      if((selectedImage ?? storedFavorites![0]['image'].toString()) .split(".").last == "mp4")
       {
         var appDocDir = await getApplicationDocumentsDirectory();
-        String savePath = appDocDir.path + "/${DateTime.now().millisecond}.mp4";
+        String savePath = "${appDocDir.path}/${DateTime.now().millisecond}.mp4";
         String fileUrl =
             selectedImage ?? storedFavorites![0]['image'].toString();
         await Dio().download(fileUrl, savePath, onReceiveProgress: (count, total) {
-          print((count / total * 100).toStringAsFixed(0) + "%");
+          if (kDebugMode) {
+            print("${(count / total * 100).toStringAsFixed(0)}%");
+          }
         });
         final result = await ImageGallerySaver.saveFile(savePath);
-        print(result);
+        if (kDebugMode) {
+          print(result);
+        }
       }
       else {
         var response = await Dio().get(
@@ -176,14 +178,18 @@ class FavouriteController extends GetxController {
         for (String selectedImage in selectedImages) {
           if (selectedImage.split(".").last =="mp4") {
             var appDocDir = await getApplicationDocumentsDirectory();
-            String savePath = appDocDir.path + "/${DateTime.now().millisecond}.mp4";
+            String savePath = "${appDocDir.path}/${DateTime.now().millisecond}.mp4";
             String fileUrl =
                 selectedImage;
             await Dio().download(fileUrl, savePath, onReceiveProgress: (count, total) {
-              print((count / total * 100).toStringAsFixed(0) + "%");
+              if (kDebugMode) {
+                print("${(count / total * 100).toStringAsFixed(0)}%");
+              }
             });
             final result = await ImageGallerySaver.saveFile(savePath);
-            print(result);
+            if (kDebugMode) {
+              print(result);
+            }
           }
           else {
             var response = await Dio().get(
@@ -382,14 +388,14 @@ class FavouriteController extends GetxController {
   init() async {
     storedFavorites = [];
     var data = await SqliteHelper.sqliteHelper.fetch();
-    data.forEach((element) {
+    for (var element in data) {
       storedFavorites?.add({
         "id": element.imageId,
         "image": element.imageUrl,
         "fileType":element.fileType,
         "thumbnail":element.thumbnail
       });
-    });
+    }
     storedFavorites?.forEach((element) {
       if(element['fileType'] =="video") {
         ImageProvider _imageProvider = NetworkImage(
@@ -422,10 +428,12 @@ class FavouriteController extends GetxController {
       {
 
         videos[i]?.initialize().then((value) {}).catchError((error) {
-          print('Error: $error');
+          if (kDebugMode) {
+            print('Error: $error');
+          }
           // Retry initialization or handle error
           videos[i]?.initialize();
-        });;
+        });
         videos[i]?.notifyListeners();
         videos[i]?.setLooping(true);
         videos[i]?.addListener(() {
@@ -454,7 +462,9 @@ class FavouriteController extends GetxController {
     checkImage = List.generate((storedFavorites ?? []).length, (index) => false);
     isPlay = List.generate((storedFavorites ?? []).length, (index) => false);
 
-    print("--------------------------------${checkImage.length}");
+    if (kDebugMode) {
+      print("--------------------------------${checkImage.length}");
+    }
     update(['favourite']);
   }
 
@@ -473,7 +483,7 @@ class FavouriteController extends GetxController {
       loader.value = true;
 
 
-      for (int i = 0; i < (checkImage ?? []).length; i++) {
+      for (int i = 0; i < (checkImage).length; i++) {
         if (checkImage[i]) {
           await SqliteHelper.sqliteHelper.delete(
             imageID: storedFavorites?[i]['id'] ?? '',

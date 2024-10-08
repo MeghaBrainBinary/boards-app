@@ -1,3 +1,5 @@
+// ignore_for_file: non_constant_identifier_names
+
 class AssetRes {
   static const String image = "assets/images/";
   static const icons = "assets/icons/";

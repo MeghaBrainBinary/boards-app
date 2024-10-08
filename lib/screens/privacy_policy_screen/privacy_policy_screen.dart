@@ -1,3 +1,5 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:boards_app/screens/privacy_policy_screen/privacy_policy_controller.dart';
 import 'package:boards_app/utils/appstyle.dart';
 import 'package:boards_app/utils/color_res.dart';
@@ -32,7 +34,7 @@ class PrivacyPolicyScreen extends StatelessWidget {
                     SizedBox(height: Get.height * 0.03),
                     Expanded(
                       child: ListView(
-                        physics: AlwaysScrollableScrollPhysics(),
+                        physics: const AlwaysScrollableScrollPhysics(),
                        // crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
 

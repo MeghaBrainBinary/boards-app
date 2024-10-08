@@ -2,8 +2,6 @@ import 'package:boards_app/common/common_button.dart';
 import 'package:boards_app/screens/wallpaper_flow/only_view_wallpaper_screen/only_view_wallpaper_screen.dart';
 import 'package:boards_app/utils/asset_res.dart';
 import 'package:boards_app/utils/string_res.dart';
-import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
@@ -25,7 +23,7 @@ downloadBottomSheetUi({required BuildContext context, imageLink}) {
           child: Wrap(
             children: [
               Container(
-                margin: EdgeInsets.only(bottom: 20),
+                margin: const EdgeInsets.only(bottom: 20),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(
                     10,
@@ -33,15 +31,15 @@ downloadBottomSheetUi({required BuildContext context, imageLink}) {
                   color: Colors.white,
                 ),
                 width: Get.width,
-                padding: EdgeInsets.all(20),
+                padding: const EdgeInsets.all(20),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
+                    const Text(
                       'DOWNLOAD',
                       style: TextStyle(fontSize: 14),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 20,
                     ),
                     GestureDetector(
@@ -51,11 +49,11 @@ downloadBottomSheetUi({required BuildContext context, imageLink}) {
                       },
                       child: Row(
                         children: [
-                          Text(
+                          const Text(
                             'Portrait Adapted',
                             style: TextStyle(fontSize: 14),
                           ),
-                          Spacer(),
+                          const Spacer(),
                           Image.asset(
                             AssetRes.add,
                             scale: 3,
@@ -63,14 +61,14 @@ downloadBottomSheetUi({required BuildContext context, imageLink}) {
                         ],
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 10,
                     ),
                     Container(
                       height: 1,
                       color: Colors.black,
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 10,
                     ),
                     GestureDetector(
@@ -80,11 +78,11 @@ downloadBottomSheetUi({required BuildContext context, imageLink}) {
                       },
                       child: Row(
                         children: [
-                          Text(
+                          const Text(
                             'Original Size',
                             style: TextStyle(fontSize: 14),
                           ),
-                          Spacer(),
+                          const Spacer(),
                           Image.asset(
                             AssetRes.add,
                             scale: 3,
@@ -92,7 +90,7 @@ downloadBottomSheetUi({required BuildContext context, imageLink}) {
                         ],
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 20,
                     ),
                     CommonButton(

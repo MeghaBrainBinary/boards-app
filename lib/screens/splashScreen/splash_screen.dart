@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:boards_app/screens/select_flow_screen/select_flow_screen.dart';
 import 'package:boards_app/screens/splashScreen/splash_screen_controller.dart';
 import 'package:boards_app/services/pref_services.dart';
 import 'package:boards_app/utils/approutes.dart';

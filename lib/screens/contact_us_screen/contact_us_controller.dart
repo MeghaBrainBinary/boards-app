@@ -1,5 +1,4 @@
 
-import 'dart:io';
 
 import 'package:boards_app/screens/contact_us_screen/api/contact_us_api.dart';
 import 'package:boards_app/screens/contact_us_screen/api/contct_us_model.dart';
@@ -14,8 +13,8 @@ class ContactUsController extends GetxController {
   TextEditingController telegramController = TextEditingController();
   TextEditingController emailIdController = TextEditingController();
 
-  String selectedLanguage="English";
-  String languageCode ="en";
+  String selectedLanguage="Russian";
+  String languageCode ="ru";
 
   RxBool loader = false.obs;
 

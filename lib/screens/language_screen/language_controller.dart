@@ -1,22 +1,19 @@
 import 'package:boards_app/localization/localization.dart';
-import 'package:boards_app/screens/boards_screen/api/language_api.dart';
-import 'package:boards_app/screens/boards_screen/boards_controller.dart';
 import 'package:boards_app/screens/boards_screen/model/get_board_model.dart';
-import 'package:boards_app/screens/select_flow_screen/select_flow_controller.dart';
-import 'package:boards_app/screens/select_flow_screen/select_flow_screen.dart';
 import 'package:boards_app/services/pref_services.dart';
 import 'package:boards_app/utils/approutes.dart';
 import 'package:boards_app/utils/asset_res.dart';
 import 'package:boards_app/utils/prefkeys.dart';
 import 'package:boards_app/utils/string_res.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 
 class LanguageController extends GetxController {
   TextEditingController searchController = TextEditingController();
 
-  String selectedLanguage = "English";
-  String languageCode = "en";
+  String selectedLanguage = "Russian";
+  String languageCode = "ru";
   GetBoardModel getBoardModel = GetBoardModel();
   RxBool loader = false.obs;
 
@@ -35,28 +32,24 @@ class LanguageController extends GetxController {
       "name":StringRes.lithuanian.tr,
     },
     {
-      "image":AssetRes.english,
-      "name":StringRes.english.tr,
-    },
-    {
       "image":AssetRes.russia,
       "name":StringRes.russian.tr,
     }
 
   ];
   List filterLst = [];
-  List clrs = List.generate(5, (index) => false);
+  List clrs = List.generate(4, (index) => false);
 
   onSearch(dynamic val) {
     filterLst = [];
-    lngs.forEach((element) {
+    for (var element in lngs) {
       if (element['name']
           .toString()
           .toLowerCase()
           .contains(val.toString().toLowerCase())) {
         filterLst.add(element);
       }
-    });
+    }
 
     clrs = List.generate(filterLst.length, (index) => false);
     // clrs[i] = true;
@@ -75,15 +68,15 @@ class LanguageController extends GetxController {
     selectedLanguage = language;
     PrefService.setValue(PrefKeys.selectedLanguageIndex, i);
     PrefService.setValue(PrefKeys.selectedLanguage, selectedLanguage);
-    print(selectedLanguage);
+    if (kDebugMode) {
+      print(selectedLanguage);
+    }
 
     update(['lng']);
   }
 
   onTapContinue() async {
-    if (selectedLanguage == "English") {
-      languageCode = "en";
-    }
+
     if (selectedLanguage == "Latvian") {
       languageCode = "lv";
     }

@@ -54,9 +54,9 @@ class WFavoritesController extends GetxController {
     var id = '';
 
     await category.get().then((value) {
-      value.docs.forEach((e) {
+      for (var e in value.docs) {
         cList = e['image'];
-        cList.forEach((element) {
+        for (var element in cList) {
           if (element['imageLink'] == image) {
             list.add({
               'imageLink': element['imageLink'],
@@ -69,8 +69,8 @@ class WFavoritesController extends GetxController {
               'isFav': element['isFav'],
             });
           }
-        });
-      });
+        }
+      }
     });
 
     await category.doc(id).update({

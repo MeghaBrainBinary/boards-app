@@ -4,9 +4,6 @@ import 'package:boards_app/common/common_button.dart';
 import 'package:boards_app/common/common_loader.dart';
 import 'package:boards_app/common/common_textfild.dart';
 import 'package:boards_app/screens/auth/login_screen/login_controller.dart';
-import 'package:boards_app/screens/contact_us_screen/contact_us_controller.dart';
-import 'package:boards_app/screens/select_flow_screen/select_flow_screen.dart';
-import 'package:boards_app/utils/app_text_field.dart';
 import 'package:boards_app/utils/approutes.dart';
 import 'package:boards_app/utils/appstyle.dart';
 import 'package:boards_app/utils/asset_res.dart';
@@ -170,7 +167,7 @@ class LoginScreen extends StatelessWidget {
                                       weight: FontWeight.w500,
                                       color: ColorRes.black),
                                 ),
-                                SizedBox(
+                                const SizedBox(
                                   width: 2,
                                 ),
                                 GestureDetector(
@@ -210,7 +207,7 @@ class LoginScreen extends StatelessWidget {
       context: context,
       builder: (BuildContext context) {
         return SimpleDialog(
-          contentPadding: EdgeInsets.symmetric(horizontal: 20),
+          contentPadding: const EdgeInsets.symmetric(horizontal: 20),
           children: [
             SizedBox(
               height: Get.height * 0.04,

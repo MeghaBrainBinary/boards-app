@@ -1,3 +1,5 @@
+// ignore_for_file: file_names, constant_identifier_names
+
 const Map<String, String> English = {
   "Choose the language": "Choose the language",
   "search language": "search language",

@@ -1,14 +1,11 @@
 // ignore_for_file: must_be_immutable
 // ignore_for_file: avoid_function_literals_in_foreach_calls
 
-import 'package:boards_app/screens/auth/forgot_password_screen/forgot_password_screen.dart';
 import 'package:boards_app/screens/auth/sign_up_screen/sign_up_screen.dart';
 import 'package:boards_app/screens/contact_us_screen/contact_us_screen.dart';
-import 'package:boards_app/screens/language_screen/language_screen.dart';
 import 'package:boards_app/screens/language_screen2/languagescreen2.dart';
 import 'package:boards_app/screens/my_folder_screen/my_folder_screen.dart';
 import 'package:boards_app/screens/settings_screen/settings_screen.dart';
-import 'package:boards_app/screens/wallpaper_flow/downloads_screen/download_screen.dart';
 import 'package:boards_app/screens/wallpaper_flow/favorites_screen/favorites_screen.dart';
 import 'package:boards_app/screens/wallpaper_flow/home_screen/home_controller.dart';
 import 'package:boards_app/screens/wallpaper_flow/only_view_wallpaper_screen/only_view_wallpaper_screen.dart';
@@ -138,7 +135,7 @@ class HomeScreen extends StatelessWidget {
                                   ),
                                 ),
                               )
-                            : SizedBox();
+                            : const SizedBox();
                       },
                     );
                   },
@@ -279,10 +276,10 @@ class HomeScreen extends StatelessWidget {
             Positioned(
               child: Container(
                 alignment: Alignment.bottomCenter,
-                padding: EdgeInsets.only(left: 20, bottom: 30),
+                padding: const EdgeInsets.only(left: 20, bottom: 30),
                 decoration: BoxDecoration(
                   color: ColorRes.appColor,
-                  borderRadius: BorderRadius.only(
+                  borderRadius: const BorderRadius.only(
                     bottomRight: Radius.circular(33),
                     bottomLeft: Radius.circular(33),
                   ),
@@ -302,7 +299,7 @@ class HomeScreen extends StatelessWidget {
                             scale: 3,
                           ),
                         )),
-                    SizedBox(
+                    const SizedBox(
                       width: 20,
                     ),
                     Text(
@@ -374,7 +371,7 @@ class HomeScreen extends StatelessWidget {
                     ),
                     title: Text(
                       homeController.drawerImageNameList[index],
-                      style: TextStyle(
+                      style: const TextStyle(
                           fontSize: 14,
                           color: Colors.black,
                           fontFamily: "regularfont"),
@@ -389,7 +386,7 @@ class HomeScreen extends StatelessWidget {
               },
               separatorBuilder: (BuildContext context, int index) {
                 return Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 24),
+                  padding: const EdgeInsets.symmetric(horizontal: 24),
                   child: Divider(
                     color: ColorRes.black.withOpacity(0.30),
                   ),

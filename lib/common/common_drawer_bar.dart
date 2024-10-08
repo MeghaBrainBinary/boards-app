@@ -5,6 +5,7 @@ import 'package:boards_app/screens/my_folder_screen/my_folder_screen.dart';
 import 'package:boards_app/utils/approutes.dart';
 import 'package:boards_app/utils/asset_res.dart';
 import 'package:boards_app/utils/color_res.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -32,14 +33,18 @@ Widget CommonDrawer(BuildContext context) {
               itemBuilder: (context, index) {
                 return ListTile(
                   onTap: () {
-                    print("Index: $index");
+                    if (kDebugMode) {
+                      print("Index: $index");
+                    }
 
                     if(index==0)
                       {
                         Get.back();
                       }
                     else if (index == 1) {
-                      print("Index: $index");
+                      if (kDebugMode) {
+                        print("Index: $index");
+                      }
 
                       Get.toNamed(AppRoutes.languageConfirmPage);
 
@@ -69,7 +74,7 @@ Widget CommonDrawer(BuildContext context) {
                   height: 1,
                   width: 50,
                   color: ColorRes.black.withOpacity(0.30),
-                  margin: EdgeInsets.symmetric(horizontal: 19),
+                  margin: const EdgeInsets.symmetric(horizontal: 19),
                 );
               },
             ),

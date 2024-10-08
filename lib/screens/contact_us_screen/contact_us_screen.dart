@@ -1,6 +1,5 @@
-// ignore_for_file: must_be_immutable
+// ignore_for_file: must_be_immutable, deprecated_member_use
 
-import 'package:boards_app/common/common_button.dart';
 import 'package:boards_app/common/common_loader.dart';
 import 'package:boards_app/screens/contact_us_screen/contact_us_controller.dart';
 import 'package:boards_app/services/pref_services.dart';
@@ -10,7 +9,6 @@ import 'package:boards_app/utils/asset_res.dart';
 import 'package:boards_app/utils/color_res.dart';
 import 'package:boards_app/utils/prefkeys.dart';
 import 'package:boards_app/utils/string_res.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -177,7 +175,8 @@ class ContactUsScreen extends StatelessWidget {
                      ):const SizedBox(),*/
 
                       /// ------- estonian ----------
-                      PrefService.getString(PrefKeys.code) =="et" ||PrefService.getString(PrefKeys.code) =="ru" || PrefService.getString(PrefKeys.code) =="en"?
+                      PrefService.getString(PrefKeys.code) =="et" ||
+                          PrefService.getString(PrefKeys.code) =="ru"?
                       Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -236,7 +235,8 @@ class ContactUsScreen extends StatelessWidget {
                     ):const SizedBox(),
 
                       /// ------- latvin ----------
-                      PrefService.getString(PrefKeys.code) =="lv" ||PrefService.getString(PrefKeys.code) =="ru" || PrefService.getString(PrefKeys.code) =="en"?
+                      PrefService.getString(PrefKeys.code) =="lv" ||
+                          PrefService.getString(PrefKeys.code) =="ru"?
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
 
@@ -297,7 +297,8 @@ class ContactUsScreen extends StatelessWidget {
                       ):const SizedBox(),
 
                       /// ------- lithunian ----------
-                      PrefService.getString(PrefKeys.code) =="lt"||  PrefService.getString(PrefKeys.code) =="ru" || PrefService.getString(PrefKeys.code) =="en"?
+                      PrefService.getString(PrefKeys.code) =="lt"||
+                          PrefService.getString(PrefKeys.code) =="ru" ?
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
 
@@ -433,7 +434,7 @@ class ContactUsScreen extends StatelessWidget {
                 ),
               ),
             ),
-            Obx(() => contactUsController.loader.value ?CommonLoader():const SizedBox()),
+            Obx(() => contactUsController.loader.value ?const CommonLoader():const SizedBox()),
 
           ],
         ),

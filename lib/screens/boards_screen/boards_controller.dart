@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_typing_uninitialized_variables, unused_element, unnecessary_null_comparison, prefer_conditional_assignment
+
 import 'package:animated_tree_view/tree_view/tree_node.dart';
 import 'package:boards_app/common/toast_msg.dart';
 import 'package:boards_app/screens/boards_screen/api/language_api.dart';
@@ -332,8 +334,8 @@ class BoardsController extends GetxController {
       if (subBoardId == null) {
         //Get.toNamed(AppRoutes.myFolderPage, arguments: name);
 
-        myFolderController.selectedId =id.toString() ?? "";
-        myFolderController.myInt(id.toString() ?? "");
+        myFolderController.selectedId =id.toString();
+        myFolderController.myInt(id.toString());
         myFolderController.isSelectedNode = List.generate(node?.children.length ?? 0, (index) => false);
         Get.to(() => MyFolderScreen(boardName: name, icon: icon, node: node?.children ?? [],isFirst :isFirst,parentId: id.toString(),quote:quote ?? '',isFirstNode: isFirst,
           quoteColor:quoteColor,
@@ -345,8 +347,8 @@ class BoardsController extends GetxController {
         categoryClickLoader.value = false;
       } else {
         //Get.toNamed(AppRoutes.myFolderPage, arguments: subName);
-        myFolderController.selectedId =id.toString() ?? "";
-        myFolderController.myInt(id.toString() ?? "");
+        myFolderController.selectedId =id.toString();
+        myFolderController.myInt(id.toString());
         myFolderController.isSelectedNode = List.generate(node?.children.length ?? 0, (index) => false);
 
         Get.to(() => MyFolderScreen(boardName: subName, icon: icon,  node: node?.children ?? [],isFirst :isFirst,parentId: id.toString(),quote:quote ?? '',isFirstNode: isFirst,

@@ -1,5 +1,6 @@
 import 'package:boards_app/screens/splashScreen/api/add_device_token_api.dart';
 import 'package:boards_app/screens/splashScreen/model/add_device_token_model.dart';
+import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 
 class SplashScreenController extends GetxController {
@@ -10,7 +11,9 @@ class SplashScreenController extends GetxController {
   addDeviceTokenApi () async{
     addDeviceTokenModel = await AddDeviceTokenApi.addDeviceTokenApi();
 
-    print("Add device token => ${addDeviceTokenModel.message}");
+    if (kDebugMode) {
+      print("Add device token => ${addDeviceTokenModel.message}");
+    }
   }
 
 }

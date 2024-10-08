@@ -1,5 +1,7 @@
-import 'dart:convert';
+// ignore_for_file: depend_on_referenced_packages
 
+
+import 'package:flutter/foundation.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
@@ -67,11 +69,15 @@ String tablename ="Favorites";
     db = await initdb();
     String query = "SELECT * FROM $tablename";
 
-    List data = await db!.rawQuery(query);print(data);
+    List data = await db!.rawQuery(query);if (kDebugMode) {
+      print(data);
+    }
     List<SqliteModel> alldata =
     data.map((e) => SqliteModel.fromjson(e)).toList();
-    print(alldata);
-    return alldata ?? [];
+    if (kDebugMode) {
+      print(alldata);
+    }
+    return alldata;
     //return data;
   }
 
