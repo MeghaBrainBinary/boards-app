@@ -1316,7 +1316,7 @@ SPEC CHECKSUMS:
   Flutter: f04841e97a9d0b0a8025694d0796dd46242b2854
   flutter_local_notifications: 0c0b1ae97e741e1521e4c1629a459d04b9aec743
   flutter_localization: f43b18844a2b3d2c71fd64f04ffd6b1e64dd54d4
-  fluttertoast: 77ff8760d90ff5041a97e3d0c0ecaaa8472524d2
+  fluttertoast: 9f2f8e81bb5ce18facb9748d7855bf5a756fe3db
   FMDB: 728731dd336af3936ce00f91d9d8495f5718a0e6
   GoogleDataTransport: 6c09b596d841063d76d4288cc2d2f42cc36e1e2a
   GoogleUtilities: ea963c370a38a8069cc5f7ba4ca849a60b6d7d15
@@ -1345,4 +1345,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: cc1f88378b4bfcf93a6ce00d2c587857c6008d3b
 
-COCOAPODS: 1.12.0
+COCOAPODS: 1.15.2
