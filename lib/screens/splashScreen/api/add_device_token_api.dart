@@ -15,6 +15,7 @@ class AddDeviceTokenApi {
       String url = ApiEndPoints.addDeviceToken;
       Map<String, String> param = {
         'device_token': PrefService.getString(PrefKeys.fcmToken),
+        "lang":PrefService.getString(PrefKeys.languageCode)==""?"ru":PrefService.getString(PrefKeys.languageCode)
       };
 
       http.Response? response = await HttpService.postApi(
