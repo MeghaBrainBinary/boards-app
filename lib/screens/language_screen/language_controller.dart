@@ -1,5 +1,7 @@
 import 'package:boards_app/localization/localization.dart';
 import 'package:boards_app/screens/boards_screen/model/get_board_model.dart';
+import 'package:boards_app/screens/splashScreen/api/add_device_token_api.dart';
+import 'package:boards_app/screens/splashScreen/model/add_device_token_model.dart';
 import 'package:boards_app/services/pref_services.dart';
 import 'package:boards_app/utils/approutes.dart';
 import 'package:boards_app/utils/asset_res.dart';
@@ -94,9 +96,9 @@ class LanguageController extends GetxController {
 
     PrefService.setValue(PrefKeys.language, selectedLanguage);
     PrefService.setValue(PrefKeys.code, languageCode);
+    await PrefService.setValue(PrefKeys.languageCode, languageCode);
     LocalizationService().changeLocale(selectedLanguage);
-
-    PrefService.setValue(PrefKeys.languageCode, languageCode);
+await addDeviceTokenApi();
 
 //getBoardModel =await GetBoardApi.getBoardApi(languageCode);
     loader.value = false;
@@ -107,5 +109,13 @@ class LanguageController extends GetxController {
     // Get.to(() => SelectFlowScreen(
     //       language: languageCode,
     //     ));
+  }
+  AddDeviceTokenModel addDeviceTokenModel = AddDeviceTokenModel();
+  addDeviceTokenApi () async{
+    addDeviceTokenModel = await AddDeviceTokenApi.addDeviceTokenApi();
+
+    if (kDebugMode) {
+      print("Add device token => ${addDeviceTokenModel.message}");
+    }
   }
 }

@@ -3,11 +3,14 @@
 import 'package:boards_app/localization/localization.dart';
 import 'package:boards_app/screens/boards_screen/boards_controller.dart';
 import 'package:boards_app/screens/boards_screen/model/get_board_model.dart';
+import 'package:boards_app/screens/splashScreen/api/add_device_token_api.dart';
+import 'package:boards_app/screens/splashScreen/model/add_device_token_model.dart';
 import 'package:boards_app/services/pref_services.dart';
 import 'package:boards_app/utils/approutes.dart';
 import 'package:boards_app/utils/asset_res.dart';
 import 'package:boards_app/utils/prefkeys.dart';
 import 'package:boards_app/utils/string_res.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -124,10 +127,10 @@ List filterList =[];
 
      PrefService.setValue(PrefKeys.language, selectedLanguage);
      PrefService.setValue(PrefKeys.code, languageCode);
-
-     PrefService.setValue(PrefKeys.languageCode, languageCode);
-
+    await PrefService.setValue(PrefKeys.languageCode, languageCode);
      LocalizationService().changeLocale(selectedLanguage);
+   await  addDeviceTokenApi();
+
 
      //getBoardModel =await GetBoardApi.getBoardApi(languageCode);
 
@@ -142,6 +145,13 @@ List filterList =[];
      Get.offAndToNamed(AppRoutes.boardsPage, arguments: languageCode);
    }
   }
+  AddDeviceTokenModel addDeviceTokenModel = AddDeviceTokenModel();
+  addDeviceTokenApi () async{
+    addDeviceTokenModel = await AddDeviceTokenApi.addDeviceTokenApi();
 
+    if (kDebugMode) {
+      print("Add device token => ${addDeviceTokenModel.message}");
+    }
+  }
 
 }
