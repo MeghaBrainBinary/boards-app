@@ -49,7 +49,7 @@ class LanguageScreen extends StatelessWidget {
                       height: Get.height * 0.03,
                     ),
                     Text(
-                      StringRes.chooseTheLanguage.tr,
+                      StringRes.chooseTheLanguage,
                       style: appTextStyle(
                           color: ColorRes.black,
                           fontSize: 20,
@@ -303,7 +303,7 @@ class LanguageScreen extends StatelessWidget {
                           borderRadius: BorderRadius.circular(5),
                         ),
                         child: Text(
-                          StringRes.continu.tr,
+                          StringRes.continu,
                           style: appTextStyle(fontSize: 18, weight: FontWeight.w600),
                         ),
                       ),

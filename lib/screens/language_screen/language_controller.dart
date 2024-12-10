@@ -23,19 +23,19 @@ class LanguageController extends GetxController {
 
     {
       "image":AssetRes.latvin,
-      "name":StringRes.latvian.tr,
+      "name":StringRes.latvian,
     },
     {
       "image":AssetRes.estonian,
-      "name":StringRes.estonian.tr,
+      "name":StringRes.estonian,
     },
     {
       "image":AssetRes.lithunian,
-      "name":StringRes.lithuanian.tr,
+      "name":StringRes.lithuanian,
     },
     {
       "image":AssetRes.russia,
-      "name":StringRes.russian.tr,
+      "name":StringRes.russian,
     }
 
   ];

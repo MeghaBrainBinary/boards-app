@@ -3,7 +3,7 @@
 const Map<String, String> Russian = {
   "Choose the language":"Выберите язык",
   "search language":"язык поиска",
-  "Continue":"Продолжит",
+  "Continue":"Продолжить",
   "Already have account?":"Уже есть аккаунт?",
   "Log In":"Авторизоваться",
   "Sign up":"Зарегистрироваться",
