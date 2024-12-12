@@ -25,6 +25,7 @@ import 'package:flutter/services.dart';
 // ignore: depend_on_referenced_packages
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'screens/intro_screen/intro_screen.dart';
 import 'screens/language_screen/language_screen.dart';
 
@@ -65,9 +66,72 @@ void main() async {
   runApp(const MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
 
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+
+  @override
+  void initState() {
+    super.initState();
+    Future.delayed(
+      const Duration(microseconds: 500),
+          () async {
+        await PrefService.init();
+        if (Platform.isIOS) {
+          final res = await Permission.notification.request();
+          await  requestIOSPermissions();
+          await _initializeNotificationService();
+        } else {
+          final res = await Permission.notification.request();
+
+          print("-------------------------------- $res");
+          await _initializeNotificationService();
+        }
+      },
+    );
+    super.initState();
+  }
+  Future<void> requestIOSPermissions() async {
+    NotificationSettings settings = await FirebaseMessaging.instance.requestPermission(
+      alert: true,
+      badge: true,
+      sound: true,
+    );
+
+    if (settings.authorizationStatus == AuthorizationStatus.authorized) {
+      print('User granted permission');
+    } else {
+      print('User declined or has not accepted permission');
+    }
+  }
+  Future<void> _initializeNotificationService() async {
+    await NotificationService.init();
+    if (Platform.isIOS) {
+      await FirebaseMessaging.instance.getAPNSToken().then((value) async {
+        debugPrint("APNS token is =================== $value");
+        await FirebaseMessaging.instance.getToken().then((value) {
+          PrefService.setValue(PrefKeys.fcmToken, value.toString());
+          if (kDebugMode) {
+            print("FCM Token => $value");
+          }
+        });
+
+      });
+    } else {
+      await FirebaseMessaging.instance.getToken().then((value) {
+        PrefService.setValue(PrefKeys.fcmToken, value.toString());
+        if (kDebugMode) {
+          print("FCM Token => $value");
+        }
+      });
+
+    }
+  }
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(

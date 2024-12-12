@@ -13,6 +13,16 @@ class NotificationService {
     );
 
  await FirebaseMessaging.instance.getNotificationSettings();
+    await FirebaseMessaging.instance.requestPermission(
+
+    );
+
+    NotificationSettings settings = await FirebaseMessaging.instance.requestPermission(
+      alert: true,
+      badge: true,
+      sound: true,
+    );
+
 
     const AndroidNotificationChannel channel = AndroidNotificationChannel(
       'high_importance_channel', // id
@@ -70,9 +80,7 @@ class NotificationService {
       }
     });
 
-    FirebaseMessaging.instance.requestPermission(
-        provisional: true,
-    );
+
 
     FirebaseMessaging.instance
         .getInitialMessage()
