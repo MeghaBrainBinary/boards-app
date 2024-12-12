@@ -13,9 +13,7 @@ class NotificationService {
     );
 
  await FirebaseMessaging.instance.getNotificationSettings();
-    await FirebaseMessaging.instance.requestPermission(
 
-    );
 
     NotificationSettings settings = await FirebaseMessaging.instance.requestPermission(
       alert: true,

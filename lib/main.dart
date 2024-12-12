@@ -75,63 +75,63 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
 
-  @override
-  void initState() {
-    super.initState();
-    Future.delayed(
-      const Duration(microseconds: 500),
-          () async {
-        await PrefService.init();
-        if (Platform.isIOS) {
-          final res = await Permission.notification.request();
-          await  requestIOSPermissions();
-          await _initializeNotificationService();
-        } else {
-          final res = await Permission.notification.request();
-
-          print("-------------------------------- $res");
-          await _initializeNotificationService();
-        }
-      },
-    );
-    super.initState();
-  }
-  Future<void> requestIOSPermissions() async {
-    NotificationSettings settings = await FirebaseMessaging.instance.requestPermission(
-      alert: true,
-      badge: true,
-      sound: true,
-    );
-
-    if (settings.authorizationStatus == AuthorizationStatus.authorized) {
-      print('User granted permission');
-    } else {
-      print('User declined or has not accepted permission');
-    }
-  }
-  Future<void> _initializeNotificationService() async {
-    await NotificationService.init();
-    if (Platform.isIOS) {
-      await FirebaseMessaging.instance.getAPNSToken().then((value) async {
-        debugPrint("APNS token is =================== $value");
-        await FirebaseMessaging.instance.getToken().then((value) {
-          PrefService.setValue(PrefKeys.fcmToken, value.toString());
-          if (kDebugMode) {
-            print("FCM Token => $value");
-          }
-        });
-
-      });
-    } else {
-      await FirebaseMessaging.instance.getToken().then((value) {
-        PrefService.setValue(PrefKeys.fcmToken, value.toString());
-        if (kDebugMode) {
-          print("FCM Token => $value");
-        }
-      });
-
-    }
-  }
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   // Future.delayed(
+  //   //   const Duration(microseconds: 500),
+  //   //       () async {
+  //   //     await PrefService.init();
+  //   //     if (Platform.isIOS) {
+  //   //       final res = await Permission.notification.request();
+  //   //       await  requestIOSPermissions();
+  //   //       await _initializeNotificationService();
+  //   //     } else {
+  //   //       final res = await Permission.notification.request();
+  //   //
+  //   //       print("-------------------------------- $res");
+  //   //       await _initializeNotificationService();
+  //   //     }
+  //   //   },
+  //   // );
+  //   super.initState();
+  // }
+  // Future<void> requestIOSPermissions() async {
+  //   NotificationSettings settings = await FirebaseMessaging.instance.requestPermission(
+  //     alert: true,
+  //     badge: true,
+  //     sound: true,
+  //   );
+  //
+  //   if (settings.authorizationStatus == AuthorizationStatus.authorized) {
+  //     print('User granted permission');
+  //   } else {
+  //     print('User declined or has not accepted permission');
+  //   }
+  // }
+  // Future<void> _initializeNotificationService() async {
+  //   await NotificationService.init();
+  //   if (Platform.isIOS) {
+  //     await FirebaseMessaging.instance.getAPNSToken().then((value) async {
+  //       debugPrint("APNS token is =================== $value");
+  //       await FirebaseMessaging.instance.getToken().then((value) {
+  //         PrefService.setValue(PrefKeys.fcmToken, value.toString());
+  //         if (kDebugMode) {
+  //           print("FCM Token => $value");
+  //         }
+  //       });
+  //
+  //     });
+  //   } else {
+  //     await FirebaseMessaging.instance.getToken().then((value) {
+  //       PrefService.setValue(PrefKeys.fcmToken, value.toString());
+  //       if (kDebugMode) {
+  //         print("FCM Token => $value");
+  //       }
+  //     });
+  //
+  //   }
+  // }
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
