@@ -260,8 +260,8 @@ class ViewOnlyWallpaperScreen extends StatelessWidget {
                                           debugPrint(
                                               'Temporary File Path: ${tempFile.path}');
                                           await tempFile.writeAsBytes(bytes);
-                                          await Share.shareFiles(
-                                              [tempFile.path],
+                                          await Share.shareXFiles(
+                                              [XFile(tempFile.path)],
                                               text: 'Check out this image!');
                                         } else {
                                           throw Exception(

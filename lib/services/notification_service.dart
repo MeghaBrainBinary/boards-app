@@ -99,7 +99,7 @@ class NotificationService {
     AndroidInitializationSettings('@mipmap/ic_launcher');
     const DarwinInitializationSettings initializationSettingsIOS =
     DarwinInitializationSettings(
-        onDidReceiveLocalNotification: onDidReceiveLocalNotification,
+        // onDidReceiveLocalNotification: onDidReceiveLocalNotification,
       requestSoundPermission: false,
       requestBadgePermission: false,
       requestAlertPermission: false,
