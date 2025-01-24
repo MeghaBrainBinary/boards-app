@@ -11,7 +11,7 @@ class WallPaperPreviewScreen extends StatelessWidget {
 
   WallPaperPreviewScreen({Key? key, required this.image}) : super(key: key);
 
-  CarouselController buttonCarouselController = CarouselController();
+  CarouselSliderController buttonCarouselController = CarouselSliderController();
 
   @override
   Widget build(BuildContext context) {
