@@ -36,7 +36,7 @@ class MyFolderScreen extends StatefulWidget {
   bool? isFirst;
   bool? isFirstNode;
   List<TreeNodeData>? node;
-
+bool isFromNotification;
   MyFolderScreen(
       {super.key,
       this.boardName,
@@ -50,7 +50,9 @@ class MyFolderScreen extends StatefulWidget {
       this.quoteFamily,
       this.isFirst,
       this.isFirstNode,
-      this.node});
+      this.node,
+      required this.isFromNotification
+      });
 
   @override
   State<MyFolderScreen> createState() => _MyFolderScreenState();
@@ -91,20 +93,27 @@ class _MyFolderScreenState extends State<MyFolderScreen> {
           myFolderController.isSelectedPageView = false;
           myFolderController.update(['fldr']);
           return false;
-        } else {
-          Get.back();
-          for (var element in myFolderController.videos) {
-            if (element != null) {
-              element.pause();
-            }
+        }
+        else {
+          if(widget.isFromNotification){
+
+            Get.offAndToNamed(AppRoutes.boardsPage);
+            return false;
           }
-          myFolderController.isPlay = List.generate(
-              myFolderController.getBoardInfoModel.data?.length ?? 0,
-              (index) => false);
+          else {
+            Get.back();
+            for (var element in myFolderController.videos) {
+              if (element != null) {
+                element.pause();
+              }
+            }
+            myFolderController.isPlay = List.generate(
+                myFolderController.getBoardInfoModel.data?.length ?? 0,
+                    (index) => false);
 
-          myFolderController.onTapBack();
-
-          return true;
+            myFolderController.onTapBack();
+            return true;
+          }
         }
       },
       child: Scaffold(
@@ -1712,17 +1721,24 @@ controller
 
                 myFolderController.update(['fldr']);
               } else {
-                Get.back();
-                for (var element in myFolderController.videos) {
-                  if (element != null) {
-                    element.pause();
-                  }
-                }
-                myFolderController.isPlay = List.generate(
-                    myFolderController.getBoardInfoModel.data?.length ?? 0,
-                    (index) => false);
+                if(widget.isFromNotification){
 
-                myFolderController.onTapBack();
+                  Get.offAndToNamed(AppRoutes.boardsPage);
+
+                }
+                else {
+                  Get.back();
+                  for (var element in myFolderController.videos) {
+                    if (element != null) {
+                      element.pause();
+                    }
+                  }
+                  myFolderController.isPlay = List.generate(
+                      myFolderController.getBoardInfoModel.data?.length ?? 0,
+                          (index) => false);
+
+                  myFolderController.onTapBack();
+                }
               }
             },
             child: const Icon(Icons.arrow_back_ios, size: 20),

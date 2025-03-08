@@ -1,11 +1,39 @@
+// ignore_for_file: unused_local_variable
+
 import 'dart:convert';
+import 'package:boards_app/screens/boards_screen/boards_controller.dart';
+import 'package:boards_app/screens/boards_screen/boards_screen.dart';
+import 'package:boards_app/screens/my_folder_screen/my_folder_controller.dart';
+import 'package:boards_app/services/pref_services.dart';
+import 'package:boards_app/utils/approutes.dart';
+import 'package:boards_app/utils/prefkeys.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:flutter_tree/flutter_tree.dart';
 import 'package:get/get.dart';
 
+
+final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
+const AndroidNotificationChannel channel = AndroidNotificationChannel(
+  'high_importance_channel', // id
+  'High Importance Notifications', // title
+  importance: Importance.max,
+  playSound: true,
+  showBadge: true,
+
+);
+@pragma('vm:entry-point')
+ Future<void> firebaseMessagingBackgroundHandler(
+RemoteMessage message) async {
+
+}
+
+
+@pragma('vm:entry-point')
 class NotificationService {
   static Future<void> init() async {
+    await FirebaseMessaging.instance.requestPermission();
     await FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(
       alert: true,
       badge: true,
@@ -14,6 +42,7 @@ class NotificationService {
 
  await FirebaseMessaging.instance.getNotificationSettings();
 
+    await FirebaseMessaging.instance.requestPermission();
 
     NotificationSettings settings = await FirebaseMessaging.instance.requestPermission(
       alert: true,
@@ -21,28 +50,35 @@ class NotificationService {
       sound: true,
     );
 
+    const AndroidInitializationSettings initializationSettingsAndroid =
+    AndroidInitializationSettings('@mipmap/ic_launcher');
+    const DarwinInitializationSettings initializationSettingsIOS =
+    DarwinInitializationSettings();
+    const InitializationSettings initializationSettings =
+    InitializationSettings(
+        android: initializationSettingsAndroid,
+        iOS: initializationSettingsIOS);
 
-    const AndroidNotificationChannel channel = AndroidNotificationChannel(
-      'high_importance_channel', // id
-      'High Importance Notifications', // title
-      importance: Importance.max,
+    flutterLocalNotificationsPlugin.initialize(initializationSettings ,
+
+    onDidReceiveNotificationResponse: (NotificationResponse message){
+      Map<String,dynamic> data = jsonDecode(message.payload ??"{}");
+      redirectNotification(data);
+
+    }
     );
-
-    final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
 
     await flutterLocalNotificationsPlugin
         .resolvePlatformSpecificImplementation<
             AndroidFlutterLocalNotificationsPlugin>()
         ?.createNotificationChannel(channel);
 
-    FirebaseMessaging.onMessageOpenedApp;
+
 
     FirebaseMessaging.onMessage.listen((RemoteMessage? message) {
       RemoteNotification? notification = message?.notification;
       AndroidNotification? android = message?.notification?.android;
 
-      /// If `onMessage` is triggered with a notification, construct our own
-      /// local notification to show to users using the created channel.
       if (notification != null && android != null) {
         Map<String, dynamic> payload = message!.data;
         flutterLocalNotificationsPlugin.show(
@@ -64,63 +100,98 @@ class NotificationService {
 
     FirebaseMessaging.onMessageOpenedApp
         .listen((RemoteMessage message) async {
-      if (true) {
-        Future.delayed(8.seconds,(){});
-      }
+      redirectNotification(message.data);
     });
 
 
-    FirebaseMessaging.instance
-        .getInitialMessage()
-        .then((RemoteMessage? message) async {
-      if (message != null) {
-        Future.delayed(5.seconds,(){});
-      }
-    });
+
 
 
 
     FirebaseMessaging.instance
         .getInitialMessage()
         .then((RemoteMessage? message) async {
-      if (message != null) {
-        Future.delayed(5.seconds, () {
 
-        });
-      }
     });
 
 
-    FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
 
 
 
-    const AndroidInitializationSettings initializationSettingsAndroid =
-    AndroidInitializationSettings('@mipmap/ic_launcher');
-    const DarwinInitializationSettings initializationSettingsIOS =
-    DarwinInitializationSettings(
-        onDidReceiveLocalNotification: onDidReceiveLocalNotification,
-      requestSoundPermission: false,
-      requestBadgePermission: false,
-      requestAlertPermission: false,
-    );
-    const InitializationSettings initializationSettings =
-    InitializationSettings(
-        android: initializationSettingsAndroid,
-        iOS: initializationSettingsIOS);
-
-
-
-    flutterLocalNotificationsPlugin.initialize(
-        initializationSettings,
-       );
-
+    FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
 
 
   }
 
-  static Future<void> _firebaseMessagingBackgroundHandler(
-      RemoteMessage message) async {}
+
+  static redirectNotification(Map<String,dynamic> message)async{
+    if(message.containsKey("board_id")) {
+
+      if(message['isImage']==true.toString()) {
+
+
+        if(Get.currentRoute != AppRoutes.boardsPage)
+        {
+        Get.offAll(()=>BoardsScreen());
+        }
+
+        TreeNodeData? treeData;
+        BoardsController boardsController = Get.put(BoardsController());
+        await boardsController.init(
+            PrefService.getString(PrefKeys.languageCode));
+        for (var element in boardsController.treeData) {
+          if (element.id == int.parse(message['board_id'] ?? '0')) {
+            if (element.children.length != 0) {
+              for (var ele in element.children) {
+                if (ele.id == int.parse(message['sub_board_id'] ?? '0')) {
+                  treeData = ele;
+                }
+              }
+            }
+            else {
+              treeData = element;
+            }
+          }
+        }
+        if (treeData != null) {
+          await boardsController.onTapFolder(
+            isFromNotification: true,
+            node: treeData,
+            treeData.id.toString(),
+            treeData.name,
+            (treeData.id.toString() == "0" && treeData.name == '') ? treeData.icon : treeData.icon,
+            quote: treeData.quote,
+            isFirst: (treeData.id.toString() == "0") ? true : false,
+            quoteColor: treeData.quote_text_color,
+            quoteFamily: treeData.quote_font_family,
+            nameColor: treeData.name_text_color,
+            nameFamily: treeData.name_font_family,
+            mainCategory: (treeData.id.toString() == "0" &&
+                treeData.name == '')
+                ? treeData.name
+                : treeData.name,
+          );
+        }
+
+        int index = 0;
+        MyFolderController myFolderController = Get.put(MyFolderController());
+        if (myFolderController.getBoardInfoModel.data != null) {
+          for (var element in myFolderController.getBoardInfoModel.data!) {
+            if (element.id == int.parse(message['image_id'] ?? '0')) {
+              index =
+                  myFolderController.getBoardInfoModel.data!.indexOf(element);
+            }
+          }
+          await myFolderController.onTapImage(index, fromNotification: true);
+        }
+      }
+
+
+    }
+  }
+
+
+
 
   static Future onDidReceiveLocalNotification(
     int id,

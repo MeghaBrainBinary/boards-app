@@ -221,11 +221,24 @@ videos =[];
     }
     update(['fldr']);
   }
-  onTapImage(index)async{
+  onTapImage(index, {bool? fromNotification})async{
       isPageView = true;
       await Future.delayed(const Duration(seconds: 1),(){});
-pageController =PageController(initialPage: index);
-      selectedImage = getBoardInfoModel.data![index].image.toString();
+
+
+      if(fromNotification ?? false)
+        {
+          await Future.delayed(const Duration(seconds: 2),(){});
+
+          pageController.animateToPage(index, duration: const Duration(milliseconds: 500
+          ), curve: Curves.easeInOut);
+          selectedImage = getBoardInfoModel.data![index].image.toString();
+        }
+      else {
+        pageController = PageController(initialPage: index);
+        selectedImage = getBoardInfoModel.data![index].image.toString();
+      }
+
     update(['fldr']);
   }
 

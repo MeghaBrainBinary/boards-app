@@ -25,7 +25,6 @@ import 'package:flutter/services.dart';
 // ignore: depend_on_referenced_packages
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
-import 'package:permission_handler/permission_handler.dart';
 import 'screens/intro_screen/intro_screen.dart';
 import 'screens/language_screen/language_screen.dart';
 
@@ -47,6 +46,8 @@ void main() async {
   );
     }
   await NotificationService.init();
+  FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
+
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   await PrefService.init();
 
@@ -147,7 +148,7 @@ class _MyAppState extends State<MyApp> {
           GetPage(name: AppRoutes.splashPage, page: () => const SplashScreen()),
           GetPage(name: AppRoutes.languagePage, page: () => LanguageScreen()),
           GetPage(name: AppRoutes.boardsPage, page: () => BoardsScreen()),
-          GetPage(name: AppRoutes.myFolderPage, page: () => MyFolderScreen()),
+          GetPage(name: AppRoutes.myFolderPage, page: () => MyFolderScreen(isFromNotification: false,)),
           GetPage(name: AppRoutes.introPage, page: () => const IntroScreen()),
           GetPage(name: AppRoutes.favourite, page: () => FavouriteScreen()),
           GetPage(name: AppRoutes.viewImagesScreen, page: () => ViewImagesScreen(), arguments: const []),

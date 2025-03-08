@@ -567,6 +567,7 @@ class BoardsScreen extends StatelessWidget {
                                                           onTap: (p,node) {
 
                                                             controller.onTapFolder(
+                                                              isFromNotification: false,
                                                               node: (p.id.toString() =="0") ?node:p,
                                                               node.id.toString(),
                                                               node.name,
@@ -582,6 +583,7 @@ class BoardsScreen extends StatelessWidget {
                                                           },
                                                           onLastTap: (p,node) {
                                                             controller.onTapFolder(
+                                                              isFromNotification: false,
                                                               node:  (p.id.toString() =="0") ?node:p,
                                                               node.id.toString(),
                                                               node.name,

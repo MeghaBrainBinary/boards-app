@@ -264,6 +264,7 @@ class BoardsController extends GetxController {
     String?  quoteColor,
     String? quoteFamily,
 
+    required bool isFromNotification
   }) async{
     //isIcons = List.generate(6, (index) => false);
 
@@ -337,12 +338,14 @@ class BoardsController extends GetxController {
         myFolderController.selectedId =id.toString();
         myFolderController.myInt(id.toString());
         myFolderController.isSelectedNode = List.generate(node?.children.length ?? 0, (index) => false);
-        Get.to(() => MyFolderScreen(boardName: name, icon: icon, node: node?.children ?? [],isFirst :isFirst,parentId: id.toString(),quote:quote ?? '',isFirstNode: isFirst,
+        Get.to(() => MyFolderScreen(boardName: name, icon: icon, node: node?.children ?? [],isFirst :isFirst,parentId: id.toString(),
+          quote:quote ?? '',isFirstNode: isFirst,
           quoteColor:quoteColor,
           quoteFamily:quoteFamily,
           nameFamily:nameFamily,
           nameColor:nameColor,
           mainCategory:mainCategory,
+          isFromNotification: isFromNotification,
         ));
         categoryClickLoader.value = false;
       } else {
@@ -357,6 +360,8 @@ class BoardsController extends GetxController {
           nameFamily:nameFamily,
           nameColor:nameColor,
           mainCategory:mainCategory,
+          isFromNotification: isFromNotification,
+
 
         ));
         categoryClickLoader.value = false;
