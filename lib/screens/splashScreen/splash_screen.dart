@@ -63,7 +63,7 @@ class _SplashScreenState extends State<SplashScreen> {
     if(message.containsKey("board_id")) {
 
 
-      if(message['isImage']==true.toString()) {
+      if(message['isImage']=="1") {
 
 
         TreeNodeData? treeData;
@@ -72,6 +72,7 @@ class _SplashScreenState extends State<SplashScreen> {
             PrefService.getString(PrefKeys.languageCode));
         for (var element in boardsController.treeData) {
           if (element.id == int.parse(message['board_id'] ?? '0')) {
+            if(message['sub_board_id'] !='') {
             if (element.children.length != 0) {
               for (var ele in element.children) {
                 if (ele.id == int.parse(message['sub_board_id'] ?? '0')) {
@@ -82,6 +83,10 @@ class _SplashScreenState extends State<SplashScreen> {
             else {
               treeData = element;
             }
+
+          }else {
+            treeData = element;
+          }
           }
         }
         if (treeData != null) {

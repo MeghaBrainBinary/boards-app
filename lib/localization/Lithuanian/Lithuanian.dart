@@ -33,7 +33,7 @@ const Map<String, String> Lithuanian = {
   "Description": "apibūdinimas",
    "Send": "Siųsti",
   "Yes": "Taip",
-  "No": "Nr",
+  "No": "Ne",
   "skip": "praleisti",
   "See Every Detail,\n Full Screen at Your Fingertips": "Peržiūrėkite kiekvieną detalę,\n po ranka pasiekiamas visas ekranas",
   "Easily Share Images &\n Videos": "Lengvai bendrinkite vaizdus ir\n vaizdo įrašus",

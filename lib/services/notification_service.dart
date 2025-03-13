@@ -127,7 +127,7 @@ class NotificationService {
   static redirectNotification(Map<String,dynamic> message)async{
     if(message.containsKey("board_id")) {
 
-      if(message['isImage']==true.toString()) {
+      if(message['isImage']=="1") {
 
 
         if(Get.currentRoute != AppRoutes.boardsPage)
@@ -141,14 +141,19 @@ class NotificationService {
             PrefService.getString(PrefKeys.languageCode));
         for (var element in boardsController.treeData) {
           if (element.id == int.parse(message['board_id'] ?? '0')) {
-            if (element.children.length != 0) {
-              for (var ele in element.children) {
-                if (ele.id == int.parse(message['sub_board_id'] ?? '0')) {
-                  treeData = ele;
+            if(message['sub_board_id'] !='') {
+              if (element.children.length != 0) {
+                for (var ele in element.children) {
+                  if (ele.id == int.parse(message['sub_board_id'] ?? '0')) {
+                    treeData = ele;
+                  }
                 }
               }
-            }
-            else {
+
+              else {
+                treeData = element;
+              }
+            }else {
               treeData = element;
             }
           }
