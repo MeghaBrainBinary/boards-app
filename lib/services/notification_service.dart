@@ -125,6 +125,7 @@ class NotificationService {
 
 
   static redirectNotification(Map<String,dynamic> message)async{
+    print(message);
     if(message.containsKey("board_id")) {
 
       if(message['isImage']=="1") {
