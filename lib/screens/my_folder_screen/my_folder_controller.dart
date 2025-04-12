@@ -100,7 +100,7 @@ List<VideoPlayerController?> videos =[];
          videos[i]?.notifyListeners();
          videos[i]?.setLooping(true);
          videos[i]?.addListener(() {
-           if(videos[i]!.value.isBuffering)
+           if(videos[i]?.value.isBuffering == true)
            {
              isLoad[i] = true;
 
@@ -112,7 +112,7 @@ List<VideoPlayerController?> videos =[];
              update(['fldr']);
 
            }
-           if(videos[i]!.value.isInitialized)
+           if(videos[i]?.value.isInitialized == true)
            {
              initilized[i] = true;
 
@@ -232,13 +232,12 @@ videos =[];
 
           pageController.animateToPage(index, duration: const Duration(milliseconds: 500
           ), curve: Curves.easeInOut);
-          selectedImage = getBoardInfoModel.data![index].image.toString();
+          selectedImage = getBoardInfoModel.data?[index].image.toString();
         }
       else {
         pageController = PageController(initialPage: index);
-        selectedImage = getBoardInfoModel.data![index].image.toString();
+        selectedImage = getBoardInfoModel.data?[index].image.toString();
       }
-
     update(['fldr']);
   }
 

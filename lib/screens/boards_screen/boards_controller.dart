@@ -271,6 +271,7 @@ class BoardsController extends GetxController {
     isIcon = false;
     isMyfolder = false;
     categoryClickLoader.value = true;
+    loader.value = true;
     update(['board']);
 
     MyFolderController myFolderController = Get.put(MyFolderController());
@@ -330,45 +331,47 @@ class BoardsController extends GetxController {
         print("---------------------------->${myFolderController.getBoardInfoModel.data?.length}");
       }
       myFolderController.isLike = List.generate(myFolderController.getBoardInfoModel.data?.length ?? 0, (index) => false);
+      Future.delayed(const Duration(milliseconds: 100),() async {
+        if (subBoardId == null) {
+          //Get.toNamed(AppRoutes.myFolderPage, arguments: name);
+
+          myFolderController.selectedId =id.toString();
+        await  myFolderController.myInt(id.toString());
+          myFolderController.isSelectedNode = List.generate(node?.children.length ?? 0, (index) => false);
+          Get.to(() => MyFolderScreen(boardName: name, icon: icon, node: node?.children ?? [],isFirst :isFirst,parentId: id.toString(),
+            quote:quote ?? '',isFirstNode: isFirst,
+            quoteColor:quoteColor,
+            quoteFamily:quoteFamily,
+            nameFamily:nameFamily,
+            nameColor:nameColor,
+            mainCategory:mainCategory,
+            isFromNotification: isFromNotification,
+          ));
+          categoryClickLoader.value = false;
+        } else {
+          //Get.toNamed(AppRoutes.myFolderPage, arguments: subName);
+          myFolderController.selectedId =id.toString();
+         await myFolderController.myInt(id.toString());
+          myFolderController.isSelectedNode = List.generate(node?.children.length ?? 0, (index) => false);
+
+          Get.to(() => MyFolderScreen(boardName: subName, icon: icon,  node: node?.children ?? [],isFirst :isFirst,parentId: id.toString(),quote:quote ?? '',isFirstNode: isFirst,
+            quoteColor:quoteColor,
+            quoteFamily:quoteFamily,
+            nameFamily:nameFamily,
+            nameColor:nameColor,
+            mainCategory:mainCategory,
+            isFromNotification: isFromNotification,
 
 
-      if (subBoardId == null) {
-        //Get.toNamed(AppRoutes.myFolderPage, arguments: name);
+          ));
+          categoryClickLoader.value = false;
+        }
+      },);
 
-        myFolderController.selectedId =id.toString();
-        myFolderController.myInt(id.toString());
-        myFolderController.isSelectedNode = List.generate(node?.children.length ?? 0, (index) => false);
-        Get.to(() => MyFolderScreen(boardName: name, icon: icon, node: node?.children ?? [],isFirst :isFirst,parentId: id.toString(),
-          quote:quote ?? '',isFirstNode: isFirst,
-          quoteColor:quoteColor,
-          quoteFamily:quoteFamily,
-          nameFamily:nameFamily,
-          nameColor:nameColor,
-          mainCategory:mainCategory,
-          isFromNotification: isFromNotification,
-        ));
-        categoryClickLoader.value = false;
-      } else {
-        //Get.toNamed(AppRoutes.myFolderPage, arguments: subName);
-        myFolderController.selectedId =id.toString();
-        myFolderController.myInt(id.toString());
-        myFolderController.isSelectedNode = List.generate(node?.children.length ?? 0, (index) => false);
-
-        Get.to(() => MyFolderScreen(boardName: subName, icon: icon,  node: node?.children ?? [],isFirst :isFirst,parentId: id.toString(),quote:quote ?? '',isFirstNode: isFirst,
-          quoteColor:quoteColor,
-          quoteFamily:quoteFamily,
-          nameFamily:nameFamily,
-          nameColor:nameColor,
-          mainCategory:mainCategory,
-          isFromNotification: isFromNotification,
-
-
-        ));
-        categoryClickLoader.value = false;
-      }
-
+      loader.value = false;
 
     } else {
+      loader.value = false;
       errorTost("This category don't have images");
       categoryClickLoader.value = false;
     }

@@ -81,7 +81,7 @@ class _MyFolderScreenState extends State<MyFolderScreen> {
           for (var element in myFolderController.videos) {
             if (element != null) {
               element.pause();
-              element.dispose();
+             // element.dispose();
             }
           }
           myFolderController.isPlay = List.generate(
@@ -99,7 +99,7 @@ class _MyFolderScreenState extends State<MyFolderScreen> {
             for (var element in myFolderController.videos) {
               if (element != null) {
                 element.pause();
-                element.dispose();
+               // element.dispose();
               }
             }
             myFolderController.isPlay = List.generate(
@@ -425,7 +425,7 @@ class _MyFolderScreenState extends State<MyFolderScreen> {
                                                                                                                       crossAxisAlignment:CrossAxisAlignment.start,
                                                                                                                       children: [
                                                                                                                         const Spacer(),
-                                                                                                                      Padding(
+                                                                                                                       Padding(
                                                                                                                           padding: const EdgeInsets.only(left: 4.0),
                                                                                                                           child: InkWell(
                                                                                                                             onTap:() async {
@@ -469,7 +469,10 @@ class _MyFolderScreenState extends State<MyFolderScreen> {
                                                                                                                         const SizedBox(height: 5,),
                                                                                                                         StatefulBuilder(
                                                                                                                             builder: (context,s) {
-                                                                                                                              s.call((){});
+                                                                                                                             // controller.videos[index]?.initialize();
+                                                                                                                              s.call((){
+
+                                                                                                                              });
                                                                                                                               return VideoProgressIndicator(controller.videos[index]!, allowScrubbing: true);
                                                                                                                             }
                                                                                                                         ),
@@ -1734,7 +1737,7 @@ class _MyFolderScreenState extends State<MyFolderScreen> {
                 for (var element in myFolderController.videos) {
                   if (element != null) {
                     element.pause();
-                    element.dispose();
+                   // element.dispose();
                   }
                 }
                 myFolderController.isPlay = List.generate(
@@ -1750,7 +1753,7 @@ class _MyFolderScreenState extends State<MyFolderScreen> {
                   for (var element in myFolderController.videos) {
                     if (element != null) {
                       element.pause();
-                      element.dispose();
+                     // element.dispose();
                     }
                   }
                   myFolderController.isPlay = List.generate(
