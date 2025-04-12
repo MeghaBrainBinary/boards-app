@@ -1,5 +1,6 @@
-
 // ignore_for_file: must_be_immutable, unnecessary_null_comparison, prefer_is_empty
+
+import 'dart:developer';
 
 import 'package:boards_app/common/common_button.dart';
 import 'package:boards_app/common/common_loader.dart';
@@ -36,7 +37,7 @@ class MyFolderScreen extends StatefulWidget {
   bool? isFirst;
   bool? isFirstNode;
   List<TreeNodeData>? node;
-bool isFromNotification;
+  bool isFromNotification;
   MyFolderScreen(
       {super.key,
       this.boardName,
@@ -51,8 +52,7 @@ bool isFromNotification;
       this.isFirst,
       this.isFirstNode,
       this.node,
-      required this.isFromNotification
-      });
+      required this.isFromNotification});
 
   @override
   State<MyFolderScreen> createState() => _MyFolderScreenState();
@@ -66,12 +66,8 @@ class _MyFolderScreenState extends State<MyFolderScreen> {
 
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
-
-
-
   @override
   Widget build(BuildContext context) {
-
     if (kDebugMode) {
       print("------------------------${widget.node}");
     }
@@ -85,6 +81,7 @@ class _MyFolderScreenState extends State<MyFolderScreen> {
           for (var element in myFolderController.videos) {
             if (element != null) {
               element.pause();
+              element.dispose();
             }
           }
           myFolderController.isPlay = List.generate(
@@ -93,23 +90,21 @@ class _MyFolderScreenState extends State<MyFolderScreen> {
           myFolderController.isSelectedPageView = false;
           myFolderController.update(['fldr']);
           return false;
-        }
-        else {
-          if(widget.isFromNotification){
-
+        } else {
+          if (widget.isFromNotification) {
             Get.offAndToNamed(AppRoutes.boardsPage);
             return false;
-          }
-          else {
+          } else {
             Get.back();
             for (var element in myFolderController.videos) {
               if (element != null) {
                 element.pause();
+                element.dispose();
               }
             }
             myFolderController.isPlay = List.generate(
                 myFolderController.getBoardInfoModel.data?.length ?? 0,
-                    (index) => false);
+                (index) => false);
 
             myFolderController.onTapBack();
             return true;
@@ -198,108 +193,101 @@ class _MyFolderScreenState extends State<MyFolderScreen> {
                                                     false &&
                                                 controller.isSelectedPageView ==
                                                     false)
-                                             /* (widget.isFirstNode ?? false)
+                                              /* (widget.isFirstNode ?? false)
                                                   ? const SizedBox()
                                                   : */
                                               GestureDetector(
-                                                      onTap: () {
-                                                        myFolderController
-                                                                .addSelectedImage =
-                                                            List.generate(
-                                                                controller
-                                                                        .getBoardInfoModel
-                                                                        .data
-                                                                        ?.length ??
-                                                                    0,
-                                                                (index) =>
-                                                                    false);
-                                                        controller
-                                                                .isSelectedPageView =
-                                                            true;
-                                                        controller.isPageView =
-                                                            false;
-                                                        for (var element in myFolderController
-                                                            .videos) {
-                                                          if (element != null) {
-                                                            element.pause();
-                                                          }
-                                                        }
-                                                        myFolderController.isPlay =
-                                                            List.generate(
-                                                                myFolderController
-                                                                        .getBoardInfoModel
-                                                                        .data
-                                                                        ?.length ??
-                                                                    0,
-                                                                (index) =>
-                                                                    false);
+                                                onTap: () {
+                                                  myFolderController
+                                                          .addSelectedImage =
+                                                      List.generate(
+                                                          controller
+                                                                  .getBoardInfoModel
+                                                                  .data
+                                                                  ?.length ??
+                                                              0,
+                                                          (index) => false);
+                                                  controller
+                                                          .isSelectedPageView =
+                                                      true;
+                                                  controller.isPageView = false;
+                                                  for (var element
+                                                      in myFolderController
+                                                          .videos) {
+                                                    if (element != null) {
+                                                      element.pause();
+                                                    }
+                                                  }
+                                                  myFolderController.isPlay =
+                                                      List.generate(
+                                                          myFolderController
+                                                                  .getBoardInfoModel
+                                                                  .data
+                                                                  ?.length ??
+                                                              0,
+                                                          (index) => false);
 
-                                                        controller
-                                                            .update(['fldr']);
-                                                      },
-                                                      child: Text(
-                                                        StringRes.select.tr,
-                                                        style: appTextStyle(
-                                                          color:
-                                                              ColorRes.appColor,
-                                                          fontSize: 15,
-                                                        ),
-                                                      ),
-                                                    )
+                                                  controller.update(['fldr']);
+                                                },
+                                                child: Text(
+                                                  StringRes.select.tr,
+                                                  style: appTextStyle(
+                                                    color: ColorRes.appColor,
+                                                    fontSize: 15,
+                                                  ),
+                                                ),
+                                              )
                                             else
                                               const SizedBox(),
                                             controller.isSelectedPageView
                                                 ?
-                                          /*  (widget.isFirstNode ?? false)
+                                                /*  (widget.isFirstNode ?? false)
                                                     ? const SizedBox()
                                                     : */
-                                            Row(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .spaceBetween,
-                                                        children: [
-                                                          Text(
-                                                            '${myFolderController.addSelectedImage.where((e) => e == true).length} ${StringRes.imageSelected.tr}',
-                                                            style: appTextStyle(
-                                                                color: ColorRes
-                                                                    .black,
-                                                                fontSize: 13,
-                                                                weight:
-                                                                    FontWeight
-                                                                        .w600),
+                                                Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceBetween,
+                                                    children: [
+                                                      Text(
+                                                        '${myFolderController.addSelectedImage.where((e) => e == true).length} ${StringRes.imageSelected.tr}',
+                                                        style: appTextStyle(
+                                                            color:
+                                                                ColorRes.black,
+                                                            fontSize: 13,
+                                                            weight: FontWeight
+                                                                .w600),
+                                                      ),
+                                                      GestureDetector(
+                                                        onTap: () {
+                                                          myFolderController
+                                                                  .addSelectedImage =
+                                                              List.generate(
+                                                                  controller
+                                                                          .getBoardInfoModel
+                                                                          .data
+                                                                          ?.length ??
+                                                                      0,
+                                                                  (index) =>
+                                                                      false);
+                                                          controller
+                                                                  .isSelectedPageView =
+                                                              false;
+                                                          controller
+                                                              .update(['fldr']);
+                                                        },
+                                                        child: Text(
+                                                          StringRes.cancel.tr,
+                                                          style: appTextStyle(
+                                                            color: ColorRes
+                                                                .appColor,
+                                                            //fontFamily: widget.nameFamily,
+                                                            fontSize: 15,
                                                           ),
-                                                          GestureDetector(
-                                                            onTap: () {
-                                                              myFolderController
-                                                                      .addSelectedImage =
-                                                                  List.generate(
-                                                                      controller
-                                                                              .getBoardInfoModel
-                                                                              .data
-                                                                              ?.length ??
-                                                                          0,
-                                                                      (index) =>
-                                                                          false);
-                                                              controller
-                                                                      .isSelectedPageView =
-                                                                  false;
-                                                              controller.update(
-                                                                  ['fldr']);
-                                                            },
-                                                            child: Text(
-                                                              StringRes
-                                                                  .cancel.tr,
-                                                              style:
-                                                                  appTextStyle(
-                                                                color: ColorRes
-                                                                    .appColor,
-                                                                //fontFamily: widget.nameFamily,
-                                                                fontSize: 15,
-                                                              ),
-                                                            ),
-                                                          ),
-                                                        ],
-                                                      )
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  )
                                                 : const SizedBox(),
                                             const SizedBox(height: 20),
                                             (controller.isPageView &&
@@ -346,16 +334,28 @@ class _MyFolderScreenState extends State<MyFolderScreen> {
                                                                           ?.length ??
                                                                       0,
                                                                   onPageChanged:
-                                                                      (val) {
+                                                                      (val) async {
                                                                     controller
                                                                         .onImageChanged(
                                                                             val);
+                                                                    // if(controller.getBoardInfoModel.data?[val].fileType == "video"){
+                                                                    //   if(controller.getBoardInfoModel.data?[val - 1].fileType == "video" || controller.getBoardInfoModel.data?[val + 1].fileType == "video"){
+                                                                    //     if(controller.videos[val]!.value.isInitialized == false) {
+                                                                    //       controller.videos[val]!.initialize();
+                                                                    //       log("isInitialized");
+                                                                    //     }
+                                                                    //   }
+                                                                    // } else {
+                                                                    //     controller.videos[val]!.dispose();
+                                                                    //     log("disposed");
+                                                                    // }
                                                                   },
                                                                   itemBuilder:
                                                                       (context,
                                                                           index) {
                                                                     controller
                                                                         .selectedIndex;
+
                                                                     return Stack(
                                                                       alignment:
                                                                           Alignment
@@ -382,139 +382,140 @@ class _MyFolderScreenState extends State<MyFolderScreen> {
                                                                               alignment: Alignment.center,
                                                                               child: controller.getBoardInfoModel.data?[index].fileType == "video"
                                                                                   ? controller.videos[index] != null
-                                                                                      ? Stack(
-                                                                                          alignment: Alignment.center,
-                                                                                          children: [
-                                                                        controller.videos[index]!.value.isInitialized?
+                                                                                      ?
+                                                                             // VideoWidget(videoUrl: controller.getBoardInfoModel.data?[index].image ?? '', thumbnailImage: controller.getBoardInfoModel.data?[index].thumbnail ?? '')
+                                                                                                    Stack(
+                                                                                                                alignment: Alignment.center,
+                                                                                                                children: [
+                                                                                              controller.videos[index]!.value.isInitialized?
 
-                                                                        SizedBox(
-                                                                          height: Get.height * 0.7,
-                                                                          width: Get.width * 0.75,
-                                                                          child: AspectRatio(
-                                                                                            aspectRatio:9/16,
-                                                                                            child:
-                                                                VideoPlayer(controller.videos[index]! ),
-                                                                                          ),
-                                                                        )
-                                                                            :
+                                                                                              SizedBox(
+                                                                                                height: Get.height * 0.7,
+                                                                                                width: Get.width * 0.75,
+                                                                                                child: AspectRatio(
+                                                                                                                  aspectRatio:9/16,
+                                                                                                                  child:
+                                                                                      VideoPlayer(controller.videos[index]!),
+                                                                                                                ),
+                                                                                              )
+                                                                                                  :
+                                                                                                  AspectRatio(
+                                                                                                                    aspectRatio:9/16,
+                                                                                                                    child: CachedNetworkImage(
+                                                                                                                      fit: BoxFit.fill,
+                                                                                                                      imageUrl:  controller.getBoardInfoModel.data?[index].thumbnail ?? '',
+                                                                                                                      progressIndicatorBuilder: (context, strings, download) {
+                                                                                                                        return Shimmer.fromColors(
+                                                                                                                          baseColor: Colors.grey.shade300,
+                                                                                                                          highlightColor: Colors.white,
+                                                                                                                          enabled: true,
+                                                                                                                          child: Container(
+                                                                                                                            height: Get.width,
+                                                                                                                            width: Get.width,
+                                                                                                                            color: Colors.white,
+                                                                                                                          ),
+                                                                                                                        );
+                                                                                                                      },
+                                                                                                                      errorWidget: (context, url, error) => Container(),
+                                                                                                                    ),
+                                                                                                                  ),
+                                                                                                                  SizedBox(
+                                                                                                                    width: Get.width * 0.75,
+                                                                                                                    child: Column(
+                                                                                                                      crossAxisAlignment:CrossAxisAlignment.start,
+                                                                                                                      children: [
+                                                                                                                        const Spacer(),
+                                                                                                                      Padding(
+                                                                                                                          padding: const EdgeInsets.only(left: 4.0),
+                                                                                                                          child: InkWell(
+                                                                                                                            onTap:() async {
 
-                                                                                            AspectRatio(
-                                                                                              aspectRatio:9/16,
-                                                                                              child: CachedNetworkImage(
-                                                                                                fit: BoxFit.fill,
-                                                                                                imageUrl:  controller.getBoardInfoModel.data?[index].thumbnail ?? '',
-                                                                                                progressIndicatorBuilder: (context, strings, download) {
-                                                                                                  return Shimmer.fromColors(
-                                                                                                    baseColor: Colors.grey.shade300,
-                                                                                                    highlightColor: Colors.white,
-                                                                                                    enabled: true,
-                                                                                                    child: Container(
-                                                                                                      height: Get.width,
-                                                                                                      width: Get.width,
-                                                                                                      color: Colors.white,
-                                                                                                    ),
-                                                                                                  );
-                                                                                                },
-                                                                                                errorWidget: (context, url, error) => Container(),
-                                                                                              ),
-                                                                                            ),
-                                                                                            SizedBox(
-                                                                                              width: Get.width * 0.75,
-                                                                                              child: Column(
-                                                                                                crossAxisAlignment:CrossAxisAlignment.start,
-                                                                                                children: [
-                                                                                                  const Spacer(),
-                                                                                                Padding(
-                                                                                                    padding: const EdgeInsets.only(left: 4.0),
-                                                                                                    child: InkWell(
-                                                                                                      onTap:() async {
 
+                                                                                                                              if(controller.isPlay[index])
+                                                                                                                              {
+                                                                                                                                controller.isPlay[index] = false;
+                                                                                                                                controller.videos[index]?.pause();
 
-                                                                                                        if(controller.isPlay[index])
+                                                                                                                              }
+                                                                                                                              else
+                                                                                                                              {
+                                                                                                                                controller.isPlay = List.generate( controller.getBoardInfoModel.data?.length ??0, (index) => false);
+                                                                                                                                for (var e in controller.videos) {
+                                                                                                                                  if(e != null)
+                                                                                                                                  {
+                                                                                                                                    e.pause();
+                                                                                                                                  }
+                                                                                                                                }
+                                                                                                                                controller.isPlay[index] = true;
+
+                                                                                                                                controller.videos[index]?.play();
+
+                                                                                                                              }
+                                                                                                                              controller.update(['fldr']);
+
+                                                                                                                            },
+                                                                                                                            child: Container(
+                                                                                                                              height: 30,
+                                                                                                                              width: 30,
+                                                                                                                              decoration:const BoxDecoration(
+                                                                                                                                shape:BoxShape.circle,
+                                                                                                                                color:Colors.white,
+                                                                                                                              ),
+                                                                                                                              child: Icon(controller.isPlay[index]?
+                                                                                                                              Icons.pause:Icons.play_arrow,size: 20,),
+                                                                                                                            ),
+                                                                                                                          ),
+                                                                                                                        ),
+                                                                                                                        const SizedBox(height: 5,),
+                                                                                                                        StatefulBuilder(
+                                                                                                                            builder: (context,s) {
+                                                                                                                              s.call((){});
+                                                                                                                              return VideoProgressIndicator(controller.videos[index]!, allowScrubbing: true);
+                                                                                                                            }
+                                                                                                                        ),
+
+                                                                                                                      ],
+                                                                                                                    ),
+                                                                                                                  ),
+                                                                                                                  controller.isLoad[index] ?const CircularProgressIndicator():const SizedBox(),
+                                                                                                                  /*      InkWell(
+                                                                                                    onTap:() async {
+
+                                                                                                      if(controller.isPlay[index])
                                                                                                         {
+
                                                                                                           controller.isPlay[index] = false;
                                                                                                           controller.videos[index]?.pause();
 
                                                                                                         }
-                                                                                                        else
+                                                                                                      else
                                                                                                         {
                                                                                                           controller.isPlay = List.generate( controller.getBoardInfoModel.data?.length ??0, (index) => false);
-                                                                                                          for (var e in controller.videos) {
+                                                                                                          controller.videos.forEach((e){
                                                                                                             if(e != null)
                                                                                                             {
                                                                                                               e.pause();
                                                                                                             }
-                                                                                                          }
+                                                                                                          });
                                                                                                           controller.isPlay[index] = true;
-
-                                                                                                          controller.videos[index]?.play();
+                                                                                                          controller.videos[index]?.start();
 
                                                                                                         }
-                                                                                                        controller.update(['fldr']);
-
-                                                                                                      },
-                                                                                                      child: Container(
-                                                                                                        height: 30,
-                                                                                                        width: 30,
-                                                                                                        decoration:const BoxDecoration(
-                                                                                                          shape:BoxShape.circle,
-                                                                                                          color:Colors.white,
-                                                                                                        ),
-                                                                                                        child: Icon(controller.isPlay[index]?
-                                                                                                        Icons.pause:Icons.play_arrow,size: 20,),
-                                                                                                      ),
-                                                                                                    ),
-                                                                                                  ),
-                                                                                                  const SizedBox(height: 5,),
-                                                                                                  StatefulBuilder(
-                                                                                                      builder: (context,s) {
-                                                                                                        s.call((){});
-                                                                                                        return VideoProgressIndicator(controller.videos[index]!, allowScrubbing: true);
-                                                                                                      }
-                                                                                                  ),
-
-                                                                                                ],
+                                                                                                      controller.update(['fldr']);
+                                                                                                    },
+                                                                                                    child: Container(
+                                                                                                      height: 30,
+                                                                                                      width: 30,
+                                                                                                      decoration:const BoxDecoration(
+                                                                                              shape:BoxShape.circle,
+                                                                                              color:Colors.white,
                                                                                               ),
-                                                                                            ),
-                                                                                            controller.isLoad[index] ?const CircularProgressIndicator():const SizedBox(),
-                                                                                            /*      InkWell(
-                                                                              onTap:() async {
-
-                                                                                if(controller.isPlay[index])
-                                                                                  {
-
-                                                                                    controller.isPlay[index] = false;
-                                                                                    controller.videos[index]?.pause();
-
-                                                                                  }
-                                                                                else
-                                                                                  {
-                                                                                    controller.isPlay = List.generate( controller.getBoardInfoModel.data?.length ??0, (index) => false);
-                                                                                    controller.videos.forEach((e){
-                                                                                      if(e != null)
-                                                                                      {
-                                                                                        e.pause();
-                                                                                      }
-                                                                                    });
-                                                                                    controller.isPlay[index] = true;
-                                                                                    controller.videos[index]?.start();
-
-                                                                                  }
-                                                                                controller.update(['fldr']);
-                                                                              },
-                                                                              child: Container(
-                                                                                height: 30,
-                                                                                width: 30,
-                                                                                decoration:const BoxDecoration(
-                                                                        shape:BoxShape.circle,
-                                                                        color:Colors.white,
-                                                                        ),
-                                                                                child: Icon(controller.isPlay[index]?Icons.pause:Icons.play_arrow,
-                                                                                size: 20,),
-                                                                              ),
-                                                                            ),*/
-                                                                                          ],
-                                                                                        )
+                                                                                                      child: Icon(controller.isPlay[index]?Icons.pause:Icons.play_arrow,
+                                                                                                      size: 20,),
+                                                                                                    ),
+                                                                                                  ),*/
+                                                                                                                ],
+                                                                                                              )
                                                                                       : const SizedBox()
                                                                                   : CachedNetworkImage(
                                                                                       fit: BoxFit.fill,
@@ -601,16 +602,15 @@ class _MyFolderScreenState extends State<MyFolderScreen> {
                                                                         .data
                                                                         ?.length ??
                                                                     0,
-                                                                gridDelegate:
-                                                                    const SliverGridDelegateWithFixedCrossAxisCount(
-                                                                  crossAxisCount:
-                                                                      2,
-                                                                  mainAxisSpacing:
-                                                                      19,
-                                                                  crossAxisSpacing:
-                                                                      19,
-                                                                        childAspectRatio: 9/16
-                                                                ),
+                                                                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                                                                    crossAxisCount:
+                                                                        2,
+                                                                    mainAxisSpacing:
+                                                                        19,
+                                                                    crossAxisSpacing:
+                                                                        19,
+                                                                    childAspectRatio:
+                                                                        9 / 16),
                                                                 itemBuilder:
                                                                     (context,
                                                                         index) {
@@ -641,27 +641,24 @@ class _MyFolderScreenState extends State<MyFolderScreen> {
                                                                               BorderRadius.circular(5),
                                                                           child:
                                                                               AspectRatio(
-                                                                                aspectRatio:9/16,
-                                                                                child: Container(
-                                                                            // height:
-                                                                            //     Get.height * 0.199,
-                                                                            // width:
-                                                                            //     Get.width * 0.45,
-                                                                            padding: (myFolderController.addSelectedImage[index] == true)
-                                                                                  ? const EdgeInsets.all(2)
-                                                                                  : const EdgeInsets.all(2),
-                                                                            decoration:
-                                                                                  BoxDecoration(
+                                                                            aspectRatio:
+                                                                                9 / 16,
+                                                                            child:
+                                                                                Container(
+                                                                              // height:
+                                                                              //     Get.height * 0.199,
+                                                                              // width:
+                                                                              //     Get.width * 0.45,
+                                                                              padding: (myFolderController.addSelectedImage[index] == true) ? const EdgeInsets.all(2) : const EdgeInsets.all(2),
+                                                                              decoration: BoxDecoration(
                                                                                 color: myFolderController.checkImg[index] == true ? ColorRes.appColor : Colors.transparent,
                                                                                 border: Border.all(
                                                                                   color: myFolderController.addSelectedImage[index] == true ? ColorRes.appColor : Colors.white,
                                                                                 ),
                                                                                 borderRadius: BorderRadius.circular(5),
-                                                                            ),
-                                                                            alignment:
-                                                                                  Alignment.center,
-                                                                            child:
-                                                                                  Stack(
+                                                                              ),
+                                                                              alignment: Alignment.center,
+                                                                              child: Stack(
                                                                                 alignment: Alignment.bottomRight,
                                                                                 children: [
                                                                                   controller.getBoardInfoModel.data?[index].fileType == "video"
@@ -669,7 +666,7 @@ class _MyFolderScreenState extends State<MyFolderScreen> {
                                                                                           ? Stack(
                                                                                               alignment: Alignment.center,
                                                                                               children: [
-                                                                                              /*  controller.videos[index]!.value.isInitialized?
+                                                                                                /*  controller.videos[index]!.value.isInitialized?
                                                                                                 controller.isLoad[index] == false?
                                                                                                 AspectRatio(
                                                                                                     aspectRatio: controller.videos[index]!.value.aspectRatio,
@@ -679,11 +676,10 @@ class _MyFolderScreenState extends State<MyFolderScreen> {
                                                                                                   fit: BoxFit.contain,):*/
 
                                                                                                 AspectRatio(
-                                                                                                  aspectRatio:9/16,
+                                                                                                  aspectRatio: 9 / 16,
                                                                                                   child: CachedNetworkImage(
                                                                                                     fit: BoxFit.fill,
-                                                                                                    imageUrl: controller.getBoardInfoModel.data?[index].
-                                                                                                    thumbnail ?? '',
+                                                                                                    imageUrl: controller.getBoardInfoModel.data?[index].thumbnail ?? '',
                                                                                                     errorWidget: (context, url, error) => Container(),
                                                                                                     progressIndicatorBuilder: (context, strings, download) {
                                                                                                       return Shimmer.fromColors(
@@ -700,18 +696,16 @@ class _MyFolderScreenState extends State<MyFolderScreen> {
                                                                                                   ),
                                                                                                 ),
                                                                                                 SizedBox(
-                                                                                                  width:
-                                                                                                  Get.width * 0.45,
-                                                                                                    child: Column(
-                                                                                                    crossAxisAlignment:CrossAxisAlignment.start,
+                                                                                                  width: Get.width * 0.45,
+                                                                                                  child: Column(
+                                                                                                    crossAxisAlignment: CrossAxisAlignment.start,
                                                                                                     children: [
                                                                                                       const Spacer(),
                                                                                                       Padding(
-                                                                                                        padding: const EdgeInsets.only(left: 4.0,bottom: 4),
+                                                                                                        padding: const EdgeInsets.only(left: 4.0, bottom: 4),
                                                                                                         child: InkWell(
-                                                                                                          onTap:() async {
-controller
-    .isSelectedPageView = false;
+                                                                                                          onTap: () async {
+                                                                                                            controller.isSelectedPageView = false;
                                                                                                             controller.onTapImage(index);
                                                                                                             controller.videos[index]?.pause();
 
@@ -736,17 +730,18 @@ controller
                                                                                                             //
                                                                                                             // }
                                                                                                             controller.update(['fldr']);
-
                                                                                                           },
                                                                                                           child: Container(
                                                                                                             height: 30,
                                                                                                             width: 30,
-                                                                                                            decoration:const BoxDecoration(
-                                                                                                              shape:BoxShape.circle,
-                                                                                                              color:Colors.white,
+                                                                                                            decoration: const BoxDecoration(
+                                                                                                              shape: BoxShape.circle,
+                                                                                                              color: Colors.white,
                                                                                                             ),
-                                                                                                            child: Icon(controller.isPlay[index]?
-                                                                                                            Icons.pause:Icons.play_arrow,size: 20,),
+                                                                                                            child: Icon(
+                                                                                                              controller.isPlay[index] ? Icons.pause : Icons.play_arrow,
+                                                                                                              size: 20,
+                                                                                                            ),
                                                                                                           ),
                                                                                                         ),
                                                                                                       ),
@@ -757,11 +752,9 @@ controller
                                                                                                           return VideoProgressIndicator(controller.videos[index]!, allowScrubbing: true);
                                                                                                         }
                                                                                                       ),*/
-
                                                                                                     ],
-                                                                                                ),
                                                                                                   ),
-
+                                                                                                ),
                                                                                               ],
                                                                                             )
                                                                                           : const SizedBox()
@@ -796,9 +789,9 @@ controller
                                                                                         )
                                                                                       : const SizedBox(),
                                                                                 ],
+                                                                              ),
                                                                             ),
                                                                           ),
-                                                                              ),
                                                                         ),
                                                                       ),
                                                                       (myFolderController.isSelect ==
@@ -926,8 +919,7 @@ controller
 
                                                                             controller.selectedId =
                                                                                 widget.parentId.toString();
-                                                                            controller.myInt(
-                                                                                widget.parentId.toString());
+                                                                            controller.myInt(widget.parentId.toString());
                                                                           } else {
                                                                             myFolderController.isSelectedNode =
                                                                                 List.generate(widget.node?.length ?? 0, (index) => false);
@@ -999,70 +991,74 @@ controller
                                                                   ),
                                                                 ),
 
-                                                         /* widget.isFirstNode ??
+                                                          /* widget.isFirstNode ??
                                                                   false
                                                               ? const SizedBox()
                                                               :*/
                                                           SizedBox(
-                                                                  height:
-                                                                      Get.height *
-                                                                          0.69,
-                                                                  width:
-                                                                      Get.width,
-                                                                  child: ((controller.getBoardInfoModel.data ??
-                                                                              [])
-                                                                          .isNotEmpty)
-                                                                      ? GridView
-                                                                          .builder(
-                                                                          padding:
-                                                                              const EdgeInsets.all(0),
-                                                                          itemCount: controller
-                                                                              .getBoardInfoModel
-                                                                              .data!
-                                                                              .length,
-                                                                          gridDelegate:
-                                                                              const SliverGridDelegateWithFixedCrossAxisCount(
-                                                                            crossAxisCount:
-                                                                                2,
-                                                                            mainAxisSpacing:
-                                                                                19,
-                                                                            crossAxisSpacing:
-                                                                                19,
-                                                                                childAspectRatio: 9/16
-                                                                          ),
-                                                                          itemBuilder:
-                                                                              (context, index) {
-                                                                            return Stack(
-                                                                              alignment: Alignment.bottomRight,
-                                                                              children: [
-                                                                                InkWell(
-                                                                                  onTap: () {
-                                                                                    controller.selectedIndex = index;
-                                                                                    controller.onTapImage(index);
-                                                                                  },
-                                                                                  child: ClipRRect(
+                                                            height: Get.height *
+                                                                0.69,
+                                                            width: Get.width,
+                                                            child: ((controller
+                                                                            .getBoardInfoModel
+                                                                            .data ??
+                                                                        [])
+                                                                    .isNotEmpty)
+                                                                ? GridView
+                                                                    .builder(
+                                                                    padding:
+                                                                        const EdgeInsets
+                                                                            .all(0),
+                                                                    itemCount: controller
+                                                                        .getBoardInfoModel
+                                                                        .data!
+                                                                        .length,
+                                                                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                                                                        crossAxisCount:
+                                                                            2,
+                                                                        mainAxisSpacing:
+                                                                            19,
+                                                                        crossAxisSpacing:
+                                                                            19,
+                                                                        childAspectRatio:
+                                                                            9 / 16),
+                                                                    itemBuilder:
+                                                                        (context,
+                                                                            index) {
+                                                                      return Stack(
+                                                                        alignment:
+                                                                            Alignment.bottomRight,
+                                                                        children: [
+                                                                          InkWell(
+                                                                            onTap:
+                                                                                () {
+                                                                              controller.selectedIndex = index;
+                                                                              controller.onTapImage(index);
+                                                                            },
+                                                                            child:
+                                                                                ClipRRect(
+                                                                              borderRadius: BorderRadius.circular(5),
+                                                                              child: AspectRatio(
+                                                                                aspectRatio: 9 / 16,
+                                                                                child: Container(
+                                                                                  // height: Get.height * 0.199,
+                                                                                  // width: Get.width * 0.45,
+                                                                                  padding: (controller.checkImg[index] == false) ? const EdgeInsets.all(0) : const EdgeInsets.all(2),
+                                                                                  decoration: BoxDecoration(
+                                                                                    color: Colors.white,
                                                                                     borderRadius: BorderRadius.circular(5),
-                                                                                    child: AspectRatio(
-                                                                                      aspectRatio:9/16,
-                                                                                      child: Container(
-                                                                                        // height: Get.height * 0.199,
-                                                                                        // width: Get.width * 0.45,
-                                                                                        padding: (controller.checkImg[index] == false) ? const EdgeInsets.all(0) : const EdgeInsets.all(2),
-                                                                                        decoration: BoxDecoration(
-                                                                                          color: Colors.white,
-                                                                                          borderRadius: BorderRadius.circular(5),
-                                                                                        ),
-                                                                                        alignment: Alignment.center,
-                                                                                        child: controller.videos.length != 0
-                                                                                            ? Stack(
-                                                                                                alignment: Alignment.topRight,
-                                                                                                children: [
-                                                                                                  controller.getBoardInfoModel.data?[index].fileType == "video"
-                                                                                                      ? controller.videos[index] != null
-                                                                                                          ? Stack(
-                                                                                                              alignment: Alignment.center,
-                                                                                                              children: [
-                                                                                                                /*controller.videos[index]!.value.isInitialized?
+                                                                                  ),
+                                                                                  alignment: Alignment.center,
+                                                                                  child: controller.videos.length != 0
+                                                                                      ? Stack(
+                                                                                          alignment: Alignment.topRight,
+                                                                                          children: [
+                                                                                            controller.getBoardInfoModel.data?[index].fileType == "video"
+                                                                                                ? controller.videos[index] != null
+                                                                                                    ? Stack(
+                                                                                                        alignment: Alignment.center,
+                                                                                                        children: [
+                                                                                                          /*controller.videos[index]!.value.isInitialized?
 
                                                                                                                 controller.isLoad[index] == false?
                                                                                                                 AspectRatio(
@@ -1072,185 +1068,183 @@ controller
                                                                                                                 ):Image.network(  controller.getBoardInfoModel.data?[index].
                                                                                                                 thumbnail ?? '' ,fit: BoxFit.contain,):*/
 
-                                                                                                                AspectRatio(
-                                                                                                                  aspectRatio:9/16,
-                                                                                                                  child: CachedNetworkImage(
-                                                                                                                    fit: BoxFit.fill,
-                                                                                                                    imageUrl: controller.getBoardInfoModel.data?[index].
-                                                                                                                    thumbnail ?? '',
-                                                                                                                    errorWidget: (context, url, error) => Container(),
-                                                                                                                    progressIndicatorBuilder: (context, strings, download) {
-                                                                                                                      return Shimmer.fromColors(
-                                                                                                                        baseColor: Colors.grey.shade300,
-                                                                                                                        highlightColor: Colors.white,
-                                                                                                                        enabled: true,
-                                                                                                                        child: Container(
-                                                                                                                          height: Get.width,
-                                                                                                                          width: Get.width,
-                                                                                                                          color: Colors.white,
-                                                                                                                        ),
-                                                                                                                      );
+                                                                                                          AspectRatio(
+                                                                                                            aspectRatio: 9 / 16,
+                                                                                                            child: CachedNetworkImage(
+                                                                                                              fit: BoxFit.fill,
+                                                                                                              imageUrl: controller.getBoardInfoModel.data?[index].thumbnail ?? '',
+                                                                                                              errorWidget: (context, url, error) => Container(),
+                                                                                                              progressIndicatorBuilder: (context, strings, download) {
+                                                                                                                return Shimmer.fromColors(
+                                                                                                                  baseColor: Colors.grey.shade300,
+                                                                                                                  highlightColor: Colors.white,
+                                                                                                                  enabled: true,
+                                                                                                                  child: Container(
+                                                                                                                    height: Get.width,
+                                                                                                                    width: Get.width,
+                                                                                                                    color: Colors.white,
+                                                                                                                  ),
+                                                                                                                );
+                                                                                                              },
+                                                                                                            ),
+                                                                                                          ),
+                                                                                                          SizedBox(
+                                                                                                            width: Get.width * 0.45,
+                                                                                                            child: Column(
+                                                                                                              crossAxisAlignment: CrossAxisAlignment.start,
+                                                                                                              children: [
+                                                                                                                const Spacer(),
+                                                                                                                Padding(
+                                                                                                                  padding: const EdgeInsets.only(left: 4.0, bottom: 4),
+                                                                                                                  child: InkWell(
+                                                                                                                    onTap: () async {
+                                                                                                                      controller.onTapImage(index);
+                                                                                                                      controller.videos[index]?.pause();
+                                                                                                                      // if(controller.isPlay[index])
+                                                                                                                      // {
+                                                                                                                      //   controller.isPlay[index] = false;
+                                                                                                                      //   controller.videos[index]?.pause();
+                                                                                                                      //
+                                                                                                                      // }
+                                                                                                                      // else
+                                                                                                                      // {
+                                                                                                                      //   controller.isPlay = List.generate( controller.getBoardInfoModel.data?.length ??0, (index) => false);
+                                                                                                                      //   controller.videos.forEach((e){
+                                                                                                                      //     if(e != null)
+                                                                                                                      //       {
+                                                                                                                      //         e.pause();
+                                                                                                                      //       }
+                                                                                                                      //   });
+                                                                                                                      //   controller.isPlay[index] = true;
+                                                                                                                      //
+                                                                                                                      //   controller.videos[index]?.play();
+                                                                                                                      //
+                                                                                                                      // }
+                                                                                                                      controller.update(['fldr']);
                                                                                                                     },
+                                                                                                                    child: Container(
+                                                                                                                      height: 30,
+                                                                                                                      width: 30,
+                                                                                                                      decoration: const BoxDecoration(
+                                                                                                                        shape: BoxShape.circle,
+                                                                                                                        color: Colors.white,
+                                                                                                                      ),
+                                                                                                                      child: Icon(
+                                                                                                                        controller.isPlay[index] ? Icons.pause : Icons.play_arrow,
+                                                                                                                        size: 20,
+                                                                                                                      ),
+                                                                                                                    ),
                                                                                                                   ),
                                                                                                                 ),
-
-                                                                                                                SizedBox(
-                                                                                                                  width: Get.width * 0.45,
-                                                                                                                  child: Column(
-                                                                                                                    crossAxisAlignment:CrossAxisAlignment.start,
-                                                                                                                    children: [
-                                                                                                                      const Spacer(),
-                                                                                                                   Padding(
-                                                                                                                         padding: const EdgeInsets.only(left: 4.0,bottom: 4),
-                                                                                                                         child: InkWell(
-                                                                                                      onTap:() async {
-
-
-                                                                                                        controller.onTapImage(index);
-                                                                                                        controller.videos[index]?.pause();
-                                                                                                        // if(controller.isPlay[index])
-                                                                                                        // {
-                                                                                                        //   controller.isPlay[index] = false;
-                                                                                                        //   controller.videos[index]?.pause();
-                                                                                                        //
-                                                                                                        // }
-                                                                                                        // else
-                                                                                                        // {
-                                                                                                        //   controller.isPlay = List.generate( controller.getBoardInfoModel.data?.length ??0, (index) => false);
-                                                                                                        //   controller.videos.forEach((e){
-                                                                                                        //     if(e != null)
-                                                                                                        //       {
-                                                                                                        //         e.pause();
-                                                                                                        //       }
-                                                                                                        //   });
-                                                                                                        //   controller.isPlay[index] = true;
-                                                                                                        //
-                                                                                                        //   controller.videos[index]?.play();
-                                                                                                        //
-                                                                                                        // }
-                                                                                                        controller.update(['fldr']);
-
-                                                                                                      },
-                                                                                                      child: Container(
-                                                                                                        height: 30,
-                                                                                                        width: 30,
-                                                                                                        decoration:const BoxDecoration(
-                                                                                                          shape:BoxShape.circle,
-                                                                                                          color:Colors.white,
-                                                                                                        ),
-                                                                                                        child: Icon(controller.isPlay[index]?
-                                                                                                        Icons.pause:Icons.play_arrow,size: 20,),
-                                                                                                      ),
-                                                                                                    ),
-                                                                                                                       ),
-                                                                                                                     /* const SizedBox(height: 5,),
+                                                                                                                /* const SizedBox(height: 5,),
                                                                                                                       StatefulBuilder(
                                                                                                                           builder: (context,s) {
                                                                                                                             s.call((){});
                                                                                                                             return VideoProgressIndicator(controller.videos[index]!, allowScrubbing: true);
                                                                                                                           }
                                                                                                                       ),*/
-                                                                                                                    ],
-                                                                                                                  ),
-                                                                                                                ),
-
                                                                                                               ],
-                                                                                                            )
-                                                                                                          : const SizedBox()
-                                                                                                      : CachedNetworkImage(
-
-                                                                                                          fit: BoxFit.fill,
-                                                                                                          imageUrl: controller.getBoardInfoModel.data![index].image!.toString(),
-                                                                                                          errorWidget: (context, url, error) => Container(),
-                                                                                                          progressIndicatorBuilder: (context, strings, download) {
-                                                                                                            return Shimmer.fromColors(
-                                                                                                              baseColor: Colors.grey.shade300,
-                                                                                                              highlightColor: Colors.white,
-                                                                                                              enabled: true,
-                                                                                                              child: Container(
-                                                                                                                height: Get.width,
-                                                                                                                width: Get.width,
-                                                                                                                color: Colors.white,
-                                                                                                              ),
-                                                                                                            );
-                                                                                                          },
-                                                                                                        ),
-                                                                                                  Container(
-                                                                                                    width: Get.width * 0.45,
-                                                                                                    alignment: Alignment.topRight,
-                                                                                                    child: GestureDetector(
-                                                                                                      onTap: () async {
-                                                                                                        await controller.likeUnlike(index);
-                                                                                                        controller.update(['fldr']);
-                                                                                                      },
-                                                                                                      child: Container(
-                                                                                                        height: 20,
-                                                                                                        width: 20,
-                                                                                                        margin: const EdgeInsets.only(top: 12, right: 12),
-                                                                                                        decoration: const BoxDecoration(
-                                                                                                          borderRadius: BorderRadius.all(Radius.circular(5)),
+                                                                                                            ),
+                                                                                                          ),
+                                                                                                        ],
+                                                                                                      )
+                                                                                                    : const SizedBox()
+                                                                                                : CachedNetworkImage(
+                                                                                                    fit: BoxFit.fill,
+                                                                                                    imageUrl: controller.getBoardInfoModel.data![index].image!.toString(),
+                                                                                                    errorWidget: (context, url, error) => Container(),
+                                                                                                    progressIndicatorBuilder: (context, strings, download) {
+                                                                                                      return Shimmer.fromColors(
+                                                                                                        baseColor: Colors.grey.shade300,
+                                                                                                        highlightColor: Colors.white,
+                                                                                                        enabled: true,
+                                                                                                        child: Container(
+                                                                                                          height: Get.width,
+                                                                                                          width: Get.width,
                                                                                                           color: Colors.white,
                                                                                                         ),
-                                                                                                        child: controller.isLike[index] == true
-                                                                                                            ? Icon(Icons.favorite_outlined, size: 18, color: ColorRes.colorE16F55)
-                                                                                                            : Icon(
-                                                                                                                Icons.favorite_outline_sharp,
-                                                                                                                size: 18,
-                                                                                                                color: ColorRes.appColor,
-                                                                                                              ),
-                                                                                                      ),
-                                                                                                    ),
+                                                                                                      );
+                                                                                                    },
                                                                                                   ),
-                                                                                                ],
-                                                                                              )
-                                                                                            : const SizedBox(),
-                                                                                      ),
-                                                                                    ),
-                                                                                  ),
-                                                                                ),
-                                                                                (controller.isSelect == false)
-                                                                                    ? const SizedBox()
-                                                                                    : InkWell(
-                                                                                        onTap: () {
-                                                                                          controller.onTapCheck(controller.getBoardInfoModel.data![index].image, index);
-                                                                                        },
-                                                                                        child: Container(
-                                                                                          margin: const EdgeInsets.only(right: 10, bottom: 10),
-                                                                                          height: 25,
-                                                                                          width: 25,
-                                                                                          decoration: BoxDecoration(color: ColorRes.white, shape: BoxShape.circle),
-                                                                                          child: (controller.checkImg[index] == false)
-                                                                                              ? const SizedBox()
-                                                                                              : SizedBox(
-                                                                                                  height: 8,
-                                                                                                  width: 11,
-                                                                                                  child: Transform.scale(
-                                                                                                    scale: 0.6,
-                                                                                                    child: Icon(
-                                                                                                      Icons.check_rounded,
-                                                                                                      color: ColorRes.appColor,
-                                                                                                    ),
+                                                                                            Container(
+                                                                                              width: Get.width * 0.45,
+                                                                                              alignment: Alignment.topRight,
+                                                                                              child: GestureDetector(
+                                                                                                onTap: () async {
+                                                                                                  await controller.likeUnlike(index);
+                                                                                                  controller.update(['fldr']);
+                                                                                                },
+                                                                                                child: Container(
+                                                                                                  height: 20,
+                                                                                                  width: 20,
+                                                                                                  margin: const EdgeInsets.only(top: 12, right: 12),
+                                                                                                  decoration: const BoxDecoration(
+                                                                                                    borderRadius: BorderRadius.all(Radius.circular(5)),
+                                                                                                    color: Colors.white,
                                                                                                   ),
+                                                                                                  child: controller.isLike[index] == true
+                                                                                                      ? Icon(Icons.favorite_outlined, size: 18, color: ColorRes.colorE16F55)
+                                                                                                      : Icon(
+                                                                                                          Icons.favorite_outline_sharp,
+                                                                                                          size: 18,
+                                                                                                          color: ColorRes.appColor,
+                                                                                                        ),
                                                                                                 ),
-                                                                                        ),
-                                                                                      ),
-                                                                              ],
-                                                                            );
-                                                                          },
-                                                                        )
-                                                                      : Center(
-                                                                          child:
-                                                                              Text(
-                                                                            StringRes.noDataFound.tr,
-                                                                            style:
-                                                                                appTextStyle(
-                                                                              color: ColorRes.appColor,
-                                                                              //fontFamily: widget.nameFamily,
-                                                                              fontSize: 15,
+                                                                                              ),
+                                                                                            ),
+                                                                                          ],
+                                                                                        )
+                                                                                      : const SizedBox(),
+                                                                                ),
+                                                                              ),
                                                                             ),
                                                                           ),
-                                                                        ),
-                                                                ),
+                                                                          (controller.isSelect == false)
+                                                                              ? const SizedBox()
+                                                                              : InkWell(
+                                                                                  onTap: () {
+                                                                                    controller.onTapCheck(controller.getBoardInfoModel.data![index].image, index);
+                                                                                  },
+                                                                                  child: Container(
+                                                                                    margin: const EdgeInsets.only(right: 10, bottom: 10),
+                                                                                    height: 25,
+                                                                                    width: 25,
+                                                                                    decoration: BoxDecoration(color: ColorRes.white, shape: BoxShape.circle),
+                                                                                    child: (controller.checkImg[index] == false)
+                                                                                        ? const SizedBox()
+                                                                                        : SizedBox(
+                                                                                            height: 8,
+                                                                                            width: 11,
+                                                                                            child: Transform.scale(
+                                                                                              scale: 0.6,
+                                                                                              child: Icon(
+                                                                                                Icons.check_rounded,
+                                                                                                color: ColorRes.appColor,
+                                                                                              ),
+                                                                                            ),
+                                                                                          ),
+                                                                                  ),
+                                                                                ),
+                                                                        ],
+                                                                      );
+                                                                    },
+                                                                  )
+                                                                : Center(
+                                                                    child: Text(
+                                                                      StringRes
+                                                                          .noDataFound
+                                                                          .tr,
+                                                                      style:
+                                                                          appTextStyle(
+                                                                        color: ColorRes
+                                                                            .appColor,
+                                                                        //fontFamily: widget.nameFamily,
+                                                                        fontSize:
+                                                                            15,
+                                                                      ),
+                                                                    ),
+                                                                  ),
+                                                          ),
                                                         ],
                                                       ),
                                           ],
@@ -1281,16 +1275,25 @@ controller
                                                 children: [
                                                   InkWell(
                                                     onTap: () async {
-                                                      for (var element in myFolderController.videos) {
+                                                      for (var element
+                                                          in myFolderController
+                                                              .videos) {
                                                         if (element != null) {
                                                           element.pause();
                                                         }
                                                       }
-                                                      myFolderController.isPlay = List.generate(
-                                                          myFolderController.getBoardInfoModel.data?.length ?? 0,
+                                                      myFolderController
+                                                              .isPlay =
+                                                          List.generate(
+                                                              myFolderController
+                                                                      .getBoardInfoModel
+                                                                      .data
+                                                                      ?.length ??
+                                                                  0,
                                                               (index) => false);
 
-                                                      myFolderController.update(['fldr']);
+                                                      myFolderController
+                                                          .update(['fldr']);
                                                       if (controller
                                                               .isSelectedPageView ==
                                                           false) {
@@ -1358,16 +1361,25 @@ controller
                                                   ),
                                                   InkWell(
                                                     onTap: () async {
-                                                      for (var element in myFolderController.videos) {
+                                                      for (var element
+                                                          in myFolderController
+                                                              .videos) {
                                                         if (element != null) {
                                                           element.pause();
                                                         }
                                                       }
-                                                      myFolderController.isPlay = List.generate(
-                                                          myFolderController.getBoardInfoModel.data?.length ?? 0,
+                                                      myFolderController
+                                                              .isPlay =
+                                                          List.generate(
+                                                              myFolderController
+                                                                      .getBoardInfoModel
+                                                                      .data
+                                                                      ?.length ??
+                                                                  0,
                                                               (index) => false);
 
-                                                      myFolderController.update(['fldr']);
+                                                      myFolderController
+                                                          .update(['fldr']);
                                                       if (controller
                                                               .isSelectedPageView ==
                                                           false) {
@@ -1416,16 +1428,25 @@ controller
                                                   ),
                                                   InkWell(
                                                     onTap: () async {
-                                                      for (var element in myFolderController.videos) {
+                                                      for (var element
+                                                          in myFolderController
+                                                              .videos) {
                                                         if (element != null) {
                                                           element.pause();
                                                         }
                                                       }
-                                                      myFolderController.isPlay = List.generate(
-                                                          myFolderController.getBoardInfoModel.data?.length ?? 0,
+                                                      myFolderController
+                                                              .isPlay =
+                                                          List.generate(
+                                                              myFolderController
+                                                                      .getBoardInfoModel
+                                                                      .data
+                                                                      ?.length ??
+                                                                  0,
                                                               (index) => false);
 
-                                                      myFolderController.update(['fldr']);
+                                                      myFolderController
+                                                          .update(['fldr']);
                                                       if (controller
                                                               .isSelectedPageView ==
                                                           false) {
@@ -1541,7 +1562,7 @@ controller
                             : const SizedBox()
                       ],
                     ),
-                 /*   widget.isFirstNode ?? false
+                    /*   widget.isFirstNode ?? false
                         ? Container(
                             height: Get.height * 0.67,
                             width: Get.width,
@@ -1619,15 +1640,15 @@ controller
                   itemBuilder: (context, index) {
                     return ListTile(
                       onTap: () {
-
                         for (var element in myFolderController.videos) {
                           if (element != null) {
                             element.pause();
                           }
                         }
                         myFolderController.isPlay = List.generate(
-                            myFolderController.getBoardInfoModel.data?.length ?? 0,
-                                (index) => false);
+                            myFolderController.getBoardInfoModel.data?.length ??
+                                0,
+                            (index) => false);
 
                         myFolderController.update(['fldr']);
 
@@ -1713,6 +1734,7 @@ controller
                 for (var element in myFolderController.videos) {
                   if (element != null) {
                     element.pause();
+                    element.dispose();
                   }
                 }
                 myFolderController.isPlay = List.generate(
@@ -1721,21 +1743,19 @@ controller
 
                 myFolderController.update(['fldr']);
               } else {
-                if(widget.isFromNotification){
-
+                if (widget.isFromNotification) {
                   Get.offAndToNamed(AppRoutes.boardsPage);
-
-                }
-                else {
+                } else {
                   Get.back();
                   for (var element in myFolderController.videos) {
                     if (element != null) {
                       element.pause();
+                      element.dispose();
                     }
                   }
                   myFolderController.isPlay = List.generate(
                       myFolderController.getBoardInfoModel.data?.length ?? 0,
-                          (index) => false);
+                      (index) => false);
 
                   myFolderController.onTapBack();
                 }
@@ -2011,4 +2031,141 @@ void showDialogs(BuildContext context) {
   );
 }
 
+class VideoWidget extends StatefulWidget {
+  String videoUrl;
+  String thumbnailImage;
+  VideoWidget(
+      {super.key, required this.videoUrl, required this.thumbnailImage});
 
+  @override
+  State<VideoWidget> createState() => _VideoWidgetState();
+}
+
+class _VideoWidgetState extends State<VideoWidget> {
+  late VideoPlayerController _controller;
+
+  startvideo() {
+    log("video ===> ${widget.videoUrl}");
+    _controller = VideoPlayerController.network(widget.videoUrl)
+      ..initialize().then((_) {
+        print(widget.videoUrl);
+        // _controller.setVolume(0);
+        // _controller.play();
+        _controller.setLooping(true); // Auto-repeating the video
+        setState(() {});
+      });
+    setState(() {});
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    setState(() {
+      startvideo();
+    });
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    log("disposed... ${widget.videoUrl}");
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      alignment: Alignment.center,
+      children: [
+        _controller.value.isInitialized
+            ? SizedBox(
+                height: Get.height * 0.7,
+                width: Get.width * 0.75,
+                child: AspectRatio(
+                  aspectRatio: 9 / 16,
+                  child: VideoPlayer(_controller),
+                ),
+              )
+            : AspectRatio(
+                aspectRatio: 9 / 16,
+                child: CachedNetworkImage(
+                  fit: BoxFit.fill,
+                  imageUrl: widget.thumbnailImage,
+                  progressIndicatorBuilder: (context, strings, download) {
+                    return Shimmer.fromColors(
+                      baseColor: Colors.grey.shade300,
+                      highlightColor: Colors.white,
+                      enabled: true,
+                      child: Container(
+                        height: Get.width,
+                        width: Get.width,
+                        color: Colors.white,
+                      ),
+                    );
+                  },
+                  errorWidget: (context, url, error) => const SizedBox(),
+                ),
+              ),
+        SizedBox(
+          width: Get.width * 0.75,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Spacer(),
+              Padding(
+                padding: const EdgeInsets.only(left: 4.0),
+                child: InkWell(
+                  onTap: () async {
+                    if (_controller.value.isPlaying) {
+                      // controller.isPlay[index] = false;
+                      _controller.pause();
+                    } else {
+                      // controller.isPlay = List.generate( controller.getBoardInfoModel.data?.length ??0, (index) => false);
+                      // for (var e in controller.videos) {
+                      //   if(e != null)
+                      //   {
+                      //     e.pause();
+                      //   }
+                      // }
+                      // controller.isPlay[index] = true;
+
+                      _controller.play();
+                    }
+                    setState(() {});
+                    // controller.update(['fldr']);
+                  },
+                  child: Container(
+                    height: 30,
+                    width: 30,
+                    decoration: const BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: Colors.white,
+                    ),
+                    child: Icon(
+                      _controller.value.isPlaying
+                          ? Icons.pause
+                          : Icons.play_arrow,
+                      size: 20,
+                    ),
+                  ),
+                ),
+              ),
+              const SizedBox(
+                height: 5,
+              ),
+              StatefulBuilder(builder: (context, s) {
+                s.call(() {});
+                return VideoProgressIndicator(_controller,
+                    allowScrubbing: true);
+              }),
+            ],
+          ),
+        ),
+        _controller.value.isBuffering
+            ? const CircularProgressIndicator()
+            : const SizedBox()
+      ],
+    );
+  }
+}
