@@ -261,9 +261,12 @@ class ViewOnlyWallpaperScreen extends StatelessWidget {
                                           debugPrint(
                                               'Temporary File Path: ${tempFile.path}');
                                           await tempFile.writeAsBytes(bytes);
-                                          await Share.shareFiles(
-                                              [tempFile.path],
-                                              text: 'Check out this image!');
+                                          await SharePlus.instance.share(
+                                            ShareParams(
+                                              files: [XFile(tempFile.path)],
+                                              text: 'Check out this image!',
+                                            ),
+                                          );
                                         } else {
                                           throw Exception(
                                               'Failed to load image');

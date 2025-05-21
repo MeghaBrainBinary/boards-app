@@ -579,12 +579,17 @@ else {
       final temp = await getTemporaryDirectory();
       final path = "${temp.path}/${DateTime.now().millisecond}.${selectedImage?.split(".").last ?? getBoardInfoModel.data![0].image.toString().split(".").last}";
       File(path).writeAsBytesSync(bytes);
-      Share.shareFiles([
-path
-      ],
-        text: '',
-        subject: '',
+      await SharePlus.instance.share(
+        ShareParams(
+          files: [XFile(path)],
+        ),
       );
+//       Share.shareFiles([
+// path
+//       ],
+//         text: '',
+//         subject: '',
+//       );
 
       selectedImage = null;
 loader.value= false;
@@ -623,21 +628,26 @@ loader.value= false;
   }
 
   Future<void> shareMultipleImages(List<String> selectedImages) async {
-    List<String> filePaths = [];
+    List<XFile> filePaths = [];
 
     // Save images temporarily and get file paths
     for (int i = 0; i < selectedImages.length; i++) {
       String filePath = await saveImageLocally(selectedImages[i], "image$i.${selectedImages[i].split(".").last}");
-      filePaths.add(filePath);
+      filePaths.add(XFile(filePath));
     }
 
     try {
       // Share the images using share_plus
-      await Share.shareFiles(
-        filePaths,
-        text: '',
-        subject: '',
+      await SharePlus.instance.share(
+        ShareParams(
+          files: filePaths,
+        ),
       );
+      // await Share.shareFiles(
+      //   filePaths,
+      //   text: '',
+      //   subject: '',
+      // );
     } catch (e) {
 
     }

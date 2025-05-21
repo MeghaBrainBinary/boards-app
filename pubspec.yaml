@@ -40,13 +40,13 @@ dependencies:
   google_fonts: ^6.2.1
 
   #___________ firebase ______________
-  firebase_core: ^2.0.0
-  firebase_messaging: ^14.4.0
+  firebase_core: ^3.13.1
+  firebase_messaging: ^15.2.6
   flutter_local_notifications: ^19.1.0
-  firebase_auth: ^4.14.1
-  cloud_firestore: ^4.13.2
-  carousel_slider: ^4.2.1
-  firebase_crashlytics: ^3.5.7
+  firebase_auth: ^5.5.4
+  cloud_firestore: ^5.6.8
+  carousel_slider: ^5.0.0
+  firebase_crashlytics: ^4.3.6
 
 
 
@@ -54,17 +54,17 @@ dependencies:
   # ___________________ video ___________________
 
   video_player: ^2.5.1
-  flutter_localization: ^0.1.10
+  flutter_localization: ^0.3.2
 #  share_extend: ^2.0.0
 #  image_gallery_saver:
-  dio: ^4.0.6
+  dio: ^5.8.0+1
   #share_plus: ^6.3.0
 #  wc_flutter_share: ^0.4.0
   cached_network_image: ^3.2.3
   flutter_tree:
     path: flutter_tree-2.0.3
   fluttertoast: ^8.2.4
-  share_plus: ^7.2.1
+  share_plus:
   permission_handler:
 #  dots_indicator: ^3.0.0
   smooth_page_indicator: ^1.1.0
@@ -77,8 +77,8 @@ dependencies:
   tutorial_coach_mark: ^1.2.11
   animated_tree_view:
   flutter_widget_from_html:
-  firebase_analytics: ^10.10.7
-  gallery_saver_plus: ^3.2.4
+  firebase_analytics: ^11.4.6
+  gallery_saver_plus:
 
 
 
@@ -91,7 +91,7 @@ dev_dependencies:
   # activated in the `analysis_options.yaml` file located at the root of your
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
-  flutter_lints: ^2.0.0
+  flutter_lints: ^5.0.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
