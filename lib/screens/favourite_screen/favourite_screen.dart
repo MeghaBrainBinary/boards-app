@@ -181,17 +181,13 @@ class FavouriteScreen extends StatelessWidget {
                                                             alignment:Alignment.center,
                                                             children: [
                                                             controller.videos[index]!.value.isInitialized?
-                                                            SizedBox(
-                                                              height: Get.height * 0.7,
-                                                              width: Get.width * 0.75,
-                                                              child: AspectRatio(
-                                                                    aspectRatio: 9/16,
-                                                                    child:
-                                                                    VideoPlayer(controller.videos[index]! )),
-                                                            )
+                                                            AspectRatio(
+                                                                  aspectRatio: controller.videos[index]!.value.aspectRatio,
+                                                                  child:
+                                                                  VideoPlayer(controller.videos[index]! ))
                                                                 :
                                                           AspectRatio(
-                                                            aspectRatio:9/16,
+                                                            aspectRatio: controller.videos[index]!.value.aspectRatio,
                                                             child: CachedNetworkImage(
                                                               fit: BoxFit.fill,
                                                               imageUrl:  controller.storedFavorites![index]['thumbnail'] ?? '',
@@ -435,7 +431,7 @@ class FavouriteScreen extends StatelessWidget {
                                                                   VideoPlayer(controller.videos[index]! ))
                                                                   :Image.network( controller.storedFavorites![index]['thumbnail'] ?? '')  :*/
                                                               AspectRatio(
-                                                                aspectRatio:9/16,
+                                                                aspectRatio: controller.videos[index]!.value.aspectRatio,
                                                                 child: CachedNetworkImage(
                                                                   fit: BoxFit.fill,
                                                                   imageUrl:  controller.storedFavorites![index]['thumbnail'] ?? '',

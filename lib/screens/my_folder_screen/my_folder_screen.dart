@@ -389,18 +389,14 @@ class _MyFolderScreenState extends State<MyFolderScreen> {
                                                                                                                 children: [
                                                                                               controller.videos[index]!.value.isInitialized?
 
-                                                                                              SizedBox(
-                                                                                                height: Get.height * 0.7,
-                                                                                                width: Get.width * 0.75,
-                                                                                                child: AspectRatio(
-                                                                                                                  aspectRatio:9/16,
-                                                                                                                  child:
+                                                                                              AspectRatio(
+                                                                                                                aspectRatio: controller.videos[index]!.value.aspectRatio,
+                                                                                                                child:
                                                                                       VideoPlayer(controller.videos[index]!),
-                                                                                                                ),
-                                                                                              )
+                                                                                                              )
                                                                                                   :
                                                                                                   AspectRatio(
-                                                                                                                    aspectRatio:9/16,
+                                                                                                                    aspectRatio:controller.videos[index]!.value.aspectRatio,
                                                                                                                     child: CachedNetworkImage(
                                                                                                                       fit: BoxFit.fill,
                                                                                                                       imageUrl:  controller.getBoardInfoModel.data?[index].thumbnail ?? '',
@@ -679,7 +675,7 @@ class _MyFolderScreenState extends State<MyFolderScreen> {
                                                                                                   fit: BoxFit.contain,):*/
 
                                                                                                 AspectRatio(
-                                                                                                  aspectRatio: 9 / 16,
+                                                                                                  aspectRatio: controller.videos[index]!.value.aspectRatio,
                                                                                                   child: CachedNetworkImage(
                                                                                                     fit: BoxFit.fill,
                                                                                                     imageUrl: controller.getBoardInfoModel.data?[index].thumbnail ?? '',
@@ -1072,7 +1068,7 @@ class _MyFolderScreenState extends State<MyFolderScreen> {
                                                                                                                 thumbnail ?? '' ,fit: BoxFit.contain,):*/
 
                                                                                                           AspectRatio(
-                                                                                                            aspectRatio: 9 / 16,
+                                                                                                            aspectRatio: controller.videos[index]!.value.aspectRatio,
                                                                                                             child: CachedNetworkImage(
                                                                                                               fit: BoxFit.fill,
                                                                                                               imageUrl: controller.getBoardInfoModel.data?[index].thumbnail ?? '',
@@ -2082,16 +2078,12 @@ class _VideoWidgetState extends State<VideoWidget> {
       alignment: Alignment.center,
       children: [
         _controller.value.isInitialized
-            ? SizedBox(
-                height: Get.height * 0.7,
-                width: Get.width * 0.75,
-                child: AspectRatio(
-                  aspectRatio: 9 / 16,
-                  child: VideoPlayer(_controller),
-                ),
-              )
+            ? AspectRatio(
+              aspectRatio:_controller.value.aspectRatio,
+              child: VideoPlayer(_controller),
+            )
             : AspectRatio(
-                aspectRatio: 9 / 16,
+          aspectRatio:_controller.value.aspectRatio,
                 child: CachedNetworkImage(
                   fit: BoxFit.fill,
                   imageUrl: widget.thumbnailImage,
