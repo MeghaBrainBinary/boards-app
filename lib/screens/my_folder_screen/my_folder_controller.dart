@@ -13,8 +13,9 @@ import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:gallery_saver_plus/gallery_saver.dart';
 import 'package:get/get.dart';
-import 'package:image_gallery_saver/image_gallery_saver.dart';
+// import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:http/http.dart' as http;
 import 'package:path_provider/path_provider.dart';
 import 'package:share_plus/share_plus.dart';
@@ -294,10 +295,13 @@ if((selectedImage ?? getBoardInfoModel.data![0].image) !.split(".").last == "mp4
         print("${(count / total * 100).toStringAsFixed(0)}%");
       }
     });
-    final result = await ImageGallerySaver.saveFile(savePath);
-    if (kDebugMode) {
-      print(result);
-    }
+    GallerySaver.saveVideo(savePath).then((value) {
+      print(value);
+    });
+   // final result = await ImageGallerySaver.saveFile(savePath);
+   //  if (kDebugMode) {
+   //    print(result);
+   //  }
   }
 else {
   var response = await Dio()
@@ -305,12 +309,24 @@ else {
       selectedImage ?? getBoardInfoModel.data![0].image.toString(),
       options: Options(responseType: ResponseType.bytes));
 
+  final dir = await getApplicationDocumentsDirectory();
 
-  await ImageGallerySaver.saveImage(
-    Uint8List.fromList(response.data),
-    quality: 60,
-    name: "ra",
-  );
+  final file = File('${dir.path}/${DateTime.now().millisecond}.jpg');
+  //
+  // // Write the bytes
+  await file.writeAsBytes(Uint8List.fromList(response.data));
+
+  // print(Uint8List.fromList(response.data));
+  GallerySaver.saveImage(file.path).then((value) {
+    print(value);
+  });
+
+
+  // await ImageGallerySaver.saveImage(
+  //   Uint8List.fromList(response.data),
+  //   quality: 60,
+  //   name: "ra",
+  // );
 }
       loader.value = false;
       showDialog(
@@ -420,22 +436,39 @@ else {
                 print("${(count / total * 100).toStringAsFixed(0)}%");
               }
             });
-            final result = await ImageGallerySaver.saveFile(savePath);
-            if (kDebugMode) {
-              print(result);
-            }
+            GallerySaver.saveVideo(savePath).then((value) {
+              print(value);
+            });
+            // final result = await ImageGallerySaver.saveFile(savePath);
+            // if (kDebugMode) {
+            //   print(result);
+            // }
           }
           else {
             var response = await Dio().get(
               selectedImage,
               options: Options(responseType: ResponseType.bytes),
             );
+            // var response = await Dio().get(
+            //     selectedImage ?? storedFavorites![0]['image'].toString(),
+            //     options: Options(responseType: ResponseType.bytes));
+            final dir = await getApplicationDocumentsDirectory();
 
-            await ImageGallerySaver.saveImage(
-              Uint8List.fromList(response.data),
-              quality: 60,
-              name: "ra",
-            );
+            final file = File('${dir.path}/${DateTime.now().millisecond}.jpg');
+            //
+            // // Write the bytes
+            await file.writeAsBytes(Uint8List.fromList(response.data));
+
+            // print(Uint8List.fromList(response.data));
+            GallerySaver.saveImage(file.path).then((value) {
+              print(value);
+            });
+
+            // await ImageGallerySaver.saveImage(
+            //   Uint8List.fromList(response.data),
+            //   quality: 60,
+            //   name: "ra",
+            // );
           }
         }
 

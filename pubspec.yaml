@@ -37,16 +37,16 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
   get: ^4.6.5
-  google_fonts: ^3.0.1
+  google_fonts: ^6.2.1
 
   #___________ firebase ______________
   firebase_core: ^2.0.0
   firebase_messaging: ^14.4.0
-  flutter_local_notifications: ^14.0.0+2
+  flutter_local_notifications: ^19.1.0
   firebase_auth: ^4.14.1
   cloud_firestore: ^4.13.2
   carousel_slider: ^4.2.1
-  firebase_crashlytics:
+  firebase_crashlytics: ^3.5.7
 
 
 
@@ -55,11 +55,11 @@ dependencies:
 
   video_player: ^2.5.1
   flutter_localization: ^0.1.10
-  share_extend: ^2.0.0
-  image_gallery_saver: ^1.7.1
+#  share_extend: ^2.0.0
+#  image_gallery_saver:
   dio: ^4.0.6
   #share_plus: ^6.3.0
-  wc_flutter_share: ^0.4.0
+#  wc_flutter_share: ^0.4.0
   cached_network_image: ^3.2.3
   flutter_tree:
     path: flutter_tree-2.0.3
@@ -77,6 +77,8 @@ dependencies:
   tutorial_coach_mark: ^1.2.11
   animated_tree_view:
   flutter_widget_from_html:
+  firebase_analytics: ^10.10.7
+  gallery_saver_plus: ^3.2.4
 
 
 

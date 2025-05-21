@@ -11,7 +11,7 @@ class WallPaperPreviewScreen extends StatelessWidget {
 
   WallPaperPreviewScreen({Key? key, required this.image}) : super(key: key);
 
-  CarouselController buttonCarouselController = CarouselController();
+ // CarouselController buttonCarouselController = CarouselController();
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +42,7 @@ class WallPaperPreviewScreen extends StatelessWidget {
             ),
             CarouselSlider.builder(
               itemCount: 2,
-              carouselController: buttonCarouselController,
+             // carouselController: buttonCarouselController,
               itemBuilder: (context, index, realIndex) {
                 return index == 0
                     ? Column(

@@ -307,8 +307,10 @@ class BoardsController extends GetxController {
       TreeNode<dynamic> convertTreeNodeDataToDynamic(TreeNodeData nodeData) {
         // Convert the current node
         TreeNode<dynamic> treeNode = TreeNode<dynamic>(
-          data: nodeData, // Store TreeNodeData directly in the data property
-          isExpanded: nodeData.expanded, // Use the expanded property from TreeNodeData
+          data: nodeData,
+
+          // Store TreeNodeData directly in the data property
+         // isExpanded: nodeData.expanded, // Use the expanded property from TreeNodeData
         );
 
         // Convert and attach children

@@ -1,7 +1,7 @@
 # boards_app
 
 A new Flutter project.
-## sdk 3.3.10
+## sdk 3.3.10 latest sdk :- 3.24.5
 ## Getting Started
 
 This project is a starting point for a Flutter application.

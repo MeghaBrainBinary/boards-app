@@ -18,9 +18,9 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:gallery_saver_plus/gallery_saver.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
-import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:path_provider/path_provider.dart';
 
 import 'package:share_plus/share_plus.dart';
@@ -417,12 +417,29 @@ void showDialogOfAds(BuildContext context, imageLink) {
                         onlyViewWallpaperController.loader.value = true;
                         var response = await Dio().get(imageLink,
                             options: Options(responseType: ResponseType.bytes));
+                        // var response = await Dio().get(
+                        //   selectedImage,
+                        //   options: Options(responseType: ResponseType.bytes),
+                        // );
+                        // var response = await Dio().get(
+                        //     selectedImage ?? storedFavorites![0]['image'].toString(),
+                        //     options: Options(responseType: ResponseType.bytes));
+                        final dir = await getApplicationDocumentsDirectory();
 
-                        await ImageGallerySaver.saveImage(
-                          Uint8List.fromList(response.data),
-                          quality: 60,
-                          name: "ohooho",
-                        );
+                        final file = File('${dir.path}/${DateTime.now().millisecond}.jpg');
+                        //
+                        // // Write the bytes
+                        await file.writeAsBytes(Uint8List.fromList(response.data));
+
+                        // print(Uint8List.fromList(response.data));
+                        GallerySaver.saveImage(file.path).then((value) {
+                          print(value);
+                        });
+                        // await ImageGallerySaver.saveImage(
+                        //   Uint8List.fromList(response.data),
+                        //   quality: 60,
+                        //   name: "ohooho",
+                        // );
                         onlyViewWallpaperController.downloadImages
                             .add(imageLink);
                         await PrefService.setValue(PrefKeys.downloadImageList,
