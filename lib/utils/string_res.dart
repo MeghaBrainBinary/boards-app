@@ -124,6 +124,7 @@ class StringRes {
   static String settings = "Settings";
   static String faq = "FAQ";
   static String loginLogout = "Login / Logout";
+  static String logout = "Logout";
 
   static String viewImages = "View Images";
   static String myWallpaper = "My Wallpaper";

@@ -41,6 +41,7 @@ const Map<String, String> Estonian = {
   "Next": "Edasi",
   "Get Started": "Alustama",
   "Login / Logout": "Logi sisse / Välja",
+  "Logout": "älja",
   "FAQ": "KKK",
   "Settings": "Seaded",
   "Favourites": "Lemmikud",

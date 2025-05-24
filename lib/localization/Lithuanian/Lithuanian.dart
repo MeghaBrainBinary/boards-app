@@ -41,6 +41,7 @@ const Map<String, String> Lithuanian = {
   "Next": "Kitas",
   "Get Started": "Pradėti",
   "Login / Logout": "Prisijungti / Atsijungti",
+  "Logout": "Atsijungti",
   "FAQ": "DUK",
   "Settings": "Nustatymai",
   "Favourites": "Mėgstamiausi",

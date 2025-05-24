@@ -45,10 +45,15 @@ class _SplashScreenState extends State<SplashScreen> {
         Timer(const Duration(seconds: 3), () {
           if (PrefService.getBool(PrefKeys.isLanguage) == false) {
             // Get.offAndToNamed(AppRoutes.introPage);
-            Get.offAndToNamed( AppRoutes.languagePage);
+            Get.offAllNamed( AppRoutes.languagePage);
           } else {
             // Get.to(() => SelectFlowScreen(language: ''));
-            Get.offAndToNamed(AppRoutes.boardsPage);
+            if(PrefService.getBool(PrefKeys.isLogin)) {
+              Get.offAllNamed(AppRoutes.boardsPage);
+            }
+            else{
+              Get.offAllNamed(AppRoutes.login);
+            }
           }
         });
       }

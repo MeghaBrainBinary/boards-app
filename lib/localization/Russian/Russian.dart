@@ -41,6 +41,7 @@ const Map<String, String> Russian = {
   "Next":"Следующий",
   "Get Started":"Начать",
   "Login / Logout":"Вход/Выход",
+  "Logout":"Выход",
   "FAQ":"Часто задаваемые вопросы",
   "Settings":"Настройки",
   "Favourites":"Избранное",

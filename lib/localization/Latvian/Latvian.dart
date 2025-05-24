@@ -41,6 +41,7 @@ const Map<String, String> Latvian = {
   "Next": "Nākamais",
   "Get Started": "Sāc",
   "Login / Logout": "Pieteikties / Atteikties",
+  "Logout": "tteikties",
   "FAQ": "FAQ",
   "Settings": "Iestatījumi",
   "Favourites": "Izlase",

@@ -2,10 +2,12 @@ import 'dart:io';
 import 'package:boards_app/common/common_button.dart';
 import 'package:boards_app/common/common_loader.dart';
 import 'package:boards_app/screens/boards_screen/boards_controller.dart';
+import 'package:boards_app/services/pref_services.dart';
 import 'package:boards_app/utils/approutes.dart';
 import 'package:boards_app/utils/appstyle.dart';
 import 'package:boards_app/utils/asset_res.dart';
 import 'package:boards_app/utils/color_res.dart';
+import 'package:boards_app/utils/prefkeys.dart';
 import 'package:boards_app/utils/string_res.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_tree/flutter_tree.dart';
@@ -73,7 +75,7 @@ class BoardsScreen extends StatelessWidget {
                             Get.toNamed(AppRoutes.setting);
                           } else {
                             Get.back();
-                            showDialogs(context);
+                            showDialogsLogout(context);
                           }
                         },
                         leading: Padding(
@@ -919,6 +921,72 @@ class BoardsScreen extends StatelessWidget {
                   child: CommonButton(
                       onTap: () {
                         exit(0);
+                      },
+                      text: StringRes.yes.tr),
+                ),
+                SizedBox(
+                  width: Get.width * 0.01,
+                ),
+                Expanded(
+                  child: GestureDetector(
+                    onTap: () {
+                      Get.back();
+                    },
+                    child: Container(
+                      alignment: Alignment.center,
+                      height: 50,
+                      width: 234,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(5),
+                          border: Border.all(color: ColorRes.appColor)),
+                      child: Text(
+                        StringRes.no.tr,
+                        style: appTextStyle(
+                            color: ColorRes.appColor,
+                            fontSize: 18,
+                            weight: FontWeight.w600),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(
+              height: Get.height * 0.04,
+            ),
+          ],
+        );
+      },
+    );
+  }
+  void showDialogsLogout(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return SimpleDialog(
+          contentPadding: const EdgeInsets.symmetric(horizontal: 20),
+          children: [
+            SizedBox(
+              height: Get.height * 0.04,
+            ),
+            Text(
+              StringRes.areYouSureLogOut.tr,
+              textAlign: TextAlign.center,
+              style: appTextStyle(
+                  weight: FontWeight.w500, fontSize: 20, color: Colors.black),
+            ),
+            SizedBox(
+              height: Get.height * 0.03,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Expanded(
+                  child: CommonButton(
+                      onTap: () {
+                       PrefService.setValue(PrefKeys.login, false);
+                       Get.offAllNamed(AppRoutes.login);
+
                       },
                       text: StringRes.yes.tr),
                 ),

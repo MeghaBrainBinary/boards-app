@@ -41,6 +41,7 @@ const Map<String, String> English = {
   "Next": "Next",
   "Get Started": "Get Started",
   "Login / Logout": "Login / Logout",
+  "Logout": "Logout",
   "FAQ": "FAQ",
   "Settings": "Settings",
   "Favourites": "Favourites",

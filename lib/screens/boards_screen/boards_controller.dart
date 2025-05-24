@@ -127,7 +127,7 @@ class BoardsController extends GetxController {
     StringRes.contactUs.tr,
     // StringRes.settings.tr,
     // StringRes.faq.tr,
-    // StringRes.loginLogout.tr,
+     StringRes.logout.tr,
   ];
 
   List<String> drawerImageList = [
@@ -138,7 +138,7 @@ class BoardsController extends GetxController {
     AssetRes.contactUs,
     // AssetRes.settingsIcon,
     //   AssetRes.faqIcon,
-    //  AssetRes.loginIcon,
+      AssetRes.loginIcon,
   ];
 
   @override
