@@ -1,3 +1,4 @@
+import 'package:boards_app/screens/auth/api/login_api.dart';
 import 'package:boards_app/services/pref_services.dart';
 import 'package:boards_app/utils/prefkeys.dart';
 import 'package:boards_app/utils/string_res.dart';
@@ -95,5 +96,13 @@ class LoginController extends GetxController {
       passwordErrorMessage = "";
     }
     update(['login']);
+  }
+
+
+  login() async {
+    loader.value =true;
+    await LoginApi.loginApi(email: email, deviseToken: PrefService.getString(PrefKeys.fcmToken), password: password);
+    loader.value =false;
+
   }
 }

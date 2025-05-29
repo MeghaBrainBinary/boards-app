@@ -983,9 +983,9 @@ class BoardsScreen extends StatelessWidget {
               children: [
                 Expanded(
                   child: CommonButton(
-                      onTap: () {
-                       PrefService.setValue(PrefKeys.login, false);
-                       Get.offAllNamed(AppRoutes.login);
+                      onTap: () async {
+                       await boardsController.logoutApi();
+
 
                       },
                       text: StringRes.yes.tr),

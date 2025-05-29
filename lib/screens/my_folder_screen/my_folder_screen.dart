@@ -1813,6 +1813,66 @@ class _MyFolderScreenState extends State<MyFolderScreen> {
       ),
     );
   }
+  void showDialogs(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return SimpleDialog(
+          contentPadding: const EdgeInsets.symmetric(horizontal: 20),
+          children: [
+            SizedBox(height: Get.height * 0.04),
+            Image.asset(AssetRes.loginIcon, height: Get.height * 0.1),
+            SizedBox(height: Get.height * 0.03),
+            Text(
+              StringRes.areYouSureLogOut.tr,
+              textAlign: TextAlign.center,
+              style: appTextStyle(
+                  weight: FontWeight.w500, fontSize: 20, color: Colors.black),
+            ),
+            SizedBox(height: Get.height * 0.03),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Expanded(
+                  child: CommonButton(
+                      onTap: () {
+
+                        myFolderController.logoutApi();
+                      },
+                      text: StringRes.yes.tr),
+                ),
+                SizedBox(width: Get.width * 0.01),
+                Expanded(
+                  child: GestureDetector(
+                    onTap: () {
+                      Get.back();
+                    },
+                    child: Container(
+                      alignment: Alignment.center,
+                      height: 50,
+                      width: 234,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(5),
+                          border: Border.all(color: ColorRes.appColor)),
+                      child: Text(
+                        StringRes.no.tr,
+                        style: appTextStyle(
+                            color: ColorRes.appColor,
+                            fontSize: 18,
+                            weight: FontWeight.w600),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(height: Get.height * 0.04),
+          ],
+        );
+      },
+    );
+  }
+
 }
 
 // ...
@@ -1968,67 +2028,6 @@ class _MyFolderScreenState extends State<MyFolderScreen> {
   }
 }*/
 
-void showDialogs(BuildContext context) {
-  showDialog(
-    context: context,
-    builder: (BuildContext context) {
-      return SimpleDialog(
-        contentPadding: const EdgeInsets.symmetric(horizontal: 20),
-        children: [
-          SizedBox(height: Get.height * 0.04),
-          Image.asset(AssetRes.loginIcon, height: Get.height * 0.1),
-          SizedBox(height: Get.height * 0.03),
-          Text(
-            StringRes.areYouSureLogOut.tr,
-            textAlign: TextAlign.center,
-            style: appTextStyle(
-                weight: FontWeight.w500, fontSize: 20, color: Colors.black),
-          ),
-          SizedBox(height: Get.height * 0.03),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Expanded(
-                child: CommonButton(
-                    onTap: () {
-                      PrefService.setValue(PrefKeys.login, false);
-                      PrefService.setValue('isUser', false);
-                      PrefService.setValue('docId', '');
-                      Get.offAllNamed(AppRoutes.login);
-                    },
-                    text: StringRes.yes.tr),
-              ),
-              SizedBox(width: Get.width * 0.01),
-              Expanded(
-                child: GestureDetector(
-                  onTap: () {
-                    Get.back();
-                  },
-                  child: Container(
-                    alignment: Alignment.center,
-                    height: 50,
-                    width: 234,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(5),
-                        border: Border.all(color: ColorRes.appColor)),
-                    child: Text(
-                      StringRes.no.tr,
-                      style: appTextStyle(
-                          color: ColorRes.appColor,
-                          fontSize: 18,
-                          weight: FontWeight.w600),
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
-          SizedBox(height: Get.height * 0.04),
-        ],
-      );
-    },
-  );
-}
 
 class VideoWidget extends StatefulWidget {
   String videoUrl;

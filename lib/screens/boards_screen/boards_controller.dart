@@ -3,9 +3,11 @@
 import 'package:animated_tree_view/tree_view/tree_node.dart';
 import 'package:boards_app/common/toast_msg.dart';
 import 'package:boards_app/screens/boards_screen/api/language_api.dart';
+import 'package:boards_app/screens/boards_screen/api/logout_api.dart';
 import 'package:boards_app/screens/my_folder_screen/my_folder_controller.dart';
 import 'package:boards_app/screens/my_folder_screen/my_folder_screen.dart';
 import 'package:boards_app/services/pref_services.dart';
+import 'package:boards_app/utils/approutes.dart';
 import 'package:boards_app/utils/asset_res.dart';
 import 'package:boards_app/utils/prefkeys.dart';
 import 'package:boards_app/utils/string_res.dart';
@@ -424,6 +426,12 @@ class BoardsController extends GetxController {
     }
   }
 
-  /// Generate tree data
+logoutApi()async{
+    loader.value =true;
+    await LogoutApi.logoutApi();
+    PrefService.setValue(PrefKeys.login, false);
+    loader.value =false;
+    Get.offAllNamed(AppRoutes.login);
+}
 
 }

@@ -1,6 +1,7 @@
 // ignore_for_file: must_be_immutable
 // ignore_for_file: avoid_function_literals_in_foreach_calls
 
+import 'package:boards_app/common/common_button.dart';
 import 'package:boards_app/screens/auth/sign_up_screen/sign_up_screen.dart';
 import 'package:boards_app/screens/contact_us_screen/contact_us_screen.dart';
 import 'package:boards_app/screens/language_screen2/languagescreen2.dart';
@@ -12,8 +13,11 @@ import 'package:boards_app/screens/wallpaper_flow/only_view_wallpaper_screen/onl
 import 'package:boards_app/screens/wallpaper_flow/wallpaper_dashboard/wallpaper_dashboard_controller.dart';
 import 'package:boards_app/screens/wallpaper_flow/wallpapers_screen/wallpaper_screen.dart';
 import 'package:boards_app/services/pref_services.dart';
+import 'package:boards_app/utils/approutes.dart';
+import 'package:boards_app/utils/appstyle.dart';
 import 'package:boards_app/utils/asset_res.dart';
 import 'package:boards_app/utils/color_res.dart';
+import 'package:boards_app/utils/prefkeys.dart';
 import 'package:boards_app/utils/string_res.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -457,6 +461,7 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
+
   openScreen(BuildContext context, {int? index}) {
     showDialog(
       context: context,
@@ -552,4 +557,65 @@ class MyController {
   void onOutsideTap() {}
 
   void onDrawerItemTap(int index) {}
+}
+void showDialogs(BuildContext context) {
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return SimpleDialog(
+        contentPadding: const EdgeInsets.symmetric(horizontal: 20),
+        children: [
+          SizedBox(height: Get.height * 0.04),
+          Image.asset(AssetRes.loginIcon, height: Get.height * 0.1),
+          SizedBox(height: Get.height * 0.03),
+          Text(
+            StringRes.areYouSureLogOut.tr,
+            textAlign: TextAlign.center,
+            style: appTextStyle(
+                weight: FontWeight.w500, fontSize: 20, color: Colors.black),
+          ),
+          SizedBox(height: Get.height * 0.03),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Expanded(
+                child: CommonButton(
+                    onTap: () {
+                      PrefService.setValue(PrefKeys.login, false);
+                      PrefService.setValue('isUser', false);
+                      PrefService.setValue('docId', '');
+                      Get.offAllNamed(AppRoutes.login);
+                    },
+                    text: StringRes.yes.tr),
+              ),
+              SizedBox(width: Get.width * 0.01),
+              Expanded(
+                child: GestureDetector(
+                  onTap: () {
+                    Get.back();
+                  },
+                  child: Container(
+                    alignment: Alignment.center,
+                    height: 50,
+                    width: 234,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(5),
+                        border: Border.all(color: ColorRes.appColor)),
+                    child: Text(
+                      StringRes.no.tr,
+                      style: appTextStyle(
+                          color: ColorRes.appColor,
+                          fontSize: 18,
+                          weight: FontWeight.w600),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+          SizedBox(height: Get.height * 0.04),
+        ],
+      );
+    },
+  );
 }

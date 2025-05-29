@@ -40,7 +40,7 @@ class _SplashScreenState extends State<SplashScreen> {
       }
       else
       {
-        splashScreenController.addDeviceTokenApi();
+        await splashScreenController.addDeviceTokenApi();
 
         Timer(const Duration(seconds: 3), () {
           if (PrefService.getBool(PrefKeys.isLanguage) == false) {

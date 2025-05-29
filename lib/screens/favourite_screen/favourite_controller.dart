@@ -3,6 +3,8 @@
 import 'dart:io';
 
 import 'package:boards_app/common/toast_msg.dart';
+import 'package:boards_app/screens/my_folder_screen/api/add_downlaod_api.dart';
+import 'package:boards_app/screens/my_folder_screen/api/add_view_api.dart';
 import 'package:boards_app/services/sqlite_helper.dart';
 import 'package:boards_app/utils/appstyle.dart';
 import 'package:boards_app/utils/color_res.dart';
@@ -45,10 +47,11 @@ class FavouriteController extends GetxController {
   int selectedIndex = 0;
   String? selectedImage;
 
-  onImageChanged(i) {
+  onImageChanged(i) async {
     if (storedFavorites?[i]['image'] != null) {
       selectedImage = storedFavorites![i]['image'].toString();
       selectedIndex = pageController.page!.round();
+      await ViewApi.viewApi(storedFavorites![selectedIndex]['id'].toString());
 
     }
     update(['favourite']);
@@ -60,25 +63,33 @@ class FavouriteController extends GetxController {
     pageController = PageController(initialPage: index);
     selectedImage = storedFavorites![index]['image'].toString();
 
+    selectedIndex =index;
+    await ViewApi.viewApi(storedFavorites![selectedIndex]['id'].toString());
+
+
     update(['favourite']);
   }
 
-  tapBackwardButton() {
+  tapBackwardButton() async {
     if (pageController.page!.round() != storedFavorites!.length - 1) {
       pageController.animateToPage(pageController.page!.round() + 1,
           duration: const Duration(milliseconds: 500), curve: Curves.easeInOut);
       selectedIndex = pageController.page!.round();
       selectedImage = storedFavorites![selectedIndex]['image'].toString();
+      await ViewApi.viewApi(storedFavorites![selectedIndex]['id'].toString());
+
     }
     update(['favourite']);
   }
 
-  tapForwardButton() {
+  tapForwardButton() async {
     if (pageController.page!.round() != 0) {
       pageController.animateToPage(pageController.page!.round() - 1,
           duration: const Duration(milliseconds: 500), curve: Curves.easeInOut);
       selectedIndex = pageController.page!.round();
       selectedImage = storedFavorites![selectedIndex]['image'].toString();
+      await ViewApi.viewApi(storedFavorites![selectedIndex]['id'].toString());
+
     }
     update(['favourite']);
   }
@@ -138,6 +149,8 @@ class FavouriteController extends GetxController {
         //   name: "ra",
         // );
       }
+      await addDownloadApi(storedFavorites![selectedIndex]['id'].toString());
+
       loader.value = false;
       showDialog(
           context: context,
@@ -193,10 +206,12 @@ class FavouriteController extends GetxController {
       loader.value = true;
 
       List<String> selectedImages = [];
+      List<int> selectedImagesIDS = [];
 
       for (int i = 0; i < checkImage.length; i++) {
         if (checkImage[i]) {
           selectedImages.add(storedFavorites?[i]['image'] ?? "");
+          selectedImagesIDS.add(storedFavorites?[i]['id']  ?? 0);
         }
       }
 
@@ -231,7 +246,10 @@ class FavouriteController extends GetxController {
             // );
           }
         }
-
+        for(int ids in selectedImagesIDS)
+        {
+          await addDownloadApi(ids.toString());
+        }
 
       } catch (e) {
 
@@ -532,6 +550,18 @@ class FavouriteController extends GetxController {
       await init();
       update(['favourite']);
     }
+  }
+
+
+  addDownloadApi(boardImageId)async{
+    loader.value =true;
+    await DownloadApi.downloadApi(boardImageId);
+    loader.value =false;
+  }
+  addViewApi(boardImageId)async{
+    loader.value =true;
+    await ViewApi.viewApi(boardImageId);
+    loader.value =false;
   }
 
 @override

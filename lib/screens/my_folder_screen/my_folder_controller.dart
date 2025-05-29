@@ -3,11 +3,17 @@
 import 'dart:core';
 import 'dart:io';
 import 'package:boards_app/common/toast_msg.dart';
+import 'package:boards_app/screens/boards_screen/api/logout_api.dart';
+import 'package:boards_app/screens/my_folder_screen/api/add_downlaod_api.dart';
+import 'package:boards_app/screens/my_folder_screen/api/add_view_api.dart';
 import 'package:boards_app/screens/my_folder_screen/api/get_board_info.dart';
 import 'package:boards_app/screens/my_folder_screen/model/get_board_info_model.dart';
+import 'package:boards_app/services/pref_services.dart';
 import 'package:boards_app/services/sqlite_helper.dart';
+import 'package:boards_app/utils/approutes.dart';
 import 'package:boards_app/utils/asset_res.dart';
 import 'package:boards_app/utils/color_res.dart';
+import 'package:boards_app/utils/prefkeys.dart';
 import 'package:boards_app/utils/string_res.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
@@ -234,15 +240,21 @@ videos =[];
           pageController.animateToPage(index, duration: const Duration(milliseconds: 500
           ), curve: Curves.easeInOut);
           selectedImage = getBoardInfoModel.data?[index].image.toString();
+          selectedIndex =index;
         }
       else {
         pageController = PageController(initialPage: index);
         selectedImage = getBoardInfoModel.data?[index].image.toString();
+        selectedIndex =index;
+
       }
+
+
+      await ViewApi.viewApi((getBoardInfoModel.data?[selectedIndex].id ??0 ).toString());
     update(['fldr']);
   }
 
-  onImageChanged(i){
+  onImageChanged(i) async {
 
 
     if(getBoardInfoModel.data != null)
@@ -252,12 +264,13 @@ videos =[];
         selectedIndex =  pageController.page!.round();
 
 
+    await ViewApi.viewApi((getBoardInfoModel.data?[selectedIndex].id ?? 0).toString());
 
       }
     update(['fldr']);
   }
 
-  tapBackwardButton(){
+  tapBackwardButton() async {
     if(pageController.page!.round() != getBoardInfoModel.data!.length - 1) {
 
       pageController.animateToPage(
@@ -265,16 +278,20 @@ videos =[];
           curve: Curves.easeInOut);
       selectedIndex =  pageController.page!.round();
       selectedImage = getBoardInfoModel.data![selectedIndex].image.toString();
+      await ViewApi.viewApi((getBoardInfoModel.data?[selectedIndex].id ??0).toString());
+
     }
     update(['fldr']);
   }
-  tapForwardButton(){
+  tapForwardButton() async {
     if(pageController.page!.round() != 0) {
       pageController.animateToPage(
           pageController.page!.round() -1, duration: const Duration(milliseconds: 500),
           curve: Curves.easeInOut);
       selectedIndex =  pageController.page!.round();
       selectedImage = getBoardInfoModel.data![selectedIndex].image.toString();
+      await ViewApi.viewApi((getBoardInfoModel.data?[selectedIndex].id ?? 0).toString());
+
     }
     update(['fldr']);
   }
@@ -321,13 +338,14 @@ else {
     print(value);
   });
 
-
   // await ImageGallerySaver.saveImage(
   //   Uint8List.fromList(response.data),
   //   quality: 60,
   //   name: "ra",
   // );
 }
+      await addDownloadApi(getBoardInfoModel.data![selectedIndex].id.toString());
+
       loader.value = false;
       showDialog(
           context: context,
@@ -416,10 +434,12 @@ else {
       loader.value = true;
 
       List<String> selectedImages = [];
+      List<int> selectedImagesIDS = [];
 
       for (int i = 0; i < addSelectedImage.length; i++) {
         if (addSelectedImage[i]) {
           selectedImages.add(getBoardInfoModel.data?[i].image ?? "");
+          selectedImagesIDS.add(getBoardInfoModel.data?[i].id  ?? 0);
         }
       }
 
@@ -472,6 +492,10 @@ else {
           }
         }
 
+        for(int ids in selectedImagesIDS)
+          {
+            await addDownloadApi(ids.toString());
+          }
 
       } catch (e) {
 
@@ -765,6 +789,26 @@ for (var element in allIndexData) {
   }
 
 
+  addDownloadApi(boardImageId)async{
+  loader.value =true;
+  await DownloadApi.downloadApi(boardImageId);
+  loader.value =false;
+  }
+  addViewApi(boardImageId)async{
+    loader.value =true;
+    await ViewApi.viewApi(boardImageId);
+    loader.value =false;
+  }
+
+  logoutApi()async{
+    loader.value =true;
+    await LogoutApi.logoutApi();
+    PrefService.setValue(PrefKeys.login, false);
+    PrefService.setValue('isUser', false);
+    PrefService.setValue('docId', '');
+    loader.value =false;
+    Get.offAllNamed(AppRoutes.login);
+  }
   /*onSelectedTapShare() async {
     if(addSelectedImage.any((selected) => selected)){
 

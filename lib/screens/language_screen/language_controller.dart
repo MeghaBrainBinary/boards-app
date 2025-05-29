@@ -103,8 +103,13 @@ await addDeviceTokenApi();
 //getBoardModel =await GetBoardApi.getBoardApi(languageCode);
     loader.value = false;
     PrefService.setValue(PrefKeys.isLanguage, true);
+    if(PrefService.getBool(PrefKeys.isLogin)) {
+      Get.offAllNamed(AppRoutes.boardsPage,arguments: languageCode);
+    }
+    else{
+      Get.offAllNamed(AppRoutes.login);
+    }
 
-    Get.offAndToNamed(AppRoutes.boardsPage,arguments: languageCode);
     //
     // Get.to(() => SelectFlowScreen(
     //       language: languageCode,

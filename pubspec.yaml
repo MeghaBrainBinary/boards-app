@@ -79,6 +79,7 @@ dependencies:
   flutter_widget_from_html:
   firebase_analytics: ^11.4.6
   gallery_saver_plus:
+  device_info_plus:
 
 
 

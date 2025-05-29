@@ -136,22 +136,20 @@ class LoginScreen extends StatelessWidget {
                             ),
                             Center(
                               child: CommonButton(
-                                  onTap: () {
+                                  onTap: () async {
                                     controller.validateEmail();
                                     controller.validatePassword();
                                     if (controller.emailErrorMessage.isEmpty &&
                                         controller.passwordErrorMessage.isEmpty) {
-                                      // controller
-                                      //     .signIn(
-                                      //         controller.emailIdController.text,
-                                      //         controller.passwordController.text)
-                                      //     .then((value) {
-                                      //   if (value) {
-                                      //     _showDialog(context);
-                                      //     controller.emailIdController.text = "";
-                                      //     controller.passwordController.text = "";
-                                      //   }
-                                      // });
+                                      await controller
+                                          .login()
+                                          .then((value) {
+                                        if (value ??true) {
+                                          _showDialog(context);
+                                          controller.emailIdController.text = "";
+                                          controller.passwordController.text = "";
+                                        }
+                                      });
                                       PrefService.setValue(PrefKeys.isLogin, true);
                                       _showDialog(context);
                                       controller.emailIdController.text = "";
@@ -248,7 +246,7 @@ class LoginScreen extends StatelessWidget {
             CommonButton(
                 onTap: () {
                   Get.offAndToNamed(AppRoutes.boardsPage,
-                      arguments: '');
+                      arguments: PrefService.getString(PrefKeys.code));
                  // Get.offAll(() => SelectFlowScreen(language: ''));
                   // Get.offAndToNamed(AppRoutes.boardsPage);
                 },
