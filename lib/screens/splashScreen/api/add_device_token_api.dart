@@ -12,7 +12,7 @@ import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 
 class AddDeviceTokenApi {
-  static Future addDeviceTokenApi() async {
+  static Future<AddDeviceTokenModel> addDeviceTokenApi() async {
     try {
       final deviceInfoPlugin = DeviceInfoPlugin();
       final deviceInfo = await deviceInfoPlugin.deviceInfo;
@@ -20,7 +20,8 @@ class AddDeviceTokenApi {
 
 String persistentID =allInfo['id'] ?? '';
       String url = ApiEndPoints.addDeviceToken;
-      Map<String, String> param = {
+      Map<String, String> param =
+{
         'device_token': PrefService.getString(PrefKeys.fcmToken),
         "lang":PrefService.getString(PrefKeys.languageCode)==""?"ru":PrefService.getString(PrefKeys.languageCode),
         "persistent_id":persistentID,
@@ -38,10 +39,16 @@ String persistentID =allInfo['id'] ?? '';
 
        return addDeviceTokenModelFromJson(response.body);
       }
+      else
+        {
+          return AddDeviceTokenModel();
+        }
     } catch (e) {
       if (kDebugMode) {
         print(e);
       }
+      return AddDeviceTokenModel();
+
     }
   }
 }

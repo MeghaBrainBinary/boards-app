@@ -98,7 +98,6 @@ class LanguageController extends GetxController {
     PrefService.setValue(PrefKeys.code, languageCode);
     await PrefService.setValue(PrefKeys.languageCode, languageCode);
     LocalizationService().changeLocale(selectedLanguage);
-await addDeviceTokenApi();
 
 //getBoardModel =await GetBoardApi.getBoardApi(languageCode);
     loader.value = false;
@@ -115,12 +114,5 @@ await addDeviceTokenApi();
     //       language: languageCode,
     //     ));
   }
-  AddDeviceTokenModel addDeviceTokenModel = AddDeviceTokenModel();
-  addDeviceTokenApi () async{
-    addDeviceTokenModel = await AddDeviceTokenApi.addDeviceTokenApi();
 
-    if (kDebugMode) {
-      print("Add device token => ${addDeviceTokenModel.message}");
-    }
-  }
 }

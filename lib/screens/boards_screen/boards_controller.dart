@@ -429,9 +429,8 @@ class BoardsController extends GetxController {
 logoutApi()async{
     loader.value =true;
     await LogoutApi.logoutApi();
-    PrefService.setValue(PrefKeys.login, false);
+
     loader.value =false;
-    Get.offAllNamed(AppRoutes.login);
 }
 
 }

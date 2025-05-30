@@ -176,7 +176,7 @@ await init();
     StringRes.contactUs.tr,
   //  StringRes.settings.tr,
    // StringRes.faq.tr,
-  //  StringRes.loginLogout.tr,
+    StringRes.logout.tr,
   ];
 
   List<String> drawerImageList = [
@@ -187,7 +187,7 @@ await init();
     AssetRes.contactUs,
    // AssetRes.settingsIcon,
  //   AssetRes.faqIcon,
-   // AssetRes.loginIcon,
+    AssetRes.loginIcon,
   ];
   List<bool> addSelectedImage = [];
 
@@ -803,11 +803,8 @@ for (var element in allIndexData) {
   logoutApi()async{
     loader.value =true;
     await LogoutApi.logoutApi();
-    PrefService.setValue(PrefKeys.login, false);
-    PrefService.setValue('isUser', false);
-    PrefService.setValue('docId', '');
+
     loader.value =false;
-    Get.offAllNamed(AppRoutes.login);
   }
   /*onSelectedTapShare() async {
     if(addSelectedImage.any((selected) => selected)){

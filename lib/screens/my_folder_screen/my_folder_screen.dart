@@ -1821,7 +1821,7 @@ class _MyFolderScreenState extends State<MyFolderScreen> {
           contentPadding: const EdgeInsets.symmetric(horizontal: 20),
           children: [
             SizedBox(height: Get.height * 0.04),
-            Image.asset(AssetRes.loginIcon, height: Get.height * 0.1),
+            Image.asset(AssetRes.loginIcon, height: Get.height * 0.1,color: ColorRes.appColor,),
             SizedBox(height: Get.height * 0.03),
             Text(
               StringRes.areYouSureLogOut.tr,

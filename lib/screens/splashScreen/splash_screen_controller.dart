@@ -5,15 +5,15 @@ import 'package:get/get.dart';
 
 class SplashScreenController extends GetxController {
 
-  AddDeviceTokenModel addDeviceTokenModel = AddDeviceTokenModel();
-
-
-  addDeviceTokenApi () async{
-    addDeviceTokenModel = await AddDeviceTokenApi.addDeviceTokenApi();
-
-    if (kDebugMode) {
-      print("Add device token => ${addDeviceTokenModel.message}");
-    }
-  }
+  // AddDeviceTokenModel addDeviceTokenModel = AddDeviceTokenModel();
+  //
+  //
+  // addDeviceTokenApi () async{
+  //   addDeviceTokenModel = await AddDeviceTokenApi.addDeviceTokenApi();
+  //
+  //   if (kDebugMode) {
+  //     print("Add device token => ${addDeviceTokenModel.message}");
+  //   }
+  // }
 
 }

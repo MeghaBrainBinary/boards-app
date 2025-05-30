@@ -129,7 +129,6 @@ List filterList =[];
      PrefService.setValue(PrefKeys.code, languageCode);
     await PrefService.setValue(PrefKeys.languageCode, languageCode);
      LocalizationService().changeLocale(selectedLanguage);
-   await  addDeviceTokenApi();
 
 
      //getBoardModel =await GetBoardApi.getBoardApi(languageCode);
@@ -145,13 +144,6 @@ List filterList =[];
      Get.offAndToNamed(AppRoutes.boardsPage, arguments: languageCode);
    }
   }
-  AddDeviceTokenModel addDeviceTokenModel = AddDeviceTokenModel();
-  addDeviceTokenApi () async{
-    addDeviceTokenModel = await AddDeviceTokenApi.addDeviceTokenApi();
 
-    if (kDebugMode) {
-      print("Add device token => ${addDeviceTokenModel.message}");
-    }
-  }
 
 }

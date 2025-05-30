@@ -112,7 +112,7 @@ class LoginScreen extends StatelessWidget {
                                     style: TextStyle(
                                         color: const Color(0xFFA2000F),
                                         fontSize: Get.height * 0.02)),
-                            SizedBox(
+                         /*   SizedBox(
                               height: Get.height * 0.01,
                             ),
                             Align(
@@ -130,7 +130,7 @@ class LoginScreen extends StatelessWidget {
                                 ),
                               ),
                             ),
-
+*/
                             SizedBox(
                               height: Get.height * 0.08,
                             ),
@@ -142,18 +142,8 @@ class LoginScreen extends StatelessWidget {
                                     if (controller.emailErrorMessage.isEmpty &&
                                         controller.passwordErrorMessage.isEmpty) {
                                       await controller
-                                          .login()
-                                          .then((value) {
-                                        if (value ??true) {
-                                          _showDialog(context);
-                                          controller.emailIdController.text = "";
-                                          controller.passwordController.text = "";
-                                        }
-                                      });
-                                      PrefService.setValue(PrefKeys.isLogin, true);
-                                      _showDialog(context);
-                                      controller.emailIdController.text = "";
-                                      controller.passwordController.text = "";
+                                          .login(context);
+
                                     }
                                   },
                                   text: StringRes.logIn.tr),
@@ -206,57 +196,5 @@ class LoginScreen extends StatelessWidget {
     );
   }
 
-  void _showDialog(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return SimpleDialog(
-          contentPadding: const EdgeInsets.symmetric(horizontal: 20),
-          children: [
-            SizedBox(
-              height: Get.height * 0.04,
-            ),
-            Image.asset(
-              AssetRes.succesfullogin,
-              height: Get.height * 0.14,
-            ),
-            SizedBox(
-              height: Get.height * 0.03,
-            ),
-            Text(
-              StringRes.successfully.tr,
-              textAlign: TextAlign.center,
-              style: appTextStyle(
-                  weight: FontWeight.w600, fontSize: 16, color: Colors.black),
-            ),
-            SizedBox(
-              height: Get.height * 0.01,
-            ),
-            Text(
-              StringRes.successfullyCreate.tr,
-              textAlign: TextAlign.center,
-              style: appTextStyle(
-                  weight: FontWeight.w400,
-                  fontSize: 12,
-                  color: Colors.black.withOpacity(0.60)),
-            ),
-            SizedBox(
-              height: Get.height * 0.03,
-            ),
-            CommonButton(
-                onTap: () {
-                  Get.offAndToNamed(AppRoutes.boardsPage,
-                      arguments: PrefService.getString(PrefKeys.code));
-                 // Get.offAll(() => SelectFlowScreen(language: ''));
-                  // Get.offAndToNamed(AppRoutes.boardsPage);
-                },
-                text: StringRes.yes.tr),
-            SizedBox(
-              height: Get.height * 0.04,
-            ),
-          ],
-        );
-      },
-    );
-  }
+
 }
