@@ -11,4 +11,5 @@ class ApiEndPoints{
   static const String logout = "$baseUrl/app-logout";
   static const String view = "$baseUrl/add-view";
   static const String download = "$baseUrl/add-download";
+  static const String uploadLanguage = "$baseUrl/update-language";
 }

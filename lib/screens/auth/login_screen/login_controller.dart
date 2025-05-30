@@ -110,10 +110,9 @@ class LoginController extends GetxController {
 LoginModel loginModel =LoginModel();
   login(context) async {
     loader.value =true;
+    await addDeviceTokenApi();
     loginModel =   await LoginApi.loginApi(email: email, deviseToken: PrefService.getString(PrefKeys.fcmToken), password: password) ?? LoginModel();
-    if(loginModel.success ==true) {
-      await addDeviceTokenApi();
-    }
+
     if(loginModel.success ==true)
       {
         PrefService.setValue(PrefKeys.isLogin, true);

@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:boards_app/localization/localization.dart';
@@ -5,6 +6,7 @@ import 'package:boards_app/screens/auth/create_new_password_screen/create_new_pa
 import 'package:boards_app/screens/auth/forgot_password_screen/forgot_password_screen.dart';
 import 'package:boards_app/screens/auth/login_screen/login_screen.dart';
 import 'package:boards_app/screens/auth/sign_up_screen/sign_up_screen.dart';
+import 'package:boards_app/screens/boards_screen/api/logout_api.dart';
 import 'package:boards_app/screens/contact_us_screen/contact_us_screen.dart';
 import 'package:boards_app/screens/favourite_screen/favourite_screen.dart';
 import 'package:boards_app/screens/language_screen2/languagescreen2.dart';
@@ -63,9 +65,9 @@ void main() async {
     };
     await FirebaseMessaging.instance.getToken().then((value) {
       PrefService.setValue(PrefKeys.fcmToken, value.toString());
-      if (kDebugMode) {
+
         print("FCM Token => $value");
-      }
+
     });
   } catch (e) {
     if (kDebugMode) {
@@ -83,7 +85,40 @@ class MyApp extends StatefulWidget {
   State<MyApp> createState() => _MyAppState();
 }
 
-class _MyAppState extends State<MyApp> {
+class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
+  @override
+  void initState() {
+    super.initState();
+    startNativeService();
+    WidgetsBinding.instance.addObserver(this);
+  }
+
+
+  MethodChannel platform = MethodChannel('native_service');
+
+  Future<void> startNativeService() async {
+    try {
+      await platform.invokeMethod('startService',{'token': PrefService.getString(PrefKeys.fcmToken)});
+
+    } catch (e) {
+      print("Failed to start native service: $e");
+    }
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
+
+  @override
+  Future<void> didChangeAppLifecycleState(AppLifecycleState state) async {
+    if (
+        state == AppLifecycleState.detached) {
+      print(" ========= working ===========");
+
+    }
+  }
 
   // @override
   // void initState() {

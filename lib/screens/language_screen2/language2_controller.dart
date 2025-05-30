@@ -3,6 +3,7 @@
 import 'package:boards_app/localization/localization.dart';
 import 'package:boards_app/screens/boards_screen/boards_controller.dart';
 import 'package:boards_app/screens/boards_screen/model/get_board_model.dart';
+import 'package:boards_app/screens/language_screen/api/language_update_api.dart';
 import 'package:boards_app/screens/splashScreen/api/add_device_token_api.dart';
 import 'package:boards_app/screens/splashScreen/model/add_device_token_model.dart';
 import 'package:boards_app/services/pref_services.dart';
@@ -129,7 +130,7 @@ List filterList =[];
      PrefService.setValue(PrefKeys.code, languageCode);
     await PrefService.setValue(PrefKeys.languageCode, languageCode);
      LocalizationService().changeLocale(selectedLanguage);
-
+await updateLanguageApi();
 
      //getBoardModel =await GetBoardApi.getBoardApi(languageCode);
 
@@ -145,5 +146,9 @@ List filterList =[];
    }
   }
 
-
+  updateLanguageApi()async{
+    loader.value =true;
+    await LanguageUpdateApi.languageUpdateApi();
+    loader.value =false;
+  }
 }

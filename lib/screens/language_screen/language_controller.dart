@@ -11,6 +11,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 
+import 'api/language_update_api.dart';
+
 class LanguageController extends GetxController {
   TextEditingController searchController = TextEditingController();
 
@@ -98,7 +100,7 @@ class LanguageController extends GetxController {
     PrefService.setValue(PrefKeys.code, languageCode);
     await PrefService.setValue(PrefKeys.languageCode, languageCode);
     LocalizationService().changeLocale(selectedLanguage);
-
+await updateLanguageApi();
 //getBoardModel =await GetBoardApi.getBoardApi(languageCode);
     loader.value = false;
     PrefService.setValue(PrefKeys.isLanguage, true);
@@ -115,4 +117,10 @@ class LanguageController extends GetxController {
     //     ));
   }
 
+
+  updateLanguageApi()async{
+    loader.value =true;
+    await LanguageUpdateApi.languageUpdateApi();
+    loader.value =false;
+  }
 }
