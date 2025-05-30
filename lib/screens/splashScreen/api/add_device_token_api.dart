@@ -15,10 +15,17 @@ class AddDeviceTokenApi {
   static Future<AddDeviceTokenModel> addDeviceTokenApi() async {
     try {
       final deviceInfoPlugin = DeviceInfoPlugin();
-      final deviceInfo = await deviceInfoPlugin.deviceInfo;
-      final allInfo = deviceInfo.data;
+      String persistentID ="";
+      if (Platform.isAndroid) {
+        AndroidDeviceInfo androidInfo = await deviceInfoPlugin.androidInfo;
+        persistentID = androidInfo.id.toString();
 
-String persistentID =allInfo['id'] ?? '';
+      } else if (Platform.isIOS) {
+        IosDeviceInfo iosInfo = await deviceInfoPlugin.iosInfo;
+        persistentID= iosInfo.identifierForVendor.toString();
+
+      }
+
       String url = ApiEndPoints.addDeviceToken;
       Map<String, String> param =
 {

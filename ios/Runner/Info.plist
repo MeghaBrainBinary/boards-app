@@ -36,6 +36,19 @@
 	<array>
 		<string>_dartobservatory._tcp</string>
 	</array>
+	<key>NSAppTransportSecurity</key>
+    <dict>
+        <key>NSExceptionDomains</key>
+        <dict>
+            <key>board.mvp.design-wisdom.com</key>
+            <dict>
+                <key>NSExceptionAllowsInsecureHTTPLoads</key>
+                <true/>
+                <key>NSIncludesSubdomains</key>
+                <true/>
+            </dict>
+        </dict>
+    </dict>
 	<key>NSCameraUsageDescription</key>
 	<string>To capture profile photo please grant camera access</string>
 	<key>NSLocalNetworkUsageDescription</key>

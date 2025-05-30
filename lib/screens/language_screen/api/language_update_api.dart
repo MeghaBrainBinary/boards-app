@@ -1,5 +1,6 @@
 // ignore_for_file: depend_on_referenced_packages
 import 'dart:convert';
+import 'dart:io';
 import 'package:boards_app/common/toast_msg.dart';
 import 'package:boards_app/screens/auth/model/login_model.dart';
 import 'package:boards_app/screens/language_screen/model/language_model.dart';
@@ -15,10 +16,16 @@ class LanguageUpdateApi {
   static Future<UpdateLanguageModel?> languageUpdateApi() async {
     try {
       final deviceInfoPlugin = DeviceInfoPlugin();
-      final deviceInfo = await deviceInfoPlugin.deviceInfo;
-      final allInfo = deviceInfo.data;
+      String persistentID ="";
+      if (Platform.isAndroid) {
+        AndroidDeviceInfo androidInfo = await deviceInfoPlugin.androidInfo;
+        persistentID = androidInfo.id.toString();
 
-      String persistentID =allInfo['id'] ?? '';
+      } else if (Platform.isIOS) {
+        IosDeviceInfo iosInfo = await deviceInfoPlugin.iosInfo;
+        persistentID= iosInfo.identifierForVendor.toString();
+
+      }
 
 
       String url = ApiEndPoints.uploadLanguage;
