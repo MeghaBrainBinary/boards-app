@@ -328,7 +328,6 @@ class FavouriteController extends GetxController {
         await SharePlus.instance.share(
           ShareParams(
             files: [XFile(path)],
-            text: '',
           ),
         );
         // Share.shareFiles([
