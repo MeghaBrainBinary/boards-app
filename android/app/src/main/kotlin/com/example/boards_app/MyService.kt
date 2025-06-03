@@ -13,7 +13,7 @@ import kotlinx.coroutines.launch
 import java.io.OutputStreamWriter
 import java.net.HttpURLConnection
 import java.net.URL
-
+import android.os.Build
 class MyService : Service() {
     override fun onTaskRemoved(rootIntent: Intent?) {
         super.onTaskRemoved(rootIntent)
@@ -27,11 +27,19 @@ class MyService : Service() {
         )
 
         val alarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
-        alarmManager.setExact(
-            AlarmManager.RTC_WAKEUP,
-            System.currentTimeMillis() + 2000, // 2 seconds delay
-            pendingIntent
-        )
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            alarmManager.setAndAllowWhileIdle(
+                AlarmManager.RTC_WAKEUP,
+                System.currentTimeMillis() + 2000,
+                pendingIntent
+            )
+        } else {
+            alarmManager.set(
+                AlarmManager.RTC_WAKEUP,
+                System.currentTimeMillis() + 2000,
+                pendingIntent
+            )
+        }
     }
 
     override fun onBind(intent: Intent?): IBinder? = null
