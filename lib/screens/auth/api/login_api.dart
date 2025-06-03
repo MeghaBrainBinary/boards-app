@@ -8,11 +8,10 @@ import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 
 class LoginApi {
-  static Future<LoginModel?> loginApi({required String email,required String deviseToken, required String password}) async {
+  static Future<LoginModel?> loginApi({required String deviseToken, required String password}) async {
     try {
       String url = ApiEndPoints.login;
       Map<String, String> param = {
-        'email':email,
         'device_token': deviseToken,
         'password': password,
       };

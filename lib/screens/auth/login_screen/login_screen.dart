@@ -69,7 +69,7 @@ class LoginScreen extends StatelessWidget {
                             SizedBox(
                               height: Get.height * 0.04,
                             ),
-                            CommonTextFeild(
+                        /*    CommonTextFeild(
                                 controller: controller.emailIdController,
                                 onChanged: (value) => controller.setEmail(value),
                                 hintText: StringRes.emailID.tr,
@@ -85,7 +85,7 @@ class LoginScreen extends StatelessWidget {
                                         fontSize: Get.height * 0.02)),
                             SizedBox(
                               height: Get.height * 0.03,
-                            ),
+                            ),*/
                             CommonTextFeild(
                                 onTapIcon: () {
                                   if (controller.isObscureText == false) {
@@ -137,10 +137,9 @@ class LoginScreen extends StatelessWidget {
                             Center(
                               child: CommonButton(
                                   onTap: () async {
-                                    controller.validateEmail();
+
                                     controller.validatePassword();
-                                    if (controller.emailErrorMessage.isEmpty &&
-                                        controller.passwordErrorMessage.isEmpty) {
+                                    if (controller.passwordErrorMessage.isEmpty) {
                                       await controller
                                           .login(context);
 

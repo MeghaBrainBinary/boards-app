@@ -18,15 +18,15 @@ import 'package:get/get.dart';
 
 class LoginController extends GetxController {
   TextEditingController passwordController = TextEditingController();
-  TextEditingController emailIdController = TextEditingController();
+  // TextEditingController emailIdController = TextEditingController();
 
   RxBool loader = false.obs;
   bool isObscureText = false;
   String password = '';
   String passwordErrorMessage = "";
 
-  String email = '';
-  String emailErrorMessage = "";
+  // String email = '';
+  // String emailErrorMessage = "";
 
   final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
 
@@ -73,23 +73,23 @@ class LoginController extends GetxController {
     });
   }
 
-  void setEmail(String value) {
-    email = value.trim();
-  }
+  // void setEmail(String value) {
+  //   email = value.trim();
+  // }
 
-  validateEmail() {
-    final emailRegex = RegExp(
-      r'^[\w-]+(\.[\w-]+)*@([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,7}$',
-    );
-    if (email.isEmpty) {
-      emailErrorMessage = StringRes.emailCanNot.tr;
-    } else if (!emailRegex.hasMatch(email)) {
-      emailErrorMessage = StringRes.invalidEmailFormat.tr;
-    } else {
-      emailErrorMessage = "";
-    }
-    update(['login']);
-  }
+  // validateEmail() {
+  //   final emailRegex = RegExp(
+  //     r'^[\w-]+(\.[\w-]+)*@([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,7}$',
+  //   );
+  //   if (email.isEmpty) {
+  //     emailErrorMessage = StringRes.emailCanNot.tr;
+  //   } else if (!emailRegex.hasMatch(email)) {
+  //     emailErrorMessage = StringRes.invalidEmailFormat.tr;
+  //   } else {
+  //     emailErrorMessage = "";
+  //   }
+  //   update(['login']);
+  // }
 
   // password
 
@@ -111,13 +111,13 @@ LoginModel loginModel =LoginModel();
   login(context) async {
     loader.value =true;
     await addDeviceTokenApi();
-    loginModel =   await LoginApi.loginApi(email: email, deviseToken: PrefService.getString(PrefKeys.fcmToken), password: password) ?? LoginModel();
+    loginModel =   await LoginApi.loginApi( deviseToken: PrefService.getString(PrefKeys.fcmToken), password: password) ?? LoginModel();
 
     if(loginModel.success ==true)
       {
         PrefService.setValue(PrefKeys.isLogin, true);
         _showDialog(context);
-        emailIdController.text = "";
+        //emailIdController.text = "";
         passwordController.text = "";
       }
     loader.value =false;
