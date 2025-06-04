@@ -21,7 +21,7 @@ class LoginController extends GetxController {
   // TextEditingController emailIdController = TextEditingController();
 
   RxBool loader = false.obs;
-  bool isObscureText = false;
+  bool isObscureText = true;
   String password = '';
   String passwordErrorMessage = "";
 
@@ -116,7 +116,9 @@ LoginModel loginModel =LoginModel();
     if(loginModel.success ==true)
       {
         PrefService.setValue(PrefKeys.isLogin, true);
-        _showDialog(context);
+       // _showDialog(context);
+        Get.offAndToNamed(AppRoutes.boardsPage,
+            arguments: PrefService.getString(PrefKeys.code));
         //emailIdController.text = "";
         passwordController.text = "";
       }
