@@ -353,11 +353,6 @@ else {
             return Theme(
               data: ThemeData(dialogBackgroundColor: Colors.white),
               child: AlertDialog(
-                title:  Text(
-                  StringRes.success.tr,
-                  style: appTextStyle(
-                      weight: FontWeight.w500, fontSize: 20, color: ColorRes.appColor),
-                ),
                 content:  Text(
                   StringRes.download.tr,
                   style: appTextStyle(
@@ -415,7 +410,7 @@ else {
 
       // Get.snackbar(
       //   "Success",
-      //   "Images are downloaded successfully",
+      //   "File downloaded successfully!",
       //   backgroundColor: Colors.green,
       //   colorText: ColorRes.white,
       // );
@@ -514,12 +509,7 @@ else {
             return Theme(
               data: ThemeData(dialogBackgroundColor: Colors.white),
               child: AlertDialog(
-                title:  Text(
-                  StringRes.success.tr,
 
-                  style: appTextStyle(
-                      weight: FontWeight.w500, fontSize: 20, color: ColorRes.appColor),
-                ),
                 content:  Text(
                   StringRes.download.tr,
                   style: appTextStyle(
@@ -563,7 +553,7 @@ else {
       );
       // Get.snackbar(
       //   "Success",
-      //   "Images are downloaded successfully",
+      //   "File downloaded successfully!",
       //   backgroundColor: Colors.green,
       //   colorText: ColorRes.white,
       // );

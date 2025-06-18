@@ -25,7 +25,7 @@ const Map<String, String> Latvian = {
   "Confirm new password": "Apstipriniet jauno paroli",
   "Password": "Parole",
   "Are you sure you want to Delete Account?": "Vai tiešām vēlaties dzēst kontu?",
-  "Are you sure want to Log Out?": "Vai tiešām vēlaties atteikties?",
+  "Are you sure want to Log Out?": "Vai tiešām vēlaties iziet?",
   "Are you sure want to Exit?": "Vai tiešām vēlaties iziet?",
   "Contact us": "Sazinieties ar mums",
   "Name": "Vārds",
@@ -40,8 +40,8 @@ const Map<String, String> Latvian = {
   "Click, Secure,Download\n Images & Videos easily": "Noklikšķiniet, Nodrošiniet, Lejupielādējiet\n Ērti attēlus un videoklipus",
   "Next": "Nākamais",
   "Get Started": "Sāc",
-  "Login / Logout": "Pieteikties / Atteikties",
-  "Logout": "tteikties",
+  "Login / Logout": "Pieteikties / Iziet",
+  "Logout": "Iziet",
   "FAQ": "FAQ",
   "Settings": "Iestatījumi",
   "Favourites": "Izlase",
@@ -103,6 +103,6 @@ const Map<String, String> Latvian = {
   "Telephone":"Tārunis",
   //"Tel":"Tālr",
   "Tel":"Telegram",
-  "Images are downloaded successfully":"Attēli veiksmīgi lejupielādēti",
+  "File downloaded successfully!":"Fails veiksmīgi lejuplādēts!",
   "Okay":"Labi"
 };

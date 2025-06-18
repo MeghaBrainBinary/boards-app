@@ -99,6 +99,6 @@ const Map<String, String> English = {
   "Telephone":"Telephone",
   //"Tel":"Tel",
   "Tel":"Telegram",
-  "Images are downloaded successfully":"Images are downloaded successfully",
+  "File downloaded successfully!":"File downloaded successfully!",
   "Okay":"Okay"
 };

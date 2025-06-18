@@ -100,6 +100,6 @@ const Map<String, String> Lithuanian = {
   "Telephone":"Telefonas",
   //"Tel":"Tel",
   "Tel":"Telegram",
-  "Images are downloaded successfully":"Vaizdai atsisiųsti sėkmingai",
+  "File downloaded successfully!":"Failas sėkmingai atsisiųstas!",
   "Okay":"Gerai"
 };

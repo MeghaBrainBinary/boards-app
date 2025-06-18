@@ -114,7 +114,7 @@ class StringRes {
   static String lithuanian = "Lithuanian";
   static String error = "Error";
   static String success = "Success";
-  static String download = "Images are downloaded successfully";
+  static String download = "File downloaded successfully!";
   static String okay = "Okay";
   static String select = "Select";
   static String inspire = "Designed by";

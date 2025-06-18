@@ -99,6 +99,6 @@ const Map<String, String> Estonian = {
   "Telephone":"Telefon",
   //"Tel":"Tel",
   "Tel":"Telegram",
-  "Images are downloaded successfully":"Pildid on edukalt alla laaditud",
+  "File downloaded successfully!":"Fail on edukalt alla laaditud!",
   "Okay":"Okei"
 };

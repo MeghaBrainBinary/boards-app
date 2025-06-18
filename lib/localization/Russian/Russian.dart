@@ -98,6 +98,6 @@ const Map<String, String> Russian = {
   "Telephone":"Телефон",
   //"Tel":"Тел",
   "Tel":"Telegram",
-  "Images are downloaded successfully":"Изображения успешно загружены",
+  "File downloaded successfully!":"Файл успешно загружен!",
   "Okay":"Хорошо"
 };

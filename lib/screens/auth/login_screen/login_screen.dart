@@ -63,8 +63,8 @@ class LoginScreen extends StatelessWidget {
                             ),
                             Center(
                                 child: Image.asset(
-                              AssetRes.secureLogin,
-                              height: Get.height * 0.3,
+                              AssetRes.appNewLogo,
+                              height: Get.height * 0.2,
                             )),
                             SizedBox(
                               height: Get.height * 0.04,

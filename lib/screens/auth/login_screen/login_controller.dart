@@ -11,6 +11,7 @@ import 'package:boards_app/utils/prefkeys.dart';
 import 'package:boards_app/utils/string_res.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -110,6 +111,12 @@ class LoginController extends GetxController {
 LoginModel loginModel =LoginModel();
   login(context) async {
     loader.value =true;
+    await FirebaseMessaging.instance.getToken().then((value) {
+      PrefService.setValue(PrefKeys.fcmToken, value.toString());
+
+      print("FCM Token => $value");
+
+    });
     await addDeviceTokenApi();
     loginModel =   await LoginApi.loginApi( deviseToken: PrefService.getString(PrefKeys.fcmToken), password: password) ?? LoginModel();
 
