@@ -14,13 +14,13 @@ class MainActivity: FlutterActivity() {
         MethodChannel(flutterEngine.dartExecutor.binaryMessenger, CHANNEL).setMethodCallHandler {
                 call, result ->
             if (call.method == "startService") {
-                val intent = Intent(this, MyService::class.java)
-                startService(intent)
-                fcmToken = call.argument("token")
-
-                val prefs = getSharedPreferences("MyAppPrefs", MODE_PRIVATE)
-                prefs.edit().putString("fcm_token", fcmToken).apply()
-                result.success(null)
+//                val intent = Intent(this, MyService::class.java)
+//                startService(intent)
+//                fcmToken = call.argument("token")
+//
+//                val prefs = getSharedPreferences("MyAppPrefs", MODE_PRIVATE)
+//                prefs.edit().putString("fcm_token", fcmToken).apply()
+//                result.success(null)
             }
         }
     }

@@ -89,21 +89,21 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   @override
   void initState() {
     super.initState();
-    startNativeService();
+   // startNativeService();
     WidgetsBinding.instance.addObserver(this);
   }
 
 
-  MethodChannel platform = MethodChannel('native_service');
-
-  Future<void> startNativeService() async {
-    try {
-      await platform.invokeMethod('startService',{'token': PrefService.getString(PrefKeys.fcmToken)});
-
-    } catch (e) {
-      print("Failed to start native service: $e");
-    }
-  }
+  // MethodChannel platform = MethodChannel('native_service');
+  //
+  // Future<void> startNativeService() async {
+  //   try {
+  //     await platform.invokeMethod('startService',{'token': PrefService.getString(PrefKeys.fcmToken)});
+  //
+  //   } catch (e) {
+  //     print("Failed to start native service: $e");
+  //   }
+  // }
 
   @override
   void dispose() {
