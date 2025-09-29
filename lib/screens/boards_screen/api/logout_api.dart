@@ -33,10 +33,16 @@ class LogoutApi {
           //   backgroundColor: Colors.red,
           // );
         } else if (status == true) {
+         String languageCode  =  PrefService.getString(PrefKeys.languageCode);
+         String code  =  PrefService.getString(PrefKeys.code);
+         String language  =  PrefService.getString(PrefKeys.language);
           PrefService.clear();
           PrefService.setValue(PrefKeys.login, false);
           PrefService.setValue('isUser', false);
           PrefService.setValue('docId', '');
+          PrefService.setValue(PrefKeys.language, language);
+          PrefService.setValue(PrefKeys.code, code);
+          await PrefService.setValue(PrefKeys.languageCode, languageCode);
           Get.offAllNamed(AppRoutes.login);
           return jsonDecode(response.body);
 

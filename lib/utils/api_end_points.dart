@@ -1,6 +1,7 @@
 class ApiEndPoints{
 
-   static const String baseUrl ="http://board.mvp.design-wisdom.com/api";
+   // static const String baseUrl ="http://board.mvp.design-wisdom.com/api";
+   static const String baseUrl ="https://moving-board.myfiluet.com/api";
  // static const String baseUrl ="http://newboard.mvp.design-wisdom.com/api";
 
   static const String getBoards ="$baseUrl/getBoards";
